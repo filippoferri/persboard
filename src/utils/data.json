@@ -1,0 +1,216 @@
+{
+    "users": [
+      {
+        "id": 1,
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "johndoe@example.com",
+        "password": "password",
+        "tier": "premium",
+        "folders": [
+          {
+            "id": 1,
+            "name": "Folder 1",
+            "projects": [
+              {
+                "id": 1,
+                "name": "Project 1",
+                "discussion": {
+                  "topic": "Topic 1",
+                  "transcript": "Transcript of Project 1",
+                  "takeaways": "Takeaways of Project 1"
+                },
+                "invited": [
+                  {
+                    "id": 1,
+                    "fullName": "Steve Jobs",
+                    "type": "mentor",
+                    "area": "Expertise",
+                    "imageUrl": "https://source.unsplash.com/random"
+                  },
+                  {
+                    "id": 2,
+                    "fullName": "Bill Gates",
+                    "type": "coach",
+                    "area": "Career Advice",
+                    "imageUrl": "https://source.unsplash.com/random"
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "name": "Project 2",
+                "discussion": {
+                  "topic": "Topic 2",
+                  "transcript": "Transcript of Project 2",
+                  "takeaways": "Takeaways of Project 2"
+                },
+                "invited": [
+                  {
+                    "id": 3,
+                    "fullName": "Elon Musk",
+                    "type": "mentor",
+                    "area": "Expertise",
+                    "imageUrl": "https://source.unsplash.com/random"
+                  },
+                  {
+                    "id": 4,
+                    "fullName": "Mark Zuckerberg",
+                    "type": "sponsor",
+                    "area": "Advocacy",
+                    "imageUrl": "https://source.unsplash.com/random"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "name": "Folder 2",
+            "projects": [
+              {
+                "id": 3,
+                "name": "Project 3",
+                "discussion": {
+                  "topic": "Topic 3",
+                  "transcript": "Transcript of Project 3",
+                  "takeaways": "Takeaways of Project 3"
+                },
+                "invited": [
+                  {
+                    "id": 2,
+                    "fullName": "Bill Gates",
+                    "type": "coach",
+                    "area": "Career Advice",
+                    "imageUrl": "https://source.unsplash.com/random"
+                  },
+                  {
+                    "id": 3,
+                    "fullName": "Elon Musk",
+                    "type": "mentor",
+                    "area": "Expertise",
+                    "imageUrl": "https://source.unsplash.com/random"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "directors": [
+          {
+            "id": 1,
+            "fullName": "Elon Musk",
+            "type": "Mentor",
+            "area": "Expertise",
+            "imageUrl": "https://i.pravatar.cc/150?img=1"
+          },
+          {
+            "id": 2,
+            "fullName": "Richard Branson",
+            "type": "Mentor",
+            "area": "Expertise",
+            "imageUrl": "https://i.pravatar.cc/150?img=2"
+          },
+          {
+            "id": 3,
+            "fullName": "Oprah Winfrey",
+            "type": "Coach",
+            "area": "Social Support",
+            "imageUrl": "https://i.pravatar.cc/150?img=3"
+          },
+          {
+            "id": 4,
+            "fullName": "Warren Buffett",
+            "type": "Mentor",
+            "area": "Expertise",
+            "imageUrl": "https://i.pravatar.cc/150?img=4"
+          },
+          {
+            "id": 5,
+            "fullName": "Tim Cook",
+            "type": "Mentor",
+            "area": "Expertise",
+            "imageUrl": "https://i.pravatar.cc/150?img=5"
+          },
+          {
+            "id": 6,
+            "fullName": "Sheryl Sandberg",
+            "type": "Mentor",
+            "area": "Network",
+            "imageUrl": "https://i.pravatar.cc/150?img=6"
+          },
+          {
+            "id": 7,
+            "fullName": "Jack Ma",
+            "type": "Mentor",
+            "area": "Expertise",
+            "imageUrl": "https://i.pravatar.cc/150?img=7"
+          },
+          {
+            "id": 8,
+            "fullName": "Malala Yousafzai",
+            "type": "Coach",
+            "area": "Developmental Feedback",
+            "imageUrl": "https://i.pravatar.cc/150?img=8"
+          },
+          {
+            "id": 9,
+            "fullName": "Bill Gates",
+            "type": "Mentor",
+            "area": "Expertise",
+            "imageUrl": "https://i.pravatar.cc/150?img=9"
+          },
+          {
+            "id": 10,
+            "fullName": "Mary Barra",
+            "type": "Mentor",
+            "area": "Expertise",
+            "imageUrl": "https://i.pravatar.cc/150?img=10"
+          },
+          {
+            "id": 11,
+            "fullName": "Indra Nooyi",
+            "type": "Mentor",
+            "area": "Expertise",
+            "imageUrl": "https://i.pravatar.cc/150?img=11"
+          },
+          {
+            "id": 12,
+            "fullName": "Satya Nadella",
+            "type": "Mentor",
+            "area": "Expertise",
+            "imageUrl": "https://i.pravatar.cc/150?img=12"
+          },
+          {
+            "id": 13,
+            "fullName": "Mellody Hobson",
+            "type": "sponsor",
+            "area": "Advocacy",
+            "imageUrl": "https://randomuser.me/api/portraits/women/3.jpg"
+          },
+          {
+            "id": 14,
+            "fullName": "Adele Goldberg",
+            "type": "mentor",
+            "area": "Developmental Feedback",
+            "imageUrl": "https://randomuser.me/api/portraits/women/62.jpg"
+         },
+         {
+            "id": 15,
+            "fullName": "Tony Robbins",
+            "type": "mentor",
+            "area": "Career Advice",
+            "imageUrl": "https://randomuser.me/api/portraits/men/43.jpg"
+          },
+         {
+            "id": 16,
+            "fullName": "Marie Forleo",
+            "type": "coach",
+            "area": "Expertise",
+            "imageUrl": "https://randomuser.me/api/portraits/women/36.jpg"
+          }
+        ]
+}
+  
