@@ -4,35 +4,37 @@ import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Link, Stack, Alert, IconButton, InputAdornment } from '@mui/material';
+import { Stack, IconButton, InputAdornment, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // auth
 import { useAuthContext } from '../../auth/useAuthContext';
-// routes
-import { PATH_AUTH } from '../../routes/paths';
 // components
 import Iconify from '../../components/iconify';
 import FormProvider, { RHFTextField } from '../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
-export default function AuthLoginForm() {
-  const { login } = useAuthContext();
+export default function AuthRegisterForm() {
+  const { register } = useAuthContext();
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const LoginSchema = Yup.object().shape({
+  const RegisterSchema = Yup.object().shape({
+    firstName: Yup.string().required('First name required'),
+    lastName: Yup.string().required('Last name required'),
     email: Yup.string().required('Email is required').email('Email must be a valid email address'),
     password: Yup.string().required('Password is required'),
   });
 
   const defaultValues = {
-    email: 'demo@minimals.cc',
-    password: 'demo1234',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
   };
 
   const methods = useForm({
-    resolver: yupResolver(LoginSchema),
+    resolver: yupResolver(RegisterSchema),
     defaultValues,
   });
 
@@ -45,7 +47,9 @@ export default function AuthLoginForm() {
 
   const onSubmit = async (data) => {
     try {
-      await login(data.email, data.password);
+      if (register) {
+        await register(data.email, data.password, data.firstName, data.lastName);
+      }
     } catch (error) {
       console.error(error);
 
@@ -60,8 +64,13 @@ export default function AuthLoginForm() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3}>
+      <Stack spacing={2.5}>
         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
+
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+          <RHFTextField name="firstName" label="First name" />
+          <RHFTextField name="lastName" label="Last name" />
+        </Stack>
 
         <RHFTextField name="email" label="Email address" />
 
@@ -79,32 +88,26 @@ export default function AuthLoginForm() {
             ),
           }}
         />
-      </Stack>
 
-      <Stack alignItems="flex-end" sx={{ my: 2 }}>
-        <Link href={PATH_AUTH.resetPassword}  variant="body2" color="inherit" underline="always">
-          Forgot password?
-        </Link>
-      </Stack>
-
-      <LoadingButton
-        fullWidth
-        color="inherit"
-        size="large"
-        type="submit"
-        variant="contained"
-        loading={isSubmitSuccessful || isSubmitting}
-        sx={{
-          bgcolor: 'text.primary',
-          color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-          '&:hover': {
+        <LoadingButton
+          fullWidth
+          color="inherit"
+          size="large"
+          type="submit"
+          variant="contained"
+          loading={isSubmitting || isSubmitSuccessful}
+          sx={{
             bgcolor: 'text.primary',
             color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-          },
-        }}
-      >
-        Login
-      </LoadingButton>
+            '&:hover': {
+              bgcolor: 'text.primary',
+              color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+            },
+          }}
+        >
+          Create account
+        </LoadingButton>
+      </Stack>
     </FormProvider>
   );
 }

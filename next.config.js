@@ -14,6 +14,5 @@ module.exports = {
     FIREBASE_MEASUREMENT_ID: '',
     // OPENAI
     OPENAI_API_KEY: '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'
-    OPEN_SECRET_KEY:'org-5hCqmmn1Vgpr8eqtmbQYDmtx'
   },
 };

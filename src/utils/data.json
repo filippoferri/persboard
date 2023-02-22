@@ -104,28 +104,28 @@
             "fullName": "Elon Musk",
             "type": "Mentor",
             "area": "Expertise",
-            "imageUrl": "https://i.pravatar.cc/150?img=1"
+            "imageUrl": "https://res.cloudinary.com/ddtdvms3g/image/upload/v1677026722/d3bb522d-e7df-4022-a322-3ccec87b6dca_oyncgp.png"
           },
           {
             "id": 2,
             "fullName": "Richard Branson",
             "type": "Mentor",
             "area": "Expertise",
-            "imageUrl": "https://i.pravatar.cc/150?img=2"
+            "imageUrl": "https://res.cloudinary.com/ddtdvms3g/image/upload/v1677026237/864a417d-46a1-4c2f-b4ec-0d557f3bd67a_poysry.png"
           },
           {
             "id": 3,
             "fullName": "Oprah Winfrey",
             "type": "Coach",
             "area": "Social Support",
-            "imageUrl": "https://i.pravatar.cc/150?img=3"
+            "imageUrl": "https://res.cloudinary.com/ddtdvms3g/image/upload/v1677026935/a00e25b9-ec5d-455d-9287-27a41c9ccaed_ejywor.png"
           },
           {
             "id": 4,
             "fullName": "Warren Buffett",
             "type": "Mentor",
             "area": "Expertise",
-            "imageUrl": "https://i.pravatar.cc/150?img=4"
+            "imageUrl": "https://res.cloudinary.com/ddtdvms3g/image/upload/v1677027057/fe508d40-fba4-4d1e-8199-74e5e46a484e_ptgpij.png"
           },
           {
             "id": 5,
@@ -143,10 +143,10 @@
           },
           {
             "id": 7,
-            "fullName": "Jack Ma",
+            "fullName": "Steve Jobs",
             "type": "Mentor",
             "area": "Expertise",
-            "imageUrl": "https://i.pravatar.cc/150?img=7"
+            "imageUrl": "https://res.cloudinary.com/ddtdvms3g/image/upload/v1677026066/265c0f07-58b8-4fd9-accc-68b510c470bc_efkuqy.png"
           },
           {
             "id": 8,
@@ -202,7 +202,7 @@
             "fullName": "Tony Robbins",
             "type": "mentor",
             "area": "Career Advice",
-            "imageUrl": "https://randomuser.me/api/portraits/men/43.jpg"
+            "imageUrl": "https://res.cloudinary.com/ddtdvms3g/image/upload/v1677026537/7648d33b-3ab0-48aa-9a00-4a7e598f71f2_hauyr6.png"
           },
          {
             "id": 16,
