@@ -138,8 +138,8 @@ export default function PageNewQuestion() {
                 </ListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <ListItemButton onClick={() => handleListItemClick('What should I tell a prospective employer about me that they don’t know?')}>
-                  <ListItemText primary="What should I tell a prospective employer about me that they don’t know?" />
+                <ListItemButton onClick={() => handleListItemClick('How can I earn my first 500k?')}>
+                  <ListItemText primary="How can I earn my first 500k?" />
                 </ListItemButton>
               </ListItem>
               <ListItem disablePadding>

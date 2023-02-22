@@ -31,6 +31,7 @@
     "axios": "^1.2.3",
     "change-case": "^4.1.2",
     "date-fns": "^2.29.3",
+    "firebase": "^9.17.1",
     "framer-motion": "^8.4.7",
     "i18next": "^22.4.9",
     "i18next-browser-languagedetector": "^7.0.1",

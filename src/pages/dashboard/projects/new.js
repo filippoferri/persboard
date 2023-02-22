@@ -62,7 +62,7 @@ export default function PageNewProject() {
         const directorDetails = selectedDirectors.map(director => {
           return {
             id: director.id,
-            name: director.fullName,
+            fullName: director.fullName,
             image: director.imageUrl,
             type: director.type
           };

@@ -6,17 +6,16 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export default async function (req, res) {
-  const { dir1, lifeQuestion } = req.body;
+  const { age } = req.body;
   const completion = await openai.createCompletion({
     model: 'text-davinci-003',
-    prompt: generateAdvice(dir1, lifeQuestion),
+    prompt: generatePrompt(age),
     temperature: 0.6,
     max_tokens: 2048,
   });
-  const headers = {
-    'Authorization': `Bearer ${ process.env.OPENAI_API_KEY}`,
-  };
+  res.status(200).json({ result: completion.data.choices[0].text });
 }
-function generateAdvice(dir1, lifeQuestion) {
-  return `As ${boarddirector1}$, ${lifeQuestion}?`;
+
+function generatePrompt(age) {
+  return `How to earn money after ${age}$ anni?`;
 }

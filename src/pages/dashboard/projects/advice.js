@@ -19,7 +19,7 @@ import Image from '../../../components/image';
 // components
 import { useSettingsContext } from '../../../components/settings';
 
-import {generateAdvice} from '../../api/openai';
+import {generateAdvice} from '../../../utils/generateAdvice';
 
 
 // ----------------------------------------------------------------------
@@ -33,18 +33,36 @@ export default function Advice() {
   const router = useRouter();
   const { d, q } = router.query;
   // decode the directorIds array from the base64 string
-  const decodedIds = d ? JSON.parse(atob(d)) : [];
+  const decodedDirs = d ? JSON.parse(atob(d)) : [];
 
   // decode the text from the base64 string
-  const decodedText = q ? atob(q) : '';
+  const decodedQuestion = q ? atob(q) : '';
 
-  // display the text in a box
-  const [question, setQuestion] = useState(decodedText);
-  const [advice, setAdvice] = useState('');
+  // display question
+  const [question, setQuestion] = useState(decodedQuestion);
 
   useEffect(() => {
-    setQuestion(decodedText);
-  }, [decodedText]);
+    setQuestion(decodedQuestion);
+  }, [decodedQuestion]);
+
+  // display the dicsussion
+  const [loading, setLoading] = useState(false);
+  const [discussion, setDiscussion] = useState('');
+
+  // useEffect(() => {
+  //   async function generateDiscussion() {
+  //     if (loading) {
+  //       return;
+  //     }
+  //     setLoading(true);
+  //     const prompt = await generateAdvice(decodedDirs, question);
+  //     setDiscussion(prompt);
+  //   }
+  //   generateDiscussion();
+  //   setLoading(false);
+  // }, []);
+
+  console.log(decodedDirs)
 
   const handleContinue = () => {};
 
@@ -65,10 +83,8 @@ export default function Advice() {
         >
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="h4" gutterBottom>
-              Let's go
+            {question}
             </Typography>
-            <Typography variant="p" gutterBottom>
-            See the “big picture” whether it be trends, crafting a balanced life</Typography>
           </Box>
           <Box sx={{ flexShrink: 0 }}>
             <Button variant="contained" size="large">
@@ -78,16 +94,17 @@ export default function Advice() {
         </Stack>
         <Paper elevation={0} variant="outlined" sx={{ flexGrow: 1 }}>
           <Grid container spacing={0} sx={{minHeight: '600px'}}>
-            <Grid item xs={3} sx={{borderRight: '1px solid #DFE3E8', background: '#f4f6f8'}}>
-              <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+            <Grid item xs={3} sx={{borderRight: '1px solid #DFE3E8'}}>
+            <Box sx={{ display: 'flex', borderBottom: '1px solid #DFE3E8', height: '75px', alignItems: 'center', p: 2, fontWeight: 'bold', color: '#637381',bgcolor: '#f4f6f8'}}>Your Board</Box>
+              <List sx={{ width: '100%' }}>
                 <List>
-                {decodedIds.map((director) => (
+                {decodedDirs.map((director) => (
                   <ListItem key={director.id} disablePadding>
                     <ListItemButton>
                     <ListItemAvatar>
-                    <Avatar alt={director.name} src={director.image} />
+                    <Avatar alt={director.fullName} src={director.image} />
                     </ListItemAvatar>
-                      <ListItemText primary={director.name} secondary={director.type} />
+                      <ListItemText primary={director.fullName} secondary={director.type} />
                     </ListItemButton>
                   </ListItem>
                 ))}
@@ -95,10 +112,18 @@ export default function Advice() {
               </List>
             </Grid>
             <Grid container item xs={9} direction="column" sx={{flexGrow: 1}} >
-              <Box sx={{ display: 'flex', borderBottom: '1px solid #DFE3E8', height: '75px', alignItems: 'center', p: 2 }}>{question}</Box>
+              <Box sx={{ display: 'flex', borderBottom: '1px solid #DFE3E8', height: '75px', alignItems: 'center', p: 2, fontWeight:'bold', color:'#637381', bgcolor: '#f4f6f8' }}>Advices</Box>
               <Box sx={{ display: 'flex', flexDirection: 'column', p:2, pb: 4 }}>
               
-          Thinking...
+              {loading && (
+                <Box>
+                  We are thinking...
+                </Box>
+              )}
+
+              <Box
+                dangerouslySetInnerHTML={{ __html: discussion }}
+              />
 
               </Box>
             </Grid>
