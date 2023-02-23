@@ -137,7 +137,8 @@ export function AuthProvider({ children }) {
         displayName: `${firstName} ${lastName}`,
         firstName: `${firstName}`,
         lastName: `${lastName}`,
-        timestamp: Timestamp.fromDate(new Date()),
+        dateAdd: Timestamp.fromDate(new Date()),
+        tier: 'free',
       });
     });
   }, []);

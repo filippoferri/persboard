@@ -32,7 +32,7 @@ export default function AccountGeneral() {
   const defaultValues = {
     //displayName: user?.displayName || '',
     firstName: user?.firstName || '',
-    LastName: user?.lastName || '',
+    lastName: user?.lastName || '',
     email: user?.email || '',
     // photoURL: user?.photoURL || null,
     // phoneNumber: user?.phoneNumber || '',
