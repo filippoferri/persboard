@@ -24,21 +24,24 @@ export default function AccountGeneral() {
   const { user } = useAuthContext();
 
   const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required('Name is required'),
+    firstName: Yup.string().required('Name is required'),
+    lastName: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email('Email must be a valid email address'),
   });
 
   const defaultValues = {
-    displayName: user?.displayName || '',
+    //displayName: user?.displayName || '',
+    firstName: user?.firstName || '',
+    LastName: user?.lastName || '',
     email: user?.email || '',
-    photoURL: user?.photoURL || null,
-    phoneNumber: user?.phoneNumber || '',
-    country: user?.country || '',
-    address: user?.address || '',
-    state: user?.state || '',
-    city: user?.city || '',
-    zipCode: user?.zipCode || '',
-    about: user?.about || '',
+    // photoURL: user?.photoURL || null,
+    // phoneNumber: user?.phoneNumber || '',
+    // country: user?.country || '',
+    // address: user?.address || '',
+    // state: user?.state || '',
+    // city: user?.city || '',
+    // zipCode: user?.zipCode || '',
+    // about: user?.about || '',
     isPublic: user?.isPublic || false,
   };
 
@@ -108,9 +111,9 @@ export default function AccountGeneral() {
                 sm: 'repeat(2, 1fr)',
               }}
             >
-              <RHFTextField name="displayName" label="First Name" disabled />
+              <RHFTextField name="firstName" label="First Name" disabled />
 
-              <RHFTextField name="displaySurname" label="Last Name" disabled />
+              <RHFTextField name="lastName" label="Last Name" disabled />
               </Box>
               <Box sx={{ mb: 4 }}>
 

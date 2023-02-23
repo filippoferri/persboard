@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { createContext, useEffect, useReducer, useCallback, useMemo } from 'react';
 import { initializeApp } from 'firebase/app';
+import { getAnalytics } from "firebase/analytics";
 import {
   getAuth,
   signOut,
@@ -133,6 +134,8 @@ export function AuthProvider({ children }) {
         uid: res.user?.uid,
         email,
         displayName: `${firstName} ${lastName}`,
+        firstName: `${firstName}`,
+        lastName: `${lastName}`,
       });
     });
   }, []);

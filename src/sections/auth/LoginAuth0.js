@@ -27,7 +27,7 @@ export default function LoginAuth0() {
       <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
         <Typography variant="h4">Sign in to PersonalBoard</Typography>
 
-        <Tooltip title={method} placement="left">
+        {/* <Tooltip title={method} placement="left">
           <Box
             component="img"
             alt={method}
@@ -35,7 +35,7 @@ export default function LoginAuth0() {
             sx={{ width: 32, height: 32, position: 'absolute', right: 0 }}
           />
         </Tooltip>
-      </Stack>
+      </Stack> */}
 
       <Button
         fullWidth

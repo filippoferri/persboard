@@ -28,7 +28,7 @@ import { MotionLazyContainer } from '../components/animate';
 // Check our docs
 // https://docs.minimals.cc/authentication/js-version
 
-import { AuthProvider } from '../auth/JwtContext';
+import { AuthProvider } from '../auth/FirebaseContext';
 
 // ----------------------------------------------------------------------
 
