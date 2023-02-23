@@ -18,6 +18,7 @@
     "re-build": "rm -rf .next .swc _static node_modules && yarn install && yarn build"
   },
   "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.21.0",
     "@emotion/cache": "^11.10.5",
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
