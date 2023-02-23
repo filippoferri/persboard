@@ -21,7 +21,7 @@ export const generateAdvice = async (dirs, question) => {
   }, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${OPENAI_API_KEY}`
+      'Authorization': `Bearer ${OPENAI_API_KEY}` 
     }
   });  
   return data.choices[0].text;

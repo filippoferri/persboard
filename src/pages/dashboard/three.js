@@ -6,6 +6,9 @@ import DashboardLayout from '../../layouts/dashboard';
 // components
 import { useSettingsContext } from '../../components/settings';
 
+'use client'
+import addData from "@/firebase/firestore/addData";
+
 // ----------------------------------------------------------------------
 
 PageThree.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
@@ -14,6 +17,18 @@ PageThree.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default function PageThree() {
   const { themeStretch } = useSettingsContext();
+
+  const handleForm = async () => {
+    const data = {
+      name: 'John snow',
+      house: 'Stark'
+    }
+    const { result, error } = await addData('users', 'user-id', data)
+
+    if (error) {
+      return console.log(error)
+    }
+  }
 
   return (
     <>
@@ -27,13 +42,7 @@ export default function PageThree() {
         </Typography>
 
         <Typography gutterBottom>
-          Curabitur turpis. Vestibulum facilisis, purus nec pulvinar iaculis, ligula mi congue nunc,
-          vitae euismod ligula urna in dolor. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit
-          id, lorem. Phasellus blandit leo ut odio. Vestibulum ante ipsum primis in faucibus orci
-          luctus et ultrices posuere cubilia Curae; Fusce id purus. Aliquam lorem ante, dapibus in,
-          viverra quis, feugiat a, tellus. In consectetuer turpis ut velit. Aenean posuere, tortor
-          sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus.
-          Vestibulum suscipit nulla quis orci. Nam commodo suscipit quam. Sed a libero.
+          <button>
         </Typography>
 
         <Typography>
