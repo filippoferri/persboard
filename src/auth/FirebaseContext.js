@@ -13,7 +13,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from 'firebase/auth';
-import { getFirestore, collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, getDoc, setDoc, Timestamp } from 'firebase/firestore';
 // config
 import { FIREBASE_API } from '../config-global';
 
@@ -130,12 +130,14 @@ export function AuthProvider({ children }) {
     await createUserWithEmailAndPassword(AUTH, email, password).then(async (res) => {
       const userRef = doc(collection(DB, 'users'), res.user?.uid);
 
+      // add user to firestore
       await setDoc(userRef, {
         uid: res.user?.uid,
         email,
         displayName: `${firstName} ${lastName}`,
         firstName: `${firstName}`,
         lastName: `${lastName}`,
+        timestamp: Timestamp.fromDate(new Date()),
       });
     });
   }, []);
