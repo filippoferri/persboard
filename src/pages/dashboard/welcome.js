@@ -19,6 +19,7 @@ import { UpgradeStorageIllustration } from '../../assets/illustrations';
 import {
   WelcomeIntro,
   WelcomeUpgrade,
+  WelcomeTopics
 } from '../../sections/@dashboard/general/welcome';
 
 // ----------------------------------------------------------------------
@@ -75,7 +76,7 @@ export default function PageWelcome() {
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             
-
+            <WelcomeTopics title="Folders" />
 
           </Grid>
         </Grid>

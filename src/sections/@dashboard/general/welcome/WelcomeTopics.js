@@ -1,14 +1,12 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-// @mui
+import NextLink from 'next/link';
+import Head from 'next/head';
 import { styled } from '@mui/material/styles';
 import { Typography, Stack } from '@mui/material';
-// utils
 import { bgGradient } from '../../../../utils/cssStyles';
-// sections
-// import { FilePanel } from '../../sections/@dashboard/general/welcome';
-
-
-// ----------------------------------------------------------------------
+import Iconify from '../../../../components/iconify';
+import { FilePanel } from '../../../../components/topics';
 
 WelcomeTopics.propTypes = {
   img: PropTypes.node,
@@ -19,14 +17,44 @@ WelcomeTopics.propTypes = {
 };
 
 export default function WelcomeTopics({ title, ...other }) {
+  const [folderName, setFolderName] = useState('');
+  const [openNewFolder, setOpenNewFolder] = useState(false);
+  const [openUploadFile, setOpenUploadFile] = useState(false);
+
+  const handleOpenNewFolder = () => {
+    setOpenNewFolder(true);
+  };
+
+  const handleCloseNewFolder = () => {
+    setOpenNewFolder(false);
+  };
+
+  const handleOpenUploadFile = () => {
+    setOpenUploadFile(true);
+  };
+
+  const handleCloseUploadFile = () => {
+    setOpenUploadFile(false);
+  };
+
+  const handleChangeFolderName = (event) => {
+    setFolderName(event.target.value);
+  };
+
+  const handleCreateNewFolder = () => {
+    handleCloseNewFolder();
+    setFolderName('');
+    console.log('CREATE NEW FOLDER', folderName);
+  };
+
   return (
     <>
-      {/* <FilePanel
-        title="Folders"
-        link={PATH_DASHBOARD.fileManager}
+      <FilePanel
+        title="Topics"
+        link=""
         onOpen={handleOpenNewFolder}
         sx={{ mt: 5 }}
-      /> */}
+      />
 
       {/* <FileNewFolderDialog open={openUploadFile} onClose={handleCloseUploadFile} /> */}
 
