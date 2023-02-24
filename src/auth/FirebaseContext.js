@@ -61,6 +61,8 @@ const GITHUB_PROVIDER = new GithubAuthProvider();
 
 const TWITTER_PROVIDER = new TwitterAuthProvider();
 
+// ----------------------------------------------------------------------
+// NOTE: Firebase Auth
 AuthProvider.propTypes = {
   children: PropTypes.node,
 };
@@ -176,3 +178,5 @@ export function AuthProvider({ children }) {
 
   return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;
 }
+
+// Path: src/auth/FirebaseContext.js

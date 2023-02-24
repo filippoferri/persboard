@@ -13,12 +13,13 @@ import { PATH_DASHBOARD } from '../../routes/paths';
 import DashboardLayout from '../../layouts/dashboard';
 // components
 import { useSettingsContext } from '../../components/settings';
-
-import {
-  AppWelcome,
-} from '../../sections/@dashboard/general/app';
-
+// assets
 import { SeoIllustration } from '../../assets/illustrations';
+import { UpgradeStorageIllustration } from '../../assets/illustrations';
+import {
+  WelcomeIntro,
+  WelcomeUpgrade,
+} from '../../sections/@dashboard/general/welcome';
 
 // ----------------------------------------------------------------------
 
@@ -33,30 +34,49 @@ export default function PageWelcome() {
   return (
     <>
       <Head>
-        <title> Projects | Personal Board</title>
+        <title> Welcome | Personal Board</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>
+
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
-            <AppWelcome
-              title={`Welcome back! \n ${user?.firstName}`}
-              description="If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything."
+            <WelcomeIntro
+              title={`Welcome back, \n ${user?.firstName}!`}
+              quote="If you cannot do great things, do small things in a great way."
+              author="Napoleon Hill"
               img={
                 <SeoIllustration
                   sx={{
                     p: 3,
-                    width: 360,
+                    width: 600,
                     margin: { xs: 'auto', md: 'inherit' },
                   }}
-                />
-              }
-              action={<Button variant="contained" href={PATH_DASHBOARD.projects.newProject}>Create New Project</Button>}
+              /> }
+              action={<Button size="large"  variant="contained" href={PATH_DASHBOARD.projects.newProject}>Get Started</Button>}
             />
           </Grid>
-
           <Grid item xs={12} md={4}>
+            <WelcomeUpgrade
+              description="Upgrade your plan and get more advices"
+              cta="Upgrade Plan"
+              img={
+                <UpgradeStorageIllustration
+                  sx={{
+                    p: 1,
+                    width: 260,
+                    margin: { xs: 'auto', md: 'inherit' },
+                  }}
+                /> }
+            />
+          </Grid>
+        </Grid>
+        
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={8}>
             
+
+
           </Grid>
         </Grid>
       </Container>

@@ -47,14 +47,15 @@ const StyledBg = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-AppWelcome.propTypes = {
+WelcomeIntro.propTypes = {
   img: PropTypes.node,
   action: PropTypes.node,
   title: PropTypes.string,
-  description: PropTypes.string,
+  quote: PropTypes.string,
+  author: PropTypes.string,
 };
 
-export default function AppWelcome({ title, description, action, img, ...other }) {
+export default function WelcomeIntro({ title, quote, author, action, img, ...other }) {
   return (
     <StyledRoot {...other}>
       <Stack
@@ -68,8 +69,19 @@ export default function AppWelcome({ title, description, action, img, ...other }
           textAlign: { xs: 'center', md: 'left' },
         }}
       >
-        <Typography paragraph variant="h4" sx={{ whiteSpace: 'pre-line' }}>
+        <Typography paragraph variant="h3" sx={{ whiteSpace: 'pre-line' }}>
           {title}
+        </Typography>
+
+        <Typography
+          variant="h4"
+          sx={{
+            opacity: 0.8,
+            mb: { xs: 1, xl: 1 },
+            width: { xs: '100%', xl: '80%'}
+          }}
+        >
+          "{quote}"
         </Typography>
 
         <Typography
@@ -77,12 +89,15 @@ export default function AppWelcome({ title, description, action, img, ...other }
           sx={{
             opacity: 0.8,
             mb: { xs: 3, xl: 5 },
+            width: { xs: '100%', xl: '80%'},
+            fontWeight: 'bold'
           }}
         >
-          {description}
+          {author}
         </Typography>
 
         {action && action}
+
       </Stack>
 
       {img && img}
