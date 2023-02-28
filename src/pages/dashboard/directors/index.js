@@ -64,6 +64,18 @@ export default function PageDirectors() {
         };
         }, [db, user]);
 
+    // Delete director
+    const handleDelete = async (directorId) => {
+        try {
+            const directorRef = doc(db, 'directors', directorId);
+            const myDirectorRef = doc(db, 'users', user.uid, 'myDirectors', directorId);
+            await deleteDoc(directorRef);
+            await deleteDoc(myDirectorRef);
+        } catch (error) {
+            console.error(error);
+        }
+        };
+
     return (  
     <>
         <Head>
@@ -111,7 +123,7 @@ export default function PageDirectors() {
                 </Card>
                 {myDirectors.length > 0 ? (
                     myDirectors.map((myDirector) => (
-                        <DirectorCard key={myDirector.id} director={myDirector} />
+                        <DirectorCard key={myDirector.id} director={myDirector} onDelete={() => handleDelete(myDirector.id)} />
                     ))
                 ) : (
                     <Grid
@@ -123,7 +135,6 @@ export default function PageDirectors() {
                         >
                         <Grid item xs={3} p={4}>
                             <Typography variant="body1" component="p" paragraph sx={{textAlign:"center"}}>Your Personal Directors created will appear here.</Typography>
-
                         </Grid>
                     </Grid>
                 )}
@@ -141,7 +152,7 @@ export default function PageDirectors() {
                 >
                 {directors.length > 0 ? (
                     directors.map((director) => (
-                        <DirectorCard key={director.id} director={director} />
+                        <DirectorCard key={director.id} director={director} onDelete={() => handleDelete(director.id)} />
                     ))
                 ) : (
                     <Typography variant="h5" component="h1" paragraph>Any AI Directors created will appear here.</Typography>

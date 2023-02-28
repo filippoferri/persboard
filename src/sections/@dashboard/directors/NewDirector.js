@@ -266,7 +266,7 @@ export default function NewDirector({ isEdit = false, currentUser }) {
           />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Card sx={{minHeight: 245, color: "#637381", border: "1px solid #F4F6F8", backgroundColor: "##F4F6F8", p: 4}}>
+          <Card sx={{minHeight: 270, color: "#637381", border: "1px solid #F4F6F8", backgroundColor: "##F4F6F8", p: 4}}>
             <Typography variant='body2'>
               {values.fullName && values.fullName}
             </Typography>

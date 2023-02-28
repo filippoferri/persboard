@@ -56,10 +56,8 @@ export default function PageNewProject() {
       }
     };
   
-    // const handleOpenModal = () => { null };
-
-    // const handleNewDirector = () => {
-    //  router.push({ pathname: PATH_DASHBOARD.directors.newDirector});};
+    const handleNewDirector = () => {
+     router.push({ pathname: PATH_DASHBOARD.directors.newDirector});};
 
     const theme = useTheme();
 
@@ -79,14 +77,14 @@ export default function PageNewProject() {
         });
       };
 
-      const app = initializeApp(FIREBASE_API);
-      const db = getFirestore(app);
-      
-      const { user } = useAuthContext();
-      console.log (user)
-  
-      const [directors, setDirectors] = useState([]);
-      const [myDirectors, setMyDirectors] = useState([]);
+    const app = initializeApp(FIREBASE_API);
+    const db = getFirestore(app);
+    
+    const { user } = useAuthContext();
+    console.log (user)
+
+    const [directors, setDirectors] = useState([]);
+    const [myDirectors, setMyDirectors] = useState([]);
 
     const [checkedDirectors, setCheckedDirectors] = useState(Array(myDirectors.length).fill(false));
 
@@ -120,6 +118,17 @@ export default function PageNewProject() {
           unsubscribeMyDirectors();
       };
       }, [db, user]);
+
+      // Delete director
+      const handleDeleteDirector = async (directorId) => {
+        try {
+          const myDirectorsRef = doc(collection(db, 'users', user.uid, 'myDirectors'), directorId);
+          await deleteDoc(myDirectorsRef);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      
     
 
     return (
@@ -147,7 +156,7 @@ export default function PageNewProject() {
                 size="large"
                 sx={{ mr: 1 }}
                 color="info"
-                //bonClick={handleNewDirector}
+                onClick={handleNewDirector}
                 >
                   Add New Director
                 </Button>
@@ -167,14 +176,16 @@ export default function PageNewProject() {
           {myDirectors.length > 0 && (
             myDirectors.map((director, index) => (
               <Grid sx={{ cursor: "pointer" }} item xs={12} sm={4} lg={3} key={director.id} onClick={() => handleSelectDirector(director.id)}>
-              <DirectorCard director={director} check={selectedDirectors.includes(director.id)} />
+              <DirectorCard director={director} check={selectedDirectors.includes(director.id)}   onDelete={() => handleDeleteDirector(director.id)}
+ />
             </Grid>
             ))
           )}
           {directors.length > 0 && (
             directors.map((director, index) => (
               <Grid sx={{ cursor: "pointer" }} item xs={12} sm={4} lg={3} key={director.id} onClick={() => handleSelectDirector(director.id)}>
-              <DirectorCard director={director} check={selectedDirectors.includes(director.id)} />
+              <DirectorCard director={director} check={selectedDirectors.includes(director.id)}   onDelete={() => handleDeleteDirector(director.id)}
+ />
             </Grid>
             
             ))

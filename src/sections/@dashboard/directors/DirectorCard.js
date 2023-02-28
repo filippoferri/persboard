@@ -24,6 +24,7 @@ const StyledOverlay = styled('div')(({ theme }) => ({
   height: '100%',
   position: 'absolute',
   backgroundColor: alpha(theme.palette.grey[900], 0.64),
+  onDelete: PropTypes.func.isRequired, // new prop
 }));
 
 // ----------------------------------------------------------------------
@@ -33,7 +34,7 @@ DirectorCard.propTypes = {
   check: PropTypes.bool,
 };
 
-export function DirectorCard({director, check }) {
+export function DirectorCard({director, check, onDelete }) {
 
   const [openDetails, setOpenDetails] = useState(false);
 
@@ -50,6 +51,11 @@ export function DirectorCard({director, check }) {
   const handleFavorite = () => {
     setFavorited(!favorited);
   };
+
+  const handleDelete = () => {
+    handleCloseDetails();
+    onDelete();
+  }
 
   const dirAvatar = director.avatar ? director.avatar : 'https://res.cloudinary.com/ddtdvms3g/image/upload/v1677442263/avatar_14_exfcsg.jpg';
 
@@ -167,10 +173,7 @@ export function DirectorCard({director, check }) {
         onFavorite={handleFavorite}
         open={openDetails}
         onClose={handleCloseDetails}
-        onDelete={() => {
-          handleCloseDetails();
-          onDelete();
-        }}
+        onDelete={handleDelete} // pass the function to handle delete action
       />
     </>
   );
