@@ -1,0 +1,65 @@
+// title: useFirestore 
+import { useState, useEffect } from 'react';
+import { getFirestore, collection, doc, Timestamp } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+import {FIREBASE_API} from '../config-global';
+
+// initialize firebase app
+const app = initializeApp(FIREBASE_API);
+// Export firestore database
+// It will be imported into your react app whenever it is needed
+const db = getFirestore(app);
+console.log('db: ', db);
+
+const useFirestore = (collection) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // useEffect(() => {
+
+  //   setLoading(true);
+  //   const unsubscribe = db.collection(collection).onSnapshot((snapshot) => {
+  //     // give the error:
+  //     // TypeError: db.collection is not a function
+  //     const documents = snapshot.docs.map((doc) => ({
+  //       id: doc.id,
+  //       ...doc.data(),
+  //     }));
+  //     setData(documents);
+  //     setLoading(false);
+  //   });
+
+  //   return unsubscribe;
+  // }, [collection]);
+
+  const addData = async (collection, document, callback) => {
+    try {
+      await db.collection("users").collection(collection).add(document);
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
+  };
+
+  // const updateData = async (id, document) => {
+  //   try {
+  //     await db.collection(collection).doc(id).update(document);
+  //   } catch (error) {
+  //     console.error('Error updating document: ', error);
+  //   }
+  // };
+
+  // const deleteData = async (id) => {
+  //   try {
+  //     await db.collection(collection).doc(id).delete();
+  //   } catch (error) {
+  //     console.error('Error deleting document: ', error);
+  //   }
+  // };
+
+  return { data, loading, addData };
+  };
+
+export default useFirestore;
+
+
+// Path: src/firestore/useFirestore

@@ -69,7 +69,7 @@ AuthProvider.propTypes = {
 
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  
   const initialize = useCallback(() => {
     try {
       onAuthStateChanged(AUTH, async (user) => {

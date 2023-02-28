@@ -76,7 +76,7 @@ export default function PageWelcome() {
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             
-            <WelcomeTopics title="Folders" />
+            <WelcomeTopics title="Topics" />
 
           </Grid>
         </Grid>
