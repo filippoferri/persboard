@@ -26,6 +26,7 @@ const navConfig = [
     subheader: '',
     items: [
       { title: 'Welcome', path: PATH_DASHBOARD.welcome, icon: ICONS.projects },
+      { title: 'AI Directors', path: PATH_DASHBOARD.directors.root, icon: ICONS.boards },
       // { title: 'Boards', path: PATH_DASHBOARD.boards, icon: ICONS.boards },
       // { title: 'Inspiration', path: PATH_DASHBOARD.inspiration, icon: ICONS.inspiration },
       // { title: 'One', path: PATH_DASHBOARD.one, icon: ICONS.dashboard },

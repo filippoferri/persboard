@@ -30,6 +30,10 @@ export const PATH_DASHBOARD = {
     question: path(ROOTS_DASHBOARD, '/projects/question'),
     advice: path(ROOTS_DASHBOARD, '/projects/advice'),
   },
+  directors: {
+    root: path(ROOTS_DASHBOARD, '/directors'),
+    newDirector: path(ROOTS_DASHBOARD, '/directors/new'),
+  },
   boards: path(ROOTS_DASHBOARD, '/boards'),
   inspiration: path(ROOTS_DASHBOARD, '/inspiration'),
   one: path(ROOTS_DASHBOARD, '/one'),

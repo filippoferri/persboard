@@ -83,7 +83,7 @@ export default function WelcomeTopics({ title, ...other }) {
       console.error('Error deleting folder:', error);
     }
   };
-
+  // Get folders
   useEffect(() => {
     const foldersRef = collection(db, 'users', user && user.uid, 'folders');
     const unsubscribe = onSnapshot(foldersRef, (snapshot) => {
@@ -108,19 +108,25 @@ export default function WelcomeTopics({ title, ...other }) {
         onChangeFolderName={(event) => handleChangeFolderName(event, folderId)}
         onCreate={handleCreateNewFolder}
         onUpdate={handleUpdateFolderName}
-    />
+      />
 
       <Grid container>
         <Stack direction="row" spacing={3} sx={{ pb: 3 }}>
-          {folders.map((folder) => (
-            <FileFolderCard 
-              key={folder.id}
-              folder={folder}
-              sx={{ minWidth: 222 }} 
-              selected={false}
-              onDelete={() => handleDeleteItem(folder.id)}
-            />
-          ))}
+        {folders.length > 0 ? (
+          <Stack direction="row" spacing={3} sx={{ pb: 3 }}>
+            {folders.map((folder) => (
+              <FileFolderCard 
+                key={folder.id}
+                folder={folder}
+                sx={{ minWidth: 222 }} 
+                selected={false}
+                onDelete={() => handleDeleteItem(folder.id)}
+              />
+            ))}
+          </Stack>
+            ) : (
+              <Typography variant="body1" sx={{ textAlign: 'center', color: '#919EAB'}}>You don't have any topics yet.</Typography>
+        )}
         </Stack>
       </Grid>
     </>

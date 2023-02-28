@@ -43,9 +43,9 @@ export default function FilePanel({
               width: 24,
               height: 24,
               color: 'common.white',
-              bgcolor: 'success.main',
+              bgcolor: '#3366ff',
               '&:hover': {
-                bgcolor: 'success.main',
+                bgcolor: '#1939B7',
               },
             }}
           >

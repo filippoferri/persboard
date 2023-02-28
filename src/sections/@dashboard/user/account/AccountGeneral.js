@@ -112,13 +112,10 @@ export default function AccountGeneral() {
               }}
             >
               <RHFTextField name="firstName" label="First Name" disabled />
-
               <RHFTextField name="lastName" label="Last Name" disabled />
-              </Box>
-              <Box sx={{ mb: 4 }}>
-
+            </Box>
+            <Box sx={{ mb: 4 }}>
               <RHFTextField fullWidth name="email" label="Email" disabled />
-
             </Box>
 
             <Divider sx={{ borderStyle: 'dashed' }} />

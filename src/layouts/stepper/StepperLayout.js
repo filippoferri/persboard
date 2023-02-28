@@ -7,6 +7,8 @@ import dynamic from 'next/dynamic';
 import { Stack, Container } from '@mui/material';
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop';
+// auth
+import AuthGuard from '../../auth/AuthGuard';
 // config
 import { HEADER } from '../../config-global';
 //
@@ -24,6 +26,7 @@ export default function StepperLayout({ children, step }) {
 
   return (
     <>
+    <AuthGuard> 
       <Header isOffset={isOffset} step={step} />
 
       <Container component="main">
@@ -37,7 +40,8 @@ export default function StepperLayout({ children, step }) {
             return React.cloneElement(child); // Pass step prop to children
           })}
         </Stack>
-      </Container>
+        </Container>
+      </AuthGuard>
     </>
   );
 }

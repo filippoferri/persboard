@@ -14,7 +14,7 @@ import FileNewFolderDialog from './FileNewFolderDialog';
 // ----------------------------------------------------------------------
 
 FileFolderCard.propTypes = {
-  folder: PropTypes.string,
+  folder: PropTypes.object,
   selected: PropTypes.bool,
   onSelect: PropTypes.func,
   onDelete: PropTypes.func,
