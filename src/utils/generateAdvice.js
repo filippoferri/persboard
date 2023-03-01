@@ -2,6 +2,11 @@ import axiosInstance from './axiosOpenai';
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
+type Data = {
+  result?: string | undefined;
+  error?: string;
+};
+
 export const generateAdvice = async (dirs, question) => {
 
   const advice = `Check this array ${dirs}$.
@@ -14,10 +19,10 @@ export const generateAdvice = async (dirs, question) => {
 
   const { data } = await axiosInstance.post(`/engines/text-davinci-003/completions`, {
     prompt: advice,
-    max_tokens: 1000,
+    max_tokens: 2048,
     n: 1,
     stop: null,
-    temperature: 0.5
+    temperature: 0.8
   }, {
     headers: {
       'Content-Type': 'application/json',
