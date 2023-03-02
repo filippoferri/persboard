@@ -95,14 +95,13 @@ export default function Advice() {
         console.log("User is not logged in or user ID is undefined.");
         return;
       }
-  
-      const boardRoomRef = collection(db, "users", user && user.uid, "boardRooms");
+      const boardRoomRef = collection(db, "users", user && user.uid, "myBoardrooms");
       const docRef = await setDoc(doc(boardRoomRef), {
         question: question,
         directors: decodedDirs,
         discussion: discussion
       });
-      console.log("Document written with ID: ", docRef.id);
+      console.log("Document written with ID: ", docRef);
       setSaved(true);
     } catch (e) {
       console.error("Error adding document: ", e);
