@@ -34,6 +34,7 @@ FileDetailsDrawer.propTypes = {
   onDelete: PropTypes.func,
   favorited: PropTypes.bool,
   onFavorite: PropTypes.func,
+  boardroom: PropTypes.bool,
 };
 
 export default function FileDetailsDrawer({
@@ -44,10 +45,11 @@ export default function FileDetailsDrawer({
     onCopyLink,
     onClose,
     onDelete,
+    boardroom,
     ...other
   }) {
 
-  const dirAvatar = item.avatar ? item.avatar : 'https://res.cloudinary.com/ddtdvms3g/image/upload/v1677442263/avatar_14_exfcsg.jpg';
+  const dirAvatar = item && item.avatar ? item.avatar : 'https://res.cloudinary.com/ddtdvms3g/image/upload/v1677442263/avatar_14_exfcsg.jpg';
 
   const QUALITY_DESCRIPTIONS = {
     Passion: 'I have a deep interest in life and being motivated to work towards personal success and fulfillment.',
@@ -141,8 +143,8 @@ export default function FileDetailsDrawer({
         </Scrollbar>
 
 
-        {item.type !== 'Premium' && (
-          <Box sx={{ p: 2.5 }}>
+        {item.type === 'Personal' && !boardroom && (      
+        <Box sx={{ p: 2.5 }}>
             <Button
               fullWidth
               variant="soft"

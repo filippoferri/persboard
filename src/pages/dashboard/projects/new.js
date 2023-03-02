@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 // @mui
 import { alpha, useTheme } from '@mui/material/styles';
-import { Container, Grid, Button, Stack, Box, Typography, CardActionArea, Paper } from '@mui/material';
+import { Container, Grid, Button, Stack, Box, Typography, CardActionArea } from '@mui/material';
 // layouts
 import StepperLayout from '../../../layouts/stepper';
 // routes
@@ -55,33 +55,31 @@ export default function PageNewProject() {
         setSelectedDirectors([...selectedDirectors, directorId]);
       }
     };
-  
+
     const handleNewDirector = () => {
-     router.push({ pathname: PATH_DASHBOARD.directors.newDirector});};
+    router.push({ pathname: PATH_DASHBOARD.directors.newDirector});};
 
     const theme = useTheme();
 
     const handleContinue = () => {
-        const directorDetails = selectedDirectors.map(director => {
-          return {
-            id: director.id,
-            fullName: director.fullName,
-            image: director.imageUrl,
-            type: director.type
-          };
-        });
-        const encodedDetails = btoa(JSON.stringify(directorDetails));
-        router.push({
-          pathname: PATH_DASHBOARD.projects.question,
-          query: { d: encodedDetails },
-        });
-      };
-
+      const selectedDetails = [...directors, ...myDirectors].filter((director) =>
+      selectedDirectors.includes(director.id)
+      ).map((director) => ({
+        id: director.id,
+        fullName: director.fullName,
+        role: director.role,
+      }));    
+      const encodedDetails = btoa(JSON.stringify(selectedDetails));
+      router.push({
+        pathname: PATH_DASHBOARD.projects.question,
+        query: { d: encodedDetails },
+      });
+    };
+    
     const app = initializeApp(FIREBASE_API);
     const db = getFirestore(app);
     
     const { user } = useAuthContext();
-    console.log (user)
 
     const [directors, setDirectors] = useState([]);
     const [myDirectors, setMyDirectors] = useState([]);
@@ -119,18 +117,16 @@ export default function PageNewProject() {
       };
       }, [db, user]);
 
-      // Delete director
-      const handleDeleteDirector = async (directorId) => {
-        try {
-          const myDirectorsRef = doc(collection(db, 'users', user.uid, 'myDirectors'), directorId);
-          await deleteDoc(myDirectorsRef);
-        } catch (error) {
-          console.log(error);
-        }
-      };
+    // Delete director
+    const handleDeleteDirector = async (directorId) => {
+      try {
+        const myDirectorsRef = doc(collection(db, 'users', user.uid, 'myDirectors'), directorId);
+        await deleteDoc(myDirectorsRef);
+      } catch (error) {
+        console.log(error);
+      }
+    };
       
-    
-
     return (
       <>
         <Head>
@@ -173,21 +169,26 @@ export default function PageNewProject() {
           </Stack>
     
           <Grid container spacing={3} sx={{flexDirection: 'row'}}>
-          {myDirectors.length > 0 && (
-            myDirectors.map((director, index) => (
-              <Grid sx={{ cursor: "pointer" }} item xs={12} sm={4} lg={3} key={director.id} onClick={() => handleSelectDirector(director.id)}>
-              <DirectorCard director={director} check={selectedDirectors.includes(director.id)}   onDelete={() => handleDeleteDirector(director.id)}
- />
+            {myDirectors.length > 0 && (
+              myDirectors.map((myDirector, index) => (
+              <Grid sx={{ cursor: "pointer" }} item xs={12} sm={4} lg={3} key={myDirector.id} onClick={() => handleSelectDirector(myDirector.id)}>
+                <DirectorCard 
+                  director={myDirector} 
+                  check={selectedDirectors.includes(myDirector.id)}   
+                  onDelete={() => handleDeleteDirector(myDirector.id)}
+                />
             </Grid>
             ))
           )}
-          {directors.length > 0 && (
-            directors.map((director, index) => (
+            {directors.length > 0 && (
+              directors.map((director, index) => (
               <Grid sx={{ cursor: "pointer" }} item xs={12} sm={4} lg={3} key={director.id} onClick={() => handleSelectDirector(director.id)}>
-              <DirectorCard director={director} check={selectedDirectors.includes(director.id)}   onDelete={() => handleDeleteDirector(director.id)}
- />
+                <DirectorCard 
+                  director={director} 
+                  check={selectedDirectors.includes(director.id)}   
+                  onDelete={() => handleDeleteDirector(director.id)}
+                />
             </Grid>
-            
             ))
           )}
           </Grid>

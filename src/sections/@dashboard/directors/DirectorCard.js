@@ -73,7 +73,6 @@ export function DirectorCard({director, check, onDelete }) {
           backgroundColor: bgColor,
           color: textColor,
         }}
-        elevation = {check ? 0 : 100}
       >
         <Box sx={{ position: 'relative', textAlign: "center" }}>
       

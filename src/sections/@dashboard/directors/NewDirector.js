@@ -45,12 +45,12 @@ export default function NewDirector({ isEdit = false, currentUser }) {
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
-  // const UpdateDirectorSchema = Yup.object().shape({
-  //   fullName: Yup.string().required('Name is required'),
-  //   role: Yup.string().required('Role is required'),
-  //   area: Yup.string().required('Area is required'),
-  //   quality: Yup.string().required('Quality is required'),
-  // });
+  const UpdateDirectorSchema = Yup.object().shape({
+    fullName: Yup.string().required('Name is required'),
+    role: Yup.string().required('Role is required'),
+    area: Yup.string().required('Area is required'),
+    quality: Yup.string().required('Quality is required'),
+  });
 
   const defaultValues = {
     fullName: 'John Doe',
@@ -227,8 +227,6 @@ export default function NewDirector({ isEdit = false, currentUser }) {
       dateEdit: Timestamp.fromDate(new Date()),
     };
 
-    console.log('Data:', data);
-
     try {
       // const directorRef = doc(collection(db, 'directors'), uniqueDirectoryId);
       const directorRef = doc(collection(db, 'users', user && user.uid, 'myDirectors'));
@@ -265,8 +263,8 @@ export default function NewDirector({ isEdit = false, currentUser }) {
             }}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Card sx={{minHeight: 270, color: "#637381", border: "1px solid #F4F6F8", backgroundColor: "##F4F6F8", p: 4}}>
+        <Grid item xs={12} md={4} sx={{ backgroundColor: "#F4F6F8", minHeight: 270, borderRadius: 2 }}>
+          <Box sx={{color: "#637381", p: "8px 16px 32px 16px "}}>
             <Typography variant='body2'>
               {values.fullName && values.fullName}
             </Typography>
@@ -279,7 +277,7 @@ export default function NewDirector({ isEdit = false, currentUser }) {
             <Typography variant='body' component="p">
               {values.area && values.quality && `${AREA_DESCRIPTIONS[values.area]}, ${QUALITY_DESCRIPTIONS[values.quality]}`}
             </Typography>
-          </Card>
+          </Box>
         </Grid>
         <Grid item xs={12} md={8}>
           <Card sx={{ p: 3 }}>

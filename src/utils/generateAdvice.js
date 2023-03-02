@@ -2,32 +2,71 @@ import axiosInstance from './axiosOpenai';
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-type Data = {
-  result?: string | undefined;
-  error?: string;
+export const generateAdvice = async (advisoryDirectors, question) => {
+  try {
+    const prompts = advisoryDirectors.map((advisoryDirector) => {
+      return `Act as ${advisoryDirector.fullName}, an expert ${advisoryDirector.role}, and talk in first person. Reply to ${question}, considering that your key quality is ${advisoryDirector.quality} and your expertise area is ${advisoryDirector.area}. Start the advice in different ways with either "My advice is...", either "I think...", either "I would suggest to" either similar. Acting as ${advisoryDirector.fullName}, when available, close sharing your personal famous phrase. Make the advice short.`;
+    });
+
+    const { data } = await axiosInstance.post(`/engines/text-davinci-003/completions`, {
+      prompt: prompts,
+      max_tokens: 10,
+      n: 1,
+      temperature: 0.5
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${OPENAI_API_KEY}` 
+      }
+    });  
+    
+    if (data?.choices) {
+      return data.choices.map((choice, index) => {
+        if (choice?.text) {
+          return {
+            fullName: advisoryDirectors[index].fullName,
+            role: advisoryDirectors[index].role,
+            text: choice.text,
+          };
+        } else {
+          throw new Error("No response found from API");
+        }
+      });
+    } else {
+      throw new Error("No response found from API");
+    }
+  } catch (error) {
+    console.log("Error while generating advice: ", error);
+    return advisoryDirectors.map((advisoryDirector) => ({ fullName: advisoryDirector.fullName, text: 'Something went wrong!! ☹️' }));
+  }
 };
 
-export const generateAdvice = async (dirs, question) => {
 
-  const advice = `Check this array ${dirs}$.
-  Take each name of the array and act exactly like those persons, replying to this question: ${question}$ and giving advice using I and me, keeping in mind Advocacy, Social Support, Career Advice, Expertise, Developmental Feedback, Network. 
 
-  Start each advice with: "My advice is...", "I think...", "I would suggest to" and similar, 
-  and add your personal quote correlated to the question. 
-  
-  Eventually, for each advice, create this <div style="background-color:#d2e9fc;padding:1rem;border-radius:8px;margin-bottom:1rem"></Box>, including the full name into this <div style="font-weight:bold"></div>.`;
 
-  const { data } = await axiosInstance.post(`/engines/text-davinci-003/completions`, {
-    prompt: advice,
-    max_tokens: 2048,
-    n: 1,
-    stop: null,
-    temperature: 0.8
-  }, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${OPENAI_API_KEY}` 
-    }
-  });  
-  return data.choices[0].text;
-}
+// export const generateAdvice = async (advisoryDirector, question) => {
+//   try {
+//     const advice = `Act as ${advisoryDirector.fullName}$, an expert ${advisoryDirector.role}$ and reply to: ${question}$`;
+
+//     const { data } = await axiosInstance.post(`/engines/text-davinci-003/completions`, {
+//       prompt: advice,
+//       max_tokens: 100,
+//       n: 1,
+//       temperature: 0.5
+//     }, {
+//       headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization': `Bearer ${OPENAI_API_KEY}` 
+//       }
+//     });  
+    
+//     if (data?.choices?.[0]?.text) {
+//       return data.choices[0].text;
+//     } else {
+//       throw new Error("No response found from API");
+//     }
+//   } catch (error) {
+//     console.log("Error while generating advice: ", error);
+//     return 'Something went wrong!! ☹️';
+//   }
+// }
