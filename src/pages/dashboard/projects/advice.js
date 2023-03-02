@@ -58,46 +58,55 @@ export default function Advice() {
     setQuestion(decodedQuestion);
   }, [decodedQuestion]);
 
+  const data = [
+    {
+      id: '1',
+      fullName: 'John Doe',
+      text: 'I think it is a great idea. I would love to be a part of it.',
+    }
+  ];
+
+
   // display the discussion
   const [loading, setLoading] = useState(false); 
   const [discussion, setDiscussion] = useState('');
   const prompts = [];
 
-  // Get the discussion
   useEffect(() => {
     async function generateDiscussion() {
       if (loading) {
         return;
       }
       setLoading(true);
-      const prompt = await generateAdvice(decodedDirs, question);
-      setDiscussion(prompt);
+      //const prompt = await generateAdvice(decodedDirs, question);
+      //setDiscussion(prompt);
+      setDiscussion(data);
     }
     generateDiscussion();
     setLoading(false);
     setDiscussionReady(true);
+    handleSave();
   }, []);
 
   // save the discussion
   const handleSave = async () => {
-    // try {
-    //   if (!user || !user.uid) {
-    //     console.log("User is not logged in or user ID is undefined.");
-    //     return;
-    //   }
+    try {
+      if (!user || !user.uid) {
+        console.log("User is not logged in or user ID is undefined.");
+        return;
+      }
   
-    //   const boardRoomRef = collection(db, "users", user && user.uid, "boardRooms");
-    //   const docRef = await setDoc(doc(boardRoomRef), {
-    //     question: question,
-    //     directors: decodedDirs,
-    //     discussion: discussion
-    //   });
-    //   console.log("Document written with ID: ", docRef.id);
-    //   setSaved(true);
-    //   push(PATH_DASHBOARD.root);
-    // } catch (e) {
-    //   console.error("Error adding document: ", e);
-    // }
+      const boardRoomRef = collection(db, "users", user && user.uid, "boardRooms");
+      const docRef = await setDoc(doc(boardRoomRef), {
+        question: question,
+        directors: decodedDirs,
+        discussion: discussion
+      });
+      console.log("Document written with ID: ", docRef.id);
+      setSaved(true);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   };
   
   const directorIds = decodedDirs.map((director) => director.id);
@@ -126,9 +135,10 @@ export default function Advice() {
 						</Typography>
           </Box>
           <Box sx={{ flexShrink: 0 }}>
-            <Button variant="contained" size="large" onClick={handleSave} disabled={!discussionReady}>
+
+            {/* <Button variant="contained" size="large" onClick={handleSave} disabled={!discussionReady}>
               Save
-            </Button>
+            </Button> */}
           </Box>
         </Stack>
         <Paper variant="outlined" sx={{ flexGrow: 1 }}>

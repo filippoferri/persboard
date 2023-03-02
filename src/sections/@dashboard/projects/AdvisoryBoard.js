@@ -28,7 +28,7 @@ export default function AdvisoryBoard({
     const { user } = useAuthContext();
     const [loadedDirectors, setLoadedDirectors] = useState([]);
     const [openDetails, setOpenDetails] = useState(false);
-    const [selectedDirector, setSelectedDirector] = useState(false);
+    const [selectedDirector, setSelectedDirector] = useState({});
 
     const handleOpenDetails = (director) => {
         setSelectedDirector(director);
@@ -60,7 +60,6 @@ export default function AdvisoryBoard({
         );
             
         setLoadedDirectors(loadedDirectors);
-        console.log(loadedDirectors);
     }
     
 
