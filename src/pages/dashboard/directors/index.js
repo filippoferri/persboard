@@ -1,7 +1,7 @@
 // next
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { CustomBreadcrumbs, Box, Grid, Card, Avatar, Divider, Container, Typography, colors, IconButton } from '@mui/material';
+import { CustomBreadcrumbs, Box, Grid, Card, Stack, Avatar, Divider, Container, Typography, colors, IconButton } from '@mui/material';
 // Router
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -82,11 +82,21 @@ export default function PageDirectors() {
             <title> AI Directors | Personal Board</title>
         </Head>
 
-        <Container maxWidth={themeStretch ? false : 'xl'} sx={{ mb: 6 }}>
-            <Typography variant="h3" component="h1" paragraph>
-                Personal AI Directors
-            </Typography>
-
+        <Container maxWidth={themeStretch ? false : 'lg'} sx={{mb: 6}}>
+            <Stack
+            direction="row"
+            alignItems="center"
+            sx={{
+                mt: 2,
+                mb: 4,
+            }}
+            >
+            <Box sx={{ flexGrow: 1, pl: 2 }}>
+                <Typography variant="h4" gutterBottom>
+                    Personal Directors
+                </Typography>
+            </Box>
+            </Stack>
             <Box
                 gap={3}
                 display="grid"
@@ -123,7 +133,7 @@ export default function PageDirectors() {
                 </Card>
                 {myDirectors.length > 0 ? (
                     myDirectors.map((myDirector) => (
-                        <DirectorCard key={myDirector.id} director={myDirector} onDelete={() => handleDelete(myDirector.id)} />
+                        <DirectorCard key={myDirector.id} director={myDirector} />
                     ))
                 ) : (
                     <Grid
@@ -140,7 +150,7 @@ export default function PageDirectors() {
                 )}
             </Box>
         </Container>
-        <Container maxWidth={themeStretch ? false : 'xl'}>
+        <Container maxWidth={themeStretch ? false : 'lg'}>
             <Box
                 gap={3}
                 display="grid"
@@ -152,7 +162,7 @@ export default function PageDirectors() {
                 >
                 {directors.length > 0 ? (
                     directors.map((director) => (
-                        <DirectorCard key={director.id} director={director} onDelete={() => handleDelete(director.id)} />
+                        <DirectorCard key={director.id} director={director} />
                     ))
                 ) : (
                     <Typography variant="h5" component="h1" paragraph>Any AI Directors created will appear here.</Typography>

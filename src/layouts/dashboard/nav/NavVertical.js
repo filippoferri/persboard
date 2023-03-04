@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 // next
 import { useRouter } from 'next/router';
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // @mui
 import { Box, Stack, Drawer } from '@mui/material';
 // hooks
@@ -18,6 +20,8 @@ import NavDocs from './NavDocs';
 import NavAccount from './NavAccount';
 import NavCreateNew from './NavCreateNew';
 import NavToggleButton from './NavToggleButton';
+import NavNewBoardroom from './NavNewBoardroom';
+
 
 // ----------------------------------------------------------------------
 
@@ -37,6 +41,9 @@ export default function NavVertical({ openNav, onCloseNav }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  const handleClick = () => {
+    router.push({  pathname: PATH_DASHBOARD.projects.newProject });};
 
   const renderContent = (
     <Scrollbar
@@ -60,9 +67,11 @@ export default function NavVertical({ openNav, onCloseNav }) {
       >
         <Logo />
 
+        {/* <NavNewBoardroom /> */}
+
       </Stack>
 
-      <NavSectionVertical data={navConfig} sx={{pt: 3}} />
+      <NavSectionVertical data={navConfig} sx={{pt: 6}} />
 
       <Box sx={{ flexGrow: 1 }} />
 

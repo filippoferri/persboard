@@ -283,8 +283,8 @@ export default function NewDirector({ isEdit = false, currentUser }) {
           <Card sx={{ p: 3 }}>
             <Box sx={{ mb: 4 }}>
               <RHFTextField select name="role" helperText="Role Director">
-                {roles.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
+                {roles.map((option, index) => (
+                  <MenuItem key={index} value={option.value}>
                     {option.label}
                   </MenuItem>
                 ))}
@@ -304,15 +304,15 @@ export default function NewDirector({ isEdit = false, currentUser }) {
               }}
             >
               <RHFTextField select name="area" helperText="Area Expertise">
-                {areas.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
+                {areas.map((option, index) => (
+                  <MenuItem key={index} value={option.value}>
                     {option.label}
                   </MenuItem>
                 ))}
               </RHFTextField>
               <RHFTextField select name="quality" helperText="Key Quality">
-                {qualities.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
+                {qualities.map((option, index) => (
+                  <MenuItem key={index} value={option.value}>
                     {option.label}
                   </MenuItem>
                 ))}

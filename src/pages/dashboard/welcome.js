@@ -1,7 +1,10 @@
 // next
 import Head from 'next/head';
 //import { Container, Typography } from '@mui/material';
-import { Container, Grid, Stack, Button } from '@mui/material';
+import React, { useState } from 'react';
+
+import { Container, Grid, Box, Stack, Button } from '@mui/material';
+import { m } from "framer-motion";
 
 // auth
 import { useAuthContext } from '../../auth/useAuthContext';
@@ -21,6 +24,11 @@ import {
   WelcomeUpgrade,
   WelcomeTopics
 } from '../../sections/@dashboard/general/welcome';
+import WelcomeQuestion from '../../sections/@dashboard/general/welcome/question';
+import WelcomeBoard from '../../sections/@dashboard/general/welcome/board';
+import WelcomeBoardroom from '../../sections/@dashboard/general/welcome/boardroom';
+//
+import { varFade } from '../../components/animate/variants/';
 
 // ----------------------------------------------------------------------
 
@@ -28,9 +36,42 @@ PageWelcome.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 // ----------------------------------------------------------------------
 
+const variants = {
+  hidden: {
+    opacity: 0,
+    y: 50,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 80,
+      damping: 20,
+    },
+  },
+};
+
+// ----------------------------------------------------------------------
+
 export default function PageWelcome() {
   const { themeStretch } = useSettingsContext();
-  const { user } = useAuthContext();
+
+  const [step, setStep] = useState(1);
+  const [data, setData] = useState({});
+
+  const handleNextStep = (stepData) => {
+    setData((prevData) => ({ ...prevData, ...stepData }));
+    setStep((prevStep) => prevStep + 1);
+  };
+
+  const handlePrevStep = () => {
+    setStep((prevStep) => prevStep - 1);
+  };
+
+  const handleData = (stepData) => {
+    setData(stepData);
+  };
 
   return (
     <>
@@ -38,9 +79,34 @@ export default function PageWelcome() {
         <title> Welcome | Personal Board</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'xl'}>
+      <Container maxWidth={themeStretch ? false : 'lg'}>
 
-        <Grid container spacing={3}>
+        {step === 1 && <WelcomeQuestion onNextStep={handleNextStep} onData={handleData}  />}
+
+        <m.div
+        initial="hidden"
+        animate="visible"
+        variants={variants}
+      >
+        {step === 2 && (
+          <WelcomeBoard
+            dataFromPrevStep={data}
+            onNextStep={handleNextStep}
+            onPrevStep={handlePrevStep}
+          />
+        )}
+
+        {step === 3 && (
+          <WelcomeBoardroom
+            dataFromPrevSteps={data}
+            onPrevStep={handlePrevStep}
+          />
+        )}
+        </m.div>
+
+      </Container>
+
+      {/* <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <WelcomeIntro
               title={`Welcome back, \n ${user?.firstName}!`}
@@ -79,8 +145,7 @@ export default function PageWelcome() {
             <WelcomeTopics title="Topics" />
 
           </Grid>
-        </Grid>
-      </Container>
+        </Grid>*/}
     </>
   );
 }

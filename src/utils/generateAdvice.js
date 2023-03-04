@@ -10,9 +10,9 @@ export const generateAdvice = async (advisoryDirectors, question) => {
 
     const { data } = await axiosInstance.post(`/engines/text-davinci-003/completions`, {
       prompt: prompts,
-      max_tokens: 10,
+      max_tokens: 2000,
       n: 1,
-      temperature: 0.5
+      temperature: 0.8
     }, {
       headers: {
         'Content-Type': 'application/json',

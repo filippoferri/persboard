@@ -35,7 +35,10 @@ export const PATH_DASHBOARD = {
     newDirector: path(ROOTS_DASHBOARD, '/directors/new'),
   },
   boards: path(ROOTS_DASHBOARD, '/boards'),
-  inspiration: path(ROOTS_DASHBOARD, '/inspiration'),
+  advices: {
+    root: path(ROOTS_DASHBOARD, '/advices'),
+    boardroom: path(ROOTS_DASHBOARD, '/advices/boardroom'),
+  },
   one: path(ROOTS_DASHBOARD, '/one'),
   two: path(ROOTS_DASHBOARD, '/two'),
   three: path(ROOTS_DASHBOARD, '/three'),

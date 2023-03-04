@@ -141,6 +141,7 @@ export function AuthProvider({ children }) {
         lastName: `${lastName}`,
         dateAdd: Timestamp.fromDate(new Date()),
         tier: 'free',
+        credits: 5,
       });
     });
   }, []);

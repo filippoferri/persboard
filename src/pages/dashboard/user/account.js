@@ -11,9 +11,7 @@ import DashboardLayout from '../../../layouts/dashboard';
 import Iconify from '../../../components/iconify';
 import { useSettingsContext } from '../../../components/settings';
 // sections
-import {
-  AccountGeneral,
-} from '../../../sections/@dashboard/user/account';
+import { AccountGeneral } from '../../../sections/@dashboard/user/account';
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +25,7 @@ export default function UserAccountPage() {
   return (
     <>
       <Head>
-        <title>Account Settings | Pesronal Board</title>
+        <title>Account Settings | Personal Board</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
