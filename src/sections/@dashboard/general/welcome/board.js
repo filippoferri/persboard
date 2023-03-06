@@ -40,8 +40,7 @@ WelcomeBoard.propTypes = {
 	dataFromPrevStep: PropTypes.object,
 	onNextStep: PropTypes.func,
 	onPrevStep: PropTypes.func,
-
-	};
+};
 
 // ----------------------------------------------------------------------
 
@@ -54,13 +53,6 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep }) {
 		const handleSubmit = (data) => {
 			onNextStep(data);
 		};
-
-		const handleNextStep = (boardData) => {
-			// Do something with the board data, such as saving it to state or sending it to the server
-			console.log(boardData);
-		};
-
-		console.log('data from previous step', dataFromPrevStep);
 
 	return (
 
@@ -91,19 +83,20 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep }) {
 		<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
 			<Tabs value={value} onChange={handleChange} aria-label="tabs">
 				<Tab label="Create From Scratch" {...a11yProps(0)} />
+				<Tab label="From AI Directors" {...a11yProps(1)} />
 				{/* <Tab label="From Saved Boards" {...a11yProps(1)} /> */}
-				<Tab label="From AI Directors" {...a11yProps(2)} />
+
 			</Tabs>
 		</Box>
 		<TabPanel value={value} index={0}>
-			<BoardFromScratch onNextStep={handleNextStep} />
+			<BoardFromScratch onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
 		</TabPanel>
-		{/* <TabPanel value={value} index={1}>
-			No Board available yet (Coming Soon)	
-		</TabPanel> */}
-		<TabPanel value={value} index={2}>
+		<TabPanel value={value} index={1}>
 			item 2
 		</TabPanel>
+				{/* <TabPanel value={value} index={1}>
+			No Board available yet (Coming Soon)	
+		</TabPanel> */}
 
 	</>
 	);

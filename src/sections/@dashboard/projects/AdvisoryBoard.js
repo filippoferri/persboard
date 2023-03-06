@@ -40,6 +40,12 @@ export default function AdvisoryBoard({
     };
 
     async function fetchDirectors() {
+
+        if (!directors.id) {
+            setLoadedDirectors(directors);
+            return;
+        }
+
         const app = initializeApp(FIREBASE_API);
         const db = getFirestore(app);
     
@@ -70,9 +76,6 @@ export default function AdvisoryBoard({
 
     return (
         <>
-            <Box sx={{ display: 'flex', borderBottom: '1px solid #DFE3E8', height: '75px', alignItems: 'center', p: 2, fontWeight: 'bold', color: '#637381',bgcolor: '#f4f6f8'}}>
-                Advisory Board
-            </Box>
             <List sx={{ width: '100%' }}>
                 <List>
                 {loadedDirectors.map((director, index) => (
@@ -81,7 +84,11 @@ export default function AdvisoryBoard({
                         <ListItemAvatar>
                         <Avatar alt={director.fullName} src={director.avatar} />
                         </ListItemAvatar>
-                        <ListItemText primary={director.role} secondary={director.fullName} />
+                        <ListItemText
+                            primary={director.id ? director.role : director.fullName}
+                            secondary={director.id ? director.fullName: director.role}
+                        />
+
                     </ListItemButton>
                     </ListItem>
                 ))}

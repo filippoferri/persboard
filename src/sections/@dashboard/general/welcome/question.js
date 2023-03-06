@@ -43,14 +43,11 @@ WelcomeQuestion.propTypes = {
 
   };
 
-export default function WelcomeQuestion({ onNextStep }) {
+export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 		const { themeStretch } = useSettingsContext();
-		const router = useRouter();
-		const { d } = router.query;
 
 		const app = initializeApp(FIREBASE_API);
 		const db = getFirestore(app);
-		const { user } = useAuthContext();
 
 		const [text, setText] = useState('');
 		const [charCount, setCharCount] = useState(100);

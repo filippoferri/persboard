@@ -114,14 +114,15 @@ export default function FileDetailsDrawer({
               margin: 'auto',
             }}
           />
-
             <Typography variant="h6" sx={{ wordBreak: 'break-all', textAlign: 'center' }}>
               {item.role}
             </Typography>
-            <Divider sx={{ borderStyle: 'dashed' }} />
-            <Typography variant="body">
-              {item.desc}
-            </Typography>
+            {item.desc && (
+              <>
+                <Divider sx={{ borderStyle: 'dashed' }} />
+                <Typography variant="body">{item.desc}</Typography>
+              </>
+            )}
           </Stack>
 
           <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{mt:2, p: 2.5 }}>
