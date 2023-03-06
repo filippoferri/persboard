@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Stack, Box, Typography, Tabs, Tab, Button } from '@mui/material';
 
 import BoardFromScratch from './Welcomeboard/boardfromscratch';
+import BoardFromDirectors from './Welcomeboard/boardfromdirectors';
 
 // ----------------------------------------------------------------------
 
@@ -85,14 +86,13 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep }) {
 				<Tab label="Create From Scratch" {...a11yProps(0)} />
 				<Tab label="From AI Directors" {...a11yProps(1)} />
 				{/* <Tab label="From Saved Boards" {...a11yProps(1)} /> */}
-
 			</Tabs>
 		</Box>
 		<TabPanel value={value} index={0}>
 			<BoardFromScratch onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
 		</TabPanel>
 		<TabPanel value={value} index={1}>
-			item 2
+			<BoardFromDirectors onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
 		</TabPanel>
 				{/* <TabPanel value={value} index={1}>
 			No Board available yet (Coming Soon)	

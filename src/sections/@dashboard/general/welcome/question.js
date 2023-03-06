@@ -41,7 +41,7 @@ WelcomeQuestion.propTypes = {
 	onNextStep: PropTypes.func,
 	onPrevStep: PropTypes.func,
 
-  };
+};
 
 export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 		const { themeStretch } = useSettingsContext();

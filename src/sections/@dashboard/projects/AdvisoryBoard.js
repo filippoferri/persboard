@@ -41,7 +41,7 @@ export default function AdvisoryBoard({
 
     async function fetchDirectors() {
 
-        if (!directors.id) {
+        if (directors.fullName) {
             setLoadedDirectors(directors);
             return;
         }
@@ -85,8 +85,8 @@ export default function AdvisoryBoard({
                         <Avatar alt={director.fullName} src={director.avatar} />
                         </ListItemAvatar>
                         <ListItemText
-                            primary={director.id ? director.role : director.fullName}
-                            secondary={director.id ? director.fullName: director.role}
+                            primary={director.fullName ? director.role : director.fullName}
+                            secondary={director.fullName ? director.fullName: director.role}
                         />
 
                     </ListItemButton>
