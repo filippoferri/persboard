@@ -51,7 +51,7 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
     // fetch the directors
     async function fetchDirectors() {
 
-        if (!directors.id){
+        if (directors.some(director => director.fullName)) {
             setLoadedDirectors(directors);
             return;
         }

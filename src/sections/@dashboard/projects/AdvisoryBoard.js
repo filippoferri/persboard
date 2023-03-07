@@ -12,6 +12,8 @@ import {
 import { useAuthContext } from '../../../auth/useAuthContext';
 // sections
 import FileDetailsDrawer from '../../../sections/@dashboard/directors/DirectorDetailsDrawer';
+import { CustomAvatar } from '../../../components/custom-avatar';
+
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +32,7 @@ export default function AdvisoryBoard({
     const [openDetails, setOpenDetails] = useState(false);
     const [selectedDirector, setSelectedDirector] = useState({});
 
-    
+    console.log("directors", directors);
 
     const handleOpenDetails = (director) => {
         setSelectedDirector(director);
@@ -41,41 +43,6 @@ export default function AdvisoryBoard({
         setOpenDetails(false);
     };
 
-    // async function fetchDirectors() {
-
-    //     if (directors.fullName){
-    //         setLoadedDirectors(directors);
-    //         return;
-    //     }
-
-    //     const app = initializeApp(FIREBASE_API);
-    //     const db = getFirestore(app);
-    
-    //     const loadedDirectors = await Promise.all(
-    //         directors.map(async (directorId) => {
-    //             const directorDoc = await getDoc(doc(db, 'directors', directorId));
-    //             const myDirectorDoc = await getDoc(doc(db, "users", user && user.uid, "myDirectors", directorId));
-                
-    //             const directorData = directorDoc.data() || {};
-    //             const myDirectorData = myDirectorDoc.exists() ? myDirectorDoc.data() : {};
-                
-    //             return {
-    //                 id: directorDoc.id,
-    //                 ...directorData,
-    //                 ...myDirectorData
-    //             };
-    //         })
-    //     );
-            
-    //     setLoadedDirectors(loadedDirectors);
-    // }
-    
-
-    // useEffect(() => {
-    //     fetchDirectors();
-    // }, [directors]);
-    
-
     return (
         <>
             <List sx={{ width: '100%' }}>
@@ -84,7 +51,7 @@ export default function AdvisoryBoard({
                     <ListItem key={index} disablePadding>
                     <ListItemButton onClick={() => handleOpenDetails(director)}>
                         <ListItemAvatar>
-                        <Avatar alt={director.fullName} src={director.avatar} />
+                        <CustomAvatar src="" alt={director.fullName} name={director.fullName} />
                         </ListItemAvatar>
                         <ListItemText
                             primary={director.fullName ? director.role : director.fullName}

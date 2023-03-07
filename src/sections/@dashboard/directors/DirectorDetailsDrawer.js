@@ -24,6 +24,8 @@ import {Image} from '@mui/material';
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
 import Label from '../../../components/label';
+import { CustomAvatar } from '../../../components/custom-avatar';
+
 
 // ----------------------------------------------------------------------
 
@@ -105,7 +107,7 @@ export default function FileDetailsDrawer({
             sx={{ p: 4, bgcolor: 'background.neutral' }}
           >
 
-          <Avatar
+          {/* <Avatar
             alt={item.fullName}
             src={dirAvatar}
             sx={{
@@ -113,7 +115,18 @@ export default function FileDetailsDrawer({
               height: 150,
               margin: 'auto',
             }}
+          /> */}
+          <CustomAvatar 
+            src="" 
+            alt={item.fullName} 
+            name={item.fullName} 
+            sx={{
+              width: 150,
+              height: 150,
+              margin: 'auto',
+            }}
           />
+
             <Typography variant="h6" sx={{ wordBreak: 'break-all', textAlign: 'center' }}>
               {item.role}
             </Typography>

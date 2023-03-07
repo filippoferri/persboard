@@ -9,12 +9,12 @@ import { Badge, Avatar } from '@mui/material';
 const getCharAtName = (name) => name && name.charAt(0).toUpperCase();
 
 const getColorByName = (name) => {
-  if (['A', 'N', 'H', 'L', 'Q'].includes(getCharAtName(name))) return 'primary';
-  if (['F', 'G', 'T', 'I', 'J'].includes(getCharAtName(name))) return 'info';
-  if (['K', 'D', 'Y', 'B', 'O'].includes(getCharAtName(name))) return 'success';
-  if (['P', 'E', 'R', 'S', 'U'].includes(getCharAtName(name))) return 'warning';
-  if (['V', 'W', 'X', 'M', 'Z'].includes(getCharAtName(name))) return 'error';
-  return 'default';
+  if (['A', 'N', 'H', 'L', 'Q'].includes(getCharAtName(name))) return '#847EBA';
+  if (['F', 'G', 'T', 'I', 'J'].includes(getCharAtName(name))) return '#ECCB3F';
+  if (['K', 'D', 'Y', 'B', 'O'].includes(getCharAtName(name))) return '#87C450';
+  if (['P', 'E', 'R', 'S', 'U'].includes(getCharAtName(name))) return '#EC7D4F';
+  if (['V', 'W', 'X', 'M', 'Z'].includes(getCharAtName(name))) return '#005C80';
+  return '#6CF2FD';
 };
 
 // ----------------------------------------------------------------------
@@ -38,8 +38,8 @@ const CustomAvatar = forwardRef(({ color, name = '', BadgeProps, children, sx, .
       <Avatar
         ref={ref}
         sx={{
-          color: theme.palette[colr]?.contrastText,
-          backgroundColor: theme.palette[colr]?.main,
+          color: "white",
+          backgroundColor: colr,
           fontWeight: theme.typography.fontWeightMedium,
           ...sx,
         }}
