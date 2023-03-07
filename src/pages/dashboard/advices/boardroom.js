@@ -27,7 +27,7 @@ export default function BoardroomPage() {
     return (
     <>
         <Head>
-        <title>Boardroom | Personal Board</title>
+            <title>Boardroom | Personal Board</title>
         </Head>
 
         <Container maxWidth={themeStretch ? false : 'lg'}>

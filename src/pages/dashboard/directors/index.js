@@ -67,19 +67,17 @@ export default function PageDirectors() {
     // Delete director
     const handleDelete = async (directorId) => {
         try {
-            const directorRef = doc(db, 'directors', directorId);
             const myDirectorRef = doc(db, 'users', user.uid, 'myDirectors', directorId);
-            await deleteDoc(directorRef);
             await deleteDoc(myDirectorRef);
         } catch (error) {
             console.error(error);
         }
-        };
+    };
 
     return (  
     <>
         <Head>
-            <title> AI Directors | Personal Board</title>
+            <title>AI Directors | Personal Board</title>
         </Head>
 
         <Container maxWidth={themeStretch ? false : 'lg'} sx={{mb: 6}}>
@@ -93,7 +91,7 @@ export default function PageDirectors() {
             >
             <Box sx={{ flexGrow: 1, pl: 2 }}>
                 <Typography variant="h4" gutterBottom>
-                    Personal Directors
+                    AI Directors
                 </Typography>
             </Box>
             </Stack>
@@ -106,8 +104,23 @@ export default function PageDirectors() {
                     md: 'repeat(4, 1fr)',
                 }}
                 >            
-                <Card onClick={handleClick} sx={{ display: 'flex', textAlign: 'center', justifyContent: 'center', bgcolor: '#3366FF', color: 'white', cursor:'pointer' }}>
-                    <Box sx={{justifyContent: 'center', mt: '24%', fontWeight: 'bold'}}>
+                <Card 
+                    onClick={handleClick} 
+                    sx={{ 
+                        textAlign: 'center', 
+                        bgcolor: '#3366FF', 
+                        color: 'white', 
+                        cursor:'pointer'
+                        }}>
+                    <Box 
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: '100%',
+                            fontWeight: 'bold'
+                            }}>
                         
                         <IconButton
                             size="small"
@@ -127,13 +140,13 @@ export default function PageDirectors() {
                             <Iconify icon="eva:plus-fill" />
                         </IconButton>
                         <Typography variant="h5" paragraph>
-                            Add AI Director
+                            Add Your <br /> Personal Director
                         </Typography>
                     </Box>
                 </Card>
                 {myDirectors.length > 0 ? (
                     myDirectors.map((myDirector) => (
-                        <DirectorCard key={myDirector.id} director={myDirector} />
+                        <DirectorCard key={myDirector.id} director={myDirector} onDelete={() => handleDelete(myDirector.id)} />
                     ))
                 ) : (
                     <Grid
@@ -151,6 +164,12 @@ export default function PageDirectors() {
             </Box>
         </Container>
         <Container maxWidth={themeStretch ? false : 'lg'}>
+            <Box xs={12}>
+                <Typography variant="h5" sx={{ mb: 2, pl: 2}} >
+                    Premium Directors
+                </Typography>
+                <Divider sx={{ mb: 3 }} />
+            </Box>
             <Box
                 gap={3}
                 display="grid"
@@ -162,13 +181,13 @@ export default function PageDirectors() {
                 >
                 {directors.length > 0 ? (
                     directors.map((director) => (
-                        <DirectorCard key={director.id} director={director} />
+                        <DirectorCard key={director.id} director={director} onDelete={() => handleDelete(director.id)}
+                        />
                     ))
                 ) : (
-                    <Typography variant="h5" component="h1" paragraph>Any AI Directors created will appear here.</Typography>
+                    <Typography variant="h5" component="h1" paragraph>Any Personal Directors created will appear here.</Typography>
                 )}
             </Box>
-            <Box sx={{justifyContent: 'center', mt: '30%', fontWeight: 'bold'}}></Box>
         </Container>
         </>
     );

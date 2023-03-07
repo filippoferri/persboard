@@ -99,8 +99,21 @@ export default function PageBoardrooms() {
                     md: 'repeat(4, 1fr)',
                 }}
                 >            
-                <Card onClick={handleClick} sx={{ display: 'flex', textAlign: 'center', justifyContent: 'center', bgcolor: '#3366FF', color: 'white', cursor:'pointer', minHeight: 200 }}>
-                    <Box sx={{justifyContent: 'center', mt: '26%', fontWeight: 'bold'}}>
+                <Card onClick={handleClick} 
+                    sx={{ 
+                            bgcolor: '#3366FF', 
+                            color: 'white', 
+                            cursor:'pointer', 
+                            minHeight: 200 
+                        }}>
+                    <Box sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            fontWeight: 'bold', 
+                            height: "100%"
+                        }}>
                         
                         <IconButton
                             size="small"
@@ -120,7 +133,7 @@ export default function PageBoardrooms() {
                             <Iconify icon="eva:plus-fill" />
                         </IconButton>
                         <Typography variant="h5" paragraph>
-                            New Boardroom
+                            New Advice
                         </Typography>
                     </Box>
                 </Card>

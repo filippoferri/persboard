@@ -22,28 +22,30 @@ export function AdviceCard({myBoardroom}) {
     return (
         <>
         <Card onClick={handleClick} sx={{cursor: "pointer"}}>
-            <Box sx={{p:4}}>
-                <Typography variant='body1'>{myBoardroom?.question}</Typography>
-            </Box>
-            <Box sx={{ display: "flex", alignItems: "center", p:4}}>
-            <Typography variant='caption' sx={{mr: 1}}>Advisory Board</Typography> 
-            {myBoardroom.directors.length > 0 ? (
-            myBoardroom.directors.map((director, index) => (
-            <Box 
-                sx={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: '50%',
-                    bgcolor: 'primary.main',
-                    display: 'inline-block',
-                    ml: index > 0 ? -1 : 0,
-                    border: '2px solid white',
-                    zIndex: index
-                }} />
-            ))
-            ) : (
-                <Typography>No Directors</Typography>
-            )}
+            <Box sx={{display: "flex", flexDirection: "column", height: "100%"}}>
+                <Box sx={{p:4, display: "flex", flex: "1"}}>
+                    <Typography variant='body1'>{myBoardroom?.question}</Typography>
+                </Box>
+                <Box sx={{ display: "flex", alignItems: "center", p:4 }}>
+                    <Typography variant='caption' sx={{mr: 1}}>Personal Board</Typography> 
+                    {myBoardroom.directors.length > 0 ? (
+                    myBoardroom.directors.map((director, index) => (
+                        <Box 
+                            sx={{
+                                width: 20,
+                                height: 20,
+                                borderRadius: '50%',
+                                bgcolor: 'primary.main',
+                                display: 'inline-block',
+                                ml: index > 0 ? -1 : 0,
+                                border: '2px solid white',
+                                zIndex: index
+                            }} />
+                    ))
+                    ) : (
+                        <Typography>No Directors</Typography>
+                    )}
+                </Box>
             </Box>
         </Card>
         </>
