@@ -17,6 +17,7 @@ import DashboardLayout from '../../layouts/dashboard';
 // components
 import { useSettingsContext } from '../../components/settings';
 // assets
+import WelcomeIntro from '../../sections/@dashboard/general/welcome/intro';
 import WelcomeQuestion from '../../sections/@dashboard/general/welcome/question';
 import WelcomeBoard from '../../sections/@dashboard/general/welcome/board';
 import WelcomeBoardroom from '../../sections/@dashboard/general/welcome/boardroom';
@@ -75,10 +76,20 @@ export default function PageWelcome() {
       <Container maxWidth={themeStretch ? false : 'lg'}>
 
         {step === 1 && 
-          <WelcomeQuestion onNextStep={handleNextStep} onData={handleData}  />
+          <WelcomeIntro onNextStep={handleNextStep}  />
         }
 
-        {step === 2 && (
+        {step === 2 && 
+        <m.div
+          initial="hidden"
+          animate="visible"
+          variants={variants}
+        >
+          <WelcomeQuestion onNextStep={handleNextStep} onData={handleData}  />
+        </m.div>
+        }
+
+        {step === 3 && (
         <m.div
           initial="hidden"
           animate="visible"
@@ -92,7 +103,7 @@ export default function PageWelcome() {
         </m.div>
         )}
 
-        {step === 3 && (
+        {step === 4 && (
         <m.div
           initial="hidden"
           animate="visible"

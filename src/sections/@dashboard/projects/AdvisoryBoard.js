@@ -5,9 +5,9 @@ import {
     Avatar, Box, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography
 } from '@mui/material';
 // Firebase/Firestore
-import { initializeApp } from 'firebase/app';
-import { FIREBASE_API } from '../../../config-global';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+// import { initializeApp } from 'firebase/app';
+// import { FIREBASE_API } from '../../../config-global';
+// import { getFirestore, doc, getDoc } from 'firebase/firestore';
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
 // sections
@@ -26,9 +26,11 @@ export default function AdvisoryBoard({
     directors,
 }) {
     const { user } = useAuthContext();
-    const [loadedDirectors, setLoadedDirectors] = useState([]);
+    //const [loadedDirectors, setLoadedDirectors] = useState([]);
     const [openDetails, setOpenDetails] = useState(false);
     const [selectedDirector, setSelectedDirector] = useState({});
+
+    
 
     const handleOpenDetails = (director) => {
         setSelectedDirector(director);
@@ -39,46 +41,46 @@ export default function AdvisoryBoard({
         setOpenDetails(false);
     };
 
-    async function fetchDirectors() {
+    // async function fetchDirectors() {
 
-        if (directors.fullName) {
-            setLoadedDirectors(directors);
-            return;
-        }
+    //     if (directors.fullName){
+    //         setLoadedDirectors(directors);
+    //         return;
+    //     }
 
-        const app = initializeApp(FIREBASE_API);
-        const db = getFirestore(app);
+    //     const app = initializeApp(FIREBASE_API);
+    //     const db = getFirestore(app);
     
-        const loadedDirectors = await Promise.all(
-            directors.map(async (directorId) => {
-                const directorDoc = await getDoc(doc(db, 'directors', directorId));
-                const myDirectorDoc = await getDoc(doc(db, "users", user && user.uid, "myDirectors", directorId));
+    //     const loadedDirectors = await Promise.all(
+    //         directors.map(async (directorId) => {
+    //             const directorDoc = await getDoc(doc(db, 'directors', directorId));
+    //             const myDirectorDoc = await getDoc(doc(db, "users", user && user.uid, "myDirectors", directorId));
                 
-                const directorData = directorDoc.data() || {};
-                const myDirectorData = myDirectorDoc.exists() ? myDirectorDoc.data() : {};
+    //             const directorData = directorDoc.data() || {};
+    //             const myDirectorData = myDirectorDoc.exists() ? myDirectorDoc.data() : {};
                 
-                return {
-                    id: directorDoc.id,
-                    ...directorData,
-                    ...myDirectorData
-                };
-            })
-        );
+    //             return {
+    //                 id: directorDoc.id,
+    //                 ...directorData,
+    //                 ...myDirectorData
+    //             };
+    //         })
+    //     );
             
-        setLoadedDirectors(loadedDirectors);
-    }
+    //     setLoadedDirectors(loadedDirectors);
+    // }
     
 
-    useEffect(() => {
-        fetchDirectors();
-    }, [directors]);
+    // useEffect(() => {
+    //     fetchDirectors();
+    // }, [directors]);
     
 
     return (
         <>
             <List sx={{ width: '100%' }}>
                 <List>
-                {loadedDirectors.map((director, index) => (
+                {directors.map((director, index) => (
                     <ListItem key={index} disablePadding>
                     <ListItemButton onClick={() => handleOpenDetails(director)}>
                         <ListItemAvatar>
@@ -88,7 +90,6 @@ export default function AdvisoryBoard({
                             primary={director.fullName ? director.role : director.fullName}
                             secondary={director.fullName ? director.fullName: director.role}
                         />
-
                     </ListItemButton>
                     </ListItem>
                 ))}

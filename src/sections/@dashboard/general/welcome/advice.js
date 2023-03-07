@@ -7,6 +7,8 @@ import Link from 'next/link';
 // @mui
 import { alpha, useTheme } from '@mui/material/styles';
 import { Container, Grid, Button, Stack, Box, Typography, Paper } from '@mui/material';
+// layouts
+import StepperLayout from '../../../layouts/stepper';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc, Timestamp, onSnapshot } from 'firebase/firestore';
@@ -25,10 +27,13 @@ import AdvisoryBoard from '../../../sections/@dashboard/projects/AdvisoryBoard';
 
 // ----------------------------------------------------------------------
 
+Advice.getLayout = (page) => <StepperLayout step={2}>{page}</StepperLayout>;
+
+// ----------------------------------------------------------------------
+
 export default function Advice() {
   const { themeStretch } = useSettingsContext();
   const router = useRouter();
-  
   const { d, q } = router.query;
 
   // decode the directorIds array from the base64 string

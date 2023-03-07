@@ -3,16 +3,18 @@ import axiosInstance from './axiosOpenai';
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 export const generateAdvice = async (advisoryDirectors, question) => {
+  console.log('advisoryDirector', advisoryDirectors)
   try {
-    const prompts = advisoryDirectors.map((advisoryDirector) => {
-      return `Act as ${advisoryDirector.fullName}, an expert ${advisoryDirector.role}, and talk in first person. Reply to ${question}, considering that your key quality is ${advisoryDirector.quality} and your expertise area is ${advisoryDirector.area}. Start the advice in different ways with either "My advice is...", either "I think...", either "I would suggest to" either similar. Acting as ${advisoryDirector.fullName}, when available, close sharing your personal famous phrase. Make the advice short.`;
+    const prompt = advisoryDirectors.map((currentDirector,index) => {
+      return `Act as ${currentDirector.fullName}, an expert ${currentDirector.role}, and talk in first person. Reply to ${question}, considering that your key quality is ${currentDirector.quality} and your expertise area is ${currentDirector.area}. Start the advice in different ways with either "My advice is...", either "I think...", either "I would suggest to" either similar. Acting as ${currentDirector.fullName}, when available, close sharing your personal famous phrase.`;
     });
 
-    const { data } = await axiosInstance.post(`/engines/text-davinci-003/completions`, {
-      prompt: prompts,
-      max_tokens: 2000,
+    const { data } = await axiosInstance.post(`/completions`, {
+      model: "text-davinci-003",
+      prompt: prompt,
+      max_tokens: 10,
       n: 1,
-      temperature: 0.8
+      temperature: 0.2
     }, {
       headers: {
         'Content-Type': 'application/json',
@@ -37,7 +39,10 @@ export const generateAdvice = async (advisoryDirectors, question) => {
     }
   } catch (error) {
     console.log("Error while generating advice: ", error);
-    return advisoryDirectors.map((advisoryDirector) => ({ fullName: advisoryDirector.fullName, text: 'Something went wrong!! ☹️' }));
+    return advisoryDirectors.map((advisoryDirector) => ({ 
+      fullName: advisoryDirector.fullName, 
+      role: advisoryDirector.role,
+      text: 'Something went wrong!! ☹️' }));
   }
 };
 
