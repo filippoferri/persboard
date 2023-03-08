@@ -110,14 +110,14 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
             }
         
             setLoading(true);
-            //const prompt = await generateAdvice(loadedDirectors, question);
-            //setDiscussion(prompt);
-            setDiscussion(data);
+            const prompt = await generateAdvice(loadedDirectors, question);
+            setDiscussion(prompt);
+            //setDiscussion(data);
             setLoading(false);
         }
     
         generateDiscussion();
-        // handleSave();
+        handleSave();
     }, []);
 
     // save the discussion
@@ -131,8 +131,9 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
         const boardRoomRef = collection(db, "users", user && user.uid, "myBoardrooms");
         const docRef = await setDoc(doc(boardRoomRef), {
             question: question,
-            directors: directors,
-            discussion: discussion
+            directors: loadedDirectors,
+            discussion: discussion,
+            dateAdd: Timestamp.fromDate(new Date()),
         });
         console.log("Document written: ", docRef.question);
         setSaved(true);

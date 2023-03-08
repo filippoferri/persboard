@@ -1,7 +1,7 @@
 // next
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { CustomBreadcrumbs, Box, Grid, Card, Stack, Avatar, Divider, Container, Typography, colors, IconButton } from '@mui/material';
+import { Box, Grid, Card, Stack, Avatar, Divider, Container, Typography, colors, IconButton } from '@mui/material';
 // Router
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -18,6 +18,8 @@ import { useSettingsContext } from '../../../components/settings';
 import Iconify from '../../../components/iconify';
 // sections
 import {DirectorCard} from '../../../sections/@dashboard/directors/DirectorCard';
+import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+
 
 // ----------------------------------------------------------------------
 
@@ -81,20 +83,21 @@ export default function PageDirectors() {
         </Head>
 
         <Container maxWidth={themeStretch ? false : 'lg'} sx={{mb: 6}}>
-            <Stack
-            direction="row"
-            alignItems="center"
-            sx={{
-                mt: 2,
-                mb: 4,
-            }}
-            >
-            <Box sx={{ flexGrow: 1, pl: 2 }}>
-                <Typography variant="h4" gutterBottom>
-                    AI Directors
-                </Typography>
+            <Box sx={{pl: 2}}>
+                <CustomBreadcrumbs
+                    heading="AI Directors"
+                    links={[
+                    {
+                        name: 'Dashboard',
+                        href: PATH_DASHBOARD.root,
+                    },
+                    {
+                        name: 'AI Directors',
+                        href: PATH_DASHBOARD.directors.root,
+                    },
+                ]}
+                />
             </Box>
-            </Stack>
             <Box
                 gap={3}
                 display="grid"
@@ -164,8 +167,8 @@ export default function PageDirectors() {
             </Box>
         </Container>
         <Container maxWidth={themeStretch ? false : 'lg'}>
-            <Box xs={12}>
-                <Typography variant="h5" sx={{ mb: 2, pl: 2}} >
+            <Box xs={12} sx={{ pl:2 }}>
+                <Typography variant="h5" sx={{ mb: 2}} >
                     Premium Directors
                 </Typography>
                 <Divider sx={{ mb: 3 }} />

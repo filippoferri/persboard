@@ -1,7 +1,7 @@
 // next
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { CustomBreadcrumbs, Box, Grid, Card, Stack, Avatar, Divider, Container, Typography, colors, IconButton } from '@mui/material';
+import { Box, Grid, Card, Stack, Avatar, Divider, Container, Typography, colors, IconButton } from '@mui/material';
 // Router
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -18,6 +18,10 @@ import { useSettingsContext } from '../../../components/settings';
 import Iconify from '../../../components/iconify';
 // sections
 import {AdviceCard} from '../../../sections/@dashboard/advices/adviceCard';
+import Link from 'next/link';
+import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+
+
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +35,7 @@ export default function PageBoardrooms() {
     const router = useRouter();
 
     const handleClick = () => {
-        router.push({ pathname: PATH_DASHBOARD.projects.newProject });};
+        router.push({ pathname: PATH_DASHBOARD.welcome });};
 
     const app = initializeApp(FIREBASE_API);
     const db = getFirestore(app);
@@ -54,20 +58,6 @@ export default function PageBoardrooms() {
         };
     }, [db, user]);
 
-    console.log(myBoardrooms);
-
-    // Delete director
-    // const handleDelete = async (directorId) => {
-    //     try {
-    //         const directorRef = doc(db, 'directors', directorId);
-    //         const myDirectorRef = doc(db, 'users', user.uid, 'myDirectors', directorId);
-    //         await deleteDoc(directorRef);
-    //         await deleteDoc(myDirectorRef);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    //     };
-
     return (  
     <>
         <Head>
@@ -75,20 +65,21 @@ export default function PageBoardrooms() {
         </Head>
 
         <Container maxWidth={themeStretch ? false : 'lg'}>
-            <Stack
-                direction="row"
-                alignItems="center"
-                sx={{
-                    mt: 2,
-                    mb: 4,
-                }}
-            >
-                <Box sx={{ flexGrow: 1, pl: 2 }}>
-                    <Typography variant="h4" gutterBottom>
-                        Advices
-                    </Typography>
-                </Box>
-            </Stack>
+            <Box sx={{pl: 2}}>
+                <CustomBreadcrumbs
+                        heading="Advices"
+                        links={[
+                        {
+                            name: 'Dashboard',
+                            href: PATH_DASHBOARD.root,
+                        },
+                        {
+                            name: 'Advices',
+                            href: PATH_DASHBOARD.advices.root,
+                        },
+                    ]}
+                />
+            </Box>
 
             <Box
                 gap={3}
@@ -104,7 +95,7 @@ export default function PageBoardrooms() {
                             bgcolor: '#3366FF', 
                             color: 'white', 
                             cursor:'pointer', 
-                            minHeight: 200 
+                            minHeight: 270 
                         }}>
                     <Box sx={{
                             display: "flex",

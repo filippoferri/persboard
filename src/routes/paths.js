@@ -38,6 +38,7 @@ export const PATH_DASHBOARD = {
   advices: {
     root: path(ROOTS_DASHBOARD, '/advices'),
     boardroom: path(ROOTS_DASHBOARD, '/advices/boardroom'),
+    view: (aid) => path(ROOTS_DASHBOARD, `/advices/boardroom/${aid}`),
   },
   one: path(ROOTS_DASHBOARD, '/one'),
   two: path(ROOTS_DASHBOARD, '/two'),
