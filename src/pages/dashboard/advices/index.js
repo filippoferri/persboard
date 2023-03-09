@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, deleteDoc, Timestamp, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../config-global';
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
@@ -21,8 +21,25 @@ import {AdviceCard} from '../../../sections/@dashboard/advices/adviceCard';
 import Link from 'next/link';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 
+import { m } from "framer-motion";
+import { varFade } from '../../../components/animate/variants';
 
-
+// ----------------------------------------------------------------------
+const variants = {
+    hidden: {
+        opacity: 0,
+        y: 30,
+    },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            type: 'spring',
+            stiffness: 80,
+            damping: 20,
+        },
+    },
+};
 // ----------------------------------------------------------------------
 
 PageBoardrooms.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
@@ -58,12 +75,29 @@ export default function PageBoardrooms() {
         };
     }, [db, user]);
 
+    // Delete director
+    const handleDelete = async (boardroomId) => {
+        console.log('Delete folder with id:', boardroomId);
+        try {
+        const boardroomRef = doc(collection(db, 'users', user.uid, 'myBoardrooms'), boardroomId);
+        await deleteDoc(boardroomRef);
+            console.log(`Folder with id ${boardroomId} has been deleted`);
+        } catch (error) {
+            console.error('Error deleting folder:', error);
+        }
+    };
+
     return (  
     <>
         <Head>
             <title> Advices | Personal Board</title>
         </Head>
 
+        <m.div
+            initial="hidden"
+            animate="visible"
+            variants={variants}
+        >
         <Container maxWidth={themeStretch ? false : 'lg'}>
             <Box sx={{pl: 2}}>
                 <CustomBreadcrumbs
@@ -93,6 +127,9 @@ export default function PageBoardrooms() {
                 <Card onClick={handleClick} 
                     sx={{ 
                             bgcolor: '#3366FF', 
+                            '&:hover': {
+                                bgcolor: 'primary.darker',
+                            },
                             color: 'white', 
                             cursor:'pointer', 
                             minHeight: 270 
@@ -110,16 +147,14 @@ export default function PageBoardrooms() {
                             size="small"
                             color="success"
                             sx={{
-                            p: 0,
-                            mb: 2,
-                            width: 60,
-                            height: 60,
-                            color: 'common.white',
-                            bgcolor: 'primary.light',
-                            '&:hover': {
-                                bgcolor: 'primary.darker',
-                            },
+                                p: 0,
+                                mb: 2,
+                                width: 60,
+                                height: 60,
+                                color: 'common.white',
+                                bgcolor: 'primary.light',
                             }}
+                            onClick={handleClick} 
                         >
                             <Iconify icon="eva:plus-fill" />
                         </IconButton>
@@ -130,7 +165,11 @@ export default function PageBoardrooms() {
                 </Card>
                 {myBoardrooms.length > 0 ? (
                     myBoardrooms.map((myBoardroom, index) => (
-                        <AdviceCard key={index} myBoardroom={myBoardroom} />
+                        <AdviceCard 
+                            key={index} 
+                            myBoardroom={myBoardroom}
+                            onDelete={() => handleDelete(myBoardroom.id)}
+                        />
                     ))
                 ) : (
                     <Grid
@@ -147,6 +186,7 @@ export default function PageBoardrooms() {
                 )}
             </Box>
         </Container>
+        </m.div>
         </>
     );
 }

@@ -10,6 +10,7 @@ import DashboardLayout from '../../../layouts/dashboard';
 // components
 import Iconify from '../../../components/iconify';
 import { useSettingsContext } from '../../../components/settings';
+import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 // sections
 import { AccountGeneral } from '../../../sections/@dashboard/user/account';
 
@@ -29,6 +30,19 @@ export default function UserAccountPage() {
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
+
+        <Box sx={{pl: 2}}>
+          <CustomBreadcrumbs
+            heading="Account Settings"
+            links={[
+              {
+                name: 'Dashboard',
+                href: PATH_DASHBOARD.root,
+              },
+              { name: 'Account Settings' },
+            ]}
+          />
+        </Box>
 
         <AccountGeneral />
 

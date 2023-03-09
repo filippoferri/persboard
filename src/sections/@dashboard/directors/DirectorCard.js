@@ -32,11 +32,10 @@ DirectorCard.propTypes = {
   director: PropTypes.object,
   check: PropTypes.bool,
   onDelete: PropTypes.func, // new prop
+  boardroom: PropTypes.bool,
 };
 
-export function DirectorCard({director, check, onDelete }) {
-
-  console.log('onDelete', onDelete)
+export function DirectorCard({director, check, onDelete, boardroom }) {
 
   const [openDetails, setOpenDetails] = useState(false);
 
@@ -176,6 +175,7 @@ export function DirectorCard({director, check, onDelete }) {
         open={openDetails}
         onClose={handleCloseDetails}
         onDelete={() => handleDelete(director.id)}// pass the function to handle delete action
+        boardroom={boardroom}
       />
     </>
   );

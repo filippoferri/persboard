@@ -1,44 +1,69 @@
+import { useState, useEffect } from 'react';
 // @mui
 import { Stack, Button, Typography, Box } from '@mui/material';
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
-// locales
-import { useLocales } from '../../../locales';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { FIREBASE_API } from '../../../config-global';
+
+// Router
+import { useRouter } from 'next/router';
+import { PATH_DASHBOARD } from '../../../routes/paths';
+
+import Slider from '@mui/material/Slider';
 
 // ----------------------------------------------------------------------
 
 export default function NavDocs() {
   const { user } = useAuthContext();
+  const app = initializeApp(FIREBASE_API);
+  const db = getFirestore(app);
+  const [remainingCredits, setRemainingCredits] = useState(null);
+  const [creditsUsed, setCreditsUsed] = useState(0); // Define creditsUsed as a state variable
 
-  const { translate } = useLocales();
+  const router = useRouter();
+  const handleClick = () => {
+    router.push({ pathname: PATH_DASHBOARD.billing.root });};
+
+
+  useEffect(() => {
+    async function fetchRemainingCredits() {
+      const boardRoomRef = collection(db, 'users', user.uid, 'myBoardrooms');
+      const querySnapshot = await getDocs(boardRoomRef);
+      const usedCredits = querySnapshot.size;
+      const creditsRemaining = user.credits - usedCredits;
+      setCreditsUsed(usedCredits); // Update the creditsUsed state variable
+      setRemainingCredits(creditsRemaining);
+    }
+
+    fetchRemainingCredits();
+  }, [user, db]);
 
   return (
+    <>
     <Stack
       spacing={3}
       sx={{
-        px: 5,
-        pb: 5,
-        mt: 10,
-        width: 1,
+        px: 2,
+        pb: 2,
+        mt: 2,
         display: 'block',
-        textAlign: 'center',
       }}
     >
-      <Box component="img" src="/assets/illustrations/illustration_docs.svg" />
-
-      <div>
-      {/* <Typography gutterBottom variant="subtitle1">
-          {`${translate('docs.hi')}, ${user?.displayName}`}
-        </Typography> */}
-       {/*  <Typography variant="body2" sx={{ color: 'text.secondary', whiteSpace: 'pre-line' }}>
-          {`${translate('docs.description')}`}
-        </Typography> */}
-        <Typography variant="body2" sx={{ color: 'text.secondary', whiteSpace: 'pre-line' }}>
-          Ver 1.0.0
+      <Box sx={{p:3, backgroundColor: "#eff3ff", borderRadius: 2}}>
+        <Typography variant="body2">
+          Credits Remaining:
         </Typography>
-      </div>
-
-      {/* <Button variant="contained">{`${translate('docs.documentation')}`}</Button> */}
+        <Typography variant="h4" color="primary">
+          {remainingCredits} credits
+        </Typography>
+        <Typography variant="body2" sx={{mb: 2}}>
+          Check out other plans to enjoy upto 100 credits
+        </Typography>
+        <Button variant="outlined" onClick={handleClick}>Discover Plans</Button>
+      </Box>
     </Stack>
+    </>
   );
 }

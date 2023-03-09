@@ -32,6 +32,10 @@ export default function PageNewDirector() {
           heading="Create Your Personal Director"
           links={[
             {
+              name: 'Dashboard',
+              href: PATH_DASHBOARD.root,
+            },
+            {
               name: 'AI Directors',
               href: PATH_DASHBOARD.directors.root,
             },

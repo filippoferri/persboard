@@ -29,24 +29,23 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
     // use states
     const [remainingCredits, setRemainingCredits] = useState();
     const [loading, setLoading] = useState(false); 
-    const [discussion, setDiscussion] = useState([]);
     const [hasSavedDiscussion, setHasSavedDiscussion] = useState(false);
     const [loadedDirectors, setLoadedDirectors] = useState([]);
-
+    const [discussion, setDiscussion] = useState([]);
 
 
     const app = initializeApp(FIREBASE_API);
     const db = getFirestore(app);
     const { user } = useAuthContext();
 
-    const data = [
-    {
-        id: '1',
-        fullName: 'John Doe',
-        text: 'I think it is a great idea. I would love to be a part of it.',
-        role: 'Mentor'
-        }
-    ];
+    // const data = [
+    // {
+    //     id: '1',
+    //     fullName: 'John Doe',
+    //     text: 'I think it is a great idea. I would love to be a part of it.',
+    //     role: 'Mentor'
+    //     }
+    // ];
 
     // fetch the directors
     async function fetchDirectors() {
@@ -78,70 +77,84 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
         setLoadedDirectors(loadedDirectors);
     }
 
-    useEffect(() => {
-        fetchDirectors();
-    }, [directors]);
-
-    //Call fetchDiscussion whenever the user saves a discussion
-    useEffect(() => {
-        if (hasSavedDiscussion) {
-        fetchDiscussion();
-        setHasSavedDiscussion(false);
+    // generate discussion
+    async function generateDiscussion() {
+        if (!user || !user.uid) {
+            return;
         }
-    }, [hasSavedDiscussion]);
 
-    // Generate the discussion
-    useEffect(() => {
-        async function generateDiscussion() {
-            if (!user || !user.uid) {
-                return;
-            }
+        const boardRoomRef = collection(db, 'users', user.uid, 'myBoardrooms');
+        const querySnapshot = await getDocs(boardRoomRef);
+        const remainingCredits = user.credits - (querySnapshot.size+1);
+
+        setRemainingCredits(remainingCredits);
     
-            const boardRoomRef = collection(db, 'users', user.uid, 'myBoardrooms');
-            const querySnapshot = await getDocs(boardRoomRef);
-            const remainingCredits = user.credits - (querySnapshot.size);
-
-            setRemainingCredits(remainingCredits);
-        
-            if (remainingCredits <= 0) {
-                setDiscussion('You have reached the limit of available credits. Please upgrade your account to receive more advices.');
-                setLoading(false);
-                return;
-            }
-        
-            setLoading(true);
-            const prompt = await generateAdvice(loadedDirectors, question);
-            setDiscussion(prompt);
-            //setDiscussion(data);
+        if (remainingCredits <= 0) {
+            setDiscussion([
+                {
+                    id: '1',
+                    fullName: 'Your Personal Board',
+                    text: 'You have reached the limit of available credits. Please upgrade your account to receive more advices.',
+                    role: 'Advisory'
+                }
+            ]);
             setLoading(false);
+            return;
         }
     
-        generateDiscussion();
-        handleSave();
-    }, []);
+        setLoading(true);
+        const prompt = await generateAdvice(loadedDirectors, question);
+        setDiscussion(prompt);
+        //setDiscussion(data);
+        setLoading(false);
+    }
 
     // save the discussion
     const handleSave = async () => {
         try {
-        if (!user || !user.uid) {
-            console.log("User is not logged in or user ID is undefined.");
-            return;
-        }
-        console.log(discussion)
-        const boardRoomRef = collection(db, "users", user && user.uid, "myBoardrooms");
-        const docRef = await setDoc(doc(boardRoomRef), {
-            question: question,
-            directors: loadedDirectors,
-            discussion: discussion,
-            dateAdd: Timestamp.fromDate(new Date()),
-        });
-        console.log("Document written: ", docRef.question);
-        setSaved(true);
-        setHasSavedDiscussion(true); // set the flag to true after the discussion is saved
-        } catch (e) {
-            console.error("Error adding document: ", e);
+            if (!user || !user.uid) {
+                console.log("User is not logged in or user ID is undefined.");
+                return;
+            }
+            if (discussion === undefined || discussion.length == 0) {
+                console.log("Discussion is empty.");
+                return;
+            }
+            const boardRoomRef = collection(db, "users", user && user.uid, "myBoardrooms");
+            const docRef = await setDoc(doc(boardRoomRef), {
+                question: question,
+                directors: loadedDirectors,
+                discussion: discussion,
+                dateAdd: Timestamp.fromDate(new Date()),
+            });
+                setHasSavedDiscussion(true); // set the flag to true after the discussion is saved
+            } catch (e) {
+                console.error("Error adding document: ", e);
         }
     };
+
+    // Use fetchDirectors to fetch directors from Firebase
+    useEffect(() => {
+        fetchDirectors();
+    }, [directors]);
+    
+    // Use generateDiscussion to generate discussion from directors and question
+    useEffect(() => {
+        if (loadedDirectors.length > 0) {
+            generateDiscussion();
+        }
+    }, [loadedDirectors]);
+    
+    // Use handleSave to save discussion to Firebase after discussion is generated
+    // Use handleSave to save discussion to Firebase after discussion is generated
+    useEffect(() => {
+        if (discussion.length > 0 && remainingCredits > 0) {
+            handleSave();
+        }
+    }, [discussion, remainingCredits]);
+
+
+
 
     return (
     <>
@@ -195,7 +208,7 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
                                     borderRadius: 1, 
                                     borderTopRightRadius: 0,
                                     mb: 1,
-                                    maxWidth: '600px',
+                                    maxWidth: '800px',
                                 }}>
                                     {question}
                                 </Box>
@@ -212,7 +225,7 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
                                 </Grid>
                             ) : (
                                 discussion.map((advice, index) => (
-                                <Grid item key={index}>
+                                <Grid item key={index} sx={{mb:2}}>
                                     <Typography
                                         variant='caption'
                                         sx={{ fontWeight: 'bold', pl: 1, mb: 2 }}
@@ -225,7 +238,7 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
                                         borderRadius: 1,
                                         borderTopLeftRadius: 0,
                                         mb: 1,
-                                        width: '600px',
+                                        width: '800px',
                                     }}
                                     >
                                         {advice.text}

@@ -32,8 +32,6 @@ export default function AdvisoryBoard({
     const [openDetails, setOpenDetails] = useState(false);
     const [selectedDirector, setSelectedDirector] = useState({});
 
-    console.log("directors", directors);
-
     const handleOpenDetails = (director) => {
         setSelectedDirector(director);
         setOpenDetails(true);

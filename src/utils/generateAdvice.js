@@ -45,33 +45,3 @@ export const generateAdvice = async (advisoryDirectors, question) => {
       text: 'Something went wrong!! ☹️' }));
   }
 };
-
-
-
-
-// export const generateAdvice = async (advisoryDirector, question) => {
-//   try {
-//     const advice = `Act as ${advisoryDirector.fullName}$, an expert ${advisoryDirector.role}$ and reply to: ${question}$`;
-
-//     const { data } = await axiosInstance.post(`/engines/text-davinci-003/completions`, {
-//       prompt: advice,
-//       max_tokens: 100,
-//       n: 1,
-//       temperature: 0.5
-//     }, {
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': `Bearer ${OPENAI_API_KEY}` 
-//       }
-//     });  
-    
-//     if (data?.choices?.[0]?.text) {
-//       return data.choices[0].text;
-//     } else {
-//       throw new Error("No response found from API");
-//     }
-//   } catch (error) {
-//     console.log("Error while generating advice: ", error);
-//     return 'Something went wrong!! ☹️';
-//   }
-// }

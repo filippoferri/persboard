@@ -83,20 +83,6 @@ export default function AccountGeneral() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack
-          direction="row"
-          alignItems="center"
-          sx={{
-            mt: 2,
-            mb: 4,
-          }}
-        >
-          <Box sx={{ flexGrow: 1, pl: 2 }}>
-            <Typography variant="h4" gutterBottom>
-              Account Settings
-            </Typography>
-          </Box>
-        </Stack>
       <Grid container spacing={3}>
 
         <Grid item xs={12} md={8}>

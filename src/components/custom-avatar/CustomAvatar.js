@@ -9,12 +9,12 @@ import { Badge, Avatar } from '@mui/material';
 const getCharAtName = (name) => name && name.charAt(0).toUpperCase();
 
 const getColorByName = (name) => {
-  if (['A', 'N', 'H', 'L', 'Q'].includes(getCharAtName(name))) return '#847EBA';
-  if (['F', 'G', 'T', 'I', 'J'].includes(getCharAtName(name))) return '#ECCB3F';
-  if (['K', 'D', 'Y', 'B', 'O'].includes(getCharAtName(name))) return '#87C450';
-  if (['P', 'E', 'R', 'S', 'U'].includes(getCharAtName(name))) return '#EC7D4F';
-  if (['V', 'W', 'X', 'M', 'Z'].includes(getCharAtName(name))) return '#005C80';
-  return '#6CF2FD';
+  if (['A', 'N', 'H', 'L', 'Q'].includes(getCharAtName(name))) return '#512bd4';
+  if (['F', 'G', 'T', 'I', 'J'].includes(getCharAtName(name))) return '#ac99ea';
+  if (['K', 'D', 'Y', 'B', 'O'].includes(getCharAtName(name))) return '#e666cc';
+  if (['P', 'E', 'R', 'S', 'U'].includes(getCharAtName(name))) return '#28c2d1';
+  if (['V', 'W', 'X', 'M', 'Z'].includes(getCharAtName(name))) return '#fa97a1';
+  return '#4633dd';
 };
 
 // ----------------------------------------------------------------------

@@ -99,7 +99,8 @@ useEffect(() => {
                         <DirectorCard 
                             director={myDirector} 
                             check={selectedDirectors.includes(myDirector.id)}   
-                            onDelete={() => handleDeleteDirector(myDirector.id)}
+                            // onDelete={() => handleDeleteDirector(myDirector.id)}
+                            boardroom={true}
                         />
                     </Grid>
                 ))
@@ -110,7 +111,7 @@ useEffect(() => {
                         <DirectorCard 
                             director={director} 
                             check={selectedDirectors.includes(director.id)}   
-                            onDelete={() => handleDeleteDirector(director.id)}
+                            // onDelete={null}
                         />
                     </Grid>
                 ))
