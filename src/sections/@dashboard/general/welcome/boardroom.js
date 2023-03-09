@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
-import { Paper, Stack, Box, Grid, Typography, Button } from '@mui/material';
+import { Paper, Stack, Box, Grid, Typography, Button, Link } from '@mui/material';
 import PropTypes from 'prop-types';
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, getDocs, getDoc, deleteDoc, Timestamp, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, updateDoc, getDocs, getDoc, deleteDoc, Timestamp, onSnapshot, FieldValue } from 'firebase/firestore';
+import { increment } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../../config-global';
 // auth
 import { useAuthContext } from '../../../../auth/useAuthContext';
 // sections
 import AdvisoryBoard from '../../../../sections/@dashboard/projects/AdvisoryBoard';
 import {generateAdvice} from '../../../../utils/generateAdvice';
+// Router
+import { useRouter } from 'next/router';
+import { PATH_DASHBOARD } from '../../../../routes/paths';
 
 
 // ----------------------------------------------------------------------
@@ -26,17 +30,20 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
     const question = dataFromPrevStep[0].question;
     const directors = dataFromPrevStep[1].directors;
 
+    const app = initializeApp(FIREBASE_API);
+    const db = getFirestore(app);
+    const { user } = useAuthContext();
+
     // use states
-    const [remainingCredits, setRemainingCredits] = useState();
+    const [remainingCredits, setRemainingCredits] = useState(user.credits);
     const [loading, setLoading] = useState(false); 
     const [hasSavedDiscussion, setHasSavedDiscussion] = useState(false);
     const [loadedDirectors, setLoadedDirectors] = useState([]);
     const [discussion, setDiscussion] = useState([]);
 
-
-    const app = initializeApp(FIREBASE_API);
-    const db = getFirestore(app);
-    const { user } = useAuthContext();
+    const router = useRouter();
+    const handleUpgrade = () => {
+        router.push({ pathname: PATH_DASHBOARD.billing.root });};
 
     // const data = [
     // {
@@ -83,9 +90,7 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
             return;
         }
 
-        const boardRoomRef = collection(db, 'users', user.uid, 'myBoardrooms');
-        const querySnapshot = await getDocs(boardRoomRef);
-        const remainingCredits = user.credits - (querySnapshot.size+1);
+        const remainingCredits = user.remainingCredits;
 
         setRemainingCredits(remainingCredits);
     
@@ -116,8 +121,8 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
                 console.log("User is not logged in or user ID is undefined.");
                 return;
             }
-            if (discussion === undefined || discussion.length == 0) {
-                console.log("Discussion is empty.");
+            if (user.remainingCredits == 0) {
+                console.log("Credits are over.");
                 return;
             }
             const boardRoomRef = collection(db, "users", user && user.uid, "myBoardrooms");
@@ -127,7 +132,15 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
                 discussion: discussion,
                 dateAdd: Timestamp.fromDate(new Date()),
             });
-                setHasSavedDiscussion(true); // set the flag to true after the discussion is saved
+            
+            setHasSavedDiscussion(true); // set the flag to true after the discussion is saved
+
+            // Decrease remaining credits by 1
+            const remainingCreditsRef = doc(db, "users", user.uid);
+            await updateDoc(remainingCreditsRef, {
+                credits: increment(-1),
+            });
+            setRemainingCredits(remainingCredits - 1);
             } catch (e) {
                 console.error("Error adding document: ", e);
         }
@@ -145,16 +158,12 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
         }
     }, [loadedDirectors]);
     
-    // Use handleSave to save discussion to Firebase after discussion is generated
-    // Use handleSave to save discussion to Firebase after discussion is generated
+   // Use handleSave to save discussion to Firebase after discussion is generated
     useEffect(() => {
-        if (discussion.length > 0 && remainingCredits > 0) {
-            handleSave();
+        if (discussion.length > 0 && remainingCredits > 0 && !hasSavedDiscussion) {
+        handleSave();
         }
-    }, [discussion, remainingCredits]);
-
-
-
+    }, [discussion, remainingCredits, hasSavedDiscussion]);
 
     return (
     <>
@@ -253,7 +262,7 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
                         <Grid container justifyContent={'center'}>
                             <Grid item justifyContent="center">
                                 <Typography variant="body1" align="center" sx={{color: "#919EAB", pt: 4, pb: 5 }}>
-                                    {remainingCredits > 0 ? `${remainingCredits} credits remaining.` : 'No credits remaining. Please upgrade your account.'} Need more? Upgrade now!
+                                    {remainingCredits > 0 ? `${remainingCredits} credits remaining.` : 'No credits remaining. Please upgrade your account.'} Need more? <Link underline="none" color="inherit" href={PATH_DASHBOARD.billing.root} >Upgrade now</Link>!
                                 </Typography>
                             </Grid>
                             <Grid item sx={{ flexGrow: 1 }}>
@@ -263,7 +272,7 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
                                         <Typography variant='h5' sx={{color: "#2065D1"}}>Achieve greater clarity and direction</Typography>
                                     </Box>
                                     <Box>
-                                        <Button variant="contained" size="large" >Upgrade Now</Button>
+                                        <Button variant="contained" size="large" onClick={handleUpgrade} >Upgrade Now</Button>
                                     </Box>
                                 </Box>
                             </Grid>

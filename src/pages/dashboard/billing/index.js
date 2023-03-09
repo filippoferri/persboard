@@ -16,7 +16,8 @@ import { varFade } from '../../../components/animate/variants';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 import Label from '../../../components/label';
 import Iconify from '../../../components/iconify';
-
+// auth
+import { useAuthContext } from '../../../auth/useAuthContext';
 
 // ----------------------------------------------------------------------
 
@@ -63,6 +64,7 @@ export default function PageBilling() {
     const { themeStretch } = useSettingsContext();
     
     const router = useRouter();
+    const { user } = useAuthContext();
 
     const [selectedBox, setSelectedBox] = useState(50);
     const [totalBilled, setTotalBilled] = useState(9.99);
@@ -72,16 +74,16 @@ export default function PageBilling() {
         setSelectedBox(amount);
         switch(amount) {
         case 50:
-            setTotalBilled(9.99);
-            break;
-        case 100:
             setTotalBilled(14.99);
             break;
+        case 100:
+            setTotalBilled(24.99);
+            break;
         case 500:
-            setTotalBilled(49.99);
+            setTotalBilled(99.99);
             break;
         case 1000:
-            setTotalBilled(99.99);
+            setTotalBilled(149.99);
             break;
         default:
             setTotalBilled(0);
@@ -133,12 +135,12 @@ export default function PageBilling() {
                         Credits used
                     </Typography>
                     <Typography variant="body1" sx={{color: 'text.secondary'}}>
-                        You have <b>0</b> credits in total, <b>0</b> credits remaining.
+                        You have <b>{user.credits}</b> credits in total, <b>{user.remainingCredits}</b> credits remaining.
                     </Typography>
-                    <Typography variant="body1" sx={{color: 'text.secondary'}}>
+                    <Typography variant="body1" sx={{color: 'text.secondary', mb: 2}}>
                         Credit cost per board advice: 1
                     </Typography>
-                    <Button color="primary" size="large">
+                    <Button variant="contained" color="primary" size="large">
                         Manage Billing
                     </Button>
                 </Card>

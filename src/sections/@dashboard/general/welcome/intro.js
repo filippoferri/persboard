@@ -56,7 +56,7 @@ export default function WelcomeIntro({ onNextStep }) {
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={4} sx={{display: 'flex', justifyContent: "center", flexDirection:"column"}}>
-                    <Box component="img" src="/assets/illustrations/illustration_question.svg" />
+                    <Box sx={{height: 200, mb: 4}} component="img" src="/assets/illustrations/illustration_question.svg" />
                     <Typography variant="h4" sx={{ mb: 2, textAlign: "center" }}>
                         1. Define Your Question
                     </Typography>
@@ -65,7 +65,7 @@ export default function WelcomeIntro({ onNextStep }) {
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={4} sx={{display: 'flex', justifyContent: "center", flexDirection:"column"}}>
-                    <Box component="img" src="/assets/illustrations/illustration_board.svg" />
+                    <Box sx={{height: 200, mb: 4}} component="img" src="/assets/illustrations/illustration_board.svg" />
                     <Typography variant="h4" sx={{ mb: 2, textAlign: "center" }}>
                         2. Build Your Board
                     </Typography>
@@ -74,7 +74,7 @@ export default function WelcomeIntro({ onNextStep }) {
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={4} sx={{display: 'flex', justifyContent: "center", flexDirection:"column"}}>
-                    <Box component="img" src="/assets/illustrations/illustration_advices.svg" />
+                    <Box sx={{height: 200, mb: 4}} component="img" src="/assets/illustrations/illustration_advices.svg" />
                     <Typography variant="h4" sx={{ mb: 2, textAlign: "center" }}>
                         3. Receive Actionable Advice
                     </Typography>
