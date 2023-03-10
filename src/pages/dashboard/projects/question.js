@@ -14,9 +14,11 @@ import { Container, Grid, Button, Stack, Box, Typography, Divider, FormControl, 
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
-import { FIREBASE_API } from '../../../config-global';
+
 // routes
 import { useRouter } from 'next/router';
+import { FIREBASE_API } from '../../../config-global';
+
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // layouts
 import StepperLayout from '../../../layouts/stepper';
@@ -51,10 +53,10 @@ export default function PageNewQuestion() {
 
 		const app = initializeApp(FIREBASE_API);
 		const db = getFirestore(app);
-		const { user } = useAuthContext();
+		// const { user } = useAuthContext();
 
 		const [text, setText] = useState('');
-		// const [charCount, setCharCount] = useState(100);
+		const [charCount, setCharCount] = useState(100);
 		// const [questions, setQuestion] = useState([]);
 
 		const handleTextChange = (event) => {
@@ -177,7 +179,6 @@ export default function PageNewQuestion() {
 					<Box sx={{ flexGrow: 1 }}>
 						<Typography variant="h4">Ideas</Typography>
 					</Box>
-					<Box sx={{ flexShrink: 0 }}></Box>
 				</Stack>
 
 				<Grid container spacing={3} direction="row">

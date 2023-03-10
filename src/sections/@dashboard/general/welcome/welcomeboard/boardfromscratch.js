@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { styled } from '@mui/material/styles';
 
@@ -9,6 +10,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Stack, Card, Paper, Box, Typography, Button, MenuItem } from '@mui/material';
 import FormProvider, { RHFTextField } from '../../../../../components/hook-form';
 
+
+// ----------------------------------------------------------------------
+
+BoardFromScratch.propTypes = {
+	dataFromPrevStep: PropTypes.func,
+	onNextStep: PropTypes.func,
+};
 
 // ----------------------------------------------------------------------
 
@@ -51,7 +59,7 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
   // Validate form fields
   const isFormValid = formFields.every(field => field.fullName !== '');
 
-  // const [boardData, setBoardData] = useState([]);
+  const [boardData, setBoardData] = useState([]);
 
   const NextStep = () => {
     const directors = { directors: formFields };
@@ -299,9 +307,9 @@ const BoardFromScratch = ({onNextStep, dataFromPrevStep}) => {
         fullName3: Yup.string().required('Name is required'),
     });
 
-    const methods = useForm({
-        resolver: yupResolver(UpdateBoardSchema),
-    });
+    // const methods = useForm({
+    //     resolver: yupResolver(UpdateBoardSchema),
+    // });
 
     return (
     <>

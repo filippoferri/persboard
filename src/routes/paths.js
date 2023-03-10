@@ -47,7 +47,6 @@ export const PATH_DASHBOARD = {
   },
   one: path(ROOTS_DASHBOARD, '/one'),
   two: path(ROOTS_DASHBOARD, '/two'),
-  three: path(ROOTS_DASHBOARD, '/three'),
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),
     settings: path(ROOTS_DASHBOARD, '/user/account'),
