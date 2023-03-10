@@ -3,11 +3,11 @@ import { useState } from 'react';
 // @mui
 import { Box, Card, Stack, Button, Divider, MenuItem, Checkbox, IconButton } from '@mui/material';
 // components
-import Iconify from '../../components/iconify';
-import MenuPopover from '../../components/menu-popover';
-import TextMaxLine from '../../components/text-max-line';
-import { useSnackbar } from '../../components/snackbar';
-import ConfirmDialog from '../../components/confirm-dialog';
+import Iconify from '../iconify';
+import MenuPopover from '../menu-popover';
+import TextMaxLine from '../text-max-line';
+import { useSnackbar } from '../snackbar';
+import ConfirmDialog from '../confirm-dialog';
 //
 import FileNewFolderDialog from './FileNewFolderDialog';
 
@@ -23,17 +23,17 @@ FileFolderCard.propTypes = {
 
 
 export default function FileFolderCard({ folder, selected, onSelect, onDelete, sx, ...other }) {
-  const { enqueueSnackbar } = useSnackbar();
+  //const { enqueueSnackbar } = useSnackbar();
 
-  const [inviteEmail, setInviteEmail] = useState('');
+  //const [inviteEmail, setInviteEmail] = useState('');
 
   const [showCheckbox, setShowCheckbox] = useState(false);
 
-  const [openShare, setOpenShare] = useState(false);
+  //const [openShare, setOpenShare] = useState(false);
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  const [openDetails, setOpenDetails] = useState(false);
+  //const [openDetails, setOpenDetails] = useState(false);
 
   const [folderName, setFolderName] = useState(folder.folderName);
 
@@ -63,21 +63,21 @@ export default function FileFolderCard({ folder, selected, onSelect, onDelete, s
     setShowCheckbox(false);
   };
 
-  const handleOpenShare = () => {
-    setOpenShare(true);
-  };
+  // const handleOpenShare = () => {
+  //   setOpenShare(true);
+  // };
 
-  const handleCloseShare = () => {
-    setOpenShare(false);
-  };
+  // const handleCloseShare = () => {
+  //   setOpenShare(false);
+  // };
 
   const handleOpenDetails = () => {
     setOpenDetails(true);
   };
 
-  const handleCloseDetails = () => {
-    setOpenDetails(false);
-  };
+  // const handleCloseDetails = () => {
+  //   setOpenDetails(false);
+  // };
 
   const handleOpenEditFolder = () => {
     setOpenEditFolder(true);

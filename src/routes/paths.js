@@ -43,6 +43,7 @@ export const PATH_DASHBOARD = {
   },
   billing: {
     root: path(ROOTS_DASHBOARD, '/billing'),
+    checkout: path(ROOTS_AUTH, '/api/checkout_sessions'),
   },
   one: path(ROOTS_DASHBOARD, '/one'),
   two: path(ROOTS_DASHBOARD, '/two'),

@@ -11,7 +11,7 @@ import {
   DialogActions,
 } from '@mui/material';
 // components
-import Iconify from '../../components/iconify';
+//import Iconify from '../iconify';
 
 // ----------------------------------------------------------------------
 
@@ -45,23 +45,23 @@ export default function FileNewFolderDialog({
     }
   }, [open]);
 
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const newFiles = acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        })
-      );
+  // const handleDrop = useCallback(
+  //   (acceptedFiles) => {
+  //     const newFiles = acceptedFiles.map((file) =>
+  //       Object.assign(file, {
+  //         preview: URL.createObjectURL(file),
+  //       })
+  //     );
 
-      setFiles([...files, ...newFiles]);
-    },
-    [files]
-  );
+  //     setFiles([...files, ...newFiles]);
+  //   },
+  //   [files]
+  // );
 
-  const handleRemoveFile = (inputFile) => {
-    const filtered = files.filter((file) => file !== inputFile);
-    setFiles(filtered);
-  };
+  // const handleRemoveFile = (inputFile) => {
+  //   const filtered = files.filter((file) => file !== inputFile);
+  //   setFiles(filtered);
+  // };
 
   const handleRemoveAllFiles = () => {
     setFiles([]);

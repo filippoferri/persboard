@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { createContext, useEffect, useReducer, useCallback, useMemo } from 'react';
 import { initializeApp } from 'firebase/app';
-import { getAnalytics } from "firebase/analytics";
+//import { getAnalytics } from "firebase/analytics";
 import {
   getAuth,
   signOut,
