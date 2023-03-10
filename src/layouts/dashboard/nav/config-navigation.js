@@ -30,7 +30,7 @@ const navConfig = [
       { title: 'Dashboard', path: PATH_DASHBOARD.welcome, icon: ICONS.menuItem },
       { title: 'Advices', path: PATH_DASHBOARD.advices.root, icon: ICONS.chat },
       { title: 'AI Directors', path: PATH_DASHBOARD.directors.root, icon: ICONS.boards },
-      //{ title: 'Boards', path: PATH_DASHBOARD.boards, icon: ICONS.boards },
+      // { title: 'Boards', path: PATH_DASHBOARD.boards, icon: ICONS.boards },
       // { title: 'One', path: PATH_DASHBOARD.one, icon: ICONS.dashboard },
       // { title: 'Two', path: PATH_DASHBOARD.two, icon: ICONS.ecommerce },
       // { title: 'Three', path: PATH_DASHBOARD.three, icon: ICONS.analytics },

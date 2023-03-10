@@ -1,23 +1,23 @@
 import { useState, useEffect } from 'react';
 // @mui
 import { Stack, Button, Typography, Box } from '@mui/material';
-// auth
-import { useAuthContext } from '../../../auth/useAuthContext';
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, getDocs, onSnapshot } from 'firebase/firestore';
-import { FIREBASE_API } from '../../../config-global';
-
 // Router
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
+// auth
+import { useAuthContext } from '../../../auth/useAuthContext';
+// firebase
+import { initializeApp } from 'firebase/app';
+import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
+import { FIREBASE_API } from '../../../config-global';
 
 // ----------------------------------------------------------------------
 
 export default function NavDocs() {
 
   const { user } = useAuthContext();
-  const app = initializeApp(FIREBASE_API);
-  const db = getFirestore(app);
+  // const app = initializeApp(FIREBASE_API);
+  // const db = getFirestore(app);
 
   const [credits, setCredits] = useState();
 
@@ -42,7 +42,6 @@ export default function NavDocs() {
   
 
   return (
-    <>
       <Stack
         spacing={3}
         sx={{
@@ -66,6 +65,5 @@ export default function NavDocs() {
           </Button>
         </Box>
       </Stack>
-    </>
   );
 }

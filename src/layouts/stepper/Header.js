@@ -5,13 +5,12 @@ import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import { AppBar, Toolbar, Box, Button, Stepper, Step, StepLabel } from '@mui/material';
 // config
+import { PATH_DASHBOARD } from 'src/routes/paths';
 import { HEADER } from '../../config-global';
 // utils
 import { bgBlur } from '../../utils/cssStyles';
 // components
 import Logo from '../../components/logo';
-
-import { PATH_DASHBOARD } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 

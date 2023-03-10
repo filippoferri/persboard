@@ -6,16 +6,16 @@ import { m } from "framer-motion";
 
 import { Container, Grid, Stack, Card, Box, Typography, Chip, Divider, Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-// layouts
-import DashboardLayout from '../../../layouts/dashboard';
 // Router
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
+// layouts
+import DashboardLayout from '../../../layouts/dashboard';
 // components
 import { useSettingsContext } from '../../../components/settings';
-import { varFade } from '../../../components/animate/variants';
+// import { varFade } from '../../../components/animate/variants';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import Label from '../../../components/label';
+// import Label from '../../../components/label';
 import Iconify from '../../../components/iconify';
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
@@ -67,12 +67,12 @@ const boxStyled = {
 export default function PageBilling() {
     const { themeStretch } = useSettingsContext();
     
-    const router = useRouter();
+    // const router = useRouter();
     const { user } = useAuthContext();
 
     const [selectedBox, setSelectedBox] = useState(50);
     const [totalBilled, setTotalBilled] = useState(9.99);
-    const [cpc, setCpc] = useState();
+    // const [cpc, setCpc] = useState();
 
     const handleBoxClick = (amount) => {
         setSelectedBox(amount);
@@ -94,13 +94,15 @@ export default function PageBilling() {
         }
     };
 
-    const handleCPC = () => {
-        const cpc = totalBilled / selectedBox;
-        setCpc(cpc.toFixed(2));
-    }
+    // const handleCPC = () => {
+    //     const cpc = totalBilled / selectedBox;
+    //     setCpc(cpc.toFixed(2));
+    // }
 
     useEffect(() => {
-        handleCPC();
+        // handleCPC();
+        const cpc = totalBilled / selectedBox;
+        setCpc(cpc.toFixed(2));
     }, [selectedBox, totalBilled]);
 
     const handleSubmit = async (event) => {

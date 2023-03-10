@@ -23,17 +23,17 @@ FileFolderCard.propTypes = {
 
 
 export default function FileFolderCard({ folder, selected, onSelect, onDelete, sx, ...other }) {
-  //const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
 
-  //const [inviteEmail, setInviteEmail] = useState('');
+  // const [inviteEmail, setInviteEmail] = useState('');
 
   const [showCheckbox, setShowCheckbox] = useState(false);
 
-  //const [openShare, setOpenShare] = useState(false);
+  // const [openShare, setOpenShare] = useState(false);
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  //const [openDetails, setOpenDetails] = useState(false);
+  // const [openDetails, setOpenDetails] = useState(false);
 
   const [folderName, setFolderName] = useState(folder.folderName);
 
@@ -71,9 +71,9 @@ export default function FileFolderCard({ folder, selected, onSelect, onDelete, s
   //   setOpenShare(false);
   // };
 
-  const handleOpenDetails = () => {
-    setOpenDetails(true);
-  };
+  // const handleOpenDetails = () => {
+  //   setOpenDetails(true);
+  // };
 
   // const handleCloseDetails = () => {
   //   setOpenDetails(false);

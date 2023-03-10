@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-// next
-import { useRouter } from 'next/router';
-// routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
 // @mui
 import { Box, Stack, Drawer } from '@mui/material';
+// next
+// import { useRouter } from 'next/router';
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
+
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
 // config
@@ -17,10 +18,10 @@ import { NavSectionVertical } from '../../../components/nav-section';
 //
 import navConfig from './config-navigation';
 import NavDocs from './NavDocs';
-import NavAccount from './NavAccount';
-import NavCreateNew from './NavCreateNew';
-import NavToggleButton from './NavToggleButton';
-import NavNewBoardroom from './NavNewBoardroom';
+// import NavAccount from './NavAccount';
+// import NavCreateNew from './NavCreateNew';
+// import NavToggleButton from './NavToggleButton';
+// import NavNewBoardroom from './NavNewBoardroom';
 
 
 // ----------------------------------------------------------------------
@@ -42,8 +43,8 @@ export default function NavVertical({ openNav, onCloseNav }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const handleClick = () => {
-    router.push({  pathname: PATH_DASHBOARD.projects.newProject });};
+  // const handleClick = () => {
+  //   router.push({  pathname: PATH_DASHBOARD.projects.newProject });};
 
   const renderContent = (
     <Scrollbar

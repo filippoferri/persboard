@@ -25,7 +25,6 @@ export default function StepperLayout({ children, step }) {
   const isOffset = useOffSetTop(HEADER.H_MAIN_DESKTOP);
 
   return (
-    <>
     <AuthGuard> 
       <Header isOffset={isOffset} step={step} />
 
@@ -42,6 +41,5 @@ export default function StepperLayout({ children, step }) {
         </Stack>
         </Container>
       </AuthGuard>
-    </>
   );
 }
