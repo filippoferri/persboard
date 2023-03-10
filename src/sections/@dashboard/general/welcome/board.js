@@ -1,10 +1,13 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import { Stack, Box, Typography, Tabs, Tab, Button } from '@mui/material';
+import { Grid, Stack, Box, Typography, Tabs, Tab, Button, IconButton } from '@mui/material';
 
 import BoardFromScratch from './Welcomeboard/boardfromscratch';
 import BoardFromDirectors from './Welcomeboard/boardfromdirectors';
+
+// components
+import Iconify from '../../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -45,7 +48,7 @@ WelcomeBoard.propTypes = {
 
 // ----------------------------------------------------------------------
 
-export default function WelcomeBoard({ dataFromPrevStep, onNextStep }) {
+export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep }) {
 
 		const [value, setValue] = React.useState(0);
 
@@ -66,19 +69,28 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep }) {
 				mb: 4,
 			}}
 		>
-			<Box sx={{ flexGrow: 1 }}>
-				<Typography variant="h4" gutterBottom>
-					Invite Your Board
-				</Typography>
-				<Typography variant="p" gutterBottom>
-					Map out your Personal Board of Directors, and engage them!
-				</Typography>
-			</Box>
-			<Box sx={{ flexShrink: 0 }}>
-			{/* <Button variant="contained" size="large" onClick={handleContinue} disabled={!text}>
-				Get Advices
-			</Button> */}
-			</Box>
+			<Grid container spacing={0}>
+				<Grid item sx={{display: "flex", alignItems:"flex-start" }}>
+                    <IconButton 
+                        color= 'default' 
+                        onClick={onPrevStep}>
+                        <Iconify icon="eva:arrow-ios-back-fill" />
+                    </IconButton>
+                </Grid>
+				<Grid item sx={{ flexGrow: 1 }}>
+					<Typography variant="h4" gutterBottom>
+						Invite Your Board
+					</Typography>
+					<Typography variant="p" gutterBottom>
+						Map out your Personal Board of Directors, and engage them!
+					</Typography>
+				</Grid>
+				<Grid item sx={{ flexShrink: 0 }}>
+				{/* <Button variant="contained" size="large" onClick={handleContinue} disabled={!text}>
+					Get Advices
+				</Button> */}
+				</Grid>
+			</Grid>
 		</Stack>
 
 		<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

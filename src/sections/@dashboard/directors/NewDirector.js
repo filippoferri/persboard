@@ -253,7 +253,7 @@ export default function NewDirector({ isEdit = false, currentUser }) {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container direction="row" alignItems="center" spacing={3}>
-        <Grid item xs={12} md={3} sx={{display: "flex", justifyContent: "center", textAlign:"end"}}>
+        <Grid item xs={12} md={3} sx={{display: "flex", justifyContent: "center", alignItems: "center", textAlign:"left"}}>
           <Avatar
             alt={values.fullName}
             src=""
@@ -263,7 +263,7 @@ export default function NewDirector({ isEdit = false, currentUser }) {
             }}
           />
         </Grid>
-        <Grid item xs={12} md={4} sx={{ backgroundColor: "#F4F6F8", minHeight: 270, borderRadius: 2 }}>
+        <Grid item xs={12} md={5} sx={{ backgroundColor: "#F4F6F8", minHeight: 270, borderRadius: 2 }}>
           <Box sx={{color: "#637381", p: "8px 16px 32px 16px "}}>
             <Typography variant='body2'>
               {values.fullName && values.fullName}

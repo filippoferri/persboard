@@ -59,7 +59,7 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
     onDelete(directorId);
   };  
 
-  const dirAvatar = director.avatar ? director.avatar : 'https://res.cloudinary.com/ddtdvms3g/image/upload/v1677442263/avatar_14_exfcsg.jpg';
+  const dirAvatar = director.avatar ? director.avatar : '/asset/illustrations/avatars/ai_default.svg';
 
   const bgColor = check ? '#3366FF' : (check === false ? 'white' : 'white' );
   const topColor = check ? '#1939B7' : (check === false ? '#DFE3E8' : '#DFE3E8' );

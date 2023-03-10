@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Paper, Stack, Box, Grid, Typography, Button, Link } from '@mui/material';
+import { Paper, Stack, Box, Grid, Typography, Button, Link, IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
 // firebase
 import { initializeApp } from 'firebase/app';
@@ -8,6 +8,8 @@ import { increment } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../../config-global';
 // auth
 import { useAuthContext } from '../../../../auth/useAuthContext';
+// components
+import Iconify from '../../../../components/iconify';
 // sections
 import AdvisoryBoard from '../../../../sections/@dashboard/projects/AdvisoryBoard';
 import {generateAdvice} from '../../../../utils/generateAdvice';
@@ -15,17 +17,19 @@ import {generateAdvice} from '../../../../utils/generateAdvice';
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 
+import Tooltip from '@mui/material/Tooltip';
 
 // ----------------------------------------------------------------------
 
 WelcomeBoardroom.propTypes = {
 	dataFromPrevStep: PropTypes.object,
 	onPrevStep: PropTypes.func,
+    onRestart: PropTypes.func,
 };
 
 // ----------------------------------------------------------------------
 
-export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) { 
+export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onRestart }) { 
 
     const question = dataFromPrevStep[0].question;
     const directors = dataFromPrevStep[1].directors;
@@ -45,14 +49,14 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
     const handleUpgrade = () => {
         router.push({ pathname: PATH_DASHBOARD.billing.root });};
 
-    // const data = [
-    // {
-    //     id: '1',
-    //     fullName: 'John Doe',
-    //     text: 'I think it is a great idea. I would love to be a part of it.',
-    //     role: 'Mentor'
-    //     }
-    // ];
+    const data = [
+    {
+        id: '1',
+        fullName: 'John Doe',
+        text: 'I think it is a great idea. I would love to be a part of it.',
+        role: 'Mentor'
+        }
+    ];
 
     // fetch the directors
     async function fetchDirectors() {
@@ -108,9 +112,9 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
         }
     
         setLoading(true);
-        const prompt = await generateAdvice(loadedDirectors, question);
-        setDiscussion(prompt);
-        //setDiscussion(data);
+        //const prompt = await generateAdvice(loadedDirectors, question);
+        //setDiscussion(prompt);
+        setDiscussion(data);
         setLoading(false);
     }
 
@@ -159,31 +163,44 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
     }, [loadedDirectors]);
     
    // Use handleSave to save discussion to Firebase after discussion is generated
-    useEffect(() => {
-        if (discussion.length > 0 && remainingCredits > 0 && !hasSavedDiscussion) {
-        handleSave();
-        }
-    }, [discussion, remainingCredits, hasSavedDiscussion]);
+    // useEffect(() => {
+    //     if (discussion.length > 0 && remainingCredits > 0 && !hasSavedDiscussion) {
+    //     handleSave();
+    //     }
+    // }, [discussion, remainingCredits, hasSavedDiscussion]);
 
     return (
     <>
         <Stack
             direction="row"
-            alignItems="center"
+            alignItems="flex-start"
             sx={{
                 mt: 2,
                 mb: 4,
             }}
         >
-            <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="h4" gutterBottom>
-                    Board Advice
-                </Typography>
-                <Typography variant="p" gutterBottom>
-                    Get guidance on your toughest question
-                </Typography>
-            </Box>
-            <Box sx={{ flexShrink: 0 }}></Box>
+            <Grid container spacing={0}>
+                <Grid item sx={{display: "flex", alignItems:"flex-start" }}>
+                    <IconButton 
+                        color= 'default' 
+                        onClick={onPrevStep}>
+                        <Iconify icon="eva:arrow-ios-back-fill" />
+                    </IconButton>
+                </Grid>
+                <Grid item sx={{ flexGrow: 1 }}>
+                    <Typography variant="h4" gutterBottom>
+                        Board Advice
+                    </Typography>
+                    <Typography variant="p" gutterBottom>
+                        Get guidance on your toughest question
+                    </Typography>
+                </Grid>
+                <Grid item sx={{ display: "flex", alignItems: "center" }}>
+                    <Button variant='contained' size="large" onClick={onRestart}>
+                        New Board Advice
+                    </Button>
+                </Grid>
+            </Grid>
         </Stack>
 
         <Paper variant="outlined" sx={{ flexGrow: 1 }}>
@@ -199,9 +216,22 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
                 <Grid container item xs={9} direction="column" sx={{flexGrow: 1}} >
 
                     <Box sx={{ display: 'flex', borderBottom: '1px solid #DFE3E8', height: '75px', alignItems: 'center', p: 2, fontWeight:'bold', color:'#637381', bgcolor: '#f4f6f8' }}>
-                        Meaningful Discussion
+                        <Box sx={{ display: "flex", flex: 1 }}>
+                            Meaningful Discussion
+                        </Box>
+                        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                            <Tooltip title="Recive new advice from the board for the same question">
+                                <IconButton 
+                                    color= 'default' 
+                                    onClick={() => {
+                                        generateDiscussion();
+                                    }}>
+                                    <Iconify icon="eva:refresh-outline" />
+                                </IconButton>
+                            </Tooltip>
+                        </Box>
                     </Box>
-                    <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', p:2, pb: 4 }}>
+                    <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', p:2 }}>
 
                         {/*/  You */}
                         <Grid container justifyContent={'flex-end'}>
@@ -212,7 +242,7 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
                                     You
                                 </Typography>
                                 <Box sx={{
-                                    backgroundColor:"#D1E9FC", 
+                                    backgroundColor:"#D6E4FF", 
                                     p: 2, 
                                     borderRadius: 1, 
                                     borderTopRightRadius: 0,
@@ -262,17 +292,17 @@ export default function WelcomeBoardroom({dataFromPrevStep, onPrevStep}) {
                         <Grid container justifyContent={'center'}>
                             <Grid item justifyContent="center">
                                 <Typography variant="body1" align="center" sx={{color: "#919EAB", pt: 4, pb: 5 }}>
-                                    {remainingCredits > 0 ? `${remainingCredits} credits remaining.` : 'No credits remaining. Please upgrade your account.'} Need more? <Link underline="none" color="inherit" href={PATH_DASHBOARD.billing.root} >Upgrade now</Link>!
+                                    {remainingCredits > 0 ? `${remainingCredits} credits remaining.` : 'No credits remaining. Please upgrade your account.'} Need more? <Link underline="none" color="#3366FF" href={PATH_DASHBOARD.billing.root} >Upgrade now</Link>!
                                 </Typography>
                             </Grid>
                             <Grid item sx={{ flexGrow: 1 }}>
-                                <Box sx={{display: 'flex', backgroundColor: "#D1E9FC", p: 2, borderRadius: 1, alignItems: "center"}}>
+                                <Box sx={{display: 'flex', backgroundColor: "#D6E4FF", p: 2, borderRadius: 1, alignItems: "center"}}>
                                     <Box sx={{ flexGrow: 1 }}>
                                         <Typography variant='h5'>Engage in a dynamic exchange of ideas</Typography>
-                                        <Typography variant='h5' sx={{color: "#2065D1"}}>Achieve greater clarity and direction</Typography>
+                                        <Typography variant='h5' sx={{color: "#3366FF"}}>Achieve greater clarity and direction</Typography>
                                     </Box>
                                     <Box>
-                                        <Button variant="contained" size="large" onClick={handleUpgrade} >Upgrade Now</Button>
+                                        <Button variant="outlined" size="large" onClick={handleUpgrade} >Upgrade Now</Button>
                                     </Box>
                                 </Box>
                             </Grid>

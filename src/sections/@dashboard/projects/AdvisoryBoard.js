@@ -49,7 +49,7 @@ export default function AdvisoryBoard({
                     <ListItem key={index} disablePadding>
                     <ListItemButton onClick={() => handleOpenDetails(director)}>
                         <ListItemAvatar>
-                        <CustomAvatar src="" alt={director.fullName} name={director.fullName} />
+                        <CustomAvatar src={director.avatar} alt={director.fullName} name={director.fullName} />
                         </ListItemAvatar>
                         <ListItemText
                             primary={director.fullName ? director.role : director.fullName}

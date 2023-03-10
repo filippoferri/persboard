@@ -8,7 +8,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 // @mui
 import { alpha, useTheme } from '@mui/material/styles';
-import { Container, Grid, Button, Stack, Box, Typography, Divider, CardActionArea, Paper, FormControl, TextField, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { Container, Grid, Button, Stack, Box, Typography, Divider, CardActionArea, Paper, FormControl, TextField, List, ListItem, ListItemButton, ListItemText, IconButton } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, deleteDoc, Timestamp, onSnapshot } from 'firebase/firestore';
@@ -21,6 +21,7 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 import Image from '../../../../components/image';
 // components
 import { useSettingsContext } from '../../../../components/settings';
+import Iconify from '../../../../components/iconify';
 
 
 // ----------------------------------------------------------------------
@@ -45,6 +46,10 @@ WelcomeQuestion.propTypes = {
 
 export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 		const { themeStretch } = useSettingsContext();
+
+		const router = useRouter();
+		const handleBack = () => {
+			router.push({ pathname: PATH_DASHBOARD.welcome });};
 
 		const app = initializeApp(FIREBASE_API);
 		const db = getFirestore(app);
@@ -112,19 +117,24 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 					mb: 4,
 				}}
 			>
-				<Box sx={{ flexGrow: 1 }}>
-					<Typography variant="h4" gutterBottom>
-						Ask Your Board
-					</Typography>
-					<Typography variant="p" gutterBottom>
-						Craft your question to get valuable advice from your Personal Board
-					</Typography>
-				</Box>
-				<Box sx={{ flexShrink: 0 }}>
-				{/* <Button variant="contained" size="large" onClick={handleContinue} disabled={!text}>
-					Get Advices
-				</Button> */}
-				</Box>
+				<Grid container spacing={0}>
+					<Grid item sx={{display: "flex", alignItems:"flex-start" }}>
+                        <IconButton 
+                            color= 'default' 
+                            onClick={handleBack}>
+                            <Iconify icon="eva:arrow-ios-back-fill" />
+                        </IconButton>
+					</Grid>
+					<Grid item sx={{ flexGrow: 1 }}>
+						<Typography variant="h4" gutterBottom>
+							Ask Your Board
+						</Typography>
+						<Typography variant="p" gutterBottom>
+							Craft your question to get valuable advice from your Personal Board
+						</Typography>
+					</Grid>
+					<Grid Item sx={{ flexShrink: 0 }}></Grid>
+				</Grid>
 			</Stack>
 
 			<Grid container spacing={2}>

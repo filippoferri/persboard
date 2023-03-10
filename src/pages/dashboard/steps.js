@@ -60,6 +60,10 @@ export default function PageWelcome() {
     setStep((prevStep) => prevStep - 1);
   };
 
+  const handleRestart = () => {
+    setStep((prevStep) => prevStep - 2);
+  };
+
   const handleData = (stepData) => {
     setData(stepData);
   };
@@ -105,6 +109,7 @@ export default function PageWelcome() {
           <WelcomeBoardroom
             dataFromPrevStep={data}
             onPrevStep={handlePrevStep}
+            onRestart={handleRestart}
           />
         </m.div>
         )}
