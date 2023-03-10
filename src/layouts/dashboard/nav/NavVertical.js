@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 // @mui
 import { Box, Stack, Drawer } from '@mui/material';
 // next
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 

@@ -72,7 +72,7 @@ export default function PageBilling() {
 
     const [selectedBox, setSelectedBox] = useState(50);
     const [totalBilled, setTotalBilled] = useState(9.99);
-    // const [cpc, setCpc] = useState();
+    const [cpc, setCpc] = useState();
 
     const handleBoxClick = (amount) => {
         setSelectedBox(amount);

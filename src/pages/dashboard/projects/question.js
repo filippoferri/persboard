@@ -2,27 +2,27 @@ import * as React from 'react';
 
 import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import { useScrollTrigger } from '@mui/material';
-import { m } from 'framer-motion';
-import { animated } from 'framer-motion';
+// import { useScrollTrigger } from '@mui/material';
+// import { m } from 'framer-motion';
+// import { animated } from 'framer-motion';
 // next
 import Head from 'next/head';
-import Link from 'next/link';
+// import Link from 'next/link';
 // @mui
-import { alpha, useTheme } from '@mui/material/styles';
-import { Container, Grid, Button, Stack, Box, Typography, Divider, CardActionArea, Paper, FormControl, TextField, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-// layouts
-import StepperLayout from '../../../layouts/stepper';
+// import { alpha, useTheme } from '@mui/material/styles';
+import { Container, Grid, Button, Stack, Box, Typography, Divider, FormControl, TextField, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, deleteDoc, Timestamp, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../config-global';
-// auth
-import { useAuthContext } from '../../../auth/useAuthContext';
 // routes
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
-import Image from '../../../components/image';
+// layouts
+import StepperLayout from '../../../layouts/stepper';
+// auth
+import { useAuthContext } from '../../../auth/useAuthContext';
+// import Image from '../../../components/image';
 // components
 import { useSettingsContext } from '../../../components/settings';
 
@@ -54,8 +54,8 @@ export default function PageNewQuestion() {
 		const { user } = useAuthContext();
 
 		const [text, setText] = useState('');
-		const [charCount, setCharCount] = useState(100);
-		const [questions, setQuestion] = useState([]);
+		// const [charCount, setCharCount] = useState(100);
+		// const [questions, setQuestion] = useState([]);
 
 		const handleTextChange = (event) => {
 			setText(event.target.value.slice(0, 100));
@@ -177,7 +177,7 @@ export default function PageNewQuestion() {
 			<Box sx={{ flexGrow: 1 }}>
 				<Typography variant="h4">Ideas</Typography>
 			</Box>
-			<Box sx={{ flexShrink: 0 }}></Box>
+			<Box sx={{ flexShrink: 0 }}>
 				</Stack>
 
 				<Grid container spacing={3} direction="row">

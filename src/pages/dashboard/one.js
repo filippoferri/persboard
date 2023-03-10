@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { Container, Typography } from '@mui/material';
 // layouts
@@ -5,7 +6,7 @@ import DashboardLayout from '../../layouts/dashboard';
 // components
 import { useSettingsContext } from '../../components/settings';
 import {generateAdvice} from '../../utils/generateAdvice';
-import { useState, useEffect } from 'react';
+
 
 // ----------------------------------------------------------------------
 

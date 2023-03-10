@@ -35,9 +35,9 @@ export default function StepperLayout({ children, step }) {
             m: 'auto',
           }}
         >
-          {React.Children.map(children, (child) => {
+          {React.Children.map(children, (child) => 
             return React.cloneElement(child); // Pass step prop to children
-          })}
+          )}
         </Stack>
         </Container>
       </AuthGuard>

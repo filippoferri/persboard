@@ -1,25 +1,25 @@
 // next
 import Head from 'next/head';
-//import { Container, Typography } from '@mui/material';
+// import { Container, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
-import { Container, Grid, Box, Stack, Button } from '@mui/material';
+import { Container } from '@mui/material';
 import { m } from "framer-motion";
 // auth
-import { useAuthContext } from '../../auth/useAuthContext';
+// import { useAuthContext } from '../../auth/useAuthContext';
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+// import { PATH_DASHBOARD } from '../../routes/paths';
 // layouts
 import DashboardLayout from '../../layouts/dashboard';
 // components
 import { useSettingsContext } from '../../components/settings';
 // assets
-import WelcomeIntro from '../../sections/@dashboard/general/welcome/intro';
+// import WelcomeIntro from '../../sections/@dashboard/general/welcome/intro';
 import WelcomeQuestion from '../../sections/@dashboard/general/welcome/question';
 import WelcomeBoard from '../../sections/@dashboard/general/welcome/board';
 import WelcomeBoardroom from '../../sections/@dashboard/general/welcome/boardroom';
 //
-import { varFade } from '../../components/animate/variants';
+// import { varFade } from '../../components/animate/variants';
 
 // ----------------------------------------------------------------------
 
