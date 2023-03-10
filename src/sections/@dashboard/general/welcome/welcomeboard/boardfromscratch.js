@@ -23,10 +23,10 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
   // Show advanced fields
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-  const handleAdvancedSubmit = (data) => {    
-    onSubmit(data);
-    setShowAdvanced(false);
-  };
+  // const handleAdvancedSubmit = (data) => {    
+  //   onSubmit(data);
+  //   setShowAdvanced(false);
+  // };
 
   // Form validation schema
   const [formFields, setFormFields] = useState([
@@ -51,7 +51,7 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
   // Validate form fields
   const isFormValid = formFields.every(field => field.fullName !== '');
 
-  const [boardData, setBoardData] = useState([]);
+  // const [boardData, setBoardData] = useState([]);
 
   const NextStep = () => {
     const directors = { directors: formFields };
@@ -85,7 +85,7 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 
                         <StyledPaper sx={{ flexGrow: 6 }}>
                             <RHFTextField 
-                              name={'fullName'} 
+                              name="fullName"
                               label="John Doe" 
                               helperText="Fake or Real Full Name (also famous)" 
                               value={input.fullName}
@@ -175,13 +175,13 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
       <Stack
         direction="row"
         alignItems="center"
+        justifyContent="flex-end"
         sx={{
             mt: 3,
             mb: 4,
       }}
         >
-          <Box sx={{ flexGrow: 1 }}></Box>
-          <Box sx={{ flexShrink: 0 }}>
+          <Box sx={{ flexShrink: 1 }}>
               <Button disabled={!isFormValid}  variant="contained" size="large" onClick={NextStep} >
                   Ask Your Board
               </Button>
@@ -316,7 +316,6 @@ const BoardFromScratch = ({onNextStep, dataFromPrevStep}) => {
             <Box sx={{ flexGrow: 1 }}>
                 Add from 3 to 5 people who will be on your board.
             </Box>
-            <Box sx={{ flexShrink: 0 }}></Box>
         </Stack>
         
         <FormFields methods={useForm()} dataFromPrevStep={dataFromPrevStep} onNextStep={onNextStep}/>

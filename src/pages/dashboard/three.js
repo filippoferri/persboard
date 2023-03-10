@@ -41,10 +41,6 @@ export default function PageThree() {
           Page Three
         </Typography>
 
-        <Typography gutterBottom>
-          <button>
-        </Typography>
-
         <Typography>
           Praesent ac sem eget est egestas volutpat. Phasellus viverra nulla ut metus varius
           laoreet. Curabitur ullamcorper ultricies nisi. Ut non enim eleifend felis pretium feugiat.

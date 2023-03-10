@@ -4,21 +4,21 @@ import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import { useScrollTrigger } from '@mui/material';
 // next
-import Head from 'next/head';
-import Link from 'next/link';
+// import Head from 'next/head';
+// import Link from 'next/link';
 // @mui
-import { alpha, useTheme } from '@mui/material/styles';
-import { Container, Grid, Button, Stack, Box, Typography, Divider, CardActionArea, Paper, FormControl, TextField, List, ListItem, ListItemButton, ListItemText, IconButton } from '@mui/material';
-// firebase
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, deleteDoc, Timestamp, onSnapshot } from 'firebase/firestore';
-import { FIREBASE_API } from '../../../../config-global';
-// auth
-import { useAuthContext } from '../../../../auth/useAuthContext';
+// import { alpha, useTheme } from '@mui/material/styles';
+import { Grid, Button, Stack, Box, Typography, Divider, FormControl, TextField, List, ListItem, ListItemButton, ListItemText, IconButton } from '@mui/material';
 // routes
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
-import Image from '../../../../components/image';
+// firebase
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
+import { FIREBASE_API } from '../../../../config-global';
+// auth
+// import { useAuthContext } from '../../../../auth/useAuthContext';
+// import Image from '../../../../components/image';
 // components
 import { useSettingsContext } from '../../../../components/settings';
 import Iconify from '../../../../components/iconify';
@@ -40,12 +40,11 @@ const StyledItem = styled('div')(({ theme }) => ({
 WelcomeQuestion.propTypes = {
 	dataFromPrevStep: PropTypes.object,
 	onNextStep: PropTypes.func,
-	onPrevStep: PropTypes.func,
-
+	// onPrevStep: PropTypes.func,
 };
 
 export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
-		const { themeStretch } = useSettingsContext();
+		// const { themeStretch } = useSettingsContext();
 
 		const router = useRouter();
 		const handleBack = () => {
@@ -56,7 +55,7 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 
 		const [text, setText] = useState('');
 		const [charCount, setCharCount] = useState(100);
-		const [questions, setQuestion] = useState([]);
+		// const [questions, setQuestion] = useState([]);
 
 		const handleTextChange = (event) => {
 			const inputText = event.target.value.slice(0, 100);
@@ -133,7 +132,6 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 							Craft your question to get valuable advice from your Personal Board
 						</Typography>
 					</Grid>
-					<Grid Item sx={{ flexShrink: 0 }}></Grid>
 				</Grid>
 			</Stack>
 
@@ -191,7 +189,6 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 		<Box sx={{ flexGrow: 1 }}>
 			<Typography variant="h4">Ideas</Typography>
 		</Box>
-		<Box sx={{ flexShrink: 0 }}></Box>
 			</Stack>
 
 			<Grid container spacing={3} direction="row">

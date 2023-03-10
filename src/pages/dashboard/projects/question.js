@@ -174,10 +174,10 @@ export default function PageNewQuestion() {
 			mb: 2
 				}}
 				>
-			<Box sx={{ flexGrow: 1 }}>
-				<Typography variant="h4">Ideas</Typography>
-			</Box>
-			<Box sx={{ flexShrink: 0 }}>
+					<Box sx={{ flexGrow: 1 }}>
+						<Typography variant="h4">Ideas</Typography>
+					</Box>
+					<Box sx={{ flexShrink: 0 }}></Box>
 				</Stack>
 
 				<Grid container spacing={3} direction="row">

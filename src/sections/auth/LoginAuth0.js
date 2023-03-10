@@ -54,6 +54,7 @@ export default function LoginAuth0() {
       >
         Login
       </Button>
+      </Stack>
     </LoginLayout>
   );
 }

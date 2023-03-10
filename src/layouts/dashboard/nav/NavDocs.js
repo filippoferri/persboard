@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react';
 import { Stack, Button, Typography, Box } from '@mui/material';
 // Router
 import { useRouter } from 'next/router';
-import { PATH_DASHBOARD } from '../../../routes/paths';
-// auth
-import { useAuthContext } from '../../../auth/useAuthContext';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
+import { PATH_DASHBOARD } from '../../../routes/paths';
+// auth
+import { useAuthContext } from '../../../auth/useAuthContext';
 import { FIREBASE_API } from '../../../config-global';
 
 // ----------------------------------------------------------------------
