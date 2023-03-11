@@ -10,14 +10,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Stack, Card, Paper, Box, Typography, Button, MenuItem } from '@mui/material';
 import FormProvider, { RHFTextField } from '../../../../../components/hook-form';
 
-
-// ----------------------------------------------------------------------
-
-BoardFromScratch.propTypes = {
-	dataFromPrevStep: PropTypes.func,
-	onNextStep: PropTypes.func,
-};
-
 // ----------------------------------------------------------------------
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
