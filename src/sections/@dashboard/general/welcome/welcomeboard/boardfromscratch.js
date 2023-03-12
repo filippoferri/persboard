@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 
 // form
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+// import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Stack, Card, Paper, Box, Typography, Button, MenuItem } from '@mui/material';
 import FormProvider, { RHFTextField } from '../../../../../components/hook-form';
@@ -17,6 +17,8 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
     width: 100,
 }));
+
+// ----------------------------------------------------------------------
 
 const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 
@@ -291,11 +293,11 @@ const qualities = [
 ];
 
 const BoardFromScratch = ({onNextStep, dataFromPrevStep}) => {
-    const UpdateBoardSchema = Yup.object().shape({
-        fullName1: Yup.string().required('Name is required'),
-        fullName2: Yup.string().required('Name is required'),
-        fullName3: Yup.string().required('Name is required'),
-    });
+    // const UpdateBoardSchema = Yup.object().shape({
+    //     fullName1: Yup.string().required('Name is required'),
+    //     fullName2: Yup.string().required('Name is required'),
+    //     fullName3: Yup.string().required('Name is required'),
+    // });
 
     // const methods = useForm({
     //     resolver: yupResolver(UpdateBoardSchema),
@@ -322,3 +324,18 @@ const BoardFromScratch = ({onNextStep, dataFromPrevStep}) => {
 };
 
 export default BoardFromScratch;
+
+// ----------------------------------------------------------------------
+
+BoardFromScratch.propTypes = {
+  onNextStep: PropTypes.func.isRequired,
+  dataFromPrevStep: PropTypes.object.isRequired,
+};
+
+FormFields.propTypes = {
+  methods: PropTypes.object.isRequired,
+  dataFromPrevStep: PropTypes.object.isRequired,
+  onNextStep: PropTypes.func.isRequired,
+};
+
+// ----------------------------------------------------------------------

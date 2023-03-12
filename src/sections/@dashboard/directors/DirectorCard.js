@@ -49,8 +49,12 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
 
   const dirAvatar = director.avatar ? director.avatar : '/asset/illustrations/avatars/ai_default.svg';
 
-let bgColor, topColor, textColor, borderColor, dividerColor;
-
+  let bgColor;
+  let topColor;
+  let textColor;
+  let borderColor;
+  let dividerColor;
+  
   if (check) {
     bgColor = '#3366FF';
     topColor = '#1939B7';
@@ -64,6 +68,7 @@ let bgColor, topColor, textColor, borderColor, dividerColor;
     borderColor = '#F4F6F8';
     dividerColor = '#DFE3E8';
   }
+  
 
 
   return (

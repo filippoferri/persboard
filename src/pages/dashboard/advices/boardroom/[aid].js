@@ -28,11 +28,7 @@ BoardroomView.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 // ----------------------------------------------------------------------
 
-BoardroomView.propTypes = {
-    myBoardroom: PropTypes.object,
-};
-
-export default function BoardroomView(myBoardroom) {
+export default function BoardroomView() {
     const {
         query: { aid },
     } = useRouter();

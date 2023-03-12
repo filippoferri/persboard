@@ -12,9 +12,10 @@ import { Grid, Button, Stack, Box, Typography, Divider, FormControl, TextField, 
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
-import { FIREBASE_API } from '../../../../config-global';
 // routes
 import { useRouter } from 'next/router';
+// firebase api
+import { FIREBASE_API } from '../../../../config-global';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // auth
 // import { useAuthContext } from '../../../../auth/useAuthContext';

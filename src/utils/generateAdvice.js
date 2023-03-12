@@ -5,9 +5,9 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 export const generateAdvice = async (advisoryDirectors, question) => {
   console.log('advisoryDirector', advisoryDirectors);
   try {
-    const prompt = advisoryDirectors.map(({ fullName, role, quality, area }) => {
-      return `Act as ${fullName}, an expert ${role}, and talk in first person. Reply to ${question}, considering that your key quality is ${quality} and your expertise area is ${area}. Start the advice in different ways with either "My advice is...", either "I think...", either "I would suggest to" either similar. Acting as ${fullName}, when available, close sharing your personal famous phrase.`;
-    });
+    const prompt = advisoryDirectors.map(({ fullName, role, quality, area }) => (
+      `Act as ${fullName}, an expert ${role}, and talk in first person. Reply to ${question}, considering that your key quality is ${quality} and your expertise area is ${area}. Start the advice in different ways with either "My advice is...", either "I think...", either "I would suggest to" either similar. Acting as ${fullName}, when available, close sharing your personal famous phrase.`
+    ));
 
     const { data } = await axiosInstance.post(
       '/completions',

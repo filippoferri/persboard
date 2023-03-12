@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Grid, Box, Typography, Button } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
@@ -15,40 +16,40 @@ import {DirectorCard} from '../../../directors/DirectorCard';
 
 const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
 
-const [selectedDirectors, setSelectedDirectors] = useState([]);
+    const [selectedDirectors, setSelectedDirectors] = useState([]);
 
-const handleSelectDirector = (directorId) => {
-    if (selectedDirectors.includes(directorId)) {
-        setSelectedDirectors(selectedDirectors.filter((id) => id !== directorId));
-    } else if (selectedDirectors.length < 5) {
-        setSelectedDirectors([...selectedDirectors, directorId]);
-    }
-};
+    const handleSelectDirector = (directorId) => {
+        if (selectedDirectors.includes(directorId)) {
+            setSelectedDirectors(selectedDirectors.filter((id) => id !== directorId));
+        } else if (selectedDirectors.length < 5) {
+            setSelectedDirectors([...selectedDirectors, directorId]);
+        }
+    };
 
-const app = initializeApp(FIREBASE_API);
-const db = getFirestore(app);
+    const app = initializeApp(FIREBASE_API);
+    const db = getFirestore(app);
 
-const { user } = useAuthContext();
+    const { user } = useAuthContext();
 
-const [premiumDirectors, setPremiumDirectors] = useState([]);
-const [myDirectors, setMyDirectors] = useState([]);
+    const [premiumDirectors, setPremiumDirectors] = useState([]);
+    const [myDirectors, setMyDirectors] = useState([]);
 
-const [checkedDirectors, setCheckedDirectors] = useState(Array(myDirectors.length).fill(false));
+    // const [checkedDirectors, setCheckedDirectors] = useState(Array(myDirectors.length).fill(false));
 
-const [boardData, setBoardData] = useState([]);
+    // const [boardData, setBoardData] = useState([]);
 
-const NextStep = () => {
-    const directors = { directors: selectedDirectors };
-    const boardData = [
-        dataFromPrevStep,
-    directors,
-    ];
-    setBoardData(boardData);
-    onNextStep(boardData);
-};
+    const NextStep = () => {
+        const directors = { directors: selectedDirectors };
+        const boardData = [
+            dataFromPrevStep,
+        directors,
+        ];
+        setBoardData(boardData);
+        onNextStep(boardData);
+    };
 
-// Get directors
-useEffect(() => {
+    // Get directors
+    useEffect(() => {
     const directorsRef = collection(db, 'directors');
     const myDirectorsRef = collection(db, 'users', user && user.uid, 'myDirectors');
     const unsubscribeDirectors = onSnapshot(directorsRef, (snapshot) => {
@@ -119,6 +120,15 @@ useEffect(() => {
             </Grid>
         </>
         );
-    };
+};
     
-    export default BoardFromDirectors;
+export default BoardFromDirectors;
+
+// ----------------------------------------------------------------------
+
+BoardFromDirectors.propTypes = {
+    onNextStep: PropTypes.func.isRequired,
+    dataFromPrevStep: PropTypes.object.isRequired,
+  };
+  
+  // ----------------------------------------------------------------------

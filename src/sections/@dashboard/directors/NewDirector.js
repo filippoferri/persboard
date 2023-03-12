@@ -11,11 +11,12 @@ import { useForm } from 'react-hook-form';
 // @mui
 import { LoadingButton } from '@mui/lab';
 import { Box, Card, Grid, Stack, Typography, MenuItem, Avatar } from '@mui/material';
-// routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, Timestamp } from 'firebase/firestore';
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
+// config
 import { FIREBASE_API } from '../../../config-global';
 // uuid
 // import { v4 as uuidv4 } from 'uuid';
