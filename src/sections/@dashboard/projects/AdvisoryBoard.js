@@ -9,7 +9,7 @@ import {
 // import { FIREBASE_API } from '../../../config-global';
 // import { getFirestore, doc, getDoc } from 'firebase/firestore';
 // auth
-import { useAuthContext } from '../../../auth/useAuthContext';
+// import { useAuthContext } from '../../../auth/useAuthContext';
 // sections
 import FileDetailsDrawer from '../directors/DirectorDetailsDrawer';
 import { CustomAvatar } from '../../../components/custom-avatar';

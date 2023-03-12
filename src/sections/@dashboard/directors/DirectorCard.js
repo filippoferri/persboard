@@ -19,7 +19,7 @@ import FileDetailsDrawer from './DirectorDetailsDrawer';
 DirectorCard.propTypes = {
   director: PropTypes.object,
   check: PropTypes.bool,
-  onDelete, // new prop
+  onDelete: PropTypes.func,
   boardroom: PropTypes.bool,
 };
 
@@ -49,18 +49,22 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
 
   const dirAvatar = director.avatar ? director.avatar : '/asset/illustrations/avatars/ai_default.svg';
 
-  let bgColor = '';
+let bgColor, topColor, textColor, borderColor, dividerColor;
+
   if (check) {
     bgColor = '#3366FF';
-  } else if (check === false) {
-    bgColor = 'white';
+    topColor = '#1939B7';
+    textColor = 'white';
+    borderColor = '#3366FF';
+    dividerColor = '#84A9FF';
   } else {
     bgColor = 'white';
+    topColor = '#DFE3E8';
+    textColor = 'text.secondary';
+    borderColor = '#F4F6F8';
+    dividerColor = '#DFE3E8';
   }
-  const topColor = check ? '#1939B7' : (check === false ? '#DFE3E8' : '#DFE3E8' );
-  const textColor = check ? 'white' : (check === false ? 'text.secondary' : 'text.secondary');
-  const borderColor = check ? '#3366FF' : (check === false ? '#F4F6F8' : '#F4F6F8');
-  const dividerColor = check ? '#84A9FF' : (check === false ? '#DFE3E8' : '#DFE3E8');
+
 
   return (
     <>

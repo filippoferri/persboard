@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Yup from 'yup';
+// import * as Yup from 'yup';
 // next
 import { useRouter } from 'next/router';
 // form
@@ -18,7 +18,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, Timestamp } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../config-global';
 // uuid
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
 // components
