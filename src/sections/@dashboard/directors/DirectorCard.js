@@ -2,13 +2,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // @mui
-import { alpha, styled } from '@mui/material/styles';
+// import { alpha, styled } from '@mui/material/styles';
 import { Box, Card, Avatar, Divider, Typography } from '@mui/material';
 // components
 // import Image from '../../../components/image';
+import MenuOpenRoundedIcon from '@mui/icons-material/MenuOpenRounded';
 import Label from '../../../components/label';
 // import Iconify from '../../../components/iconify';
-import MenuOpenRoundedIcon from '@mui/icons-material/MenuOpenRounded';
 
 import SvgColor from '../../../components/svg-color';
 // sections
@@ -19,7 +19,7 @@ import FileDetailsDrawer from './DirectorDetailsDrawer';
 DirectorCard.propTypes = {
   director: PropTypes.object,
   check: PropTypes.bool,
-  onDelete: PropTypes.func, // new prop
+  onDelete, // new prop
   boardroom: PropTypes.bool,
 };
 
@@ -49,7 +49,14 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
 
   const dirAvatar = director.avatar ? director.avatar : '/asset/illustrations/avatars/ai_default.svg';
 
-  const bgColor = check ? '#3366FF' : (check === false ? 'white' : 'white' );
+  let bgColor = '';
+  if (check) {
+    bgColor = '#3366FF';
+  } else if (check === false) {
+    bgColor = 'white';
+  } else {
+    bgColor = 'white';
+  }
   const topColor = check ? '#1939B7' : (check === false ? '#DFE3E8' : '#DFE3E8' );
   const textColor = check ? 'white' : (check === false ? 'text.secondary' : 'text.secondary');
   const borderColor = check ? '#3366FF' : (check === false ? '#F4F6F8' : '#F4F6F8');

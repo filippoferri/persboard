@@ -29,7 +29,7 @@ export const AUTH0_API = {
 
 export const MAP_API = process.env.MAPBOX_API;
 
-export const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+export const { OPENAI_API_KEY } = process.env;
 
 // ROOT PATH AFTER LOGIN SUCCESSFUL
 const { welcome: PATH_AFTER_LOGIN } = PATH_DASHBOARD;

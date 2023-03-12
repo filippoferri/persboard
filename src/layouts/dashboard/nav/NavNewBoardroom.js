@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 // import { styled, alpha } from '@mui/material/styles';
 import { Box, Link } from '@mui/material';
 // auth
-import { useAuthContext } from '../../../auth/useAuthContext';
+// import { useAuthContext } from '../../../auth/useAuthContext';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 

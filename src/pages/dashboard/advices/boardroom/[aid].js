@@ -5,19 +5,18 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 // @mui
 import { Paper, Box, Container, Typography, Grid } from '@mui/material';
-// layouts
-import DashboardLayout from '../../../../layouts/dashboard';
 // firebase
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { FIREBASE_API } from '../../../../config-global';
+// layouts
+import DashboardLayout from '../../../../layouts/dashboard';
 // Router
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // auth
 import { useAuthContext } from '../../../../auth/useAuthContext';
 import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
 import AdvisoryBoard from '../../../../sections/@dashboard/projects/AdvisoryBoard';
-
 
 
 const app = initializeApp(FIREBASE_API);
@@ -30,11 +29,10 @@ BoardroomView.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 // ----------------------------------------------------------------------
 
 BoardroomView.propTypes = {
-    index: PropTypes.number,
     myBoardroom: PropTypes.object,
 };
 
-export default function BoardroomView(myBoardroom, index) {
+export default function BoardroomView(myBoardroom) {
     const {
         query: { aid },
     } = useRouter();

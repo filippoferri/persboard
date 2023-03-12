@@ -6,10 +6,11 @@ import { Box, Grid, Card, Divider, Container, Typography, IconButton } from '@mu
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, deleteDoc, onSnapshot } from 'firebase/firestore';
-import { FIREBASE_API } from '../../../config-global';
 // Router
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
+// firebase API
+import { FIREBASE_API } from '../../../config-global';
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
 // layouts

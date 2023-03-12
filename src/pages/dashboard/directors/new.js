@@ -7,7 +7,7 @@ import DashboardLayout from '../../../layouts/dashboard';
 // import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
-import { useSettingsContext } from '../../../components/settings';
+// import { useSettingsContext } from '../../../components/settings';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 
 import UserNewDirectorForm from '../../../sections/@dashboard/directors/NewDirector';
