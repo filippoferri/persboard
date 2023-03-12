@@ -63,10 +63,25 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
     onNextStep(boardData);
   };
   
+  const handleAdvanced = () => {
+    setShowAdvanced(!showAdvanced);
+  };
 
   return (
     <>
       <FormProvider methods={useForm()}>
+        <Box sx={{pr:2, mb: 1}}>  
+          <Typography sx={{
+              variant: "caption",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              color: "#3f51b5",
+            }}
+            onClick={handleAdvanced}
+          >{showAdvanced ? 'Simple AI' : 'Advanced AI'}</Typography>
+      </Box>
       {formFields.map((input, index) => {
         return (
           <Card key={index} sx={{ p: 2, mb: 1 }}>
@@ -86,16 +101,15 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
                         <StyledPaper sx={{ flexGrow: 6 }}>
                             <RHFTextField 
                               name="fullName"
-                              label="John Doe" 
+                              label="Full Name" 
                               helperText="Fake or Real Full Name (also famous)" 
                               value={input.fullName}
                               onChange={event => handleFormChange(index, event)}
                             />
                         </StyledPaper>
 
-                    {showAdvanced ? (
+                    {showAdvanced && (
                     <>
-
                       <StyledPaper sx={{ flexGrow: 1 }}>
                         <RHFTextField
                           select
@@ -144,23 +158,7 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
                         </RHFTextField>
                       </StyledPaper>
                     </>
-                  ) : (
-                    <StyledPaper
-                      sx={{ alignItems: 'center', justifyContent: 'center' }}
-                      onClick={() => setShowAdvanced(true)}
-                    >
-                      <Typography sx={{
-                        variant: "caption",
-                        cursor: "pointer",
-                        display: "flex",
-                        height: "56px",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "#3f51b5",
-                      }}>Advanced AI</Typography>
-                    </StyledPaper>
                   )}
-
                     </Stack>
                 
           </Card>
@@ -314,7 +312,7 @@ const BoardFromScratch = ({onNextStep, dataFromPrevStep}) => {
             }}
         >
             <Box sx={{ flexGrow: 1 }}>
-                Add from 3 to 5 people who will be on your board.
+                Add from 3 to 5 worldwide celebrities who will be on your board.
             </Box>
         </Stack>
         

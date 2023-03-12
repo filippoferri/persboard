@@ -29,7 +29,7 @@ import Iconify from '../../../../components/iconify';
 const StyledItem = styled('div')(({ theme }) => ({
 	color: theme.palette.grey.darker,
 	backgroundColor: "#F4F6F8",
-	'&:hover, ListItemButton': {backgroundColor: "##DFE3E8"},
+	'&:hover': {backgroundColor: "#3366FF", color: "#FFFFFF"},
 	borderRadius: Number(theme.shape.borderRadius) * 2,
 	marginBottom: theme.spacing(1),
 	padding: theme.spacing(1),
@@ -64,8 +64,7 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 		};
 
 		const handleListItemClick = (content) => {
-			setText(content);
-			setCharCount(100 - content.length);
+			onNextStep({ question: content });
 		};
 
 		const handleSubmit = () => {
