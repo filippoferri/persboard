@@ -53,7 +53,7 @@ export default function WelcomeIntro({ onNextStep }) {
                   1. Define Your Question
                 </Typography>
                 <Typography variant="body1" sx={{ textAlign: "center" }}>
-                  Start by crafting a clear and concise question that will guide your board's advice.
+                  Start by crafting a clear and concise question that will guide your board&apos;s advice.
                 </Typography>
               </Grid>
               <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
@@ -71,7 +71,7 @@ export default function WelcomeIntro({ onNextStep }) {
                   3. Receive Actionable Advice
                 </Typography>
                 <Typography variant="body1" sx={{ textAlign: "center" }}>
-                  Leverage Your Personal Board's Insights and use this information to develop a plan of action.
+                  Leverage Your Personal Board&apos;s Insights and use this information to develop a plan of action.
                 </Typography>
               </Grid>
               <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>

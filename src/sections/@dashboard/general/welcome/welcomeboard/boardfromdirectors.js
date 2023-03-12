@@ -36,7 +36,7 @@ const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
 
     // const [checkedDirectors, setCheckedDirectors] = useState(Array(myDirectors.length).fill(false));
 
-    // const [boardData, setBoardData] = useState([]);
+    const [boardData, setBoardData] = useState([]);
 
     const NextStep = () => {
         const directors = { directors: selectedDirectors };
@@ -129,6 +129,6 @@ export default BoardFromDirectors;
 BoardFromDirectors.propTypes = {
     onNextStep: PropTypes.func.isRequired,
     dataFromPrevStep: PropTypes.object.isRequired,
-  };
+  };  
   
   // ----------------------------------------------------------------------

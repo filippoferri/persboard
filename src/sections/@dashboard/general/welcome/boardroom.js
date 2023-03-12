@@ -4,10 +4,10 @@ import { Paper, Stack, Box, Grid, Typography, Button, Link, IconButton, Tooltip 
 import PropTypes from 'prop-types';
 // Router
 import { useRouter } from 'next/router';
-import { PATH_DASHBOARD } from '../../../../routes/paths';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, updateDoc, getDoc, Timestamp, increment } from 'firebase/firestore';
+import { PATH_DASHBOARD } from '../../../../routes/paths';
 // import { increment } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../../config-global';
 // auth
@@ -30,8 +30,9 @@ WelcomeBoardroom.propTypes = {
 
 export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onRestart }) { 
 
-    const question = dataFromPrevStep[0].question;
-    const directors = dataFromPrevStep[1].directors;
+    const { question } = dataFromPrevStep[0];
+    const { directors } = dataFromPrevStep[1];
+
 
     const app = initializeApp(FIREBASE_API);
     const db = getFirestore(app);
@@ -252,7 +253,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                             </Grid>
                         </Grid>
 
-                        <Grid container justifyContent={'flex-start'} sx={{flex: 1}}>
+                        <Grid container justifyContent="flex-start" sx={{flex: 1}}>
                             {discussion.length === 0 ? (
                                 <Grid item justifyContent="center" sx={{mb: 6}}>
                                     <Typography variant="body1" align="center" sx={{color: "#919EAB"}}>
@@ -284,9 +285,8 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                             )}
                         </Grid>
 
-                        {/*/  Limits */}
                         {discussion.length !== 0 ? (
-                        <Grid container justifyContent={'center'}>
+                        <Grid container justifyContent="center">
                             <Grid item justifyContent="center">
                                 <Typography variant="body1" align="center" sx={{color: "#919EAB", pt: 4, pb: 5 }}>
                                     {remainingCredits > 0 ? `${remainingCredits} credits remaining.` : 'No credits remaining. Please upgrade your account.'} Need more? <Link underline="none" color="#3366FF" href={PATH_DASHBOARD.billing.root} >Upgrade now</Link>!
@@ -303,7 +303,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                     </Box>
                                 </Box>
                             </Grid>
-                        </Grid> ) : ( <></> )}
+                        </Grid> ) : null }
 
                     </Box>
 

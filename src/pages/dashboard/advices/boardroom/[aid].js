@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // next
 import Head from 'next/head';
 import { useRouter } from 'next/router';
