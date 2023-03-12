@@ -64,104 +64,102 @@ export default function FileDetailsDrawer({
   };
 
   return (
-    <>
-      <Drawer
-        open={open}
-        onClose={onClose}
-        anchor="right"
-        BackdropProps={{
-          invisible: true,
-        }}
-        PaperProps={{
-          sx: { width: 320 },
-        }}
-        {...other}
-      >
-        <Scrollbar sx={{ height: 1 }}>
-          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 2.5 }}>
-            <Typography variant="h6">About</Typography>
+    <Drawer
+      open={open}
+      onClose={onClose}
+      anchor="right"
+      BackdropProps={{
+        invisible: true,
+      }}
+      PaperProps={{
+        sx: { width: 320 },
+      }}
+      {...other}
+    >
+      <Scrollbar sx={{ height: 1 }}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 2.5 }}>
+          <Typography variant="h6">About</Typography>
 
-            {/* <Checkbox
-              color="warning"
-              icon={<Iconify icon="eva:star-outline" />}
-              checkedIcon={<Iconify icon="eva:star-fill" />}
-              checked={favorited}
-              onChange={onFavorite}
-              sx={{ p: 0.75 }}
-            /> */}
-          </Stack>
-
-          <Stack
-            spacing={3}
-            justifyContent="center"
-            sx={{ p: 4, bgcolor: 'background.neutral' }}
-          >
-
-          {/* <Avatar
-            alt={item.fullName}
-            src={dirAvatar}
-            sx={{
-              width: 150,
-              height: 150,
-              margin: 'auto',
-            }}
+          {/* <Checkbox
+            color="warning"
+            icon={<Iconify icon="eva:star-outline" />}
+            checkedIcon={<Iconify icon="eva:star-fill" />}
+            checked={favorited}
+            onChange={onFavorite}
+            sx={{ p: 0.75 }}
           /> */}
-          <CustomAvatar 
-            src="" 
-            alt={item.fullName} 
-            name={item.fullName} 
-            sx={{
-              width: 150,
-              height: 150,
-              margin: 'auto',
-            }}
-          />
+        </Stack>
 
-            <Typography variant="h6" sx={{ wordBreak: 'break-all', textAlign: 'center' }}>
-              {item.role}
-            </Typography>
-            {item.desc && (
-              <>
-                <Divider sx={{ borderStyle: 'dashed' }} />
-                <Typography variant="body">{item.desc}</Typography>
-              </>
-            )}
-          </Stack>
+        <Stack
+          spacing={3}
+          justifyContent="center"
+          sx={{ p: 4, bgcolor: 'background.neutral' }}
+        >
 
-          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{mt:2, p: 2.5 }}>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Area of Expertise
-            </Typography>
-            <Label color="info">{item.area}</Label>
-          </Stack>
-          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 2.5 }}>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Key Quality
-            </Typography>
-            <Label color="info">{item.quality}</Label>
-          </Stack>
-          <Stack sx={{ p: 2.5 }}>
-            <Alert icon={false} severity="info">{AREA_DESCRIPTIONS[item.area]}, {QUALITY_DESCRIPTIONS[item.quality]}</Alert>
+        {/* <Avatar
+          alt={item.fullName}
+          src={dirAvatar}
+          sx={{
+            width: 150,
+            height: 150,
+            margin: 'auto',
+          }}
+        /> */}
+        <CustomAvatar 
+          src="" 
+          alt={item.fullName} 
+          name={item.fullName} 
+          sx={{
+            width: 150,
+            height: 150,
+            margin: 'auto',
+          }}
+        />
 
-          </Stack>
-        </Scrollbar>
+          <Typography variant="h6" sx={{ wordBreak: 'break-all', textAlign: 'center' }}>
+            {item.role}
+          </Typography>
+          {item.desc && (
+            <>
+              <Divider sx={{ borderStyle: 'dashed' }} />
+              <Typography variant="body">{item.desc}</Typography>
+            </>
+          )}
+        </Stack>
+
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{mt:2, p: 2.5 }}>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              Area of Expertise
+          </Typography>
+          <Label color="info">{item.area}</Label>
+        </Stack>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 2.5 }}>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            Key Quality
+          </Typography>
+          <Label color="info">{item.quality}</Label>
+        </Stack>
+        <Stack sx={{ p: 2.5 }}>
+          <Alert icon={false} severity="info">{AREA_DESCRIPTIONS[item.area]}, {QUALITY_DESCRIPTIONS[item.quality]}</Alert>
+
+        </Stack>
+      </Scrollbar>
 
 
-        {item.type === 'Personal' && !boardroom && (      
-        <Box sx={{ p: 2.5 }}>
-            <Button
-              fullWidth
-              variant="soft"
-              color="error"
-              size="large"
-              startIcon={<Iconify icon="eva:trash-2-outline" />}
-              onClick={onDelete}
-            >
-              Delete
-            </Button>
-          </Box>
-        )}
-      </Drawer>
-    </>
+      {item.type === 'Personal' && !boardroom && (      
+      <Box sx={{ p: 2.5 }}>
+          <Button
+            fullWidth
+            variant="soft"
+            color="error"
+            size="large"
+            startIcon={<Iconify icon="eva:trash-2-outline" />}
+            onClick={onDelete}
+          >
+            Delete
+          </Button>
+        </Box>
+      )}
+    </Drawer>
   );
 }
