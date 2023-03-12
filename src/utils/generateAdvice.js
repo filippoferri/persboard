@@ -1,6 +1,6 @@
 import axiosInstance from './axiosOpenai';
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const { OPENAI_API_KEY } = process.env;
 
 export const generateAdvice = async (advisoryDirectors, question) => {
   console.log('advisoryDirector', advisoryDirectors);

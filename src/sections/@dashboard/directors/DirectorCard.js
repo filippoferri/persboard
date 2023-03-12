@@ -75,7 +75,7 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
     <>
       <Card
         sx={{
-          borderColor: borderColor,
+          borderColor,
           backgroundColor: bgColor,
           color: textColor,
         }}
