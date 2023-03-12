@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 // @mui
 import {
-    Avatar, Box, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography
+    List, ListItem, ListItemAvatar, ListItemButton, ListItemText
 } from '@mui/material';
 // Firebase/Firestore
 // import { initializeApp } from 'firebase/app';
@@ -11,7 +11,7 @@ import {
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
 // sections
-import FileDetailsDrawer from '../../../sections/@dashboard/directors/DirectorDetailsDrawer';
+import FileDetailsDrawer from '../directors/DirectorDetailsDrawer';
 import { CustomAvatar } from '../../../components/custom-avatar';
 
 
@@ -27,8 +27,8 @@ AdvisoryBoard.propTypes = {
 export default function AdvisoryBoard({
     directors,
 }) {
-    const { user } = useAuthContext();
-    //const [loadedDirectors, setLoadedDirectors] = useState([]);
+    // const { user } = useAuthContext();
+    // const [loadedDirectors, setLoadedDirectors] = useState([]);
     const [openDetails, setOpenDetails] = useState(false);
     const [selectedDirector, setSelectedDirector] = useState({});
 
@@ -65,7 +65,7 @@ export default function AdvisoryBoard({
                 item={selectedDirector}
                 open={openDetails}
                 onClose={handleCloseDetails}
-                boardroom={true}
+                boardroom
                 // onDelete={handleDelete} // pass the function to handle delete action
             />
         </>

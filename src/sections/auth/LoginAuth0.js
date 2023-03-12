@@ -1,5 +1,5 @@
 // @mui
-import { Alert, Tooltip, Stack, Typography, Box, Button } from '@mui/material';
+import { Stack, Typography, Button } from '@mui/material';
 // auth
 import { useAuthContext } from '../../auth/useAuthContext';
 // layouts
@@ -8,7 +8,7 @@ import LoginLayout from '../../layouts/login';
 // ----------------------------------------------------------------------
 
 export default function LoginAuth0() {
-  const { method } = useAuthContext();
+  // const { method } = useAuthContext();
 
   // NOTE: Turn off comments below to enable Auth0.
   // const { login } = useAuthContext();

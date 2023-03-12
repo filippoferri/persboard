@@ -4,12 +4,12 @@ import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Box, Grid, Card, Stack, Typography, Divider, Link } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import { Box, Grid, Card, Typography, Divider, Link } from '@mui/material';
+// import { LoadingButton } from '@mui/lab';
 // auth
 import { useAuthContext } from '../../../../auth/useAuthContext';
 // assets
-import { countries } from '../../../../assets/data';
+// import { countries } from '../../../../assets/data';
 // components
 import { useSnackbar } from '../../../../components/snackbar';
 import FormProvider, {
@@ -30,7 +30,7 @@ export default function AccountGeneral() {
   });
 
   const defaultValues = {
-    //displayName: user?.displayName || '',
+    // displayName: user?.displayName || '',
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     email: user?.email || '',
@@ -53,7 +53,7 @@ export default function AccountGeneral() {
   const {
     setValue,
     handleSubmit,
-    formState: { isSubmitting },
+    // formState: { isSubmitting },
   } = methods;
 
   const onSubmit = async (data) => {
@@ -66,20 +66,20 @@ export default function AccountGeneral() {
     }
   };
 
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
+  // const handleDrop = useCallback(
+  //   (acceptedFiles) => {
+  //     const file = acceptedFiles[0];
 
-      const newFile = Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      });
+  //     const newFile = Object.assign(file, {
+  //       preview: URL.createObjectURL(file),
+  //     });
 
-      if (file) {
-        setValue('photoURL', newFile, { shouldValidate: true });
-      }
-    },
-    [setValue]
-  );
+  //     if (file) {
+  //       setValue('photoURL', newFile, { shouldValidate: true });
+  //     }
+  //   },
+  //   [setValue]
+  // );
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>

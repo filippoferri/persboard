@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Stack, Box, Typography, Button } from '@mui/material';
+import { Grid, Box, Typography, Button } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, deleteDoc, Timestamp, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../../../config-global';
 // auth
 import { useAuthContext } from '../../../../../auth/useAuthContext';
 // sections
-import {DirectorCard} from '../../../../../sections/@dashboard/directors/DirectorCard';
+import {DirectorCard} from '../../../directors/DirectorCard';
 
 
 // ----------------------------------------------------------------------
@@ -15,22 +15,22 @@ import {DirectorCard} from '../../../../../sections/@dashboard/directors/Directo
 
 const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
 
-    const [selectedDirectors, setSelectedDirectors] = useState([]);
+const [selectedDirectors, setSelectedDirectors] = useState([]);
 
-    const handleSelectDirector = (directorId) => {
-        if (selectedDirectors.includes(directorId)) {
-            setSelectedDirectors(selectedDirectors.filter((id) => id !== directorId));
-        } else if (selectedDirectors.length < 5) {
-            setSelectedDirectors([...selectedDirectors, directorId]);
-        }
-    };
+const handleSelectDirector = (directorId) => {
+    if (selectedDirectors.includes(directorId)) {
+        setSelectedDirectors(selectedDirectors.filter((id) => id !== directorId));
+    } else if (selectedDirectors.length < 5) {
+        setSelectedDirectors([...selectedDirectors, directorId]);
+    }
+};
 
-    const app = initializeApp(FIREBASE_API);
+const app = initializeApp(FIREBASE_API);
 const db = getFirestore(app);
 
 const { user } = useAuthContext();
 
-const [directors, setDirectors] = useState([]);
+const [premiumDirectors, setPremiumDirectors] = useState([]);
 const [myDirectors, setMyDirectors] = useState([]);
 
 const [checkedDirectors, setCheckedDirectors] = useState(Array(myDirectors.length).fill(false));
@@ -53,15 +53,15 @@ useEffect(() => {
     const myDirectorsRef = collection(db, 'users', user && user.uid, 'myDirectors');
     const unsubscribeDirectors = onSnapshot(directorsRef, (snapshot) => {
         const directorsData = [];
-        snapshot.forEach((doc) => {
-        directorsData.push({ id: doc.id, ...doc.data() });
+        snapshot.forEach((directorsDoc) => {
+        directorsData.push({ id: directorsDoc.id, ...directorsDoc.data() });
         });
-        setDirectors(directorsData);
+        setPremiumDirectors(directorsData);
     });
     const unsubscribeMyDirectors = onSnapshot(myDirectorsRef, (snapshot) => {
         const myDirectorsData = [];
-        snapshot.forEach((doc) => {
-        myDirectorsData.push({ id: doc.id, ...doc.data() });
+        snapshot.forEach((myDirectorsDoc) => {
+        myDirectorsData.push({ id: myDirectorsDoc.id, ...myDirectorsDoc.data() });
         });
         setMyDirectors(myDirectorsData);
     });
@@ -100,13 +100,13 @@ useEffect(() => {
                             director={myDirector} 
                             check={selectedDirectors.includes(myDirector.id)}   
                             // onDelete={() => handleDeleteDirector(myDirector.id)}
-                            boardroom={true}
+                            boardroom
                         />
                     </Grid>
                 ))
             )}
-            {directors.length > 0 && (
-                directors.map((director, index) => (
+            {premiumDirectors.length > 0 && (
+                premiumDirectors.map((director, index) => (
                     <Grid sx={{ cursor: "pointer" }} item xs={12} sm={4} lg={3} key={director.id} onClick={() => handleSelectDirector(director.id)}>
                         <DirectorCard 
                             director={director} 
