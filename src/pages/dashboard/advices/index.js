@@ -1,14 +1,15 @@
 // next
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { Box, Grid, Card, Stack, Avatar, Divider, Container, Typography, colors, IconButton } from '@mui/material';
+import { m } from "framer-motion";
+import { Box, Grid, Card, Container, Typography, IconButton } from '@mui/material';
+// firebase
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, doc, deleteDoc, onSnapshot } from 'firebase/firestore';
+import { FIREBASE_API } from '../../../config-global';
 // Router
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
-// firebase
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
-import { FIREBASE_API } from '../../../config-global';
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
 // layouts
@@ -17,12 +18,11 @@ import DashboardLayout from '../../../layouts/dashboard';
 import { useSettingsContext } from '../../../components/settings';
 import Iconify from '../../../components/iconify';
 // sections
-import {AdviceCard} from '../../../sections/@dashboard/advices/adviceCard';
-import Link from 'next/link';
+import {AdviceCard} from '../../../sections/@dashboard/advices/AdviceCard';
+// import Link from 'next/link';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 
-import { m } from "framer-motion";
-import { varFade } from '../../../components/animate/variants';
+// import { varFade } from '../../../components/animate/variants';
 
 // ----------------------------------------------------------------------
 const variants = {
@@ -65,8 +65,8 @@ export default function PageBoardrooms() {
         const myBoardroomsRef = collection(db, 'users', user && user.uid, 'myBoardrooms');
         const unsubscribemyBoardrooms = onSnapshot(myBoardroomsRef, (snapshot) => {
             const myBoardroomsData = [];
-            snapshot.forEach((doc) => {
-                myBoardroomsData.push({ id: doc.id, ...doc.data() });
+            snapshot.forEach((item) => {
+                myBoardroomsData.push({ id: item.id, ...item.data() });
             });
             setMyBoardrooms(myBoardroomsData);
         });

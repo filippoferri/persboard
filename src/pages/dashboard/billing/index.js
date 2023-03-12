@@ -7,7 +7,7 @@ import { m } from "framer-motion";
 import { Container, Grid, Stack, Card, Box, Typography, Chip, Divider, Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // Router
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // layouts
 import DashboardLayout from '../../../layouts/dashboard';
@@ -101,8 +101,8 @@ export default function PageBilling() {
 
     useEffect(() => {
         // handleCPC();
-        const cpc = totalBilled / selectedBox;
-        setCpc(cpc.toFixed(2));
+        const cpcFinal = totalBilled / selectedBox;
+        setCpc(cpcFinal.toFixed(2));
     }, [selectedBox, totalBilled]);
 
     const handleSubmit = async (event) => {

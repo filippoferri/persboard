@@ -1,19 +1,19 @@
 // 
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { paramCase } from 'change-case';
+// import { paramCase } from 'change-case';
 import { m } from "framer-motion";
 // @mui
-import { Box, Card, Avatar, Divider, Typography, Stack, IconButton, Fab, MenuItem, Button } from '@mui/material';
+import { Box, Card, Typography, IconButton, Button } from '@mui/material';
 // Router
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 import Iconify from '../../../components/iconify';
 import ConfirmDialog from '../../../components/confirm-dialog';
-import { useSnackbar } from '../../../components/snackbar';
-import { textAlign } from '@mui/system';
+// import { useSnackbar } from '../../../components/snackbar';
+// import { textAlign } from '@mui/system';
 //
-import { varFade } from '../../../components/animate/variants';
+// import { varFade } from '../../../components/animate/variants';
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ AdviceCard.propTypes = {
 
 export function AdviceCard({myBoardroom, onDelete}) {
 
-    const { enqueueSnackbar } = useSnackbar();
+    // const { enqueueSnackbar } = useSnackbar();
 
     const [openConfirm, setOpenConfirm] = useState(false);
 

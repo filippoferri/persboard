@@ -1,24 +1,15 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+// import { useState } from 'react';
 // @mui
 import {
   Box,
-  Chip,
-  List,
   Alert,
   Stack,
-  Avatar,
   Drawer,
   Button,
   Divider,
-  Checkbox,
-  TextField,
   Typography,
-  IconButton,
-  Autocomplete,
 } from '@mui/material';
-import { alpha } from '@mui/material/styles';
-import {Image} from '@mui/material';
 
 // components
 import Iconify from '../../../components/iconify';
@@ -44,14 +35,13 @@ export default function FileDetailsDrawer({
     open,
     favorited,
     onFavorite,
-    onCopyLink,
     onClose,
     onDelete,
     boardroom,
     ...other
   }) {
 
-  const dirAvatar = item && item.avatar ? item.avatar : 'https://res.cloudinary.com/ddtdvms3g/image/upload/v1677442263/avatar_14_exfcsg.jpg';
+  // const dirAvatar = item && item.avatar ? item.avatar : 'https://res.cloudinary.com/ddtdvms3g/image/upload/v1677442263/avatar_14_exfcsg.jpg';
 
   const QUALITY_DESCRIPTIONS = {
     Passion: 'I have a deep interest in life and being motivated to work towards personal success and fulfillment.',

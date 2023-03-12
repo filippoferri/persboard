@@ -1,23 +1,22 @@
 import { useState, useEffect } from 'react';
-import { Paper, Stack, Box, Grid, Typography, Button, Link, IconButton } from '@mui/material';
+import { Paper, Stack, Box, Grid, Typography, Button, Link, IconButton, Tooltip } from '@mui/material';
+// import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
+// Router
+import { useRouter } from 'next/router';
+import { PATH_DASHBOARD } from '../../../../routes/paths';
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, updateDoc, getDocs, getDoc, deleteDoc, Timestamp, onSnapshot, FieldValue } from 'firebase/firestore';
-import { increment } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, updateDoc, getDoc, Timestamp, increment } from 'firebase/firestore';
+// import { increment } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../../config-global';
 // auth
 import { useAuthContext } from '../../../../auth/useAuthContext';
 // components
 import Iconify from '../../../../components/iconify';
 // sections
-import AdvisoryBoard from '../../../../sections/@dashboard/projects/AdvisoryBoard';
+import AdvisoryBoard from '../../projects/AdvisoryBoard';
 import {generateAdvice} from '../../../../utils/generateAdvice';
-// Router
-import { useRouter } from 'next/router';
-import { PATH_DASHBOARD } from '../../../../routes/paths';
-
-import Tooltip from '@mui/material/Tooltip';
 
 // ----------------------------------------------------------------------
 
@@ -112,9 +111,9 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         }
     
         setLoading(true);
-        //const prompt = await generateAdvice(loadedDirectors, question);
-        //setDiscussion(prompt);
-        setDiscussion(data);
+        const prompt = await generateAdvice(loadedDirectors, question);
+        setDiscussion(prompt);
+        // setDiscussion(data);
         setLoading(false);
     }
 
@@ -125,7 +124,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                 console.log("User is not logged in or user ID is undefined.");
                 return;
             }
-            if (user.remainingCredits == 0) {
+            if (user.remainingCredits === 0) {
                 console.log("Credits are over.");
                 return;
             }
@@ -163,11 +162,11 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     }, [loadedDirectors]);
     
    // Use handleSave to save discussion to Firebase after discussion is generated
-    // useEffect(() => {
-    //     if (discussion.length > 0 && remainingCredits > 0 && !hasSavedDiscussion) {
-    //     handleSave();
-    //     }
-    // }, [discussion, remainingCredits, hasSavedDiscussion]);
+    useEffect(() => {
+        if (discussion.length > 0 && remainingCredits > 0 && !hasSavedDiscussion) {
+        handleSave();
+        }
+    }, [discussion, remainingCredits, hasSavedDiscussion]);
 
     return (
     <>
@@ -205,7 +204,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
 
         <Paper variant="outlined" sx={{ flexGrow: 1 }}>
             <Grid container spacing={0} sx={{minHeight: '600px'}}>
-                {/*/  Advisory Board */}
+
                 <Grid item xs={3} sx={{borderRight: '1px solid #DFE3E8'}}>
                     <Box sx={{ display: 'flex', borderBottom: '1px solid #DFE3E8', height: '75px', alignItems: 'center', p: 2, fontWeight: 'bold', color: '#637381',bgcolor: '#f4f6f8'}}>
                         Advisory Board
@@ -233,8 +232,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                     </Box>
                     <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', p:2 }}>
 
-                        {/*/  You */}
-                        <Grid container justifyContent={'flex-end'}>
+                        <Grid container justifyContent='flex-end'>
                             <Grid item sx={{ textAlign: 'right', mb: 2 }}>
                                 <Typography 
                                 variant='caption' 
@@ -254,7 +252,6 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                             </Grid>
                         </Grid>
 
-                        {/*/  Discussion */}  
                         <Grid container justifyContent={'flex-start'} sx={{flex: 1}}>
                             {discussion.length === 0 ? (
                                 <Grid item justifyContent="center" sx={{mb: 6}}>

@@ -4,15 +4,15 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 // @mui
-import { Paper, Box, Divider, Stack, Container, Typography, Grid, Button} from '@mui/material';
-// Router
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { Paper, Box, Container, Typography, Grid } from '@mui/material';
 // layouts
 import DashboardLayout from '../../../../layouts/dashboard';
 // firebase
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { FIREBASE_API } from '../../../../config-global';
+// Router
+import { PATH_DASHBOARD } from '../../../../routes/paths';
 // auth
 import { useAuthContext } from '../../../../auth/useAuthContext';
 import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
@@ -34,7 +34,7 @@ BoardroomView.propTypes = {
     myBoardroom: PropTypes.object,
 };
 
-export default function BoardroomView() {
+export default function BoardroomView(myBoardroom, index) {
     const {
         query: { aid },
     } = useRouter();
@@ -51,9 +51,8 @@ export default function BoardroomView() {
             const adviceRef = doc(db, 'users', user.uid, 'myBoardrooms', aid);
             const adviceDoc = await getDoc(adviceRef);
         if (adviceDoc.exists()) {
-            const adviceData = adviceDoc.data();
-            setAdviceData(adviceData);
-            console.log(adviceData)
+            const adviceResult = adviceDoc.data();
+            setAdviceData(adviceResult);
         } else {
             console.log(`No advice found with id ${aid}`);
         }
@@ -97,7 +96,7 @@ export default function BoardroomView() {
 
         <Paper variant="outlined" sx={{ flexGrow: 1 }}>
             <Grid container spacing={0} sx={{minHeight: '600px'}}>
-                {/*/  Advisory Board */}
+
                 <Grid item xs={3} sx={{borderRight: '1px solid #DFE3E8'}}>
                     <Box sx={{ display: 'flex', borderBottom: '1px solid #DFE3E8', height: '75px', alignItems: 'center', p: 2, fontWeight: 'bold', color: '#637381',bgcolor: '#f4f6f8'}}>
                         Advisory Board
@@ -112,8 +111,7 @@ export default function BoardroomView() {
                     </Box>
                     <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', p:2, pb: 4 }}>
 
-                        {/*/  You */}
-                        <Grid container justifyContent={'flex-end'}>
+                        <Grid container justifyContent='flex-end'>
                             <Grid item sx={{ textAlign: 'right', mb: 2 }}>
                                 <Typography 
                                 variant='caption' 
@@ -133,8 +131,7 @@ export default function BoardroomView() {
                             </Grid>
                         </Grid>
 
-                        {/*/  Discussion */}  
-                        <Grid container justifyContent={'flex-start'} sx={{flex: 1}}>
+                        <Grid container justifyContent='flex-start' sx={{flex: 1}}>
                             {discussion.length === 0 ? (
                                 <Grid item justifyContent="center" sx={{mb: 6}}>
                                     <Typography variant="body1" align="center" sx={{color: "#919EAB"}}>

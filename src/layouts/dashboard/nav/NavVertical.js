@@ -5,7 +5,7 @@ import { Box, Stack, Drawer } from '@mui/material';
 // next
 import { useRouter } from 'next/router';
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+// import { PATH_DASHBOARD } from '../../../routes/paths';
 
 // hooks
 import useResponsive from '../../../hooks/useResponsive';

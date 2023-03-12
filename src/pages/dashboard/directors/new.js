@@ -1,10 +1,10 @@
 // next
 import Head from 'next/head';
-import { Container, Typography, Box } from '@mui/material';
+import { Container } from '@mui/material';
 // layouts
 import DashboardLayout from '../../../layouts/dashboard';
 // Router
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
 import { useSettingsContext } from '../../../components/settings';
@@ -19,7 +19,7 @@ PageNewDirector.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 // ----------------------------------------------------------------------
 
 export default function PageNewDirector() {
-  const { themeStretch } = useSettingsContext();
+  // const { themeStretch } = useSettingsContext();
 
   return (
     <>

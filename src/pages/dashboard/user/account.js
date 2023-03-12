@@ -1,14 +1,14 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 // next
 import Head from 'next/head';
 // @mui
-import { Container, Tab, Tabs, Box } from '@mui/material';
+import { Container, Box } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // layouts
 import DashboardLayout from '../../../layouts/dashboard';
 // components
-import Iconify from '../../../components/iconify';
+// import Iconify from '../../../components/iconify';
 import { useSettingsContext } from '../../../components/settings';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 // sections

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import { Grid, Stack, Box, Typography, Tabs, Tab, Button, IconButton } from '@mui/material';
+import { Grid, Stack, Box, Typography, Tabs, Tab, IconButton } from '@mui/material';
 
-import BoardFromScratch from './Welcomeboard/boardfromscratch';
-import BoardFromDirectors from './Welcomeboard/boardfromdirectors';
+import BoardFromScratch from './welcomeboard/boardfromscratch';
+import BoardFromDirectors from './welcomeboard/boardfromdirectors';
 
 // components
 import Iconify from '../../../../components/iconify';
@@ -45,6 +45,12 @@ WelcomeBoard.propTypes = {
 	onNextStep: PropTypes.func,
 	onPrevStep: PropTypes.func,
 };
+
+TabPanel.propTypes = {
+		children: PropTypes.node,
+		index: PropTypes.number.isRequired,
+		value: PropTypes.number.isRequired,
+	};
 
 // ----------------------------------------------------------------------
 

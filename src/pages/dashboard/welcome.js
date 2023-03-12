@@ -1,9 +1,9 @@
 // next
 import Head from 'next/head';
-import React, { useState } from 'react';
+import React from 'react';
 import { Container } from '@mui/material';
 // auth
-import { useAuthContext } from '../../auth/useAuthContext';
+// import { useAuthContext } from '../../auth/useAuthContext';
 // layouts
 import DashboardLayout from '../../layouts/dashboard';
 // components

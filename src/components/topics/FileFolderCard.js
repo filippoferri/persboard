@@ -6,7 +6,7 @@ import { Box, Card, Stack, Button, Divider, MenuItem, Checkbox, IconButton } fro
 import Iconify from '../iconify';
 import MenuPopover from '../menu-popover';
 import TextMaxLine from '../text-max-line';
-import { useSnackbar } from '../snackbar';
+// import { useSnackbar } from '../snackbar';
 import ConfirmDialog from '../confirm-dialog';
 //
 import FileNewFolderDialog from './FileNewFolderDialog';
@@ -71,9 +71,9 @@ export default function FileFolderCard({ folder, selected, onSelect, onDelete, s
   //   setOpenShare(false);
   // };
 
-  // const handleOpenDetails = () => {
-  //   setOpenDetails(true);
-  // };
+  const handleOpenDetails = () => {
+    setOpenDetails(true);
+  };
 
   // const handleCloseDetails = () => {
   //   setOpenDetails(false);

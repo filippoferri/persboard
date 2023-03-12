@@ -1,14 +1,15 @@
 // next
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { Box, Grid, Card, Stack, Avatar, Divider, Container, Typography, colors, IconButton } from '@mui/material';
+import { m } from "framer-motion";
+import { Box, Grid, Card, Divider, Container, Typography, IconButton } from '@mui/material';
+// firebase
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, doc, deleteDoc, onSnapshot } from 'firebase/firestore';
+import { FIREBASE_API } from '../../../config-global';
 // Router
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
-// firebase
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, deleteDoc, Timestamp, onSnapshot } from 'firebase/firestore';
-import { FIREBASE_API } from '../../../config-global';
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
 // layouts
@@ -19,10 +20,6 @@ import Iconify from '../../../components/iconify';
 // sections
 import {DirectorCard} from '../../../sections/@dashboard/directors/DirectorCard';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-
-
-import { m } from "framer-motion";
-import { varFade } from '../../../components/animate/variants';
 
 // ----------------------------------------------------------------------
 const variants = {
@@ -67,15 +64,15 @@ export default function PageDirectors() {
         const myDirectorsRef = collection(db, 'users', user && user.uid, 'myDirectors');
         const unsubscribeDirectors = onSnapshot(directorsRef, (snapshot) => {
             const directorsData = [];
-            snapshot.forEach((doc) => {
-            directorsData.push({ id: doc.id, ...doc.data() });
+            snapshot.forEach((item) => {
+            directorsData.push({ id: item.id, ...item.data() });
             });
             setDirectors(directorsData);
         });
         const unsubscribeMyDirectors = onSnapshot(myDirectorsRef, (snapshot) => {
             const myDirectorsData = [];
-            snapshot.forEach((doc) => {
-            myDirectorsData.push({ id: doc.id, ...doc.data() });
+            snapshot.forEach((item) => {
+            myDirectorsData.push({ id: item.id, ...item.data() });
             });
             setMyDirectors(myDirectorsData);
         });

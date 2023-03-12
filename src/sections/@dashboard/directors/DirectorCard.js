@@ -3,28 +3,16 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Card, Avatar, Divider, Typography, Stack, IconButton, Fab } from '@mui/material';
+import { Box, Card, Avatar, Divider, Typography } from '@mui/material';
 // components
-import Image from '../../../components/image';
+// import Image from '../../../components/image';
 import Label from '../../../components/label';
-import Iconify from '../../../components/iconify';
+// import Iconify from '../../../components/iconify';
 import MenuOpenRoundedIcon from '@mui/icons-material/MenuOpenRounded';
 
 import SvgColor from '../../../components/svg-color';
 // sections
-import FileDetailsDrawer from '../../../sections/@dashboard/directors/DirectorDetailsDrawer';
-
-// ----------------------------------------------------------------------
-
-const StyledOverlay = styled('div')(({ theme }) => ({
-  top: 0,
-  left: 0,
-  zIndex: 8,
-  width: '100%',
-  height: '100%',
-  position: 'absolute',
-  backgroundColor: alpha(theme.palette.grey[900], 0.64),
-}));
+import FileDetailsDrawer from './DirectorDetailsDrawer';
 
 // ----------------------------------------------------------------------
 
@@ -145,7 +133,7 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
           {director.role}
         </Typography>
 
-        <Typography variant="body2" sx={{ color: 'text.secondary',  mb: 3, textAlign: "center", color: textColor   }}>
+        <Typography variant="body2" sx={{ mb: 3, textAlign: "center", color: textColor   }}>
           {director.fullName}
         </Typography>
 
@@ -153,14 +141,14 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
 
         <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" sx={{ py: 3 }}>
           <div>
-            <Typography variant="caption" component="div" sx={{ mb: 0.75, color: 'text.disabled', textAlign: "center", color: textColor  }}>
+            <Typography variant="caption" component="div" sx={{ mb: 0.75, textAlign: "center", color: textColor  }}>
               Area Expertise
             </Typography>
             <Typography variant="subtitle1" sx={{ textAlign: "center" }}>{director.area}</Typography>
           </div>
 
           <div>
-            <Typography variant="caption" component="div" sx={{ mb: 0.75, color: 'text.disabled', textAlign: "center", color: textColor  }}>
+            <Typography variant="caption" component="div" sx={{ mb: 0.75, textAlign: "center", color: textColor  }}>
               Key Quality
             </Typography>
             <Typography variant="subtitle1" sx={{textAlign: "center" }}>{director.quality}</Typography>

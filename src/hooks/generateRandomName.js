@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-    const RandomFullName = () => {
+const RandomFullName = () => {
     const [fullName, setFullName] = useState('');
 
     const firstNames = ['Alice', 'Bob', 'Carol', 'David', 'Eve', 'Frank', 'Grace'];
@@ -11,7 +11,9 @@ import { useState } from 'react';
         const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];
         const randomFullName = `${randomFirstName} ${randomLastName}`;
         setFullName(randomFullName);
-    };
+        };
 
     return [fullName, generateName];
-    };
+};
+
+export default RandomFullName;

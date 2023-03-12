@@ -32,7 +32,8 @@ export const MAP_API = process.env.MAPBOX_API;
 export const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 // ROOT PATH AFTER LOGIN SUCCESSFUL
-export const PATH_AFTER_LOGIN = PATH_DASHBOARD.welcome;
+const { welcome: PATH_AFTER_LOGIN } = PATH_DASHBOARD;
+export { PATH_AFTER_LOGIN };
 
 // LAYOUT
 // ----------------------------------------------------------------------

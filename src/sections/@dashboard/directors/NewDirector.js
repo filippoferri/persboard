@@ -1,39 +1,37 @@
 // title: WelcomeTopics
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 // next
 import { useRouter } from 'next/router';
 // form
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+// import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Switch, Typography, FormControlLabel, MenuItem, Avatar, Alert } from '@mui/material';
-// auth
-import { useAuthContext } from '../../../auth/useAuthContext';
+import { Box, Card, Grid, Stack, Typography, MenuItem, Avatar } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, deleteDoc, Timestamp, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, Timestamp } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../config-global';
 // uuid
 import { v4 as uuidv4 } from 'uuid';
+// auth
+import { useAuthContext } from '../../../auth/useAuthContext';
 // components
-import Label from '../../../components/label';
+// import Label from '../../../components/label';
 import { useSnackbar } from '../../../components/snackbar';
 import FormProvider, {
-  RHFSelect,
-  RHFSwitch,
   RHFTextField,
-  RHFUploadAvatar,
 } from '../../../components/hook-form';
 // ----------------------------------------------------------------------
 
 NewDirector.propTypes = {
-  key: PropTypes.string,
+  isEdit: PropTypes.bool,
+  currentUser: PropTypes.object,
 };
 
 export default function NewDirector({ isEdit = false, currentUser }) {
@@ -45,29 +43,28 @@ export default function NewDirector({ isEdit = false, currentUser }) {
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
-  const UpdateDirectorSchema = Yup.object().shape({
-    fullName: Yup.string().required('Name is required'),
-    role: Yup.string().required('Role is required'),
-    area: Yup.string().required('Area is required'),
-    quality: Yup.string().required('Quality is required'),
-  });
+  // const UpdateDirectorSchema = Yup.object().shape({
+  //   fullName: Yup.string().required('Name is required'),
+  //   role: Yup.string().required('Role is required'),
+  //   area: Yup.string().required('Area is required'),
+  //   quality: Yup.string().required('Quality is required'),
+  // });
 
-  const defaultValues = {
-    fullName: 'John Doe',
-    role: 'Executive Coach',
-    area: 'Advocacy',
-    quality: 'Vision and Leadership',
-    description: '',
-  };
+  // const defaultValues = {
+  //   fullName: 'John Doe',
+  //   role: 'Executive Coach',
+  //   area: 'Advocacy',
+  //   quality: 'Vision and Leadership',
+  //   description: '',
+  // };
 
   const methods = useForm();
 
   const {
     reset,
     watch,
-    setValue,
     handleSubmit,
-    formState: { isSubmitting, isValid },
+    formState: { isSubmitting },
   } = methods;
 
   const values = watch();
@@ -207,7 +204,7 @@ export default function NewDirector({ isEdit = false, currentUser }) {
 
   // Add new director
   const handleNewDirector = async () => {
-    const uniqueDirectoryId = uuidv4();
+    // const uniqueDirectoryId = uuidv4();
     const fullName = watch('fullName');
     const role = watch('role');
     const area = watch('area');
