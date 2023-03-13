@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Paper, Stack, Box, Grid, Typography, Button, Link, IconButton, Tooltip } from '@mui/material';
 // import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
@@ -48,7 +48,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
 
     // Get credits
     useEffect(() => {
-        //const app = initializeApp(FIREBASE_API);
+        // const app = initializeApp(FIREBASE_API);
         // const db = getFirestore(app);
 
         const creditsRef = doc(db, 'users', user.uid);
@@ -62,14 +62,14 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         return unsubscribe;
     }, [user.uid, db, remainingCredits]);
 
-    const data = [
-    {
-        id: '1',
-        fullName: 'John Doe',
-        text: 'I think it is a great idea. I would love to be a part of it.',
-        role: 'Mentor'
-        }
-    ];
+    // const data = [
+    // {
+    //     id: '1',
+    //     fullName: 'John Doe',
+    //     text: 'I think it is a great idea. I would love to be a part of it.',
+    //     role: 'Mentor'
+    //     }
+    // ];
 
     // fetch the directors
     const fetchDirectors = useCallback(async () => {
