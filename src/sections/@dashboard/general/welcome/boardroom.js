@@ -47,14 +47,14 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     const handleUpgrade = () => {
         router.push({ pathname: PATH_DASHBOARD.billing.root });};
 
-    const data = [
-    {
-        id: '1',
-        fullName: 'John Doe',
-        text: 'I think it is a great idea. I would love to be a part of it.',
-        role: 'Mentor'
-        }
-    ];
+    // const data = [
+    // {
+    //     id: '1',
+    //     fullName: 'John Doe',
+    //     text: 'I think it is a great idea. I would love to be a part of it.',
+    //     role: 'Mentor'
+    //     }
+    // ];
 
     // fetch the directors
     async function fetchDirectors() {
@@ -105,9 +105,9 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             return;
         }
     
-        // const prompt = await generateAdvice(loadedDirectors, question);
-        //setDiscussion(prompt);
-        setDiscussion(data);
+        const prompt = await generateAdvice(loadedDirectors, question);
+        setDiscussion(prompt);
+        // setDiscussion(data);
     }
 
     // save the discussion
@@ -123,9 +123,9 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             }
             const boardRoomRef = collection(db, "users", user && user.uid, "myBoardrooms");
             const docRef = await setDoc(doc(boardRoomRef), {
-                question: question,
+                question,
                 directors: loadedDirectors,
-                discussion: discussion,
+                discussion,
                 dateAdd: Timestamp.fromDate(new Date()),
             });
             
@@ -145,21 +145,21 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     // Use fetchDirectors to fetch directors from Firebase
     useEffect(() => {
         fetchDirectors();
-    }, [directors]);
+    }, [directors, fetchDirectors]);
     
     // Use generateDiscussion to generate discussion from directors and question
     useEffect(() => {
         if (loadedDirectors.length > 0) {
             generateDiscussion();
         }
-    }, [loadedDirectors]);
+    }, [loadedDirectors, generateDiscussion]);
     
    // Use handleSave to save discussion to Firebase after discussion is generated
-    // useEffect(() => {
-    //     if (discussion.length > 0 && remainingCredits > 0 && !hasSavedDiscussion) {
-    //     handleSave();
-    //     }
-    // }, [discussion, remainingCredits, hasSavedDiscussion]);
+    useEffect(() => {
+        if (discussion.length > 0 && remainingCredits > 0 && !hasSavedDiscussion) {
+            handleSave();
+        }
+    }, [discussion, remainingCredits, hasSavedDiscussion, handleSave]);
 
     return (
     <>
