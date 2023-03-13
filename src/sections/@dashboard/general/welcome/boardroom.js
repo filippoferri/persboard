@@ -48,7 +48,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
 
     // Get credits
     useEffect(() => {
-        // const app = initializeApp(FIREBASE_API);
+        //const app = initializeApp(FIREBASE_API);
         // const db = getFirestore(app);
 
         const creditsRef = doc(db, 'users', user.uid);
@@ -60,7 +60,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         console.log("remaining credits: ", remainingCredits);
 
         return unsubscribe;
-    }, [user.uid]);
+    }, [user.uid, db, remainingCredits]);
 
     const data = [
     {
@@ -72,7 +72,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     ];
 
     // fetch the directors
-    async function fetchDirectors() {
+    const fetchDirectors = useCallback(async () => {
 
         if (directors.some(director => director.fullName)) {
             setLoadedDirectors(directors);
@@ -96,10 +96,10 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         );
             
         setLoadedDirectors(loadedDirectorsRef);
-    }
+    }, [directors, db, user]);
 
     // generate discussion
-    async function generateDiscussion() {
+    const generateDiscussion = useCallback(async () => {
         if (!user || !user.uid) {
             return;
         }
@@ -116,16 +116,16 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             return;
         }
     
-        // const prompt = await generateAdvice(loadedDirectors, question);
-        // setDiscussion(prompt);
-        setDiscussion(data);
+        const prompt = await generateAdvice(loadedDirectors, question);
+        setDiscussion(prompt);
+        // setDiscussion(data);
 
         // Decrease remaining credits by 1
         const remainingCreditsRef = doc(db, "users", user.uid);
         await updateDoc(remainingCreditsRef, { credits: increment(-1) });
 
         setCredits(prevCredits => prevCredits - 1); // update the remaining credits state variable
-    }
+    }, [loadedDirectors, question, remainingCredits, db, user]);
 
     // save the discussion
     async function handleSave() {
