@@ -33,14 +33,12 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     const { question } = dataFromPrevStep[0];
     const { directors } = dataFromPrevStep[1];
 
-
     const app = initializeApp(FIREBASE_API);
     const db = getFirestore(app);
     const { user } = useAuthContext();
 
     // use states
     const [remainingCredits, setRemainingCredits] = useState(user.credits);
-    const [loading, setLoading] = useState(false); 
     const [hasSavedDiscussion, setHasSavedDiscussion] = useState(false);
     const [loadedDirectors, setLoadedDirectors] = useState([]);
     const [discussion, setDiscussion] = useState([]);
@@ -65,11 +63,8 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             setLoadedDirectors(directors);
             return;
         }
-
-        const app = initializeApp(FIREBASE_API);
-        const db = getFirestore(app);
     
-        const loadedDirectors = await Promise.all(
+        const loadedDirectorsRef = await Promise.all(
             directors.map(async (directorId) => {
                 const directorDoc = await getDoc(doc(db, 'directors', directorId));
                 const myDirectorDoc = await getDoc(doc(db, "users", user && user.uid, "myDirectors", directorId));
@@ -85,7 +80,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             })
         );
             
-        setLoadedDirectors(loadedDirectors);
+        setLoadedDirectors(loadedDirectorsRef);
     }
 
     // generate discussion
@@ -94,11 +89,11 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             return;
         }
 
-        const remainingCredits = user.remainingCredits;
+        const remainingCreditsRef = user.remainingCredits;
 
-        setRemainingCredits(remainingCredits);
+        setRemainingCredits(remainingCreditsRef);
     
-        if (remainingCredits <= 0) {
+        if (remainingCreditsRef <= 0) {
             setDiscussion([
                 {
                     id: '1',
@@ -107,15 +102,12 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                     role: 'Advisory'
                 }
             ]);
-            setLoading(false);
             return;
         }
     
-        setLoading(true);
-        const prompt = await generateAdvice(loadedDirectors, question);
-        setDiscussion(prompt);
-        // setDiscussion(data);
-        setLoading(false);
+        // const prompt = await generateAdvice(loadedDirectors, question);
+        //setDiscussion(prompt);
+        setDiscussion(data);
     }
 
     // save the discussion
@@ -163,11 +155,11 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     }, [loadedDirectors]);
     
    // Use handleSave to save discussion to Firebase after discussion is generated
-    useEffect(() => {
-        if (discussion.length > 0 && remainingCredits > 0 && !hasSavedDiscussion) {
-        handleSave();
-        }
-    }, [discussion, remainingCredits, hasSavedDiscussion]);
+    // useEffect(() => {
+    //     if (discussion.length > 0 && remainingCredits > 0 && !hasSavedDiscussion) {
+    //     handleSave();
+    //     }
+    // }, [discussion, remainingCredits, hasSavedDiscussion]);
 
     return (
     <>
