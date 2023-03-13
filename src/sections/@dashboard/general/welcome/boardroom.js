@@ -39,7 +39,6 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
 
     // use states
     const [remainingCredits, setCredits] = useState();
-    const [hasSavedDiscussion, setHasSavedDiscussion] = useState(false);
     const [loadedDirectors, setLoadedDirectors] = useState([]);
     const [discussion, setDiscussion] = useState([]);
 
@@ -130,26 +129,32 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
 
     // save the discussion
     async function handleSave() {
-        const boardRoomRef = db.collection(`users/${user.uid}/myBoardrooms`);
-        await boardRoomRef.add({
-            question,
-            directors,
-            discussion,
-            dateAdd: firebase.firestore.Timestamp.fromDate(new Date()),
-        });
+        const myBoardroomsRef = doc(collection(db, "users", user.uid, "myBoardrooms"));
+        try {
+            // add folder to firestore
+            await setDoc (myBoardroomsRef,{
+                question,
+                directors,
+                discussion,
+                dateAdd: Timestamp.fromDate(new Date()),
+            });
+            console.log('New discussion added:', question);
+        } catch (error) {
+            console.error('Error adding discussion:', error);
+        }
     }
 
     // Use fetchDirectors to fetch directors from Firebase
     useEffect(() => {
         fetchDirectors();
-    }, [directors]);
+    }, [directors, fetchDirectors]);
     
     // Use generateDiscussion to generate discussion from directors and question
     useEffect(() => {
         if (loadedDirectors.length > 0) {
             generateDiscussion();
         }
-    }, [loadedDirectors]);
+    }, [loadedDirectors, generateDiscussion]);
 
     return (
     <>
