@@ -212,7 +212,7 @@ export default function PageDirectors() {
                             />
                         ))
                     ) : (
-                        <Typography variant="h5" component="h1" paragraph>Any Personal Directors created will appear here.</Typography>
+                        <Typography variant="h5" component="body1" paragraph>Any Personal Directors created will appear here.</Typography>
                     )}
                 </Box>
             </Container>

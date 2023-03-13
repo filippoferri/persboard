@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, updateDoc, getDoc, Timestamp, increment } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, updateDoc, getDoc, Timestamp, increment, onSnapshot } from 'firebase/firestore';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // import { increment } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../../config-global';
@@ -38,7 +38,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     const { user } = useAuthContext();
 
     // use states
-    const [remainingCredits, setRemainingCredits] = useState(user.credits);
+    const [remainingCredits, setCredits] = useState();
     const [hasSavedDiscussion, setHasSavedDiscussion] = useState(false);
     const [loadedDirectors, setLoadedDirectors] = useState([]);
     const [discussion, setDiscussion] = useState([]);
@@ -47,14 +47,30 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     const handleUpgrade = () => {
         router.push({ pathname: PATH_DASHBOARD.billing.root });};
 
-    // const data = [
-    // {
-    //     id: '1',
-    //     fullName: 'John Doe',
-    //     text: 'I think it is a great idea. I would love to be a part of it.',
-    //     role: 'Mentor'
-    //     }
-    // ];
+    // Get credits
+    useEffect(() => {
+        // const app = initializeApp(FIREBASE_API);
+        // const db = getFirestore(app);
+
+        const creditsRef = doc(db, 'users', user.uid);
+        const unsubscribe = onSnapshot(creditsRef, (snapshot) => {
+            const data = snapshot.data();
+            setCredits(data.credits);
+        });
+
+        console.log("remaining credits: ", remainingCredits);
+
+        return unsubscribe;
+    }, [user.uid]);
+
+    const data = [
+    {
+        id: '1',
+        fullName: 'John Doe',
+        text: 'I think it is a great idea. I would love to be a part of it.',
+        role: 'Mentor'
+        }
+    ];
 
     // fetch the directors
     async function fetchDirectors() {
@@ -88,12 +104,8 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         if (!user || !user.uid) {
             return;
         }
-
-        const remainingCreditsRef = user.remainingCredits;
-
-        setRemainingCredits(remainingCreditsRef);
     
-        if (remainingCreditsRef <= 0) {
+        if (remainingCredits <= 0) {
             setDiscussion([
                 {
                     id: '1',
@@ -105,61 +117,39 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             return;
         }
     
-        const prompt = await generateAdvice(loadedDirectors, question);
-        setDiscussion(prompt);
-        // setDiscussion(data);
+        // const prompt = await generateAdvice(loadedDirectors, question);
+        // setDiscussion(prompt);
+        setDiscussion(data);
+
+        // Decrease remaining credits by 1
+        const remainingCreditsRef = doc(db, "users", user.uid);
+        await updateDoc(remainingCreditsRef, { credits: increment(-1) });
+
+        setCredits(prevCredits => prevCredits - 1); // update the remaining credits state variable
     }
 
     // save the discussion
-    const handleSave = async () => {
-        try {
-            if (!user || !user.uid) {
-                console.log("User is not logged in or user ID is undefined.");
-                return;
-            }
-            if (user.remainingCredits === 0) {
-                console.log("Credits are over.");
-                return;
-            }
-            const boardRoomRef = collection(db, "users", user && user.uid, "myBoardrooms");
-            const docRef = await setDoc(doc(boardRoomRef), {
-                question,
-                directors: loadedDirectors,
-                discussion,
-                dateAdd: Timestamp.fromDate(new Date()),
-            });
-            
-            setHasSavedDiscussion(true); // set the flag to true after the discussion is saved
-
-            // Decrease remaining credits by 1
-            const remainingCreditsRef = doc(db, "users", user.uid);
-            await updateDoc(remainingCreditsRef, {
-                credits: increment(-1),
-            });
-            setRemainingCredits(remainingCredits - 1);
-            } catch (e) {
-                console.error("Error adding document: ", e);
-        }
-    };
+    async function handleSave() {
+        const boardRoomRef = db.collection(`users/${user.uid}/myBoardrooms`);
+        await boardRoomRef.add({
+            question,
+            directors,
+            discussion,
+            dateAdd: firebase.firestore.Timestamp.fromDate(new Date()),
+        });
+    }
 
     // Use fetchDirectors to fetch directors from Firebase
     useEffect(() => {
         fetchDirectors();
-    }, [directors, fetchDirectors]);
+    }, [directors]);
     
     // Use generateDiscussion to generate discussion from directors and question
     useEffect(() => {
         if (loadedDirectors.length > 0) {
             generateDiscussion();
         }
-    }, [loadedDirectors, generateDiscussion]);
-    
-   // Use handleSave to save discussion to Firebase after discussion is generated
-    useEffect(() => {
-        if (discussion.length > 0 && remainingCredits > 0 && !hasSavedDiscussion) {
-            handleSave();
-        }
-    }, [discussion, remainingCredits, hasSavedDiscussion, handleSave]);
+    }, [loadedDirectors]);
 
     return (
     <>
@@ -212,13 +202,23 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                             Meaningful Discussion
                         </Box>
                         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                            <Tooltip title="Recive new advice from the board for the same question">
+                            <Tooltip title="Ask your board again to get different advices">
                                 <IconButton 
                                     color= 'default' 
                                     onClick={() => {
                                         generateDiscussion();
                                     }}>
                                     <Iconify icon="eva:refresh-outline" />
+                                </IconButton>
+                            </Tooltip>
+
+                            <Tooltip title="Save this discussion for a future consult">
+                                <IconButton 
+                                    color= 'default' 
+                                    onClick={() => {
+                                        handleSave();
+                                    }}>
+                                    <Iconify icon="eva:save-outline" />
                                 </IconButton>
                             </Tooltip>
                         </Box>
