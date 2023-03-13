@@ -69,7 +69,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     //     text: 'I think it is a great idea. I would love to be a part of it.',
     //     role: 'Mentor'
     //     }
-    // ];
+    // ]; 
 
     // fetch the directors
     const fetchDirectors = useCallback(async () => {
