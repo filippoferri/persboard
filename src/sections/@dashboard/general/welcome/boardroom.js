@@ -96,7 +96,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         );
             
         setLoadedDirectors(loadedDirectorsRef);
-    }, [directors, db, user]);
+    }, [directors, db, user]); 
 
     // generate discussion
     const generateDiscussion = useCallback(async () => {
