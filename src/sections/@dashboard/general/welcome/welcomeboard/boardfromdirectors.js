@@ -40,12 +40,12 @@ const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
 
     const NextStep = () => {
         const directors = { directors: selectedDirectors };
-        const boardData = [
+        const boardDataArr = [
             dataFromPrevStep,
-        directors,
+            directors,
         ];
-        setBoardData(boardData);
-        onNextStep(boardData);
+        setBoardData(boardDataArr);
+        onNextStep(boardDataArr);
     };
 
     // Get directors

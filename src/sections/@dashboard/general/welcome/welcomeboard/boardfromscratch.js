@@ -39,9 +39,9 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 
   // Manage form fields
   const handleFormChange = (index, event) => {
-    let data = [...formFields];
-    data[index][event.target.name] = event.target.value;
-    setFormFields(data);
+    let fieldsData = [...formFields];
+    fieldsData[index][event.target.name] = event.target.value;
+    setFormFields(fieldsData);
   }
 
   // Add new form fields
