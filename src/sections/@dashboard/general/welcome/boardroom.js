@@ -14,6 +14,7 @@ import { FIREBASE_API } from '../../../../config-global';
 import { useAuthContext } from '../../../../auth/useAuthContext';
 // components
 import Iconify from '../../../../components/iconify';
+import { useSnackbar } from '../../../../components/snackbar';
 // sections
 import AdvisoryBoard from '../../projects/AdvisoryBoard';
 import {generateAdvice} from '../../../../utils/generateAdvice';
@@ -29,6 +30,7 @@ WelcomeBoardroom.propTypes = {
 // ----------------------------------------------------------------------
 
 export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onRestart }) { 
+    const { enqueueSnackbar } = useSnackbar();
 
     const { question } = dataFromPrevStep[0];
     const { directors } = dataFromPrevStep[1];
@@ -46,30 +48,14 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     const handleUpgrade = () => {
         router.push({ pathname: PATH_DASHBOARD.billing.root });};
 
-    // Get credits
-    useEffect(() => {
-        // const app = initializeApp(FIREBASE_API);
-        // const db = getFirestore(app);
-
-        const creditsRef = doc(db, 'users', user.uid);
-        const unsubscribe = onSnapshot(creditsRef, (snapshot) => {
-            const data = snapshot.data();
-            setCredits(data.credits);
-        });
-
-        console.log("remaining credits: ", remainingCredits);
-
-        return unsubscribe;
-    }, [user.uid, db, remainingCredits]);
-
-    // const data = [
-    // {
-    //     id: '1',
-    //     fullName: 'John Doe',
-    //     text: 'I think it is a great idea. I would love to be a part of it.',
-    //     role: 'Mentor'
-    //     }
-    // ]; 
+    const data = [
+    {
+        id: '1',
+        fullName: 'John Doe',
+        text: 'I think it is a great idea. I would love to be a part of it.',
+        role: 'Mentor'
+        }
+    ]; 
 
     // fetch the directors
     const fetchDirectors = useCallback(async () => {
@@ -103,8 +89,15 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         if (!user || !user.uid) {
             return;
         }
+
+        const creditsRef = doc(db, 'users', user.uid);
+        const unsubscribe = onSnapshot(creditsRef, (snapshot) => {
+            const data = snapshot.data();
+            setCredits(data.credits);
+        });
     
         if (remainingCredits <= 0) {
+            console.log('remaining credits: ', remainingCredits);
             setDiscussion([
                 {
                     id: '1',
@@ -116,16 +109,15 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             return;
         }
     
-        const prompt = await generateAdvice(loadedDirectors, question);
-        setDiscussion(prompt);
-        // setDiscussion(data);
+        // const prompt = await generateAdvice(loadedDirectors, question);
+        // setDiscussion(prompt);
+        setDiscussion(data);
 
         // Decrease remaining credits by 1
         const remainingCreditsRef = doc(db, "users", user.uid);
         await updateDoc(remainingCreditsRef, { credits: increment(-1) });
 
-        setCredits(prevCredits => prevCredits - 1); // update the remaining credits state variable
-    }, [loadedDirectors, question, remainingCredits, db, user]);
+    }, [question, db, user]);
 
     // save the discussion
     async function handleSave() {
@@ -138,10 +130,16 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                 discussion,
                 dateAdd: Timestamp.fromDate(new Date()),
             });
+            enqueueSnackbar('Discussion saved!');
             console.log('New discussion added:', question);
         } catch (error) {
             console.error('Error adding discussion:', error);
         }
+    }
+
+    async function handleRefresh() {
+        const [discussion, setDiscussion] = useState([]);
+        generateDiscussion();
     }
 
     // Use fetchDirectors to fetch directors from Firebase
@@ -149,12 +147,12 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         fetchDirectors();
     }, [directors, fetchDirectors]);
     
-    // Use generateDiscussion to generate discussion from directors and question
+    // Use generateDiscussion to generate discussion from directors
     useEffect(() => {
-        if (loadedDirectors.length > 0) {
+        // if (loadedDirectors.length > 0) {
             generateDiscussion();
-        }
-    }, [loadedDirectors, generateDiscussion]);
+        // }
+    }, [generateDiscussion]);
 
     return (
     <>
@@ -211,7 +209,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                 <IconButton 
                                     color= 'default' 
                                     onClick={() => {
-                                        generateDiscussion();
+                                        handleRefresh();
                                     }}>
                                     <Iconify icon="eva:refresh-outline" />
                                 </IconButton>

@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 import Iconify from '../../../components/iconify';
 import ConfirmDialog from '../../../components/confirm-dialog';
-// import { useSnackbar } from '../../../components/snackbar';
+import { useSnackbar } from '../../../components/snackbar';
 // import { textAlign } from '@mui/system';
 //
 // import { varFade } from '../../../components/animate/variants';
@@ -41,7 +41,7 @@ AdviceCard.propTypes = {
 
 export function AdviceCard({myBoardroom, onDelete}) {
 
-    // const { enqueueSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
 
     const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -62,13 +62,19 @@ export function AdviceCard({myBoardroom, onDelete}) {
         setOpenConfirm(false);
     };
 
+    const handleDelete = () => {
+        onDelete(),
+        enqueueSnackbar('Advice deleted', { variant: 'error' });
+        handleCloseConfirm();
+    }
+
     return (
         <>
         <m.div 
             initial="hidden"
             animate="visible"
             variants={variants}>
-            <Card sx={{cursor: "pointer"}}>
+            <Card sx={{cursor: "pointer", height: 300}}>
                 <Box sx={{display: "flex", flexDirection: "column", height: "100%"}}>
                     <Box 
                         sx={{
@@ -103,6 +109,7 @@ export function AdviceCard({myBoardroom, onDelete}) {
                         {myBoardroom.directors.length > 0 ? (
                         myBoardroom.directors.map((director, index) => (
                             <Box 
+                                key={index}
                                 sx={{
                                     width: 20,
                                     height: 20,
@@ -111,7 +118,6 @@ export function AdviceCard({myBoardroom, onDelete}) {
                                     display: 'inline-block',
                                     ml: index > 0 ? -1 : 0,
                                     border: '2px solid white',
-                                    zIndex: index
                                 }} />
                         ))
                         ) : (
@@ -131,7 +137,7 @@ export function AdviceCard({myBoardroom, onDelete}) {
                 <Button 
                     variant="contained" 
                     color="error" 
-                    onClick={onDelete}
+                    onClick={handleDelete}
                 >
                     Delete
                 </Button>

@@ -78,13 +78,12 @@ export default function PageBoardrooms() {
 
     // Delete director
     const handleDelete = async (boardroomId) => {
-        console.log('Delete folder with id:', boardroomId);
         try {
         const boardroomRef = doc(collection(db, 'users', user.uid, 'myBoardrooms'), boardroomId);
         await deleteDoc(boardroomRef);
-            console.log(`Folder with id ${boardroomId} has been deleted`);
+            console.log(`Advice with id ${boardroomId} has been deleted`);
         } catch (error) {
-            console.error('Error deleting folder:', error);
+            console.error('Error deleting the advice:', error);
         }
     };
 
@@ -133,7 +132,7 @@ export default function PageBoardrooms() {
                             },
                             color: 'white', 
                             cursor:'pointer', 
-                            minHeight: 270 
+                            minHeight: 300 
                         }}>
                     <Box sx={{
                             display: "flex",
@@ -166,11 +165,12 @@ export default function PageBoardrooms() {
                 </Card>
                 {myBoardrooms.length > 0 ? (
                     myBoardrooms.map((myBoardroom, index) => (
-                        <AdviceCard 
-                            key={index} 
-                            myBoardroom={myBoardroom}
-                            onDelete={() => handleDelete(myBoardroom.id)}
-                        />
+                        <Grid item key={index}>
+                            <AdviceCard
+                                myBoardroom={myBoardroom}
+                                onDelete={() => handleDelete(myBoardroom.id)}
+                            />
+                        </Grid>
                     ))
                 ) : (
                     <Grid
