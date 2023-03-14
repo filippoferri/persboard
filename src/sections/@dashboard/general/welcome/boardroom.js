@@ -48,14 +48,14 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     const handleUpgrade = () => {
         router.push({ pathname: PATH_DASHBOARD.billing.root });};
 
-    const data = [
-    {
-        id: '1',
-        fullName: 'John Doe',
-        text: 'I think it is a great idea. I would love to be a part of it.',
-        role: 'Mentor'
-        }
-    ]; 
+    // const data = [
+    // {
+    //     id: '1',
+    //     fullName: 'John Doe',
+    //     text: 'I think it is a great idea. I would love to be a part of it.',
+    //     role: 'Mentor'
+    //     }
+    // ]; 
 
     // fetch the directors
     const fetchDirectors = useCallback(async () => {
@@ -109,9 +109,9 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             return;
         }
     
-        // const prompt = await generateAdvice(loadedDirectors, question);
-        // setDiscussion(prompt);
-        setDiscussion(data);
+        const prompt = await generateAdvice(loadedDirectors, question);
+        setDiscussion(prompt);
+        // setDiscussion(data);
 
         // Decrease remaining credits by 1
         const remainingCreditsRef = doc(db, "users", user.uid);

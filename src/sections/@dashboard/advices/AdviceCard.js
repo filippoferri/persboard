@@ -63,8 +63,8 @@ export function AdviceCard({myBoardroom, onDelete}) {
     };
 
     const handleDelete = () => {
-        onDelete(),
-        enqueueSnackbar('Advice deleted', { variant: 'error' });
+        onDelete();
+        enqueueSnackbar('Advice deleted');
         handleCloseConfirm();
     }
 
