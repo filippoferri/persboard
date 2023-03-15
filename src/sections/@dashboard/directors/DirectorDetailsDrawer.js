@@ -5,6 +5,7 @@ import {
   Box,
   Alert,
   Stack,
+  Avatar,
   Drawer,
   Button,
   Divider,
@@ -15,7 +16,7 @@ import {
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
 import Label from '../../../components/label';
-import { CustomAvatar } from '../../../components/custom-avatar';
+// import { CustomAvatar } from '../../../components/custom-avatar';
 
 
 // ----------------------------------------------------------------------
@@ -105,7 +106,7 @@ export default function FileDetailsDrawer({
             margin: 'auto',
           }}
         /> */}
-        <CustomAvatar 
+        <Avatar 
           src={item.avatar}
           alt={item.fullName} 
           name={item.fullName} 
