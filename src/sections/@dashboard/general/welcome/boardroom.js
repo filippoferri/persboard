@@ -40,6 +40,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     const { user } = useAuthContext();
 
     // use states
+    // eslint-disable-next-line
     const [remainingCredits, setCredits] = useState(user.credits);
     const [loadedDirectors, setLoadedDirectors] = useState([]);
     const [discussion, setDiscussion] = useState([]);
