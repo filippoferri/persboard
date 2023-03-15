@@ -3218,10 +3218,10 @@ form-data@^4.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-framer-motion@^8.4.7:
-  version "8.4.7"
-  resolved "https://registry.npmjs.org/framer-motion/-/framer-motion-8.4.7.tgz"
-  integrity sha512-+uQRQ4bC4hCyrfxM0xQ/AP+O7g0iNG65MoKzdc2gLU9FDm19wWrafCYPunyP7HYLMQxjoiJh1fKUCxpfyQo6Mg==
+framer-motion@^8.5.5:
+  version "8.5.5"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-8.5.5.tgz#e30e9087bfc9b3367459f83b4d9fe7efd5acade6"
+  integrity sha512-5IDx5bxkjWHWUF3CVJoSyUVOtrbAxtzYBBowRE2uYI/6VYhkEBD+rbTHEGuUmbGHRj6YqqSfoG7Aa1cLyWCrBA==
   dependencies:
     "@motionone/dom" "^10.15.3"
     hey-listen "^1.0.8"
