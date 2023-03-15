@@ -27,7 +27,7 @@
     "@iconify/react": "^4.0.1",
     "@mui/icons-material": "^5.11.9",
     "@mui/lab": "^5.0.0-alpha.116",
-    "@mui/material": "^5.11.5",
+    "@mui/material": "^5.11.10",
     "@next/font": "^13.1.2",
     "autosuggest-highlight": "^3.3.4",
     "axios": "^1.2.3",
