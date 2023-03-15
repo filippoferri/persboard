@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, updateDoc, getDoc, Timestamp, increment, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, updateDoc, getDoc, Timestamp, increment } from 'firebase/firestore';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // import { increment } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../../config-global';
