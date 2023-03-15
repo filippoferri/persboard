@@ -106,7 +106,7 @@ export default function FileDetailsDrawer({
           }}
         /> */}
         <CustomAvatar 
-          src="" 
+          src={item.avatar}
           alt={item.fullName} 
           name={item.fullName} 
           sx={{

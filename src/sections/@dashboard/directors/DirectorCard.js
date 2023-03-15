@@ -47,7 +47,7 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
     onDelete(directorId);
   };  
 
-  const dirAvatar = director.avatar ? director.avatar : '/asset/illustrations/avatars/ai_default.svg';
+  const dirAvatar = director.avatar ? director.avatar : '/assets/illustrations/avatars/ai_default.svg';
 
   let bgColor;
   let topColor;

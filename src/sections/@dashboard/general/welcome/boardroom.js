@@ -40,7 +40,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     const { user } = useAuthContext();
 
     // use states
-    const [remainingCredits, setCredits] = useState();
+    const [remainingCredits, setCredits] = useState(user.credits);
     const [loadedDirectors, setLoadedDirectors] = useState([]);
     const [discussion, setDiscussion] = useState([]);
 
@@ -56,6 +56,16 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     //     role: 'Mentor'
     //     }
     // ]; 
+
+    // Decrease remaining credits by 1
+    async function handleCredits() {
+        const remainingCreditsRef = doc(db, "users", user.uid);
+        try {
+            await updateDoc(remainingCreditsRef, { credits: increment(-1) });
+        } catch (error) {
+            console.error('Error decreasing credits:', error);
+        }         
+    };
 
     // fetch the directors
     const fetchDirectors = useCallback(async () => {
@@ -89,15 +99,8 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         if (!user || !user.uid) {
             return;
         }
-
-        const creditsRef = doc(db, 'users', user.uid);
-        const unsubscribe = onSnapshot(creditsRef, (snapshot) => {
-            const data = snapshot.data();
-            setCredits(data.credits);
-        });
     
         if (remainingCredits <= 0) {
-            console.log('remaining credits: ', remainingCredits);
             setDiscussion([
                 {
                     id: '1',
@@ -110,20 +113,21 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         }
     
         const prompt = await generateAdvice(loadedDirectors, question);
+        // Assuming `generateAdvice` returns an object with an `error` property when an error occurs
+        if (!prompt.error) {
+            await handleCredits(); // Call handleCredits if the prompt does not contain an error
+        }
         setDiscussion(prompt);
-        // setDiscussion(data);
-
-        // Decrease remaining credits by 1
-        const remainingCreditsRef = doc(db, "users", user.uid);
-        await updateDoc(remainingCreditsRef, { credits: increment(-1) });
-
-    }, [question, db, user]);
+        // eslint-disable-next-line
+    }, [question, loadedDirectors, remainingCredits, user]);
+    
+    
 
     // save the discussion
     async function handleSave() {
         const myBoardroomsRef = doc(collection(db, "users", user.uid, "myBoardrooms"));
         try {
-            // add folder to firestore
+            // add discussion to firestore
             await setDoc (myBoardroomsRef,{
                 question,
                 directors,
@@ -131,28 +135,32 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                 dateAdd: Timestamp.fromDate(new Date()),
             });
             enqueueSnackbar('Discussion saved!');
-            console.log('New discussion added:', question);
         } catch (error) {
             console.error('Error adding discussion:', error);
         }
     }
 
-    async function handleRefresh() {
-        const [discussion, setDiscussion] = useState([]);
+    const handleRefresh = () => {
+        setDiscussion([]);
         generateDiscussion();
+        if (remainingCredits > 0) {
+            enqueueSnackbar('New advices created.');
+        }
     }
 
     // Use fetchDirectors to fetch directors from Firebase
     useEffect(() => {
         fetchDirectors();
+        // eslint-disable-next-line
     }, [directors, fetchDirectors]);
     
-    // Use generateDiscussion to generate discussion from directors
+    // Use generateDiscussion to generate the discussion
     useEffect(() => {
-        // if (loadedDirectors.length > 0) {
+        if (loadedDirectors.length > 0) {
             generateDiscussion();
-        // }
-    }, [generateDiscussion]);
+        }
+        // eslint-disable-next-line
+    }, [loadedDirectors]);
 
     return (
     <>
@@ -174,7 +182,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                 </Grid>
                 <Grid item sx={{ flexGrow: 1 }}>
                     <Typography variant="h4" gutterBottom>
-                        Board Advice
+                        Boardroom
                     </Typography>
                     <Typography variant="p" gutterBottom>
                         Get guidance on your toughest question
@@ -226,6 +234,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                             </Tooltip>
                         </Box>
                     </Box>
+
                     <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', p:2 }}>
 
                         <Grid container justifyContent='flex-end'>

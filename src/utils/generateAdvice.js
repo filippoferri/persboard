@@ -1,18 +1,18 @@
 import axiosInstance from './axiosOpenai';
 
-const { OPENAI_API_KEY } = process.env;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 export const generateAdvice = async (advisoryDirectors, question) => {
   try {
-    const prompt = advisoryDirectors.map(({ fullName, role, quality, area }) => (
+    const discussion = advisoryDirectors.map(({ fullName, role, quality, area }) => (
       `Act as ${fullName}, an expert ${role}, and talk in first person. Reply to ${question}, considering that your key quality is ${quality} and your expertise area is ${area}. Acting as ${fullName}, when available, close sharing your personal famous phrase.`
     ));
 
     const { data } = await axiosInstance.post(
       '/completions',
       {
-        model: 'text-davinci-003',
-        prompt,
+        model: 'text-davinci-003', 
+        prompt: discussion,
         max_tokens: 10,
         n: 1,
         temperature: 0.2,
@@ -25,7 +25,7 @@ export const generateAdvice = async (advisoryDirectors, question) => {
       }
     );
 
-    if (data?.choices) {
+    if (data?.choices) {     
       return data.choices.map((choice, index) => {
         if (choice?.text) {
           const { fullName, role } = advisoryDirectors[index];
