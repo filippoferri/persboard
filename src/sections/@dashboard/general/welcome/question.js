@@ -30,7 +30,7 @@ import Iconify from '../../../../components/iconify';
 const StyledItem = styled('div')(({ theme }) => ({
 	color: theme.palette.grey.darker,
 	backgroundColor: "#F4F6F8",
-	'&:hover': {backgroundColor: "#3366FF", color: "#FFFFFF"},
+	'&:hover': {backgroundColor: theme.palette.primary.main, color: "#FFFFFF"},
 	borderRadius: Number(theme.shape.borderRadius) * 2,
 	marginBottom: theme.spacing(1),
 	padding: theme.spacing(1),

@@ -132,17 +132,16 @@ export default function FileDetailsDrawer({
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Area of Expertise
           </Typography>
-          <Label color="info">{item.area}</Label>
+          <Label color="success">{item.area}</Label>
         </Stack>
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 2.5 }}>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             Key Quality
           </Typography>
-          <Label color="info">{item.quality}</Label>
+          <Label color="success">{item.quality}</Label>
         </Stack>
         <Stack sx={{ p: 2.5 }}>
-          <Alert icon={false} severity="info">{AREA_DESCRIPTIONS[item.area]}, {QUALITY_DESCRIPTIONS[item.quality]}</Alert>
-
+          <Alert icon={false} severity="success">{AREA_DESCRIPTIONS[item.area]}, {QUALITY_DESCRIPTIONS[item.quality]}</Alert>
         </Stack>
       </Scrollbar>
 

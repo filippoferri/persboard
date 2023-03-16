@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 // @mui
 import { Stack, Button, Typography, Box } from '@mui/material';
+import { useTheme, alpha } from '@mui/material/styles';
 // Router
 import { useRouter } from 'next/router';
 // firebase
@@ -14,10 +15,12 @@ import { FIREBASE_API } from '../../../config-global';
 // ----------------------------------------------------------------------
 
 export default function NavDocs() {
-
   const { user } = useAuthContext();
   // const app = initializeApp(FIREBASE_API);
   // const db = getFirestore(app);
+
+  const theme = useTheme();
+  const PRIMARY_LIGHTER = theme.palette.primary.lighter;
 
   const [credits, setCredits] = useState();
 
@@ -52,7 +55,7 @@ export default function NavDocs() {
           display: 'block',
         }}
       >
-        <Box sx={{ p: 3, backgroundColor: '#eff3ff', borderRadius: 2 }}>
+        <Box sx={{ p: 3, backgroundColor: alpha(PRIMARY_LIGHTER, 0.4), borderRadius: 2 }}>
           <Typography variant="body2">Credits Remaining:</Typography>
           <Typography variant="h4" color="primary">
             {credits} credits

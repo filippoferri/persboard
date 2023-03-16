@@ -79,7 +79,7 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 			  display: "flex",
 			  alignItems: "center",
 			  justifyContent: "flex-end",
-			  color: "#3f51b5",
+			  color: "primary.darker",
 			}}
 			onClick={handleAdvanced}
 		  >{showAdvanced ? 'Simple AI' : 'Advanced AI'}</Typography>
@@ -90,7 +90,7 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 			<StyledPaper
 			  sx={{
 				display: 'flex',
-				backgroundColor: '#D1E9FC',
+				backgroundColor: 'primary.lighter',
 				borderRadius: 1,
 				width: '50px',
 				justifyContent: 'center',

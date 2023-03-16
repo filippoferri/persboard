@@ -11,7 +11,7 @@
         </g>
     </g>
     <defs>
-        <linearGradient id="_Linear1" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(180.868,0,0,234.169,21.4095,187.754)"><stop offset="0" style="stop-color:rgb(51,102,255);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(9,26,122);stop-opacity:1"/></linearGradient>
-        <linearGradient id="_Linear2" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(181.053,0,0,236.912,158.569,133.082)"><stop offset="0" style="stop-color:rgb(107,70,249);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(255,12,170);stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear1" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(180.868,0,0,234.169,21.4095,187.754)"><stop offset="0" style="stop-color:rgb(137,115,217);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(32,22,104);stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear2" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(181.053,0,0,236.912,158.569,133.082)"><stop offset="0" style="stop-color:rgb(107,70,249);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(32,22,104);stop-opacity:1"/></linearGradient>
     </defs>
 </svg>

@@ -56,11 +56,11 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
   let dividerColor;
   
   if (check) {
-    bgColor = '#3366FF';
-    topColor = '#1939B7';
+    bgColor = 'primary.main';
+    topColor = 'primary.darker';
     textColor = 'white';
-    borderColor = '#3366FF';
-    dividerColor = '#84A9FF';
+    borderColor = 'primary.main';
+    dividerColor = 'primary.lighter';
   } else {
     bgColor = 'white';
     topColor = '#DFE3E8';

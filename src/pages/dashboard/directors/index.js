@@ -133,7 +133,7 @@ export default function PageDirectors() {
                         onClick={handleClick} 
                         sx={{ 
                             textAlign: 'center', 
-                            bgcolor: '#3366FF', 
+                            bgcolor: 'primary.main', 
                             '&:hover': {
                                 bgcolor: 'primary.darker',
                             },
@@ -160,6 +160,9 @@ export default function PageDirectors() {
                                     height: 60,
                                     color: 'common.white',
                                     bgcolor: 'primary.light',
+                                    '&:hover': {
+                                        bgcolor: 'primary.light',
+                                    },
                                 }}
                                 onClick={handleClick} 
                             >

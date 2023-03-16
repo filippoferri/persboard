@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { m } from "framer-motion";
+// @mui
 import { Box, Grid, Card, Container, Typography, IconButton } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
@@ -126,7 +127,7 @@ export default function PageBoardrooms() {
                 >            
                 <Card onClick={handleClick} 
                     sx={{ 
-                            bgcolor: '#3366FF', 
+                            bgcolor: 'primary.main', 
                             '&:hover': {
                                 bgcolor: 'primary.darker',
                             },
@@ -153,6 +154,9 @@ export default function PageBoardrooms() {
                                 height: 60,
                                 color: 'common.white',
                                 bgcolor: 'primary.light',
+                                '&:hover': {
+                                    bgcolor: 'primary.light',
+                                },
                             }}
                             onClick={handleClick} 
                         >

@@ -246,7 +246,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                     You
                                 </Typography>
                                 <Box sx={{
-                                    backgroundColor:"#D6E4FF", 
+                                    backgroundColor:"primary.lighter", 
                                     p: 2, 
                                     borderRadius: 1, 
                                     borderTopRightRadius: 0,
@@ -280,7 +280,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                         borderRadius: 1,
                                         borderTopLeftRadius: 0,
                                         mb: 1,
-                                        width: '800px',
+                                        width: '600px',
                                     }}
                                     >
                                         {advice.text}
@@ -292,16 +292,11 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
 
                         {discussion.length !== 0 ? (
                         <Grid container justifyContent="center">
-                            <Grid item justifyContent="center">
-                                <Typography variant="body1" align="center" sx={{color: "#919EAB", pt: 4, pb: 5 }}>
-                                    {remainingCredits > 0 ? `${remainingCredits} credits remaining.` : 'No credits remaining. Please upgrade your account.'} Need more? <Link underline="none" color="#3366FF" href={PATH_DASHBOARD.billing.root} >Upgrade now</Link>!
-                                </Typography>
-                            </Grid>
                             <Grid item sx={{ flexGrow: 1 }}>
-                                <Box sx={{display: 'flex', backgroundColor: "#D6E4FF", p: 2, borderRadius: 1, alignItems: "center"}}>
+                                <Box sx={{display: 'flex', backgroundColor: "primary.lighter", p: 2, borderRadius: 1, alignItems: "center"}}>
                                     <Box sx={{ flexGrow: 1 }}>
-                                        <Typography variant='h5'>Engage in a dynamic exchange of ideas</Typography>
-                                        <Typography variant='h5' sx={{color: "#3366FF"}}>Achieve greater clarity and direction</Typography>
+                                        <Typography variant='h5' sx={{color: "primary.darker"}}>Engage in a dynamic exchange of ideas.</Typography>
+                                        <Typography variant='h5' sx={{color: "primary.darker"}}>Achieve greater clarity and direction.</Typography>
                                     </Box>
                                     <Box>
                                         <Button variant="outlined" size="large" onClick={handleUpgrade} >Upgrade Now</Button>

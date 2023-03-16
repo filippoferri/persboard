@@ -13,15 +13,14 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 import DashboardLayout from '../../../layouts/dashboard';
 // components
 import { useSettingsContext } from '../../../components/settings';
-// import { varFade } from '../../../components/animate/variants';
+// Components
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-// import Label from '../../../components/label';
 import Iconify from '../../../components/iconify';
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
+
 // utils
 import getStripe from '../../../utils/getStripe';
-
 
 // ----------------------------------------------------------------------
 
@@ -53,7 +52,7 @@ const boxStyled = {
     borderRadius: "50%",
     border: "1px solid #E5E5E5",
     '&:hover': {
-        borderColor: "#3366FF",
+        borderColor: "primary.darker",
     },
     cursor: "pointer",
     fontWeight: "bold",
@@ -167,21 +166,21 @@ export default function PageBilling() {
                 </Grid>
                 <Grid item xs={12} md={5}>
                     <form onSubmit={handleSubmit}>
-                    <Card sx={{mt: 3, mb: 5, p:4, backgroundColor: "#eff3ff", borderRadius: 2}}>
+                    <Card sx={{mt: 3, mb: 5, p:4, backgroundColor: "primary.lighter", borderRadius: 2}}>
                         <Typography variant="h4">
                             Buy Credits <Chip label="Powered by Stripe" size="small" color="primary" />
                         </Typography>
                         <Box sx={{ display: "flex", mt:4, mb:2, justifyContent: "center" }}>
-                            <Box sx={{ ...boxStyled, backgroundColor: selectedBox === 50 ? "#3366FF" : "white", color: selectedBox === 50 ? "white" : "inherit" }} onClick={() => handleBoxClick(50)}>
+                            <Box sx={{ ...boxStyled, backgroundColor: selectedBox === 50 ? "primary.main" : "white", color: selectedBox === 50 ? "white" : "inherit" }} onClick={() => handleBoxClick(50)}>
                             50
                             </Box>
-                            <Box sx={{ ...boxStyled, backgroundColor: selectedBox === 100 ? "#3366FF" : "white", color: selectedBox === 100 ? "white" : "inherit" }} onClick={() => handleBoxClick(100)}>
+                            <Box sx={{ ...boxStyled, backgroundColor: selectedBox === 100 ? "primary.main" : "white", color: selectedBox === 100 ? "white" : "inherit" }} onClick={() => handleBoxClick(100)}>
                             100
                             </Box>
-                            <Box sx={{ ...boxStyled, backgroundColor: selectedBox === 500 ? "#3366FF" : "white", color: selectedBox === 500 ? "white" : "inherit" }} onClick={() => handleBoxClick(500)}>
+                            <Box sx={{ ...boxStyled, backgroundColor: selectedBox === 500 ? "primary.main" : "white", color: selectedBox === 500 ? "white" : "inherit" }} onClick={() => handleBoxClick(500)}>
                             500
                             </Box>
-                            <Box sx={{ ...boxStyled, backgroundColor: selectedBox === 1000 ? "#3366FF" : "white", color: selectedBox === 1000 ? "white" : "inherit" }} onClick={() => handleBoxClick(1000)}>
+                            <Box sx={{ ...boxStyled, backgroundColor: selectedBox === 1000 ? "primary.main" : "white", color: selectedBox === 1000 ? "white" : "inherit" }} onClick={() => handleBoxClick(1000)}>
                             1000
                             </Box>
                         </Box>
