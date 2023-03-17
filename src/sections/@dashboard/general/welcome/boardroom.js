@@ -60,12 +60,14 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
 
     // Decrease remaining credits by 1
     async function handleCredits() {
-        const remainingCreditsRef = doc(db, "users", user.uid);
-        try {
-            await updateDoc(remainingCreditsRef, { credits: increment(-1) });
-        } catch (error) {
-            console.error('Error decreasing credits:', error);
-        }         
+        if (remainingCredits > 0) {
+            const remainingCreditsRef = doc(db, "users", user.uid);
+            try {
+                await updateDoc(remainingCreditsRef, { credits: increment(-1) });
+            } catch (error) {
+                console.error('Error decreasing credits:', error);
+            } 
+        }           
     };
 
     // fetch the directors
@@ -131,7 +133,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             // add discussion to firestore
             await setDoc (myBoardroomsRef,{
                 question,
-                directors,
+                directors: loadedDirectors,
                 discussion,
                 dateAdd: Timestamp.fromDate(new Date()),
             });
@@ -258,7 +260,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                             </Grid>
                         </Grid>
 
-                        <Grid container justifyContent="flex-start" sx={{flex: 1}}>
+                        <Grid container justifyContent="flex-start" sx={{flex: 1, mb: 4}}>
                             {discussion.length === 0 ? (
                                 <Grid item justifyContent="center" sx={{mb: 6}}>
                                     <Typography variant="body1" align="center" sx={{color: "#919EAB"}}>

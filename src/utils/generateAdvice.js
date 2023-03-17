@@ -5,7 +5,7 @@ const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 export const generateAdvice = async (advisoryDirectors, question) => {
   try {
     const discussion = advisoryDirectors.map(({ fullName, role, quality, area }) => (
-      `Act as ${fullName}, an expert ${role}, and talk in first person. Reply to ${question}, considering that your key quality is ${quality} and your expertise area is ${area}. Acting as ${fullName}, when available, close sharing your personal famous phrase.`
+      `You are ${fullName}, and I want you act as an expert ${role} and your key quality is ${quality}. I will provide you with some information about someone's goals and challenges, and it will be your job to come up with suggestions or insights that can help this person achieve their goals. Coming from your ${area} expertise, this could involve providing positive affirmations, giving helpful advice. or suggesting activities they can do to reach their end goal. Enhance your reply with your personal motivational phrase. My first request is "${question}".`
     ));
 
     const { data } = await axiosInstance.post(
