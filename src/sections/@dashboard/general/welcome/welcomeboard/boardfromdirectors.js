@@ -96,7 +96,7 @@ const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
             <Grid container spacing={3} sx={{flexDirection: 'row' }}>
             {myDirectors.length > 0 && (
                 myDirectors.map((myDirector, index) => (
-                    <Grid sx={{ cursor: "pointer" }} item xs={12} sm={4} lg={3} key={myDirector.id} onClick={() => handleSelectDirector(myDirector.id)}>
+                    <Grid sx={{ cursor: "pointer" }} item xs={12} sm={4} key={myDirector.id} onClick={() => handleSelectDirector(myDirector.id)}>
                         <DirectorCard 
                             director={myDirector} 
                             check={selectedDirectors.includes(myDirector.id)}   
@@ -108,7 +108,7 @@ const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
             )}
             {premiumDirectors.length > 0 && (
                 premiumDirectors.map((director, index) => (
-                    <Grid sx={{ cursor: "pointer" }} item xs={12} sm={4} lg={3} key={director.id} onClick={() => handleSelectDirector(director.id)}>
+                    <Grid sx={{ cursor: "pointer" }} item xs={12} sm={6} lg={4} key={director.id} onClick={() => handleSelectDirector(director.id)}>
                         <DirectorCard 
                             director={director} 
                             check={selectedDirectors.includes(director.id)}   

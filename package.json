@@ -32,6 +32,7 @@
     "autosuggest-highlight": "^3.3.4",
     "axios": "^1.2.3",
     "change-case": "^4.1.2",
+    "compromise": "^14.8.2",
     "date-fns": "^2.29.3",
     "firebase": "^9.17.1",
     "framer-motion": "^8.5.5",

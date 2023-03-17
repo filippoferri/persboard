@@ -105,20 +105,20 @@ export default function BoardroomView() {
                     </Box>
                     <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', p:2, pb: 4 }}>
 
-                        <Grid container justifyContent='flex-end'>
-                            <Grid item sx={{ textAlign: 'right', mb: 2 }}>
+                        <Grid container sx={{ display: 'flex', flex: 1, }}>
+                            <Grid item sx={{ mb: 2 }}>
                                 <Typography 
                                 variant='caption' 
                                 sx={{ fontWeight:'bold', pr: 1 }}>
-                                    You
+                                    Your Question
                                 </Typography>
                                 <Box sx={{
                                     backgroundColor:"#D1E9FC", 
                                     p: 2, 
                                     borderRadius: 1, 
                                     borderTopRightRadius: 0,
-                                    mb: 1,
-                                    maxWidth: '600px',
+                                    display: 'block',
+                                    width: '100%',
                                 }}>
                                     {adviceData.question}
                                 </Box>
@@ -129,7 +129,7 @@ export default function BoardroomView() {
                             {discussion.length === 0 ? (
                                 <Grid item justifyContent="center" sx={{mb: 6}}>
                                     <Typography variant="body1" align="center" sx={{color: "#919EAB"}}>
-                                        We are thinking...
+                                        The boardroom is empty.
                                     </Typography>
                                 </Grid>
                             ) : (
@@ -147,7 +147,6 @@ export default function BoardroomView() {
                                         borderRadius: 1,
                                         borderTopLeftRadius: 0,
                                         mb: 1,
-                                        width: '600px',
                                     }}
                                     >
                                         {advice.text}

@@ -5,6 +5,7 @@ import { Grid, Stack, Box, Typography, Tabs, Tab, IconButton } from '@mui/materi
 
 import BoardFromScratch from './welcomeboard/boardfromscratch';
 import BoardFromDirectors from './welcomeboard/boardfromdirectors';
+import BoardFromSelection from './welcomeboard/boardfromselection';
 
 // components
 import Iconify from '../../../../components/iconify';
@@ -23,11 +24,11 @@ function TabPanel(props) {
 
 	return (
 		<div
-		role="tabpanel"
-		hidden={value !== index}
-		id={`simple-tabpanel-${index}`}
-		aria-labelledby={`simple-tab-${index}`}
-		{...other}
+			role="tabpanel"
+			hidden={value !== index}
+			id={`simple-tabpanel-${index}`}
+			aria-labelledby={`simple-tab-${index}`}
+			{...other}
 		>
 		{value === index && (
 			<Box sx={{ pt: 3 }}>
@@ -99,22 +100,50 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 			</Grid>
 		</Stack>
 
-		<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-			<Tabs value={value} onChange={handleChange} aria-label="tabs">
-				<Tab label="Create From Scratch" {...a11yProps(0)} />
-				<Tab label="From AI Directors" {...a11yProps(1)} />
-				{/* <Tab label="From Saved Boards" {...a11yProps(1)} /> */}
-			</Tabs>
-		</Box>
-		<TabPanel value={value} index={0}>
-			<BoardFromScratch onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
-		</TabPanel>
-		<TabPanel value={value} index={1}>
-			<BoardFromDirectors onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
-		</TabPanel>
-				{/* <TabPanel value={value} index={1}>
-			No Board available yet (Coming Soon)	
-		</TabPanel> */}
+		<Grid container spacing={5} sx={{ display: "flex", flexGrow: 1 }}>
+			<Grid item xs={2} >
+				<Tabs 
+					value={value} 
+					onChange={handleChange} 
+					aria-label="tabs"
+					orientation="vertical"
+					sx={{ borderRight: 1, borderColor:"grey.300", }}
+				>
+					<Tab 
+						fullWidth 
+						label="From Scratch"
+						sx={{ 
+							justifyContent: "left",
+						}}
+						{...a11yProps(0)} />
+					<Tab 
+						fullWidth 
+						label="From AI Directors"
+						sx={{ 
+							justifyContent: "left",
+						}}
+						{...a11yProps(1)} />
+					<Tab 
+						fullWidth 
+						label="From AI Selection"
+						sx={{ 
+							justifyContent: "left",
+						}}
+						{...a11yProps(2)} />
+				</Tabs>
+			</Grid>
+			<Grid item xs={10}>
+				<TabPanel value={value} index={0}>
+					<BoardFromScratch onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
+				</TabPanel>
+				<TabPanel value={value} index={1}>
+					<BoardFromDirectors onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
+				</TabPanel>
+				<TabPanel value={value} index={2}>
+					<BoardFromSelection onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />	
+				</TabPanel>
+			</Grid>
+		</Grid>
 
 	</>
 	);

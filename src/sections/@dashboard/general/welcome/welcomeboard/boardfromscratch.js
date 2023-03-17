@@ -31,162 +31,162 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
   // };
 
   // Form validation schema
-  const [formFields, setFormFields] = useState([
-	{ fullName: '', role: 'Inspirer', area: 'Advocacy', quality: 'Vision' },
-	{ fullName: '', role: 'Inspirer', area: 'Advocacy', quality: 'Vision' },
-	{ fullName: '', role: 'Inspirer', area: 'Advocacy', quality: 'Vision' },
-  ]);
+	const [formFields, setFormFields] = useState([
+		{ fullName: '', role: 'Inspirer', area: 'Advocacy', quality: 'Vision' },
+		{ fullName: '', role: 'Inspirer', area: 'Advocacy', quality: 'Vision' },
+		{ fullName: '', role: 'Inspirer', area: 'Advocacy', quality: 'Vision' },
+	]);
 
-  // Manage form fields
-  const handleFormChange = (index, event) => {
+  	// Manage form fields
+	const handleFormChange = (index, event) => {
 	const fieldsData = [...formFields];
-	fieldsData[index][event.target.name] = event.target.value;
-	setFormFields(fieldsData);
-  }
+		fieldsData[index][event.target.name] = event.target.value;
+		setFormFields(fieldsData);
+	}
 
-  // Add new form fields
-  const addFields = () => {
+  	// Add new form fields
+	const addFields = () => {
 	const object = { fullName: '', role: 'Inspirer', area: 'Advocacy', quality: 'Vision' }
-	setFormFields([...formFields, object])
-  }
+		setFormFields([...formFields, object])
+	}
 
-  // Validate form fields
-  const isFormValid = formFields.every(field => field.fullName !== '');
+	// Validate form fields
+	const isFormValid = formFields.every(field => field.fullName !== '');
 
-  // const [boardData, setBoardData] = useState([]);
+	// const [boardData, setBoardData] = useState([]);
 
-  const NextStep = () => {
-	const directors = { directors: formFields };
-	const boardData = [
-	  dataFromPrevStep,
-	  directors,
-	];
-	// setBoardData(boardData);
-	onNextStep(boardData);
-  };
-  
-  const handleAdvanced = () => {
-	setShowAdvanced(!showAdvanced);
-  };
+	const NextStep = () => {
+		const directors = { directors: formFields };
+		const boardData = [
+			dataFromPrevStep,
+			directors,
+		];
+		// setBoardData(boardData);
+		onNextStep(boardData);
+	};
+	
+	const handleAdvanced = () => {
+		setShowAdvanced(!showAdvanced);
+	};
 
-  return (
+	return (
 	<>
-	  <FormProvider methods={useForm()}>
-		<Box sx={{pr:2, mb: 1}}>  
-		  <Typography sx={{
-			  variant: "caption",
-			  cursor: "pointer",
-			  display: "flex",
-			  alignItems: "center",
-			  justifyContent: "flex-end",
-			  color: "primary.darker",
-			}}
-			onClick={handleAdvanced}
-		  >{showAdvanced ? 'Simple AI' : 'Advanced AI'}</Typography>
-	  </Box>
-	  {formFields.map((input, index) => (
-		<Card key={index} sx={{ p: 2, mb: 1 }}>
-		  <Stack direction="row" spacing={1}>
-			<StyledPaper
-			  sx={{
-				display: 'flex',
-				backgroundColor: 'primary.lighter',
-				borderRadius: 1,
-				width: '50px',
-				justifyContent: 'center',
-				alignItems: 'center',
-			  }}
+	<FormProvider methods={useForm()}>
+		{/* <Box sx={{pr:2, mb: 1}}>  
+			<Typography sx={{
+				variant: "caption",
+				cursor: "pointer",
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "flex-end",
+				color: "primary.darker",
+				}}
+				onClick={handleAdvanced}
+			>{showAdvanced ? '[Simple Profile]' : '[Advanced Profile]'}</Typography>
+		</Box> */}
+		{formFields.map((input, index) => (
+			<Card key={index} sx={{ p: 2, mb: 1 }}>
+			<Stack direction="row" spacing={1}>
+				<StyledPaper
+				sx={{
+					display: 'flex',
+					backgroundColor: 'primary.lighter',
+					borderRadius: 1,
+					width: '50px',
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}
+				>
+				<Typography variant="h5">{index+1}</Typography>
+				</StyledPaper>
+
+				<StyledPaper sx={{ flexGrow: 6 }}>
+				<RHFTextField 
+					name="fullName"
+					label="Full Name" 
+					helperText="Fake or Real Full Name (also famous)" 
+					value={input.fullName}
+					onChange={event => handleFormChange(index, event)}
+				/>
+				</StyledPaper>
+
+				{showAdvanced && (
+				<>
+					<StyledPaper sx={{ flexGrow: 1 }}>
+					<RHFTextField
+						select
+						name="role"
+						helperText="Role Director"
+						value={input.role}
+						onChange={event => handleFormChange(index, event)}
+					>
+						{roles.map((option, roleIndex) => (
+						<MenuItem key={roleIndex} value={option.value}>
+							{option.label}
+						</MenuItem>
+						))}
+					</RHFTextField>
+					</StyledPaper>
+
+					<StyledPaper sx={{ flexGrow: 1 }}>
+					<RHFTextField
+						select
+						name="area"
+						helperText="Area Expertise"
+						value={input.area}
+						onChange={event => handleFormChange(index, event)}
+					>
+						{areas.map((option, areaIndex) => (
+						<MenuItem key={areaIndex} value={option.value}>
+							{option.label}
+						</MenuItem>
+						))}
+					</RHFTextField>
+					</StyledPaper>
+
+					<StyledPaper sx={{ flexGrow: 1 }}>
+					<RHFTextField
+						select
+						name="quality"
+						helperText="Key Quality"
+						value={input.quality}
+						onChange={event => handleFormChange(index, event)}
+					>
+						{qualities.map((option, qualityIndex) => (
+						<MenuItem key={qualityIndex} value={option.value}>
+							{option.label}
+						</MenuItem>
+						))}
+					</RHFTextField>
+					</StyledPaper>
+				</>
+				)}
+			</Stack>
+			</Card>
+		))}
+		</FormProvider>
+		{formFields.length < 5 && isFormValid && (
+			<Box sx={{pt: 2}}>
+			<Button onClick={addFields}>Add director</Button>
+			</Box>
+		)}
+		<Stack
+			direction="row"
+			alignItems="center"
+			justifyContent="flex-end"
+			sx={{
+				mt: 3,
+				mb: 4,
+		}}
 			>
-			  <Typography variant="h5">{index+1}</Typography>
-			</StyledPaper>
-
-			<StyledPaper sx={{ flexGrow: 6 }}>
-			  <RHFTextField 
-				name="fullName"
-				label="Full Name" 
-				helperText="Fake or Real Full Name (also famous)" 
-				value={input.fullName}
-				onChange={event => handleFormChange(index, event)}
-			  />
-			</StyledPaper>
-
-			{showAdvanced && (
-			  <>
-				<StyledPaper sx={{ flexGrow: 1 }}>
-				  <RHFTextField
-					select
-					name="role"
-					helperText="Role Director"
-					value={input.role}
-					onChange={event => handleFormChange(index, event)}
-				  >
-					{roles.map((option, roleIndex) => (
-					  <MenuItem key={roleIndex} value={option.value}>
-						{option.label}
-					  </MenuItem>
-					))}
-				  </RHFTextField>
-				</StyledPaper>
-
-				<StyledPaper sx={{ flexGrow: 1 }}>
-				  <RHFTextField
-					select
-					name="area"
-					helperText="Area Expertise"
-					value={input.area}
-					onChange={event => handleFormChange(index, event)}
-				  >
-					{areas.map((option, areaIndex) => (
-					  <MenuItem key={areaIndex} value={option.value}>
-						{option.label}
-					  </MenuItem>
-					))}
-				  </RHFTextField>
-				</StyledPaper>
-
-				<StyledPaper sx={{ flexGrow: 1 }}>
-				  <RHFTextField
-					select
-					name="quality"
-					helperText="Key Quality"
-					value={input.quality}
-					onChange={event => handleFormChange(index, event)}
-				  >
-					{qualities.map((option, qualityIndex) => (
-					  <MenuItem key={qualityIndex} value={option.value}>
-						{option.label}
-					  </MenuItem>
-					))}
-				  </RHFTextField>
-				</StyledPaper>
-			  </>
-			)}
-		  </Stack>
-		</Card>
-	  ))}
-	  </FormProvider>
-	  {formFields.length < 5 && isFormValid && (
-		<Box sx={{pt: 2}}>
-		  <Button onClick={addFields}>Add director</Button>
-		</Box>
-	  )}
-	  <Stack
-		direction="row"
-		alignItems="center"
-		justifyContent="flex-end"
-		sx={{
-			mt: 3,
-			mb: 4,
-	  }}
-		>
-		  <Box sx={{ flexShrink: 1 }}>
-			  <Button disabled={!isFormValid}  variant="contained" size="large" onClick={NextStep} >
-				  Ask Your Board
-			  </Button>
-		  </Box>
-	  </Stack>
+			<Box sx={{ flexShrink: 1 }}>
+				<Button disabled={!isFormValid}  variant="contained" size="large" onClick={NextStep} >
+					Ask Your Board
+				</Button>
+			</Box>
+		</Stack>
 	</>
-  );
+	);
 };
 
 const roles = [
@@ -297,10 +297,10 @@ const BoardFromScratch = ({onNextStep, dataFromPrevStep}) => (
 	  alignItems="center"
 	  sx={{
 		mt: 1,
-		mb: 4,
+		mb: 3,
 	  }}
 	>
-	  <Box sx={{ flexGrow: 1 }}>
+	  <Box sx={{ flexGrow: 1, pl: 2 }}>
 		Add from 3 to 5 worldwide celebrities who will be on your board.
 	  </Box>
 	</Stack>
