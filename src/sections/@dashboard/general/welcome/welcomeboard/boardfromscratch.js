@@ -27,10 +27,10 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
   	// Show advanced fields
 	const [showAdvanced, setShowAdvanced] = useState(false);
 
-  const handleAdvancedSubmit = (data) => {    
-    onSubmit(data);
-    setShowAdvanced(false);
-  };
+//   const handleAdvancedSubmit = (data) => {    
+//     onSubmit(data);
+//     setShowAdvanced(false);
+//   };
 
   // Form validation schema
 	const [formFields, setFormFields] = useState([

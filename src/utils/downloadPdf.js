@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { PDFDownloadLink, Document, Page, View, Text, Image, StyleSheet } from '@react-pdf/renderer';
+import { PDFDownloadLink, Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
 // @mui
 import { IconButton, Tooltip } from '@mui/material';
 // components
@@ -147,12 +147,25 @@ export default DownloadPdf;
 // ----------------------------------------------------------------------
 
 DownloadPdf.propTypes = {
-	question: PropTypes.string,
-    directors: PropTypes.array,
-    discussion: PropTypes.object,
-    takeaways: PropTypes.arrayOf(PropTypes.shape({
-        text: PropTypes.string
-    })),
+    question: PropTypes.string,
+    directors: PropTypes.arrayOf(
+        PropTypes.shape({
+            fullName: PropTypes.string,
+            role: PropTypes.string,
+        })
+    ),
+    discussion: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+            fullName: PropTypes.string,
+            role: PropTypes.string,
+        })
+    ),
+    takeaways: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
 };
 
 // ----------------------------------------------------------------------

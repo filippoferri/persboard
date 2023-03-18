@@ -44,8 +44,6 @@ export default function BoardroomView() {
     const discussion = adviceData.discussion || [];
     const takeaways = adviceData.takeaways || [];
 
-    console.log('takeaways', takeaways);
-
     // Retrieve data from Firestore using `aid`
     const generateDiscussion = useCallback(async () => {
         try {
