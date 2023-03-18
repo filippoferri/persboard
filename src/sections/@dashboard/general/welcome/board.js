@@ -111,7 +111,7 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 				>
 					<Tab 
 						fullWidth 
-						label="From Scratch"
+						label="From AI Selection"
 						sx={{ 
 							justifyContent: "left",
 						}}
@@ -125,7 +125,7 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 						{...a11yProps(1)} />
 					<Tab 
 						fullWidth 
-						label="From AI Selection"
+						label="From Scratch"
 						sx={{ 
 							justifyContent: "left",
 						}}
@@ -134,13 +134,13 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 			</Grid>
 			<Grid item xs={10}>
 				<TabPanel value={value} index={0}>
-					<BoardFromScratch onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
+					<BoardFromSelection onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />	
 				</TabPanel>
 				<TabPanel value={value} index={1}>
 					<BoardFromDirectors onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
 				</TabPanel>
 				<TabPanel value={value} index={2}>
-					<BoardFromSelection onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />	
+					<BoardFromScratch onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
 				</TabPanel>
 			</Grid>
 		</Grid>
