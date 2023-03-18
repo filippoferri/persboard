@@ -118,6 +118,28 @@ const MyPdf = ({ question, directors, discussion, takeaways }) => (
     </Document>
 );
 
+MyPdf.propTypes = {
+    question: PropTypes.string,
+    directors: PropTypes.arrayOf(
+        PropTypes.shape({
+            fullName: PropTypes.string,
+            role: PropTypes.string,
+        })
+    ),
+    discussion: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+            fullName: PropTypes.string,
+            role: PropTypes.string,
+        })
+    ),
+    takeaways: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
+};
+
 
 const DownloadPdf = ({ question, directors, discussion, takeaways }) => (
     <PDFDownloadLink document={
