@@ -65,9 +65,9 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 		onNextStep(boardData);
 	};
 	
-	const handleAdvanced = () => {
-		setShowAdvanced(!showAdvanced);
-	};
+	// const handleAdvanced = () => {
+	// 	setShowAdvanced(!showAdvanced);
+	// };
 
 	return (
 	<>
@@ -291,22 +291,22 @@ const qualities = [
 ];
 
 const BoardFromScratch = ({onNextStep, dataFromPrevStep}) => (
-  <>
-	<Stack
-	  direction="row"
-	  alignItems="center"
-	  sx={{
-		mt: 1,
-		mb: 3,
-	  }}
-	>
-	  <Box sx={{ flexGrow: 1, pl: 2 }}>
-		Add from 3 to 5 worldwide celebrities who will be on your board.
-	  </Box>
-	</Stack>
+	<>
+		<Stack
+		direction="row"
+		alignItems="center"
+		sx={{
+			mt: 1,
+			mb: 3,
+		}}
+		>
+		<Box sx={{ flexGrow: 1, pl: 2 }}>
+			Add from 3 to 5 worldwide celebrities who will be on your board.
+		</Box>
+		</Stack>
 
-	<FormFields methods={useForm()} dataFromPrevStep={dataFromPrevStep} onNextStep={onNextStep}/>
-  </>
+		<FormFields methods={useForm()} dataFromPrevStep={dataFromPrevStep} onNextStep={onNextStep}/>
+	</>
 );
 
 

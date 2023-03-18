@@ -42,7 +42,9 @@ export default function BoardroomView() {
 
     const directors = adviceData.directors || [];
     const discussion = adviceData.discussion || [];
-    const takeaways = adviceData.takeaways || {};
+    const takeaways = adviceData.takeaways || [];
+
+    console.log('takeaways', takeaways);
 
     // Retrieve data from Firestore using `aid`
     const generateDiscussion = useCallback(async () => {
@@ -109,7 +111,7 @@ export default function BoardroomView() {
                         <Box sx={{ display: 'flex', flex: 1, alignItems: 'center', }}>
                             Meaningful Discussion   
                         </Box>
-                        <DownloadPdf directors={directors} question={adviceData.question} discussion={discussion} />
+                        <DownloadPdf directors={directors} question={adviceData.question} discussion={discussion} takeaways={takeaways} />
                     </Box>
                     <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', p:2, pb: 4 }}>
 
@@ -151,7 +153,7 @@ export default function BoardroomView() {
                                     </Typography>
                                     <Box sx={{
                                         backgroundColor: "#F4F6F8",
-                                        p: 2,
+                                        p: 3,
                                         borderRadius: 1,
                                         borderTopLeftRadius: 0,
                                         mb: 1,

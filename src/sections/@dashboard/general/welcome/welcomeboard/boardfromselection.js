@@ -9,7 +9,6 @@ import { FIREBASE_API } from '../../../../../config-global';
 import { useAuthContext } from '../../../../../auth/useAuthContext';
 // sections
 import {DirectorCard} from '../../../directors/DirectorCard';
-import nlp from 'compromise';
 import { suggestDirectors } from '../../../../../utils/compromise';
 
 

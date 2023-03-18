@@ -3,32 +3,28 @@ import { forwardRef } from 'react';
 
 import { List, ListSubheader, ListItem, ListItemText } from '@mui/material';
 // components
-import Iconify from '../../components/iconify';
+import Iconify from '../iconify';
 
 // ----------------------------------------------------------------------
 
-const CustomList = forwardRef(
-({ icon, takeaways, listSubheader, sx, ...other }, ref) => {
-    return (
-        <List
-            sx={{ width: '100%' }}
-            aria-labelledby="nested-list-subheader"
-            subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-                {listSubheader}
-            </ListSubheader>
-            }
-        >
-            {Array.isArray(takeaways) && takeaways.map((takeaway, index) => (
-                <ListItem sx={{ display: "flex", alignItems: "center" }}>
-                    <Iconify icon="eva:arrow-forward-outline" sx={{ mr: 1 }} />
-                    <ListItemText key={index} primary={takeaway.text} />
-                </ListItem>
-            ))}
-        </List>
-    );
-}
-);
+const CustomList = forwardRef(({ icon, takeaways, listSubheader, sx, ...other }, ref) => (
+    <List
+        sx={{ width: '100%' }}
+        aria-labelledby="nested-list-subheader"
+        subheader={
+        <ListSubheader component="div" id="nested-list-subheader">
+            {listSubheader}
+        </ListSubheader>
+        }
+    >
+        {Array.isArray(takeaways) && takeaways.map((takeaway, index) => (
+            <ListItem key={index} sx={{ display: "flex", alignItems: "center" }}>
+                <Iconify icon="eva:arrow-forward-outline" sx={{ mr: 1 }} />
+                <ListItemText key={index} primary={takeaway.text} />
+            </ListItem>
+        ))}
+    </List>
+));
 
 CustomList.propTypes = {
     sx: PropTypes.object,

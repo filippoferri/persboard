@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Paper, Stack, Box, Grid, Typography, Button, Link, IconButton, Tooltip, CircularProgress } from '@mui/material';
+import { Paper, Stack, Box, Grid, Typography, Button, IconButton, Tooltip, CircularProgress } from '@mui/material';
 // import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
 // Router
@@ -284,7 +284,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                         <Grid container justifyContent="flex-start" sx={{flex: 1}}>
                             {discussion.length === 0 ? (
                                 <Grid item justifyContent="center" sx={{mb: 6}}>
-                                    <Typography variant="body1" align="center" sx={{color: "#919EAB"}}>
+                                    <Typography variant="body1" align="center" sx={{color: "#919EAB", mb: 2 }}>
                                         We are thinking...
                                     </Typography>
                                     <CircularProgress />
