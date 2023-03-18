@@ -15,9 +15,13 @@ import DashboardLayout from '../../../../layouts/dashboard';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // auth
 import { useAuthContext } from '../../../../auth/useAuthContext';
+// components
 import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
+import CustomList from '../../../../components/list';
+// sections
 import AdvisoryBoard from '../../../../sections/@dashboard/projects/AdvisoryBoard';
-
+// Utils
+import DownloadPdf from '../../../../utils/downloadPdf';
 
 const app = initializeApp(FIREBASE_API);
 const db = getFirestore(app);
@@ -38,6 +42,7 @@ export default function BoardroomView() {
 
     const directors = adviceData.directors || [];
     const discussion = adviceData.discussion || [];
+    const takeaways = adviceData.takeaways || {};
 
     // Retrieve data from Firestore using `aid`
     const generateDiscussion = useCallback(async () => {
@@ -101,7 +106,10 @@ export default function BoardroomView() {
                 <Grid container item xs={9} direction="column" sx={{flexGrow: 1}} >
 
                     <Box sx={{ display: 'flex', borderBottom: '1px solid #DFE3E8', height: '75px', alignItems: 'center', p: 2, fontWeight:'bold', color:'#637381', bgcolor: '#f4f6f8' }}>
-                        Meaningful Discussion
+                        <Box sx={{ display: 'flex', flex: 1, alignItems: 'center', }}>
+                            Meaningful Discussion   
+                        </Box>
+                        <DownloadPdf directors={directors} question={adviceData.question} discussion={discussion} />
                     </Box>
                     <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', p:2, pb: 4 }}>
 
@@ -155,6 +163,13 @@ export default function BoardroomView() {
                                 ))
                             )}
                         </Grid>
+
+                        {takeaways.length !== 0 ? (
+                        <Grid container sx={{ mb: 4, flexDirection: "row"}}>
+                            <Grid item sx={{ display: "flex" }}>
+                                <CustomList listSubheader="Key Takeaways" takeaways={takeaways} />
+                            </Grid>
+                        </Grid> ) : null }
 
                     </Box>
 

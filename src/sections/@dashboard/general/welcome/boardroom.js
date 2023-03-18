@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Paper, Stack, Box, Grid, Typography, Button, Link, IconButton, Tooltip } from '@mui/material';
+import { Paper, Stack, Box, Grid, Typography, Button, Link, IconButton, Tooltip, CircularProgress } from '@mui/material';
 // import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
 // Router
@@ -15,9 +15,11 @@ import { useAuthContext } from '../../../../auth/useAuthContext';
 // components
 import Iconify from '../../../../components/iconify';
 import { useSnackbar } from '../../../../components/snackbar';
+import CustomList from '../../../../components/list';
 // sections
 import AdvisoryBoard from '../../projects/AdvisoryBoard';
 import {generateAdvice} from '../../../../utils/generateAdvice';
+import {generateTakeaways} from '../../../../utils/generateTakeaways';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +46,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     const [remainingCredits, setCredits] = useState(user.credits);
     const [loadedDirectors, setLoadedDirectors] = useState([]);
     const [discussion, setDiscussion] = useState([]);
+    const [takeaways, setTakeaways] = useState([]);
 
     const router = useRouter();
     const handleUpgrade = () => {
@@ -55,6 +58,15 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     //     fullName: 'John Doe',
     //     text: 'I think it is a great idea. I would love to be a part of it.',
     //     role: 'Mentor'
+    //     }
+    // ]; 
+
+    //  const keyTakeaways = [
+    //     {
+    //         text: 'Think big, but start small.',
+    //     },
+    //     {
+    //         text: 'Less is more.',
     //     }
     // ]; 
 
@@ -112,6 +124,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                     role: 'Advisory'
                 }
             ]);
+            //setTakeaways(keyTakeaways);
             return;
         }
     
@@ -121,11 +134,18 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             await handleCredits(); // Call handleCredits if the prompt does not contain an error
         }
         setDiscussion(prompt);
+
+        // Generate takeaways after setting the discussion
+        const discussionText = prompt
+            .map(({ fullName, role, text }) => `${fullName} (${role}): ${text}`)
+            .join('\n');
+        const generatedTakeaways = await generateTakeaways(discussionText);
+        setTakeaways(generatedTakeaways);
+        // setTakeaways(keyTakeaways);
+
         // eslint-disable-next-line
     }, [question, loadedDirectors, remainingCredits, user]);
     
-    
-
     // save the discussion
     async function handleSave() {
         const myBoardroomsRef = doc(collection(db, "users", user.uid, "myBoardrooms"));
@@ -135,6 +155,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                 question,
                 directors: loadedDirectors,
                 discussion,
+                takeaways,
                 dateAdd: Timestamp.fromDate(new Date()),
             });
             enqueueSnackbar('Discussion saved!');
@@ -260,12 +281,13 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                             </Grid>
                         </Grid>
 
-                        <Grid container justifyContent="flex-start" sx={{flex: 1, mb: 4}}>
+                        <Grid container justifyContent="flex-start" sx={{flex: 1}}>
                             {discussion.length === 0 ? (
                                 <Grid item justifyContent="center" sx={{mb: 6}}>
                                     <Typography variant="body1" align="center" sx={{color: "#919EAB"}}>
                                         We are thinking...
                                     </Typography>
+                                    <CircularProgress />
                                 </Grid>
                             ) : (
                                 discussion.map((advice, index) => (
@@ -292,6 +314,13 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                             )}
                         </Grid>
 
+                        {takeaways.length !== 0 ? (
+                        <Grid container sx={{ mb: 4, flexDirection: "row"}}>
+                            <Grid item sx={{ display: "flex" }}>
+                                <CustomList listSubheader="Key Takeaways" takeaways={takeaways} />
+                            </Grid>
+                        </Grid> ) : null }
+
                         {discussion.length !== 0 ? (
                         <Grid container justifyContent="center">
                             <Grid item sx={{ flexGrow: 1 }}>
@@ -306,7 +335,6 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                 </Box>
                             </Grid>
                         </Grid> ) : null }
-
                     </Box>
 
                 </Grid>

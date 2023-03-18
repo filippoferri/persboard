@@ -144,7 +144,6 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 				</TabPanel>
 			</Grid>
 		</Grid>
-
 	</>
 	);
 }

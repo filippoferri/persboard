@@ -13,7 +13,7 @@ export const generateAdvice = async (advisoryDirectors, question) => {
       {
         model: 'text-davinci-003', 
         prompt: discussion,
-        max_tokens: 10,
+        max_tokens: 1000,
         n: 1,
         temperature: 0.2,
       },

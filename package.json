@@ -28,6 +28,7 @@
     "@mui/lab": "^5.0.0-alpha.116",
     "@mui/material": "^5.11.5",
     "@next/font": "^13.1.2",
+    "@react-pdf/renderer": "^3.1.8",
     "@stripe/stripe-js": "^1.48.0",
     "autosuggest-highlight": "^3.3.4",
     "axios": "^1.2.3",
