@@ -124,7 +124,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                     role: 'Advisory'
                 }
             ]);
-            //setTakeaways(keyTakeaways);
+            
             return;
         }
     
