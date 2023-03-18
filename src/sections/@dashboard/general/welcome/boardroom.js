@@ -19,7 +19,9 @@ import CustomList from '../../../../components/list';
 // sections
 import AdvisoryBoard from '../../projects/AdvisoryBoard';
 import {generateAdvice} from '../../../../utils/generateAdvice';
+// Utils
 import {generateTakeaways} from '../../../../utils/generateTakeaways';
+import DownloadPdf from '../../../../utils/downloadPdf';
 
 // ----------------------------------------------------------------------
 
@@ -236,6 +238,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                         <Box sx={{ display: "flex", flex: 1 }}>
                             Meaningful Discussion
                         </Box>
+                        { discussion.length > 1 ? (
                         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                             <Tooltip title="Ask your board again to get different advices">
                                 <IconButton 
@@ -247,6 +250,8 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                 </IconButton>
                             </Tooltip>
 
+                            <DownloadPdf directors={loadedDirectors} question={question} discussion={discussion} takeaways={takeaways} />
+
                             <Tooltip title="Save this discussion for a future consult">
                                 <IconButton 
                                     color= 'default' 
@@ -256,7 +261,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                     <Iconify icon="eva:save-outline" />
                                 </IconButton>
                             </Tooltip>
-                        </Box>
+                        </Box> ) : null }
                     </Box>
 
                     <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', p:2 }}>
@@ -287,7 +292,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                     <Typography variant="body1" align="center" sx={{color: "#919EAB", mb: 2 }}>
                                         We are thinking...
                                     </Typography>
-                                    <CircularProgress />
+                                    <CircularProgress size={30} />
                                 </Grid>
                             ) : (
                                 discussion.map((advice, index) => (
@@ -321,7 +326,6 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                             </Grid>
                         </Grid> ) : null }
 
-                        {discussion.length !== 0 ? (
                         <Grid container justifyContent="center">
                             <Grid item sx={{ flexGrow: 1 }}>
                                 <Box sx={{display: 'flex', backgroundColor: "primary.lighter", p: 2, borderRadius: 1, alignItems: "center"}}>
@@ -334,7 +338,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                     </Box>
                                 </Box>
                             </Grid>
-                        </Grid> ) : null }
+                        </Grid>
                     </Box>
 
                 </Grid>

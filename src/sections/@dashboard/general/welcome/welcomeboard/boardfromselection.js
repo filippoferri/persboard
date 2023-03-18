@@ -38,8 +38,6 @@ const BoardFromSelection = ({onNextStep, dataFromPrevStep}) => {
 
             const suggestedDirectorIds = suggestedDirectors.map((director) => director.id);
 
-            console.log('suggestedDirectorIds', suggestedDirectorIds)
-
             setSelectedDirectors(suggestedDirectorIds);
             setSelectedDirectorObjects(suggestedDirectors);
         });

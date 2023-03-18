@@ -9,6 +9,8 @@ import { useForm } from 'react-hook-form';
 
 import { Stack, Card, Paper, Box, Typography, Button, MenuItem } from '@mui/material';
 import FormProvider, { RHFTextField } from '../../../../../components/hook-form';
+// components
+import Iconify from '../../../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -65,25 +67,25 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 		onNextStep(boardData);
 	};
 	
-	// const handleAdvanced = () => {
-	// 	setShowAdvanced(!showAdvanced);
-	// };
+	const handleAdvanced = () => {
+		setShowAdvanced(!showAdvanced);
+	};
 
 	return (
 	<>
 	<FormProvider methods={useForm()}>
-		{/* <Box sx={{pr:2, mb: 1}}>  
+		<Box sx={{pr:2, mb: 1}}>  
 			<Typography sx={{
 				variant: "caption",
 				cursor: "pointer",
 				display: "flex",
 				alignItems: "center",
-				justifyContent: "flex-end",
-				color: "primary.darker",
+				justifyContent: "flex-start",
+				color: "primary.dark",
 				}}
 				onClick={handleAdvanced}
-			>{showAdvanced ? '[Simple Profile]' : '[Advanced Profile]'}</Typography>
-		</Box> */}
+			><Iconify icon={showAdvanced ? 'eva:eye-off-outline' : 'eva:eye-outline'} sx={{ ml: 2, mr: 1 }}/> {showAdvanced ? 'Hide Advanced Fields' : 'Show Advanced Fields'}</Typography>
+		</Box>
 		{formFields.map((input, index) => (
 			<Card key={index} sx={{ p: 2, mb: 1 }}>
 			<Stack direction="row" spacing={1}>
@@ -167,7 +169,7 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 		</FormProvider>
 		{formFields.length < 5 && isFormValid && (
 			<Box sx={{pt: 2}}>
-			<Button onClick={addFields}>Add director</Button>
+				<Button onClick={addFields}>Add director</Button>
 			</Box>
 		)}
 		<Stack
