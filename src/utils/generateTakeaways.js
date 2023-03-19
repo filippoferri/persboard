@@ -41,7 +41,7 @@ export const generateTakeaways = async (discussion) => {
     console.log('Error while generating takeaways: ', error);
     return [
       {
-        text: 'Something went wrong!!',
+        text: 'No important points covered in the discussion.',
       },
     ];
   }

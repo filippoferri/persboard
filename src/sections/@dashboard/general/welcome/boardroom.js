@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Paper, Stack, Box, Grid, Typography, Button, IconButton, Tooltip, CircularProgress } from '@mui/material';
+import { Paper, Stack, Box, Grid, Typography, Button, IconButton, Tooltip, Skeleton } from '@mui/material';
 import Confetti from 'react-confetti';
 // import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
@@ -17,6 +17,7 @@ import { useAuthContext } from '../../../../auth/useAuthContext';
 import Iconify from '../../../../components/iconify';
 import { useSnackbar } from '../../../../components/snackbar';
 import CustomList from '../../../../components/list';
+import { MotionViewport, varBounce } from '../../../../components/animate';
 // sections
 import AdvisoryBoard from '../../projects/AdvisoryBoard';
 import {generateAdvice} from '../../../../utils/generateAdvice';
@@ -182,8 +183,9 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         width: window.innerWidth,
         height: window.innerHeight,
         recycle: false,
-        numberOfPieces: 200,
+        numberOfPieces: 1000,
         gravity: 0.1,
+        colors: ['#8973D9', '#FFAF33', '#75A7FF', '#4ED857', '#EAD219', '#FF7E42'],
     };
 
     // Use fetchDirectors to fetch directors from Firebase
@@ -237,8 +239,8 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         <Paper variant="outlined" sx={{ flexGrow: 1 }}>
             <Grid container spacing={0} sx={{minHeight: '600px'}}>
 
-                <Grid item xs={3} sx={{borderRight: '1px solid #DFE3E8'}}>
-                    <Box sx={{ display: 'flex', borderBottom: '1px solid #DFE3E8', height: '75px', alignItems: 'center', p: 2, fontWeight: 'bold', color: '#637381',bgcolor: '#f4f6f8'}}>
+                <Grid item xs={3} sx={{borderRight: '1px solid grey.300'}}>
+                    <Box sx={{ display: 'flex', borderBottom: '1px solid grey.300', height: '75px', alignItems: 'center', p: 2, fontWeight: 'bold', color: 'grey.600',bgcolor: 'grey.200'}}>
                         Advisory Board
                     </Box>
                     <AdvisoryBoard directors={loadedDirectors} />
@@ -246,7 +248,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
 
                 <Grid container item xs={9} direction="column" sx={{flexGrow: 1}} >
 
-                    <Box sx={{ display: 'flex', borderBottom: '1px solid #DFE3E8', height: '75px', alignItems: 'center', p: 2, fontWeight:'bold', color:'#637381', bgcolor: '#f4f6f8' }}>
+                    <Box sx={{ display: 'flex', borderBottom: '1px solid grey.300', height: '75px', alignItems: 'center', p: 2, fontWeight:'bold', color:'grey.600', bgcolor: 'grey.200' }}>
                         <Box sx={{ display: "flex", flex: 1 }}>
                             Meaningful Discussion
                         </Box>
@@ -300,33 +302,35 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
 
                         <Grid container justifyContent="flex-start" sx={{flex: 1}}>
                             {discussion.length === 0 ? (
-                                <Grid item justifyContent="center" sx={{mb: 6}}>
-                                    <Typography variant="body1" align="center" sx={{color: "#919EAB", mb: 2 }}>
+                                <Grid item sx={{mb: 6}}>
+                                    <Typography variant="body1" align="left" sx={{color: "grey.600", mb: 2 }}>
                                         We are thinking...
                                     </Typography>
-                                    <CircularProgress size={30} />
+                                    <Skeleton variant="rounded" width={600} height={60} sx={{ bgcolor: 'grey.200', mb: 1 }} />
+                                    <Skeleton variant="rounded" width={600} height={60} animation="wave" sx={{ bgcolor: 'grey.200', mb: 1  }}  />
+                                    <Skeleton variant="rounded" width={600} height={60} sx={{ bgcolor: 'grey.200', mb: 1  }}  />
                                 </Grid>
                             ) : (
                                 discussion.map((advice, index) => (
-                                <Grid item key={index} sx={{mb:2}}>
-                                    <Typography
-                                        variant='caption'
-                                        sx={{ fontWeight: 'bold', pl: 1, mb: 2 }}
-                                    >
-                                        {advice.fullName} | {advice.role}
-                                    </Typography>
-                                    <Box sx={{
-                                        backgroundColor: "#F4F6F8",
-                                        p: 2,
-                                        borderRadius: 1,
-                                        borderTopLeftRadius: 0,
-                                        mb: 1,
-                                        width: '600px',
-                                    }}
-                                    >
-                                        {advice.text}
-                                    </Box>
-                                </Grid>
+                                    <Grid item key={index} sx={{mb:2}}>
+                                        <Typography
+                                            variant='caption'
+                                            sx={{ fontWeight: 'bold', pl: 1, mb: 2 }}
+                                        >
+                                            {advice.fullName} | {advice.role}
+                                        </Typography>
+                                        <Box sx={{
+                                            backgroundColor: "grey.200",
+                                            p: 2,
+                                            borderRadius: 1,
+                                            borderTopLeftRadius: 0,
+                                            mb: 1,
+                                            width: '600px',
+                                        }}
+                                        >
+                                            {advice.text}
+                                        </Box>
+                                    </Grid>
                                 ))
                             )}
                         </Grid>
@@ -347,7 +351,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                 <Box sx={{display: 'flex', backgroundColor: "primary.lighter", p: 2, borderRadius: 1, alignItems: "center"}}>
                                     <Box sx={{ flexGrow: 1 }}>
                                         <Typography variant='h5' sx={{color: "primary.darker"}}>Engage in a dynamic exchange of ideas.</Typography>
-                                        <Typography variant='h5' sx={{color: "primary.darker"}}>Achieve greater clarity and direction.</Typography>
+                                        <Typography variant='h5' sx={{color: "primary.main"}}>Achieve greater clarity and direction.</Typography>
                                     </Box>
                                     <Box>
                                         <Button variant="outlined" size="large" onClick={handleUpgrade} >Upgrade Now</Button>
