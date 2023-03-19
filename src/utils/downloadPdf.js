@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
         padding: 30,
     },
     title: {
+        fontFamily: "Helvetica-Bold",
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 30,
@@ -19,6 +20,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     subTitle: {
+        fontFamily: "Helvetica-Bold",
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 5,
@@ -32,6 +34,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     author: {
+        fontFamily: "Helvetica-Bold",
         fontSize: 10,
         fontWeight: 'bold',
         marginBottom: 2,
@@ -74,7 +77,7 @@ const MyPdf = ({ question, directors, discussion, takeaways }) => (
                     <View style={styles.section}>
                         <Text style={styles.subTitle}>Your Bord</Text>
                         {directors && Object.entries(directors).map(([index, director]) => (
-                            <View key={index} style={styles.marginBottom}>
+                            <View key={index}>
                                 <Text style={styles.text}>{director.fullName}</Text>
                                 <Text style={styles.subText}>{director.role}</Text>
                             </View>
@@ -93,13 +96,12 @@ const MyPdf = ({ question, directors, discussion, takeaways }) => (
 
                 <View style={[styles.section, styles.rightColumn]}>
                     <View style={styles.section}>
-                        <Text style={styles.subTitle}>Question</Text>
-                        <Text style={styles.text}>{question}</Text>
+                        <Text style={styles.subTitle}>{question}</Text>
                     </View>
 
                     <View style={styles.section}>
                         {discussion && discussion.map((advice, index) => (
-                            <View key={index} style={styles.noMargin}>
+                            <View key={index}>
                                 <Text style={styles.text}>{advice.text}</Text>
                                 <Text style={styles.author}>{advice.fullName}</Text>
                                 <Text style={styles.author}>{advice.role}</Text>

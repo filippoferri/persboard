@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { PATH_DASHBOARD } from "../../../../routes/paths";
 // utils
 // import { bgGradient } from "../../../../utils/cssStyles";
+import { useAuthContext } from '../../../../auth/useAuthContext';
 
 // ----------------------------------------------------------------------
 
@@ -35,6 +36,29 @@ WelcomeIntro.propTypes = {
 
 export default function WelcomeIntro({ onNextStep }) {
 
+    function greeting(name) {
+      const date = new Date();
+      const hours = date.getHours();
+      let greeting = "";
+    
+      if (hours >= 0 && hours < 12) {
+        greeting = "Good Morning";
+      } else if (hours >= 12 && hours < 18) {
+        greeting = "Good Afternoon";
+      } else {
+        greeting = "Good Evening";
+      }
+    
+      // const message = `${greeting}, ${name}`;
+      return (
+        <Typography variant="h3" sx={{ textAlign: "center", color: "primary.dark" }}>
+          {greeting},  <Typography variant="span" sx={{color: "primary.main"}}>{name}</Typography>
+        </Typography>
+      );
+    }
+
+    const { user } = useAuthContext();
+
     const router = useRouter();
     const handleClick = () => {
         router.push({ pathname: PATH_DASHBOARD.steps });};
@@ -43,8 +67,9 @@ export default function WelcomeIntro({ onNextStep }) {
           <m.div initial="hidden" animate="visible" variants={variants}>
             <Grid container spacing={6} sx={{ mt: 2, alignItems: "flex-start" }}>
               <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
-                <Typography variant="h3" gutterBottom sx={{ textAlign: "center" }}>
-                  Engage With Your Board
+                  {greeting(user.firstName)}           
+                <Typography variant="h4" gutterBottom sx={{ textAlign: "center", color:"grey.700"  }}>
+                  Engage Now With Your Personal Board
                 </Typography>
               </Grid>
               <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
