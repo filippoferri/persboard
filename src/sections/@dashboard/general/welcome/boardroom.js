@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Paper, Stack, Box, Grid, Typography, Button, IconButton, Tooltip, CircularProgress } from '@mui/material';
+import Confetti from 'react-confetti';
 // import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
 // Router
@@ -167,12 +168,23 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     }
 
     const handleRefresh = () => {
-        setDiscussion([]);
-        generateDiscussion();
         if (remainingCredits > 0) {
+            setDiscussion([]);
+            setTakeaways([]);
+            generateDiscussion();
             enqueueSnackbar('New advices created.');
+        } else {
+            enqueueSnackbar('You have reached the limit of available credits.', { variant: 'error' });
         }
     }
+
+    const confettiProps = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        recycle: false,
+        numberOfPieces: 200,
+        gravity: 0.1,
+    };
 
     // Use fetchDirectors to fetch directors from Firebase
     useEffect(() => {
@@ -318,6 +330,10 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                 ))
                             )}
                         </Grid>
+
+                        {discussion.length > 1 ? (
+                            <Confetti {...confettiProps} />
+                        ) : null }
 
                         {takeaways.length !== 0 ? (
                         <Grid container sx={{ mb: 4, flexDirection: "row"}}>
