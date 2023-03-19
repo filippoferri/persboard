@@ -28,6 +28,26 @@ const variants = {
     },
 };
 
+function greeting(name) {
+  const date = new Date();
+  const hours = date.getHours();
+  let greeting = "";
+
+  if (hours >= 0 && hours < 12) {
+    greeting = "Good Morning";
+  } else if (hours >= 12 && hours < 18) {
+    greeting = "Good Afternoon";
+  } else {
+    greeting = "Good Evening";
+  }
+
+  return (
+    <Typography variant="h3" sx={{ textAlign: "center", color: "primary.dark" }}>
+      {greeting}, <Typography variant="span" sx={{ color: "primary.main" }}>{name}</Typography>
+    </Typography>
+  );
+}
+
   // ----------------------------------------------------------------------
 
 WelcomeIntro.propTypes = {

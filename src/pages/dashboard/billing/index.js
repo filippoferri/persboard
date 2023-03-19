@@ -154,7 +154,7 @@ export default function PageBilling() {
                             Credits used
                         </Typography>
                         <Typography variant="body1" sx={{color: 'text.secondary'}}>
-                            You have <b>{user.credits}</b> credits in total, <b>{user.remainingCredits}</b> credits remaining.
+                            You have <b>{user.credits}</b> remaining.
                         </Typography>
                         <Typography variant="body1" sx={{color: 'text.secondary', mb: 2}}>
                             Credit cost per board advice: 1
@@ -166,7 +166,7 @@ export default function PageBilling() {
                 </Grid>
                 <Grid item xs={12} md={5}>
                     <form onSubmit={handleSubmit}>
-                    <Card sx={{mt: 3, mb: 5, p:4, backgroundColor: "primary.lighter", borderRadius: 2}}>
+                    <Card sx={{mt: 3, mb: 5, p:4, backgroundColor: "grey.200", borderRadius: 2}}>
                         <Typography variant="h4">
                             Buy Credits <Chip label="Powered by Stripe" size="small" color="primary" />
                         </Typography>

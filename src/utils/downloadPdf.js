@@ -151,9 +151,9 @@ const DownloadPdf = ({ question, directors, discussion, takeaways }) => (
                 discussion={discussion}
                 takeaways={takeaways}
             />
-        } fileName="somename.pdf">
+        } fileName="boardroom_report.pdf">
     {({ blob, url, loading, error }) =>
-        loading ? 'Loading document...' : 
+        loading ? 'Creating...' : 
         ( 
         <Tooltip title="Download">
             <IconButton 
