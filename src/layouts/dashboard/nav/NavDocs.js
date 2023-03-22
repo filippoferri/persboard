@@ -22,7 +22,7 @@ export default function NavDocs() {
   const theme = useTheme();
   const PRIMARY_LIGHTER = theme.palette.primary.lighter;
 
-  const [credits, setCredits] = useState();
+  const [credits, setCredits] = useState(user.credits);
 
   const router = useRouter();
   const handleClick = () => {
@@ -30,19 +30,36 @@ export default function NavDocs() {
   };
 
   // Get credits
+  // useEffect(() => {
+  //   const app = initializeApp(FIREBASE_API);
+  //   const db = getFirestore(app);
+
+  //   const creditsRef = doc(db, 'users', user.uid);
+  //   const unsubscribe = onSnapshot(creditsRef, (snapshot) => {
+  //     const data = snapshot.data();
+  //     setCredits(data.credits);
+  //   });
+
+  //   return unsubscribe;
+  // }, [user.uid]);
+
   useEffect(() => {
     const app = initializeApp(FIREBASE_API);
     const db = getFirestore(app);
-
+  
+    if (!user) {
+      setCredits(null);
+      return;
+    }
+  
     const creditsRef = doc(db, 'users', user.uid);
     const unsubscribe = onSnapshot(creditsRef, (snapshot) => {
       const data = snapshot.data();
-      setCredits(data.credits);
+      setCredits(credits);
     });
-
+  
     return unsubscribe;
   }, [user.uid]);
-  
 
   return (
       <Stack

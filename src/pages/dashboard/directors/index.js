@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { m } from "framer-motion";
-import { Box, Grid, Card, Divider, Container, Typography, IconButton } from '@mui/material';
+import { Box, Grid, Card, Divider, Container, Typography, IconButton, Skeleton } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, deleteDoc, onSnapshot } from 'firebase/firestore';
@@ -59,8 +59,11 @@ export default function PageDirectors() {
     const [directors, setDirectors] = useState([]);
     const [myDirectors, setMyDirectors] = useState([]);
 
+    const [isLoading, setIsLoading] = useState(false);
+
     // Get directors
     useEffect(() => {
+        setIsLoading(true);
         const directorsRef = collection(db, 'directors');
         const myDirectorsRef = collection(db, 'users', user && user.uid, 'myDirectors');
         const unsubscribeDirectors = onSnapshot(directorsRef, (snapshot) => {
@@ -69,6 +72,7 @@ export default function PageDirectors() {
             directorsData.push({ id: item.id, ...item.data() });
             });
             setDirectors(directorsData);
+            setIsLoading(false);
         });
         const unsubscribeMyDirectors = onSnapshot(myDirectorsRef, (snapshot) => {
             const myDirectorsData = [];
@@ -76,10 +80,12 @@ export default function PageDirectors() {
             myDirectorsData.push({ id: item.id, ...item.data() });
             });
             setMyDirectors(myDirectorsData);
+            setIsLoading(false);
         });
         return () => {
             unsubscribeDirectors();
             unsubscribeMyDirectors();
+            setIsLoading(false);
         };
         }, [db, user]);
 
@@ -124,8 +130,8 @@ export default function PageDirectors() {
                     gap={3}
                     display="grid"
                     gridTemplateColumns={{
-                        xs: 'repeat(2, 1fr)',
-                        sm: 'repeat(3, 1fr)',
+                        xs: 'repeat(1, 1fr)',
+                        sm: 'repeat(2, 1fr)',
                         md: 'repeat(4, 1fr)',
                     }}
                     >            
@@ -146,7 +152,7 @@ export default function PageDirectors() {
                                 flexDirection: 'column',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                height: '100%',
+                                height: 265,
                                 fontWeight: 'bold'
                                 }}>
                             
@@ -173,7 +179,9 @@ export default function PageDirectors() {
                             </Typography>
                         </Box>
                     </Card>
-                    {myDirectors.length > 0 ? (
+                    {isLoading ? (
+                        <Skeleton variant="rectangular" width={"100%"} height={265} sx={{ borderRadius: 1 }} />
+                    ) : myDirectors.length > 0 ? (
                         myDirectors.map((myDirector) => (
                             <DirectorCard key={myDirector.id} director={myDirector} onDelete={() => handleDelete(myDirector.id)} />
                         ))
@@ -204,12 +212,14 @@ export default function PageDirectors() {
                     gap={3}
                     display="grid"
                     gridTemplateColumns={{
-                        xs: 'repeat(2, 1fr)',
-                        sm: 'repeat(3, 1fr)',
+                        xs: 'repeat(1, 1fr)',
+                        sm: 'repeat(2, 1fr)',
                         md: 'repeat(4, 1fr)',
                     }}
                     >
-                    {directors.length > 0 ? (
+                    {isLoading ? (
+                        <Skeleton variant="rectangular" width={"100%"} height={265} />
+                    ) : directors.length > 0 ? (
                         directors.map((director) => (
                             <DirectorCard key={director.id} director={director} onDelete={() => handleDelete(director.id)}
                             />

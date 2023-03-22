@@ -16,15 +16,6 @@ PageOne.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default function PageOne() {
   const { themeStretch } = useSettingsContext();
-  const [story, setStory] = useState('');
-
-  useEffect(() => {
-    async function generateStory() {
-      const prompts = await generateAdvice('Steve Jobs', 'How can I earn my first 500k?');
-      setStory(prompts);
-    }
-    generateStory();
-  }, []);
 
   return (
     <>
@@ -37,7 +28,7 @@ export default function PageOne() {
           Generated Story:
         </Typography>
         <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
-          {story}
+          text
         </Typography>
       </Container>
     </>

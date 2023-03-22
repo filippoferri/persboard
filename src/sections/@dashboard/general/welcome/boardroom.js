@@ -239,8 +239,8 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         <Paper variant="outlined" sx={{ flexGrow: 1 }}>
             <Grid container spacing={0} sx={{minHeight: '600px'}}>
 
-                <Grid item xs={3} sx={{borderRight: '1px solid grey.300'}}>
-                    <Box sx={{ display: 'flex', borderBottom: '1px solid grey.300', height: '75px', alignItems: 'center', p: 2, fontWeight: 'bold', color: 'grey.600',bgcolor: 'grey.200'}}>
+                <Grid item xs={3} sx={{borderRight: '1px solid', borderColor: 'grey.300'}}>
+                    <Box sx={{ display: 'flex', borderBottom: '1px solid', borderColor: 'grey.300', height: '75px', alignItems: 'center', p: 2, fontWeight: 'bold', color: 'grey.600',bgcolor: 'grey.200'}}>
                         Advisory Board
                     </Box>
                     <AdvisoryBoard directors={loadedDirectors} />
@@ -248,7 +248,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
 
                 <Grid container item xs={9} direction="column" sx={{flexGrow: 1}} >
 
-                    <Box sx={{ display: 'flex', borderBottom: '1px solid grey.300', height: '75px', alignItems: 'center', p: 2, fontWeight:'bold', color:'grey.600', bgcolor: 'grey.200' }}>
+                    <Box sx={{ display: 'flex', borderBottom: '1px solid', borderColor: 'grey.300', height: '75px', alignItems: 'center', p: 2, fontWeight:'bold', color:'grey.600', bgcolor: 'grey.200' }}>
                         <Box sx={{ display: "flex", flex: 1 }}>
                             Meaningful Discussion
                         </Box>

@@ -35,6 +35,9 @@ export const { OPENAI_API_KEY } = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 const { welcome: PATH_AFTER_LOGIN } = PATH_DASHBOARD;
 export { PATH_AFTER_LOGIN };
 
+// ROOT PATH AFTER LOGIN SUCCESSFUL
+export const PATH_AFTER_REGISTER = '/dashboard/survey';
+
 // LAYOUT
 // ----------------------------------------------------------------------
 

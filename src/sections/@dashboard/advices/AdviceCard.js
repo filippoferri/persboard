@@ -11,9 +11,6 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 import Iconify from '../../../components/iconify';
 import ConfirmDialog from '../../../components/confirm-dialog';
 import { useSnackbar } from '../../../components/snackbar';
-// import { textAlign } from '@mui/system';
-//
-// import { varFade } from '../../../components/animate/variants';
 
 // ----------------------------------------------------------------------
 

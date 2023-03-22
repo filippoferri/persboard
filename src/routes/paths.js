@@ -25,6 +25,7 @@ export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   welcome: path(ROOTS_DASHBOARD, '/welcome'),
   steps: path(ROOTS_DASHBOARD, '/steps'),
+  //survey: path(ROOTS_DASHBOARD, '/survey'),
   projects: {
     root: path(ROOTS_DASHBOARD, '/projects'),
     newProject: path(ROOTS_DASHBOARD, '/projects/new'),

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { m } from "framer-motion";
 // @mui
-import { Box, Grid, Card, Container, Typography, IconButton } from '@mui/material';
+import { Box, Grid, Card, Container, Typography, IconButton, Skeleton } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, deleteDoc, onSnapshot } from 'firebase/firestore';
@@ -61,9 +61,12 @@ export default function PageBoardrooms() {
     const { user } = useAuthContext();
 
     const [myBoardrooms, setMyBoardrooms] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     // Get directors
     useEffect(() => {
+        setIsLoading(true);
+
         const myBoardroomsRef = collection(db, 'users', user && user.uid, 'myBoardrooms');
         const unsubscribemyBoardrooms = onSnapshot(myBoardroomsRef, (snapshot) => {
             const myBoardroomsData = [];
@@ -71,6 +74,7 @@ export default function PageBoardrooms() {
                 myBoardroomsData.push({ id: item.id, ...item.data() });
             });
             setMyBoardrooms(myBoardroomsData);
+            setIsLoading(false);
         });
         return () => {
             unsubscribemyBoardrooms();
@@ -120,8 +124,8 @@ export default function PageBoardrooms() {
                 gap={3}
                 display="grid"
                 gridTemplateColumns={{
-                    xs: 'repeat(2, 1fr)',
-                    sm: 'repeat(3, 1fr)',
+                    xs: 'repeat(1, 1fr)',
+                    sm: 'repeat(2, 1fr)',
                     md: 'repeat(4, 1fr)',
                 }}
                 >            
@@ -167,7 +171,9 @@ export default function PageBoardrooms() {
                         </Typography>
                     </Box>
                 </Card>
-                {myBoardrooms.length > 0 ? (
+                {isLoading ? (
+                    <Skeleton variant="rectangular" width={"100%"} height={300} sx={{ borderRadius: 1 }} />
+                ) : myBoardrooms.length > 0 ? (
                     myBoardrooms.map((myBoardroom, index) => (
                         <Grid item key={index}>
                             <AdviceCard
@@ -182,10 +188,10 @@ export default function PageBoardrooms() {
                         spacing={0}
                         direction="column"
                         alignItems="center"
-                        sx={{ minHeight: 265, justifyContent:"center", alignItems:"center" }}
+                        sx={{ minHeight: 300, justifyContent:"center", alignItems:"center" }}
                         >
-                        <Grid item xs={3} p={4}>
-                            <Typography variant="body1" component="p" paragraph sx={{textAlign:"center"}}>Your Boardrooms created will appear here.</Typography>
+                        <Grid item xs={12} md={6} lg={3} p={4}>
+                            <Typography variant="body1" component="p" paragraph sx={{textAlign:"center"}}>Your Boardrooms will appear here.</Typography>
                         </Grid>
                     </Grid>
                 )}

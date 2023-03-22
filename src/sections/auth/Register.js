@@ -33,11 +33,11 @@ export default function Register() {
         sx={{ color: 'text.secondary', mt: 3, typography: 'caption', textAlign: 'center' }}
       >
         {'By signing up, I agree to '}
-        <Link underline="always" color="text.primary">
-          Terms of Service
+        <Link href="https://personalboard.ai/privacy-policy" underline="always" color="text.primary">
+          Terms And Conditions
         </Link>
         {' and '}
-        <Link underline="always" color="text.primary">
+        <Link href="https://personalboard.ai/terms-conditions" underline="always" color="text.primary">
           Privacy Policy
         </Link>
         .
