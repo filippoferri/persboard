@@ -49,17 +49,17 @@ export default function NavDocs() {
   
     if (!user) {
       setCredits(null);
-      return;
+      return () => {};
     }
   
     const creditsRef = doc(db, 'users', user.uid);
     const unsubscribe = onSnapshot(creditsRef, (snapshot) => {
       const data = snapshot.data();
-      setCredits(credits);
+      setCredits(data.credits);
     });
   
     return unsubscribe;
-  }, [user.uid]);
+  }, [user, user.uid, setCredits]);  
 
   return (
       <Stack

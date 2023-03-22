@@ -4,13 +4,13 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Box, Grid, Card, Typography, Divider, Link, Button, FormGroup, FormControlLabel, Checkbox, Paper } from '@mui/material';
+import { Box, Grid, Card, Typography, Divider, Link, Button, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore';
 // Router
-import { useRouter } from 'next/router';
-import { PATH_AUTH } from '../../../../routes/paths';
+// import { useRouter } from 'next/router';
+// import { PATH_AUTH } from '../../../../routes/paths';
 // auth
 import { useAuthContext } from '../../../../auth/useAuthContext';
 // firebase API
@@ -59,7 +59,7 @@ export default function AccountGeneral() {
   const onSubmit = async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      enqueueSnackbar('Update success!');
+      // enqueueSnackbar('Update success!');
       console.log('DATA', data);
     } catch (error) {
       console.error(error);

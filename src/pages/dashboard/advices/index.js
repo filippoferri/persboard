@@ -173,27 +173,27 @@ export default function PageBoardrooms() {
                 </Card>
                 {isLoading ? (
                     <Skeleton variant="rectangular" width={"100%"} height={300} sx={{ borderRadius: 1 }} />
-                ) : myBoardrooms.length > 0 ? (
+                ) : (
+                <>
+                    {myBoardrooms.length > 0 ? (
                     myBoardrooms.map((myBoardroom, index) => (
                         <Grid item key={index}>
-                            <AdviceCard
-                                myBoardroom={myBoardroom}
-                                onDelete={() => handleDelete(myBoardroom.id)}
-                            />
+                        <AdviceCard
+                            myBoardroom={myBoardroom}
+                            onDelete={() => handleDelete(myBoardroom.id)}
+                        />
                         </Grid>
                     ))
-                ) : (
-                    <Grid
-                        container
-                        spacing={0}
-                        direction="column"
-                        alignItems="center"
-                        sx={{ minHeight: 300, justifyContent:"center", alignItems:"center" }}
-                        >
+                    ) : (
+                    <Grid container spacing={0} direction="column" alignItems="center" sx={{ minHeight: 300, justifyContent:"center", alignItems:"center" }}>
                         <Grid item xs={12} md={6} lg={3} p={4}>
-                            <Typography variant="body1" component="p" paragraph sx={{textAlign:"center"}}>Your Boardrooms will appear here.</Typography>
+                        <Typography variant="body1" component="p" paragraph sx={{textAlign:"center"}}>
+                            Your Boardrooms will appear here.
+                        </Typography>
                         </Grid>
                     </Grid>
+                    )}
+                </>
                 )}
             </Box>
         </Container>

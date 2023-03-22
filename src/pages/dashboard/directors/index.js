@@ -181,22 +181,26 @@ export default function PageDirectors() {
                     </Card>
                     {isLoading ? (
                         <Skeleton variant="rectangular" width={"100%"} height={265} sx={{ borderRadius: 1 }} />
-                    ) : myDirectors.length > 0 ? (
-                        myDirectors.map((myDirector) => (
-                            <DirectorCard key={myDirector.id} director={myDirector} onDelete={() => handleDelete(myDirector.id)} />
-                        ))
                     ) : (
-                        <Grid
-                            container
-                            spacing={0}
-                            direction="column"
-                            alignItems="center"
-                            sx={{ minHeight: 265, justifyContent:"center", alignItems:"center" }}
-                            >
-                            <Grid item xs={3} p={4}>
-                                <Typography variant="body1" component="p" paragraph sx={{textAlign:"center"}}>Your Personal Directors created will appear here.</Typography>
+                        myDirectors.length > 0 ? (
+                            myDirectors.map((myDirector) => (
+                                <DirectorCard key={myDirector.id} director={myDirector} onDelete={() => handleDelete(myDirector.id)} />
+                            ))
+                        ) : (
+                            <Grid
+                                container
+                                spacing={0}
+                                direction="column"
+                                alignItems="center"
+                                sx={{ minHeight: 265, justifyContent:"center", alignItems:"center" }}
+                                >
+                                <Grid item xs={3} p={4}>
+                                    <Typography variant="body1" component="p" paragraph sx={{textAlign:"center"}}>
+                                        Your Personal Directors created will appear here.
+                                    </Typography>
+                                </Grid>
                             </Grid>
-                        </Grid>
+                        )
                     )}
                 </Box>
             </Container>
@@ -219,14 +223,19 @@ export default function PageDirectors() {
                     >
                     {isLoading ? (
                         <Skeleton variant="rectangular" width={"100%"} height={265} />
-                    ) : directors.length > 0 ? (
+                    ) : null}
+                        {directors.length > 0 && (
                         directors.map((director) => (
                             <DirectorCard key={director.id} director={director} onDelete={() => handleDelete(director.id)}
                             />
                         ))
-                    ) : (
-                        <Typography variant="h5" component="body1" paragraph>Any Personal Directors created will appear here.</Typography>
                     )}
+                    {!isLoading && directors.length === 0 && (
+                        <Typography variant="h5" component="body1" paragraph>
+                            Any Personal Directors created will appear here.
+                        </Typography>
+                    )}
+
                 </Box>
             </Container>
         </m.div>

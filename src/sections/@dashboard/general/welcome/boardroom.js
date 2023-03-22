@@ -17,7 +17,6 @@ import { useAuthContext } from '../../../../auth/useAuthContext';
 import Iconify from '../../../../components/iconify';
 import { useSnackbar } from '../../../../components/snackbar';
 import CustomList from '../../../../components/list';
-import { MotionViewport, varBounce } from '../../../../components/animate';
 // sections
 import AdvisoryBoard from '../../projects/AdvisoryBoard';
 import {generateAdvice} from '../../../../utils/generateAdvice';
