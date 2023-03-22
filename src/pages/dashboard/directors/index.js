@@ -180,27 +180,17 @@ export default function PageDirectors() {
                         </Box>
                     </Card>
                     {isLoading ? (
-                        <Skeleton variant="rectangular" width={"100%"} height={265} sx={{ borderRadius: 1 }} />
-                    ) : (
-                        myDirectors.length > 0 ? (
-                            myDirectors.map((myDirector) => (
-                                <DirectorCard key={myDirector.id} director={myDirector} onDelete={() => handleDelete(myDirector.id)} />
-                            ))
-                        ) : (
-                            <Grid
-                                container
-                                spacing={0}
-                                direction="column"
-                                alignItems="center"
-                                sx={{ minHeight: 265, justifyContent:"center", alignItems:"center" }}
-                                >
-                                <Grid item xs={3} p={4}>
-                                    <Typography variant="body1" component="p" paragraph sx={{textAlign:"center"}}>
-                                        Your Personal Directors created will appear here.
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        )
+                        <Skeleton variant="rectangular" width="100%" height={265} sx={{ borderRadius: 1 }} />
+                    ) : null}
+                        {myDirectors.length > 0 && (
+                        myDirectors.map((myDirector) => (
+                            <DirectorCard key={myDirector.id} director={myDirector} onDelete={() => handleDelete(myDirector.id)} />
+                        ))
+                    )}
+                    {!isLoading && directors.length === 0 && (
+                        <Typography variant="h5" component="body1" paragraph>
+                            Your Personal Directors created will appear here.
+                        </Typography>
                     )}
                 </Box>
             </Container>
@@ -222,7 +212,7 @@ export default function PageDirectors() {
                     }}
                     >
                     {isLoading ? (
-                        <Skeleton variant="rectangular" width={"100%"} height={265} />
+                        <Skeleton variant="rectangular" width="100%" height={265} />
                     ) : null}
                         {directors.length > 0 && (
                         directors.map((director) => (
@@ -232,10 +222,9 @@ export default function PageDirectors() {
                     )}
                     {!isLoading && directors.length === 0 && (
                         <Typography variant="h5" component="body1" paragraph>
-                            Any Personal Directors created will appear here.
+                            No AI Directors active now.
                         </Typography>
                     )}
-
                 </Box>
             </Container>
         </m.div>

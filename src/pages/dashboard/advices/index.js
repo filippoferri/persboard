@@ -172,7 +172,7 @@ export default function PageBoardrooms() {
                     </Box>
                 </Card>
                 {isLoading ? (
-                    <Skeleton variant="rectangular" width={"100%"} height={300} sx={{ borderRadius: 1 }} />
+                    <Skeleton variant="rectangular" width="100%" height={300} sx={{ borderRadius: 1 }} />
                 ) : (
                 <>
                     {myBoardrooms.length > 0 ? (
