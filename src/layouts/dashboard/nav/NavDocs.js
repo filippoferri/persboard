@@ -29,20 +29,6 @@ export default function NavDocs() {
     router.push({ pathname: PATH_DASHBOARD.billing.root });
   };
 
-  // Get credits
-  // useEffect(() => {
-  //   const app = initializeApp(FIREBASE_API);
-  //   const db = getFirestore(app);
-
-  //   const creditsRef = doc(db, 'users', user.uid);
-  //   const unsubscribe = onSnapshot(creditsRef, (snapshot) => {
-  //     const data = snapshot.data();
-  //     setCredits(data.credits);
-  //   });
-
-  //   return unsubscribe;
-  // }, [user.uid]);
-
   useEffect(() => {
     const app = initializeApp(FIREBASE_API);
     const db = getFirestore(app);

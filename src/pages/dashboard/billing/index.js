@@ -4,23 +4,33 @@ import axios from 'axios';
 import Head from 'next/head';
 import { m } from "framer-motion";
 
-import { Container, Grid, Stack, Card, Box, Typography, Chip, Divider, Button } from '@mui/material';
+import { 
+    Container, Grid, Stack, Card, Box, Typography, Chip, Divider, Button,
+    TableContainer, Table, TableHead, TableBody, TableRow, TableCell
+} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // Router
 // import { useRouter } from 'next/router';
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
+import { PATH_DASHBOARD, ROOTS_AUTH } from '../../../routes/paths';
 // layouts
 import DashboardLayout from '../../../layouts/dashboard';
 // components
 import { useSettingsContext } from '../../../components/settings';
-// Components
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 import Iconify from '../../../components/iconify';
+import Label from '../../../components/label';
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
 
 // utils
 import getStripe from '../../../utils/getStripe';
+import { FIREBASE_API } from '../../../config-global';
+
+// Show right date in the payment table
+import { format } from 'date-fns';
+
 
 // ----------------------------------------------------------------------
 
@@ -72,6 +82,7 @@ export default function PageBilling() {
     const [selectedBox, setSelectedBox] = useState(50);
     const [totalBilled, setTotalBilled] = useState(9.99);
     const [cpc, setCpc] = useState();
+    const [credits, setCredits] = useState(user.credits);
 
     const handleBoxClick = (amount) => {
         setSelectedBox(amount);
@@ -93,13 +104,7 @@ export default function PageBilling() {
         }
     };
 
-    // const handleCPC = () => {
-    //     const cpc = totalBilled / selectedBox;
-    //     setCpc(cpc.toFixed(2));
-    // }
-
     useEffect(() => {
-        // handleCPC();
         const cpcFinal = totalBilled / selectedBox;
         setCpc(cpcFinal.toFixed(2));
     }, [selectedBox, totalBilled]);
@@ -107,16 +112,60 @@ export default function PageBilling() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const stripe = await getStripe(); // call getStripe here to get the promise
-        const { data } = await axios.post('/api/checkout_sessions', { 
-            name: selectedBox,
-            price: totalBilled 
+        const response = await axios.post('/api/checkout_sessions', {
+            quantity: selectedBox,
+            price: totalBilled
         });
-        const session = data.sessionId;
-        const result = await stripe.redirectToCheckout({ sessionId: session });
+    
+        console.log('response:', response); // Log the response object
+        console.log('sessionId:', response.data.sessionId); // Log the sessionId
+    
+        const sessionId = response.data.sessionId;
+        const result = await stripe.redirectToCheckout({ sessionId: sessionId });
+    
         if (result.error) {
             console.log(result.error.message);
         }
-    }; 
+    };
+
+    useEffect(() => {
+        const app = initializeApp(FIREBASE_API);
+        const db = getFirestore(app);
+        
+        if (!user) {
+            setCredits(null);
+            return () => {};
+        }
+        
+        const creditsRef = doc(db, 'users', user.uid);
+        const unsubscribe = onSnapshot(creditsRef, (snapshot) => {
+            const data = snapshot.data();
+            setCredits(data.credits);
+        });
+        
+        return unsubscribe;
+
+    }, [user, user.uid, setCredits]);
+
+    // Inside your PageBilling component, add this useState and useEffect
+    const [payments, setPayments] = useState([]);
+
+    useEffect(() => {
+        const fetchPayments = async () => {
+            try {
+                // Replace 'CUSTOMER_ID' with the actual customer ID that you saved during customer creation in Stripe
+                const response = await axios.get(`/api/list_payments?customerId=${user.stripeCustomerId}`);
+                console.log('response:', response)
+                setPayments(response.data.data);
+                console.log('payments:', payments);
+            } catch (error) {
+                console.error('Error fetching payments:', error);
+            }
+        };
+
+        fetchPayments();
+    }, [user.stripeCustomerId]);
+
 
     return (
     <>
@@ -147,25 +196,55 @@ export default function PageBilling() {
                 />
             </Box>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={6}>
                 <Grid item xs={12} md={5}>
-                    <Card sx={{mt: 3, mb: 5, p:4, backgroundColor: "default", borderRadius: 2}}>
+                    <Box sx={{mt: 6, p: 2}}>
                         <Typography variant="h4" gutterBottom>
-                            Credits used
+                            Balance
                         </Typography>
                         <Typography variant="body1" sx={{color: 'text.secondary'}}>
-                            You have <b>{user.credits}</b> remaining.
+                            You have <b>{credits}</b> remaining.
                         </Typography>
                         <Typography variant="body1" sx={{color: 'text.secondary', mb: 2}}>
                             Credit cost per board advice: 1
                         </Typography>
-                        <Button variant="contained" color="primary" size="large">
-                            Manage Billing
-                        </Button>
-                    </Card>
+                    </Box>
+
+                    {payments.length > 0 && (
+                    <Box sx={{ p: 2}}>
+                        <Typography variant="h4" gutterBottom>
+                            Charge Overview
+                        </Typography>
+
+                        <TableContainer >
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell sx={{w:40}}>Date</TableCell>
+                                        <TableCell>Amount</TableCell>
+                                        <TableCell>Credits</TableCell>
+                                        <TableCell>Status</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                        { payments.map((payment) => (
+                                        <TableRow key={payment.id}>
+                                            <TableCell>{format(new Date(payment.created * 1000), 'PPP')}</TableCell>
+                                            <TableCell>${(payment.amount / 100).toFixed(2)}</TableCell>
+                                            <TableCell>100</TableCell>
+                                            <TableCell>
+                                            <Label color="success">{payment.status}</Label>
+                                            </TableCell>
+                                        </TableRow>
+                                        ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Box>
+                    )}
                 </Grid>
                 <Grid item xs={12} md={5}>
-                    <form onSubmit={handleSubmit}>
+                    
                     <Card sx={{mt: 3, mb: 5, p:4, backgroundColor: "grey.200", borderRadius: 2}}>
                         <Typography variant="h4">
                             Buy Credits <Chip label="Powered by Stripe" size="small" color="primary" />
@@ -206,7 +285,13 @@ export default function PageBilling() {
                                 ~${cpc} per board advice
                             </Typography>
 
-                            <LoadingButton fullWidth size="large" type="submit" variant="contained" sx={{ mt: 5, mb: 3 }}>
+                            <LoadingButton 
+                                fullWidth size="large" 
+                                type="submit" 
+                                variant="contained" 
+                                sx={{ mt: 5, mb: 3 }}
+                                onClick={handleSubmit}
+                            >
                                 Upgrade
                             </LoadingButton>
 
@@ -222,7 +307,7 @@ export default function PageBilling() {
                                 </Typography>
                         </Stack>
                     </Card>
-                    </form>
+                    
                 </Grid>
             </Grid>
         </Container>

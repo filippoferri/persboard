@@ -97,7 +97,6 @@ export default function NewDirector({ isEdit = false, currentUser }) {
       const directorRef = doc(collection(db, 'users', user && user.uid, 'myDirectors'));
       await setDoc(directorRef, data);
       await push(PATH_DASHBOARD.directors.root);
-      console.log('New director added with ID:', directorRef.id);
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
     } catch (error) {
       console.error('Error adding director:', error);

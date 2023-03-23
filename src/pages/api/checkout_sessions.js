@@ -1,30 +1,46 @@
-// utils
-import getStripe from '../../utils/getStripe';
+import Stripe from 'stripe';
+const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
+import axios from 'axios';
+
+// import { useRouter } from 'next/router';
+import { PATH_DASHBOARD } from '../../routes/paths';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const session = await getStripe.checkout.sessions.create({
+      const { quantity, price } = req.body;
+
+      console.log('quantity', quantity);
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
         line_items: [
           {
-            // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-            default_price: 'price_1Mk2KSIvN6LsMTsI4faUPn9o',
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: `Buy ${quantity} Credits`,
+              },
+              unit_amount: price * 100,
+            },
             quantity: 1,
           },
         ],
+        metadata: {
+          credits: quantity.toString(), // Store the number of credits in the metadata
+        },
         mode: 'payment',
-        success_url: `https://example.com/success`,
-        cancel_url: `https://example.com/success`,
+        success_url: `${process.env.NEXT_PUBLIC_HOST_API_KEY}/dashboard/billing/success/?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.NEXT_PUBLIC_HOST_API_KEY}/dashboard/billing/cancel/`,
       });
-      res.redirect(303, session.url);
+      
+      
+      res.status(200).json({ sessionId: session.id });
     } catch (err) {
-      res.status(err.statusCode || 500).json(err.message);
+      res.status(500).json({ statusCode: 500, message: err.message });
     }
   } else {
     res.setHeader('Allow', 'POST');
     res.status(405).end('Method Not Allowed');
   }
 }
-
-// can you help how to create a checkout session in nextjs with stripe?
-
