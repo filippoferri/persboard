@@ -157,7 +157,7 @@ export default function AccountGeneral() {
           open={openConfirm}
           onClose={handleCloseConfirm}
           title="Are you sure?"
-          content="Do you really want to delete your account? This action is irreversible and can not be undone?"
+          content="Do you really want to delete your account? This action is irreversible and can not be undone."
           action={
               <Button 
                   variant="contained" 
