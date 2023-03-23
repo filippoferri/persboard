@@ -146,21 +146,20 @@ export default function PageBilling() {
     // Inside your PageBilling component, add this useState and useEffect
     const [payments, setPayments] = useState([]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         const fetchPayments = async () => {
             try {
                 // Replace 'CUSTOMER_ID' with the actual customer ID that you saved during customer creation in Stripe
                 const response = await axios.get(`/api/list_payments?customerId=${user.stripeCustomerId}`);
-                console.log('response:', response)
                 setPayments(response.data.data);
-                console.log('payments:', payments);
             } catch (error) {
                 console.error('Error fetching payments:', error);
             }
         };
 
         fetchPayments();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user.stripeCustomerId]);
 
 

@@ -1,18 +1,21 @@
 import React, { useEffect, useCallback } from 'react';
+
 import axios from 'axios';
-// next
+
 import Head from 'next/head';
 import { m } from "framer-motion";
 import { Container, Grid, Card, Box, Typography, Button } from '@mui/material';
-// layouts
-import DashboardLayout from '../../../layouts/dashboard';
+// next
 import { useRouter } from 'next/router';
 // Firebase/Firestore
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, updateDoc, increment } from 'firebase/firestore';
+// layouts
+import DashboardLayout from '../../../layouts/dashboard';
+// config
 import { FIREBASE_API } from '../../../config-global';
 // stripe
-import { createStripeCustomer as createCustomer, getSessionDetails } from '../../api/stripe_api';
+import { getSessionDetails } from '../../api/stripe_api';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
@@ -50,20 +53,16 @@ export default function SuccessPage() {
     const router = useRouter();
     const { session_id } = router.query;
 
-    console.log('session_id', session_id);
-
     const app = initializeApp(FIREBASE_API);
     const db = getFirestore(app);
     const { user } = useAuthContext();
 
     const createStripeCustomer = async (email, uid) => {
         try {
-        const response = await axios.post('/api/create_customer', {
-            email,
-            uid,
-        });
-    
-        console.log('Stripe customer created with ID:', response.data.customerId);
+            const response = await axios.post('/api/create_customer', {
+                email,
+                uid,
+            });
         } catch (error) {
         console.error('Error creating Stripe customer:', error);
         }
@@ -74,9 +73,7 @@ export default function SuccessPage() {
             const userRef = doc(db, 'users', user && user.uid);
         
             // Create Stripe customer
-            const customerId = await createStripeCustomer(user.email, user.uid);
-            console.log('Stripe customer created with ID:', customerId);
-        
+            const customerId = await createStripeCustomer(user.email, user.uid);        
             // Retrieve the checkout session details from your server or Stripe directly
             const sessionData = await getSessionDetails(session_id);
             const purchasedCredits = parseInt(sessionData.metadata.credits, 10);
@@ -88,6 +85,8 @@ export default function SuccessPage() {
         } catch (error) {
             console.error('Error updating credits:', error);
         }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user, session_id]);
     
     useEffect(() => {
