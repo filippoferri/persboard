@@ -156,11 +156,13 @@ export default function PageBilling() {
                 console.error('Error fetching payments:', error);
             }
         };
-
-        fetchPayments();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user.stripeCustomerId]);
+    
+        if (user.stripeCustomerId) {
+            fetchPayments();
+        }
+    
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user.stripeCustomerId]);    
 
 
     return (

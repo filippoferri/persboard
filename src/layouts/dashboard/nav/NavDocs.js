@@ -67,7 +67,7 @@ export default function NavDocs() {
             Check out our credit packs to enjoy upto 1000 credits
           </Typography>
           <Button variant="outlined" onClick={handleClick}>
-            Discover Plans
+            Buy Credits
           </Button>
         </Box>
       </Stack>
