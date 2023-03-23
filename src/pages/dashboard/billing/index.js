@@ -194,7 +194,8 @@ export default function PageBilling() {
 
             <Grid container spacing={6}>
                 <Grid item xs={12} md={5}>
-                    <Box sx={{mt: 6, p: 2}}>
+                    <Card sx={{mt: 3, p: 2}}>
+                    <Box sx={{ mb: 3 }}>
                         <Typography variant="h4" gutterBottom>
                             Balance
                         </Typography>
@@ -238,6 +239,7 @@ export default function PageBilling() {
                         </TableContainer>
                     </Box>
                     )}
+                    </Card>
                 </Grid>
                 <Grid item xs={12} md={5}>
                     
