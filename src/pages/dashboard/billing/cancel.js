@@ -25,7 +25,7 @@ return (
         Payment Canceled
         </Typography>
         <Typography variant="subtitle1" sx={{ mb: 3, textAlign: "center" }}>
-        It seems like you've canceled the payment process. If you want to try again, please go back to the billing page.
+            It seems like you&apos;ve canceled the payment process. If you want to try again, please go back to the billing page.
         </Typography>
         <Button variant="contained" color="primary" onClick={handleGoBack}>
         Go Back

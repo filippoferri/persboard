@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { m } from "framer-motion";
 
 import { 
-    Container, Grid, Stack, Card, Box, Typography, Chip, Divider, Button,
+    Container, Grid, Stack, Card, Box, Typography, Chip, Divider,
     TableContainer, Table, TableHead, TableBody, TableRow, TableCell
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -13,7 +13,10 @@ import { LoadingButton } from '@mui/lab';
 // import { useRouter } from 'next/router';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
-import { PATH_DASHBOARD, ROOTS_AUTH } from '../../../routes/paths';
+// Show right date in the payment table
+import { format } from 'date-fns';
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // layouts
 import DashboardLayout from '../../../layouts/dashboard';
 // components
@@ -27,10 +30,6 @@ import { useAuthContext } from '../../../auth/useAuthContext';
 // utils
 import getStripe from '../../../utils/getStripe';
 import { FIREBASE_API } from '../../../config-global';
-
-// Show right date in the payment table
-import { format } from 'date-fns';
-
 
 // ----------------------------------------------------------------------
 
@@ -116,17 +115,14 @@ export default function PageBilling() {
             quantity: selectedBox,
             price: totalBilled
         });
-    
-        console.log('response:', response); // Log the response object
-        console.log('sessionId:', response.data.sessionId); // Log the sessionId
-    
-        const sessionId = response.data.sessionId;
-        const result = await stripe.redirectToCheckout({ sessionId: sessionId });
+        const { sessionId } = response.data; // Use object destructuring
+        const result = await stripe.redirectToCheckout({ sessionId }); // Use property shorthand
     
         if (result.error) {
             console.log(result.error.message);
         }
     };
+    
 
     useEffect(() => {
         const app = initializeApp(FIREBASE_API);
@@ -150,6 +146,7 @@ export default function PageBilling() {
     // Inside your PageBilling component, add this useState and useEffect
     const [payments, setPayments] = useState([]);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         const fetchPayments = async () => {
             try {

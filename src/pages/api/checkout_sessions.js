@@ -1,9 +1,6 @@
 import Stripe from 'stripe';
-const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
-import axios from 'axios';
 
-// import { useRouter } from 'next/router';
-import { PATH_DASHBOARD } from '../../routes/paths';
+const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {

@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import axios from 'axios';
-// stripe
-import { createStripeCustomer, getSessionDetails } from '../../api/stripe_api';
 // next
 import Head from 'next/head';
 import { m } from "framer-motion";
@@ -9,11 +7,14 @@ import { Container, Grid, Card, Box, Typography, Button } from '@mui/material';
 // layouts
 import DashboardLayout from '../../../layouts/dashboard';
 import { useRouter } from 'next/router';
-import { PATH_DASHBOARD, ROOTS_AUTH } from '../../../routes/paths';
 // Firebase/Firestore
 import { initializeApp } from 'firebase/app';
-import { FIREBASE_API } from '../../../config-global';
 import { getFirestore, doc, updateDoc, increment } from 'firebase/firestore';
+import { FIREBASE_API } from '../../../config-global';
+// stripe
+import { createStripeCustomer as createCustomer, getSessionDetails } from '../../api/stripe_api';
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
 import { useSettingsContext } from '../../../components/settings';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
@@ -58,8 +59,8 @@ export default function SuccessPage() {
     const createStripeCustomer = async (email, uid) => {
         try {
         const response = await axios.post('/api/create_customer', {
-            email: email,
-            uid: uid,
+            email,
+            uid,
         });
     
         console.log('Stripe customer created with ID:', response.data.customerId);
@@ -68,7 +69,7 @@ export default function SuccessPage() {
         }
     };
 
-    const updateCredits = async () => {
+    const updateCredits = useCallback(async () => {
         try {
             const userRef = doc(db, 'users', user && user.uid);
         
@@ -78,7 +79,7 @@ export default function SuccessPage() {
         
             // Retrieve the checkout session details from your server or Stripe directly
             const sessionData = await getSessionDetails(session_id);
-            const purchasedCredits = parseInt(sessionData.metadata.credits);
+            const purchasedCredits = parseInt(sessionData.metadata.credits, 10);
         
             // Increment the user's credits
             await updateDoc(userRef, {
@@ -87,13 +88,13 @@ export default function SuccessPage() {
         } catch (error) {
             console.error('Error updating credits:', error);
         }
-    };
+    }, [user, session_id]);
     
     useEffect(() => {
         if (session_id) {
             updateCredits();
         }
-    }, [session_id]);
+    }, [session_id, updateCredits]);
 
     const handleGoDashboard = () => {
         // todo: Replace with the route you want to redirect to

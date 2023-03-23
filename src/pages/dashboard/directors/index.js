@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { m } from "framer-motion";
-import { Box, Grid, Card, Divider, Container, Typography, IconButton, Skeleton } from '@mui/material';
+import { Box, Card, Divider, Container, Typography, IconButton, Skeleton } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, deleteDoc, onSnapshot } from 'firebase/firestore';

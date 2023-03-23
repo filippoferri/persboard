@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     try {
         // Create a Stripe customer
         const customer = await stripe.customers.create({
-            email: email,
+            email,
         });
 
         // Initialize Firebase app
