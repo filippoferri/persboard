@@ -82,6 +82,7 @@ export default function PageBilling() {
     const [totalBilled, setTotalBilled] = useState(9.99);
     const [cpc, setCpc] = useState();
     const [credits, setCredits] = useState(user.credits);
+    const [loading, setLoading] = useState(false);
 
     const handleBoxClick = (amount) => {
         setSelectedBox(amount);
@@ -110,18 +111,27 @@ export default function PageBilling() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const stripe = await getStripe(); // call getStripe here to get the promise
+        setLoading(true); // Set loading state to true
+    
+        try {
+        const stripe = await getStripe();
         const response = await axios.post('/api/checkout_sessions', {
             quantity: selectedBox,
-            price: totalBilled
+            price: totalBilled,
         });
-        const { sessionId } = response.data; // Use object destructuring
-        const result = await stripe.redirectToCheckout({ sessionId }); // Use property shorthand
+        const { sessionId } = response.data;
+        const result = await stripe.redirectToCheckout({ sessionId });
     
         if (result.error) {
             console.log(result.error.message);
         }
+        } catch (error) {
+        console.error('Error in handleSubmit:', error);
+        } finally {
+        setLoading(false); // Reset loading state to false
+        }
     };
+    
     
 
     useEffect(() => {
@@ -291,6 +301,7 @@ export default function PageBilling() {
                                 variant="contained" 
                                 sx={{ mt: 5, mb: 3 }}
                                 onClick={handleSubmit}
+                                loading={loading} 
                             >
                                 Upgrade
                             </LoadingButton>
