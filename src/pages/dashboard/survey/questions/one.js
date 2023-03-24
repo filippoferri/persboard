@@ -48,23 +48,23 @@
     const optionsOne = [
         {
             value: 'would advance to leadership position in current field/industry',
-            label: 'Advance to leadership position in current field/industry',
+            label: 'Advancement - Seeking to advance to a leadership position within my field',
         },
         {
             value: 'would transition to career that aligns with passions/interests',
-            label: 'Transition to career that aligns with passions/interests',
+            label: 'Change - Transitioning into a new career aligned with my passions and interests',
         },
         {
             value: 'would start an own business/become entrepreneur',
-            label: 'Start own business/become entrepreneur',
+            label: 'Entrepreneurship - Starting my own business or becoming an entrepreneur',
         },
         {
             value: 'would achieve specific degree/certification',
-            label: 'Achieve specific degree/certification',
+            label: 'Milestone - Achieving a milestone, such as earning a degree or certification',
         },
         {
             value: 'is still exploring career options',
-            label: 'Still exploring career options',
+            label: 'Exploration - Still exploring different options and paths right for me',
         },
     ];
 
