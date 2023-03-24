@@ -188,7 +188,7 @@ export default function PageBoardrooms() {
                     <Grid container spacing={0} direction="column" alignItems="center" sx={{ minHeight: 300, justifyContent:"center", alignItems:"center" }}>
                         <Grid item xs={12} md={6} lg={3} p={4}>
                         <Typography variant="body1" component="p" paragraph sx={{textAlign:"center"}}>
-                            Your Boardrooms will appear here.
+                            Your Boardroom Advice will appear here.
                         </Typography>
                         </Grid>
                     </Grid>

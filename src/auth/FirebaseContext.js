@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { createContext, useEffect, useReducer, useCallback, useMemo } from 'react';
 import { initializeApp } from 'firebase/app';
+
 // import { getAnalytics } from "firebase/analytics";
 import {
   getAuth,
@@ -14,8 +15,12 @@ import {
   createUserWithEmailAndPassword,
 } from 'firebase/auth';
 import { getFirestore, collection, doc, getDoc, setDoc, Timestamp } from 'firebase/firestore';
+// next
+import { useRouter } from 'next/router';
 // config
 import { FIREBASE_API } from '../config-global';
+// routes
+import { PATH_DASHBOARD } from '../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -128,6 +133,8 @@ export function AuthProvider({ children }) {
   }, []);
 
   // REGISTER
+  const router = useRouter();
+  // const history = useHistory();
   const register = useCallback(async (email, password, firstName, lastName) => {
     await createUserWithEmailAndPassword(AUTH, email, password).then(async (res) => {
       const userRef = doc(collection(DB, 'users'), res.user?.uid);
@@ -143,6 +150,9 @@ export function AuthProvider({ children }) {
         tier: 'free',
         credits: 3,
       });
+
+      // redirect user to survey page
+      router.push({ pathname: PATH_DASHBOARD.survey});
     });
   }, []);
 
