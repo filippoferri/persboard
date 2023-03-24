@@ -74,7 +74,7 @@ const handleOptionClick = (optionValue) => {
     onNextStep({ optionTwo: optionValue });
 };   
 
-const optionTwo = dataFromPrevStep.optionTwo;
+const {optionTwo} = dataFromPrevStep;
 
 return (
     <Grid container spacing={0} sx={{ justifyContent: 'center' }}>

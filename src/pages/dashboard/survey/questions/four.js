@@ -67,13 +67,11 @@ const optionsFour = [
 },
 ];
 
-export default function QuestionFour({ dataFromPrevStep, onNextStep, onPrevStep }) {
+export default function QuestionFour({ onNextStep, onPrevStep }) {
 
 const handleOptionClick = (optionValue) => {
     onNextStep({ optionFour: optionValue });
 }; 
-
-const optionFour = dataFromPrevStep.optionFour;
 
 return (
     <Grid container spacing={0} sx={{ justifyContent: 'center' }}>

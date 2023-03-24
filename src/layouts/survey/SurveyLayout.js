@@ -6,13 +6,13 @@ import dynamic from 'next/dynamic';
 // @mui
 import { Stack, Container, Box } from '@mui/material';
 // hooks
-import useOffSetTop from '../../hooks/useOffSetTop';
+// import useOffSetTop from '../../hooks/useOffSetTop';
 // auth
 import AuthGuard from '../../auth/AuthGuard';
 // config
 // import { HEADER } from '../../config-global';
 //
-const Header = dynamic(() => import('./Header'), { ssr: false });
+// const Header = dynamic(() => import('./Header'), { ssr: false });
 
 // ----------------------------------------------------------------------
 
