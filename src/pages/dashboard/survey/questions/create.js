@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { Container, Grid, Box, Typography, Button } from '@mui/material';
-import Iconify from '../../../../components/iconify';
+import { Grid, Box, Typography, Button } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
 // ----------------------------------------------------------------------
@@ -12,22 +11,6 @@ CreateProfile.propTypes = {
 };
 
 // ----------------------------------------------------------------------
-
-const variants = {
-    hidden: {
-        opacity: 0,
-        y: 50,
-    },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-        type: 'spring',
-        stiffness: 80,
-        damping: 20,
-        },
-    },
-};
 
 export default function CreateProfile({ dataFromPrevStep, onGetStarted }) {
     const [progress, setProgress] = useState(0);
@@ -108,7 +91,7 @@ export default function CreateProfile({ dataFromPrevStep, onGetStarted }) {
                 <Box sx={{ height: 100}}>   
                 {progress === 100 ? (
                     <Button variant="contained" size="large" onClick={() => onGetStarted(dataFromPrevStep)} sx={{ mt: 4, mb: 1 }}>
-                        Let's go
+                        Let&apos;s go
                     </Button>
                 ) : (
                     <Typography variant="body1" sx={{ textAlign: 'center', mt: 2 }}>

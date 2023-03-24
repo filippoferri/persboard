@@ -1,32 +1,16 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-import { Container, Grid, Box, Typography, Button } from '@mui/material';
+import { Grid, Box, Typography } from '@mui/material';
 import Iconify from '../../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
 QuestionTwo.propTypes = {
+    dataFromPrevStep: PropTypes.object,
     onNextStep: PropTypes.func,
     onPrevStep: PropTypes.func,
 };
 
 // ----------------------------------------------------------------------
-
-const variants = {
-    hidden: {
-        opacity: 0,
-        y: 50,
-    },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-        type: 'spring',
-        stiffness: 80,
-        damping: 20,
-        },
-    },
-};
 
 const styledBoxTwo = {
     display: 'flex',
@@ -90,6 +74,8 @@ const handleOptionClick = (optionValue) => {
     onNextStep({ optionTwo: optionValue });
 };   
 
+const optionTwo = dataFromPrevStep.optionTwo;
+
 return (
     <Grid container spacing={0} sx={{ justifyContent: 'center' }}>
     <Grid
@@ -108,7 +94,7 @@ return (
             sx={{ mb: 2, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             onClick={onPrevStep}
         >
-            <Iconify icon={'eva:arrow-back-outline'} /> Back
+            <Iconify icon='eva:arrow-back-outline' /> Back
         </Box>
         <Typography variant="h5" sx={{ mb: 3 }}>
             What is your decision-making style?
@@ -117,20 +103,20 @@ return (
             <Box
                 key={option.value}
                 sx={
-                dataFromPrevStep.optionTwo === option.value
+                    optionTwo === option.value
                     ? { ...styledBoxTwo, borderColor: 'secondary.dark', border: 2  }
                     : styledBoxTwo
                 }
                 onClick={() => handleOptionClick(option.value)}
             >
                 <Box sx={
-                    dataFromPrevStep.optionTwo === option.value
+                    optionTwo === option.value
                     ? { ...styledChipTwo, backgroundColor: 'secondary.dark', color: 'white' }
                     : styledChipTwo
                 }>{String.fromCharCode(65 + index)}</Box>
                 <Box sx={{ display: 'flex', flexGrow: 1 }}>{option.label}</Box>
-                {dataFromPrevStep.optionTwo === option.value && (
-                    <Iconify icon={'eva:checkmark-outline'} sx={{ ml: 1}} />
+                {optionTwo === option.value && (
+                    <Iconify icon='eva:checkmark-outline' sx={{ ml: 1}} />
                 )}
             </Box>
         ))}

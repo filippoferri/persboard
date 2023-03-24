@@ -10,7 +10,7 @@ import useOffSetTop from '../../hooks/useOffSetTop';
 // auth
 import AuthGuard from '../../auth/AuthGuard';
 // config
-import { HEADER } from '../../config-global';
+// import { HEADER } from '../../config-global';
 //
 const Header = dynamic(() => import('./Header'), { ssr: false });
 
@@ -22,10 +22,9 @@ StepperLayout.propTypes = {
 };
 
 export default function StepperLayout({ children, step }) {
-  const isOffset = useOffSetTop(HEADER.H_MAIN_DESKTOP);
+  // const isOffset = useOffSetTop(HEADER.H_MAIN_DESKTOP);
 
-  const renderContent = () => {
-    return (
+  const renderContent = () => (
       <>
         {/* <Header isOffset={isOffset} step={step} /> */}
 
@@ -45,7 +44,6 @@ export default function StepperLayout({ children, step }) {
         </Box>
       </>
     );
-  };
 
   return <AuthGuard> {renderContent()} </AuthGuard>;
 }

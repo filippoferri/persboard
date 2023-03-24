@@ -1,33 +1,16 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-import { Container, Grid, Box, Typography, Button } from '@mui/material';
+import { Grid, Box, Typography } from '@mui/material';
 import Iconify from '../../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
 QuestionFour.propTypes = {
+    dataFromPrevStep: PropTypes.object,
     onNextStep: PropTypes.func,
     onPrevStep: PropTypes.func,
-    onSaveProfile: PropTypes.func,
 };
 
 // ----------------------------------------------------------------------
-
-const variants = {
-hidden: {
-    opacity: 0,
-    y: 50,
-},
-visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-    type: 'spring',
-    stiffness: 80,
-    damping: 20,
-    },
-},
-};
 
 const styledBoxFour = {
     display: 'flex',
@@ -88,7 +71,9 @@ export default function QuestionFour({ dataFromPrevStep, onNextStep, onPrevStep 
 
 const handleOptionClick = (optionValue) => {
     onNextStep({ optionFour: optionValue });
-};   
+}; 
+
+const optionFour = dataFromPrevStep.optionFour;
 
 return (
     <Grid container spacing={0} sx={{ justifyContent: 'center' }}>
@@ -107,7 +92,7 @@ return (
             sx={{ mb: 2, pr: 3, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             onClick={onPrevStep}
         >
-            <Iconify icon={'eva:arrow-back-outline'} /> Back
+            <Iconify icon='eva:arrow-back-outline' /> Back
         </Box>
         <Typography variant="h5" sx={{ mb: 3 }}>
             Last question, which of these best represents your ideal love language?

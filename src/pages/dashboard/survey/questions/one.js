@@ -1,32 +1,16 @@
     import PropTypes from 'prop-types';
-    import { useState, useEffect } from 'react';
-    import { Container, Grid, Box, Typography, Button } from '@mui/material';
+    import { Grid, Box, Typography } from '@mui/material';
     import Iconify from '../../../../components/iconify';
 
     // ----------------------------------------------------------------------
 
     QuestionOne.propTypes = {
+        dataFromPrevStep: PropTypes.object,
         onNextStep: PropTypes.func,
         onPrevStep: PropTypes.func,
     };
 
     // ----------------------------------------------------------------------
-
-    const variants = {
-    hidden: {
-        opacity: 0,
-        y: 50,
-    },
-    visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-            type: 'spring',
-            stiffness: 80,
-            damping: 20,
-        },
-    },
-    };
 
     const styledBox = {
         display: 'flex',
@@ -88,7 +72,9 @@ export default function QuestionOne({ dataFromPrevStep, onNextStep, onPrevStep }
 
     const handleOptionClick = (optionValue) => {
         onNextStep({ optionOne: optionValue });
-    };   
+    };
+    
+    const optionOne = dataFromPrevStep.optionOne;
 
     return (
         <Grid container spacing={0} sx={{ justifyContent: 'center' }}>
@@ -108,7 +94,7 @@ export default function QuestionOne({ dataFromPrevStep, onNextStep, onPrevStep }
                 sx={{ mb: 2, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
                 onClick={onPrevStep}
             >
-                <Iconify icon={'eva:arrow-back-outline'} /> Back
+                <Iconify icon='eva:arrow-back-outline' /> Back
             </Box>
             <Typography variant="h5" sx={{ mb: 3 }}>
                 What are your long-term career goals?
@@ -117,7 +103,7 @@ export default function QuestionOne({ dataFromPrevStep, onNextStep, onPrevStep }
                 <Box
                     key={option.value}
                     sx={
-                    dataFromPrevStep.optionOne === option.value
+                        optionOne === option.value
                         ? { ...styledBox, borderColor: 'primary.dark', border: 2 }
                         : styledBox
                     }
@@ -125,13 +111,13 @@ export default function QuestionOne({ dataFromPrevStep, onNextStep, onPrevStep }
                 >
                 <Box 
                     sx={
-                        dataFromPrevStep.optionOne === option.value
+                        optionOne === option.value
                         ? { ...styledChip, backgroundColor: 'primary.dark', color: 'white' }
                         : styledChip
                     }>{String.fromCharCode(65 + index)}</Box>
                     <Box sx={{ display: 'flex', flexGrow: 1 }}>{option.label}</Box>
-                    {dataFromPrevStep.optionOne === option.value && (
-                        <Iconify icon={'eva:checkmark-outline'} sx={{ ml: 1}} />
+                    {optionOne === option.value && (
+                        <Iconify icon='eva:checkmark-outline' sx={{ ml: 1}} />
                     )}
                 </Box>
             ))}

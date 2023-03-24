@@ -2,13 +2,13 @@ import Head from 'next/head';
 import { useState } from 'react';
 import { Container, Grid, Typography, Button } from '@mui/material';
 import { m } from "framer-motion";
-// auth
-import { useAuthContext } from '../../../auth/useAuthContext';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc } from 'firebase/firestore';
 // routes
 import { useRouter } from 'next/router';
+// auth
+import { useAuthContext } from '../../../auth/useAuthContext';
 // firebase api
 import { FIREBASE_API } from '../../../config-global';
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -22,7 +22,7 @@ import QuestionFour from './questions/four';
 import CreateProfile from './questions/create';
 // components
 import { useSettingsContext } from '../../../components/settings';
-import Iconify from '../../../components/iconify';
+// import Iconify from '../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -105,7 +105,7 @@ export default function SurveyOne() {
                     <Grid container spacing={0} sx={{ justifyContent: "center" }}>
                         <Grid xs={12} md={4} item sx={{display: "flex", flexDirection: "column", justifyContent:"center", alignItems:"center", height: `calc(100vh - 14vh)` }}>
                                 <Typography variant='h3' sx={{ textAlign: "center", lineHeight: '1.3', mb: 2 }}>Your Personal Board begins with you. </Typography>
-                                <Typography variant='body1' sx={{ textAlign: "center" }}>Let's start by exploring what makes you great.</Typography>
+                                <Typography variant='body1' sx={{ textAlign: "center" }}>Let&apos;s start by exploring what makes you great.</Typography>
                                 <Button     
                                     variant="contained" size="large" 
                                     onClick={() => handleNextStep({})}

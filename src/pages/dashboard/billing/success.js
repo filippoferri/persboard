@@ -59,12 +59,12 @@ export default function SuccessPage() {
 
     const createStripeCustomer = async (email, uid) => {
         try {
-            const response = await axios.post('/api/create_customer', {
+            await axios.post('/api/create_customer', {
                 email,
                 uid,
             });
         } catch (error) {
-        console.error('Error creating Stripe customer:', error);
+            console.error('Error creating Stripe customer:', error);
         }
     };
 
@@ -73,7 +73,7 @@ export default function SuccessPage() {
             const userRef = doc(db, 'users', user && user.uid);
         
             // Create Stripe customer
-            const customerId = await createStripeCustomer(user.email, user.uid);        
+            await createStripeCustomer(user.email, user.uid);        
             // Retrieve the checkout session details from your server or Stripe directly
             const sessionData = await getSessionDetails(session_id);
             const purchasedCredits = parseInt(sessionData.metadata.credits, 10);

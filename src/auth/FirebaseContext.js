@@ -154,6 +154,7 @@ export function AuthProvider({ children }) {
       // redirect user to survey page
       router.push({ pathname: PATH_DASHBOARD.survey});
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // LOGOUT
