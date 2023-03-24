@@ -74,7 +74,7 @@ export default function QuestionOne({ dataFromPrevStep, onNextStep, onPrevStep }
         onNextStep({ optionOne: optionValue });
     };
     
-    const { optionOne } = dataFromPrevStep;
+    const optionOne = dataFromPrevStep?.optionOne;
 
     return (
         <Grid container spacing={0} sx={{ justifyContent: 'center' }}>

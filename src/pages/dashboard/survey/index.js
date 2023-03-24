@@ -64,8 +64,6 @@ export default function SurveyOne() {
     const [step, setStep] = useState(1);
     const [data, setData] = useState({});
 
-    console.log('data', data);
-
     const handleNextStep = (stepData) => {
         setData((prevData) => ({ ...prevData, ...stepData }));
         setStep((prevStep) => prevStep + 1);
