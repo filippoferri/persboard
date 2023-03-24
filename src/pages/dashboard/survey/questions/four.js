@@ -5,7 +5,6 @@ import Iconify from '../../../../components/iconify';
 // ----------------------------------------------------------------------
 
 QuestionFour.propTypes = {
-    dataFromPrevStep: PropTypes.object,
     onNextStep: PropTypes.func,
     onPrevStep: PropTypes.func,
 };

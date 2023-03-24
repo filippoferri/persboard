@@ -79,8 +79,7 @@ export default function CreateProfile({ dataFromPrevStep, onGetStarted }) {
                 
                 {progress === 100 ? (
                     <Typography variant="h4" sx={{ textAlign: 'center', mt: 2 }}>
-                        Your experience is ready!
-                        Your journey starts now.
+                        Your experience is ready!<br />The journey starts now.
                     </Typography>
                 ) : (
                     <Typography variant="h4" sx={{ textAlign: 'center', mt: 2 }}>

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import PropTypes from 'prop-types';
 // next
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 // @mui
 import { Stack, Container, Box } from '@mui/material';
 // hooks
