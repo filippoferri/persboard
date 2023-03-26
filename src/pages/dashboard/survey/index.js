@@ -4,7 +4,7 @@ import { Container, Grid, Typography, Button } from '@mui/material';
 import { m } from "framer-motion";
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
 // routes
 import { useRouter } from 'next/router';
 // auth
@@ -85,7 +85,7 @@ export default function SurveyOne() {
                 // other user data
                 myProfile: [profileData.optionOne, profileData.optionTwo, profileData.optionThree, profileData.optionFour]
             };            
-            await updateDoc(userRef, dataProfile);
+            await setDoc(userRef, dataProfile);
             // await setDoc(profileRef, profileData);
             handleNextStep(profileData);
         } catch (error) {
