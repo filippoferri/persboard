@@ -131,7 +131,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             return;
         }
     
-        const prompt = await generateAdvice(loadedDirectors, question);
+        const prompt = await generateAdvice(loadedDirectors, question, user);
         // Assuming `generateAdvice` returns an object with an `error` property when an error occurs
         if (!prompt.error) {
             await handleCredits(); // Call handleCredits if the prompt does not contain an error
