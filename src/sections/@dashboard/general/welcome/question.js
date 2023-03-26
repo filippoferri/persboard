@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles';
 // import Link from 'next/link';
 // @mui
 // import { alpha, useTheme } from '@mui/material/styles';
-import { Grid, Button, Stack, Box, Typography, Divider, FormControl, TextField, List, ListItem, ListItemButton, ListItemText, IconButton } from '@mui/material';
+import { Grid, Button, Stack, Box, Typography, FormControl, TextField, IconButton } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
@@ -72,11 +72,7 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 
 		const handleSubmit = () => {
 			onNextStep({ question: text });
-		};	  
-
-		const [workQuestions, setWorkQuestions] = useState([]);
-		const [loveQuestions, setLoveQuestions] = useState([]);
-		const [healthQuestions, setHealthQuestions] = useState([]);
+		};
 
 		const [open, setOpen] = useState(false);
 
@@ -106,9 +102,6 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 							break;
 					}
 				});
-				setWorkQuestions(workQuestionsData);
-				setLoveQuestions(loveQuestionsData);
-				setHealthQuestions(healthQuestionsData);
 			});
 			return unsubscribe;
 		}, [db]);

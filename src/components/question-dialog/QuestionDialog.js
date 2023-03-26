@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from 'prop-types';
 
-import { Dialog, DialogTitle, DialogContent, Box, Card, CardContent, List, ListItem, ListItemText, Typography, Grid, IconButton } from '@mui/material';
+import { Dialog, DialogContent, Box, Card, CardContent, List, ListItem, ListItemText, Typography, Grid, IconButton, Divider } from '@mui/material';
 import Close from '@mui/icons-material/Close';
 
 const style = {
@@ -48,17 +49,18 @@ export default function QuestionDialog({ open, handleClose, onNextStep }) {
                     sx={{
                     position: 'absolute',
                     top: 8,
-                    right: 16,
+                    right: 24,
                     }}
                 >
                     <Close />
                 </IconButton>
 
                 <Box sx={style}>
-                    <Box sx={{ width: "20%", backgroundColor: "primary.lighter", p:2, pt: 4 }}>
+                    <Box sx={{ width: "20%", backgroundColor: "grey.200", p:2, pt: 4 }}>
                         <Typography id="dialog-description" variant="h6" sx={{ pl:2 }}>
                             Ideas
                         </Typography>
+                        <Divider sx={{ my: 2 }} />
                         {questions && (
                         <List>
                             {Object.keys(questions).map((area, index) => (
@@ -67,9 +69,9 @@ export default function QuestionDialog({ open, handleClose, onNextStep }) {
                                 key={index}
                                 onClick={() => setSelectedArea(area)}
                                 sx={{
-                                    backgroundColor: area === selectedArea ? "primary.light" : "transparent",
+                                    backgroundColor: area === selectedArea ? "primary.lighter" : "transparent",
                                     '&:hover': {
-                                        backgroundColor: "primary.light",
+                                        backgroundColor: "primary.lighter",
                                     },
                                     borderRadius: 1,
                                     mb: 1,
@@ -124,3 +126,9 @@ export default function QuestionDialog({ open, handleClose, onNextStep }) {
     </div>
     );
 }
+
+QuestionDialog.propTypes = {
+    open: PropTypes.bool.isRequired,
+    handleClose: PropTypes.func.isRequired,
+    onNextStep: PropTypes.func.isRequired,
+};
