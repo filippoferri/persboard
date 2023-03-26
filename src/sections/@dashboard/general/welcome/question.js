@@ -23,6 +23,8 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 // components
 // import { useSettingsContext } from '../../../../components/settings';
 import Iconify from '../../../../components/iconify';
+import QuestionDialog from "../../../../components/question-dialog";
+
 
 
 // ----------------------------------------------------------------------
@@ -55,13 +57,13 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 		const db = getFirestore(app);
 
 		const [text, setText] = useState('');
-		const [charCount, setCharCount] = useState(100);
+		const [charCount, setCharCount] = useState(250);
 		// const [questions, setQuestion] = useState([]);
 
 		const handleTextChange = (event) => {
-			const inputText = event.target.value.slice(0, 100);
+			const inputText = event.target.value.slice(0, 250);
 			setText(inputText);
-			setCharCount(100 - inputText.length);
+			setCharCount(250 - inputText.length);
 		};
 
 		const handleListItemClick = (content) => {
@@ -75,6 +77,11 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 		const [workQuestions, setWorkQuestions] = useState([]);
 		const [loveQuestions, setLoveQuestions] = useState([]);
 		const [healthQuestions, setHealthQuestions] = useState([]);
+
+		const [open, setOpen] = useState(false);
+
+		const handleOpen = () => setOpen(true);
+		const handleClose = () => setOpen(false);
 
 		// Get questions from firebase
 		useEffect(() => {
@@ -143,20 +150,43 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 						width: '100%',
 					}}
 				>
-					<FormControl fullWidth sx={{ m: 1 }} variant="standard">
+					<FormControl fullWidth sx={{ m: 1, position: "relative" }} variant="standard">
 						<TextField
 							label="Your life question starts here..."
 							variant="outlined"
 							multiline
-							rows={2}
+							rows={4}
 							onChange={handleTextChange}
-							sx={{ fontSize: 30 }}
+							sx={{
+								fontSize: 30,
+								'& .MuiOutlinedInput-root': {
+								'&.Mui-focused fieldset': {
+									borderColor: 'primary.light',
+								},
+								'&:hover fieldset': {
+									borderColor: 'primary.light',
+								},
+								},
+							}}
 							value={text}
 						/>
+						<Button
+							variant="outlined"
+							color="primary"
+							onClick={handleOpen}
+							sx={{
+							position: "absolute",
+							bottom: 0,
+							left: 0,
+							mb: 1,
+							ml: 1
+							}}
+						>
+							Browse Ideas
+						</Button>
 					</FormControl>
-					{/* <Typography variant="p" sx={{ ml: 2 }}>
-						Characters remaining: {charCount}
-					</Typography> */}
+
+					<QuestionDialog open={open} handleClose={handleClose} onNextStep={handleListItemClick} />
 				</Stack>
 			</Grid>
 
@@ -177,67 +207,6 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 				</Button>
 				</Box>
 			</Stack>
-
-			<Stack
-				direction="row"
-				alignItems="center"
-				sx={{
-					mt: 4,
-		mb: 2
-			}}
-			>
-		<Box sx={{ flexGrow: 1 }}>
-			<Typography variant="h4">Ideas</Typography>
-		</Box>
-			</Stack>
-
-			<Grid container spacing={3} direction="row">
-				<Grid item xs={4}>
-					<Typography variant="caption" sx={{fontWeight: "bold"}}>WORK</Typography>
-					<Divider sx={{mb: 1}} />
-					<List>
-						{workQuestions.map((question, index) => (
-							<ListItem disablePadding key={index}>
-								<StyledItem>
-								<ListItemButton onClick={() => handleListItemClick(question.question)}>
-									<ListItemText primary={question.question} />
-									</ListItemButton>
-								</StyledItem>
-							</ListItem>
-						))}
-					</List>
-				</Grid>
-				<Grid item xs={4}>
-					<Typography variant="caption" sx={{fontWeight: "bold"}}>HEALTH</Typography>
-					<Divider sx={{mb: 1}} />
-					<List>
-						{healthQuestions.map((question, index) => (
-							<ListItem disablePadding key={index}>
-								<StyledItem>
-									<ListItemButton onClick={() => handleListItemClick(question.question)}>
-										<ListItemText primary={question.question} />
-									</ListItemButton>
-								</StyledItem>
-							</ListItem>
-						))}
-					</List>
-				</Grid>
-				<Grid item xs={4}>
-					<Typography variant="caption" sx={{fontWeight: "bold"}}>LOVE</Typography>
-					<Divider sx={{mb: 1}} />
-					<List>
-						{loveQuestions.map((question, index) => (
-							<ListItem disablePadding key={index}>
-								<StyledItem>
-									<ListItemButton onClick={() => handleListItemClick(question.question)}>
-										<ListItemText primary={question.question} />
-									</ListItemButton>
-								</StyledItem>
-							</ListItem>
-						))}
-					</List>
-				</Grid>
-			</Grid>
 		</>
 	);
 }
