@@ -3,6 +3,7 @@ import axiosInstance from './axiosOpenai';
 const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 
 export const generateAdvice = async (advisoryDirectors, question, user) => {
+
   const { firstName, myProfile } = user;
   const firstNameCapitalized = firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
@@ -34,8 +35,7 @@ export const generateAdvice = async (advisoryDirectors, question, user) => {
   
 
   try {
-    const advice = [];
-    for (const { fullName, role, quality, area } of advisoryDirectors) {
+    const advice = await Promise.all(advisoryDirectors.map(async ({ fullName, role, quality, area }) => {
 
       let profile = '';
       if (myProfile) { 
@@ -48,7 +48,7 @@ export const generateAdvice = async (advisoryDirectors, question, user) => {
       // Generate a new prompt for this advisory director
       const prompt = `You are ${fullName}, and I want you to act as an expert ${role}. You are part of my personal Board of Directors and my name is ${firstNameCapitalized}. ${profile}
       \n\nActually, I'm looking for advice. I will provide you with some information about my goals and challenges, and it will be your goal to come up with suggestions or insights that can help me achieve my goals.\n\nComing from your ${area} expertise with ${quality} as your first key quality, this could involve providing positive affirmations, giving helpful advice, or suggesting activities I can do to reach my end goal. Enhance your reply with your personal motivational phrase starting with ${motivationalPhrase}. My request is "${question} and you can start with ${openingSentence}...".`;
-      
+
       // Generate response from OpenAI API
       const { data } = await axiosInstance.post(
         '/completions',
@@ -66,23 +66,24 @@ export const generateAdvice = async (advisoryDirectors, question, user) => {
           },
         }
       );
-      
+
       if (!data?.choices || !data.choices[0]?.text) {
         throw new Error('No response found from API');
       }
-      
+
       // Save the generated advice for this director
-      advice.push({
+      return {
         fullName,
         role,
         text: data.choices[0].text,
-      });
-    }
-    
+      };
+    }));
+
     // Return the generated advice for each advisory director
     return advice;
   } catch (error) {
     console.log('Error while generating advice: ', error);
+
     return advisoryDirectors.map(({ fullName, role }) => ({
       fullName,
       role,
