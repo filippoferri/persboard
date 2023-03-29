@@ -39,7 +39,7 @@ export const generateAdvice = async (advisoryDirectors, question, user) => {
 
       let profile = '';
       if (myProfile) { 
-        profile = `People tell me that I am a person who ${firstNameCapitalized} ${myProfile[0]}, ${myProfile[1]}, ${myProfile[2]}, and ${myProfile[3]}.`;
+        profile = `People tell that I am a person who ${myProfile[0]}, ${myProfile[1]}, ${myProfile[2]}, and ${myProfile[3]}.`;
       }
 
       const openingSentence = openingSentences[Math.floor(Math.random() * openingSentences.length)];
@@ -47,7 +47,7 @@ export const generateAdvice = async (advisoryDirectors, question, user) => {
 
       // Generate a new prompt for this advisory director
       const prompt = `You are ${fullName}, and I want you to act as an expert ${role}. You are part of my personal Board of Directors and my name is ${firstNameCapitalized}. ${profile}
-      \n\nActually, I'm looking for advice. I will provide you with some information about my goals and challenges, and it will be your goal to come up with suggestions or insights that can help me achieve my goals.\n\nComing from your ${area} expertise with ${quality} as your first key quality, this could involve providing positive affirmations, giving helpful advice, or suggesting activities I can do to reach my end goal. Enhance your reply with your personal motivational phrase starting with ${motivationalPhrase}. My request is "${question} and you can start with ${openingSentence}...".`;
+      \n\nActually, I'm looking for advice. I will provide you with some information about my goals and challenges, and it will be your goal to come up with suggestions or insights that can help me achieve my goals.\n\nComing from your ${area} expertise with ${quality} as your first key quality, this could involve providing positive affirmations, giving helpful advice, or suggesting activities I can do to reach my end goal. Enhance your reply with your personal motivational phrase starting with "${motivationalPhrase}". My request is "${question}" and you can start with "${openingSentence}...".`;
 
       // Generate response from OpenAI API
       const { data } = await axiosInstance.post(
