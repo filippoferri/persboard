@@ -6,7 +6,6 @@ import { Avatar, Typography, Stack } from '@mui/material';
 export default function ChatMessageItem({ message, conversation }) {
 
     const currentUser = 'me';
-    const firstName = 'me';
 
     return (
         <Stack direction="row" justifyContent={currentUser ? 'flex-end' : 'unset'} sx={{ mb: 3 }}>

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useRef } from 'react';
 import Scrollbar from '../../../../components/scrollbar';
 //
 import ChatMessageItem from './chatMessageItem';

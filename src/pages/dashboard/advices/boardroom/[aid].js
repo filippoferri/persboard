@@ -4,11 +4,10 @@ import { useEffect, useState, useCallback } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 // @mui
-import { Card, Box, Container, Typography, Grid } from '@mui/material';
+import { Container } from '@mui/material';
 // firebase
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
-import { FIREBASE_API } from '../../../../config-global';
 // layouts
 import DashboardLayout from '../../../../layouts/dashboard';
 // Router
@@ -17,12 +16,10 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 import { useAuthContext } from '../../../../auth/useAuthContext';
 // components
 import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
-import CustomList from '../../../../components/list';
 // sections
-import AdvisoryBoard from '../../../../sections/@dashboard/projects/AdvisoryBoard';
 import { Boardroom } from 'src/sections/@dashboard/boardroom';
-// Utils
-import DownloadPdf from '../../../../utils/downloadPdf';
+// config
+import { FIREBASE_API } from '../../../../config-global';
 
 const app = initializeApp(FIREBASE_API);
 const db = getFirestore(app);

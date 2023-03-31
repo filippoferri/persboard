@@ -1,15 +1,12 @@
 import PropTypes from 'prop-types';
 // @mui
 import {
-    Badge,
-    Stack,
-    Typography,
     ListItemText,
     ListItemButton,
     ListItemAvatar,
 } from '@mui/material';
   // components
-import { CustomAvatar, CustomAvatarGroup } from '../../../../components/custom-avatar';
+import { CustomAvatar } from '../../../../components/custom-avatar';
 
 // ----------------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 // @mui
-import { Box, Stack, Typography, IconButton } from '@mui/material';
+import { Stack, Typography, IconButton } from '@mui/material';
 // components
 import Iconify from '../../../../components/iconify';
 

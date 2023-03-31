@@ -1,11 +1,6 @@
 import PropTypes from 'prop-types';
-import { Card, Container, Stack } from '@mui/material';
+import { Card, Stack } from '@mui/material';
 
-// routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
-// components
-import { useSettingsContext } from '../../../components/settings';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
 // subsections
 import BoardroomDrawer from './sections/boardroomDrawer';
 import BoardroomHeader from './sections/boardroomHeader';

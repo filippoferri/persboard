@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 // @mui
-import { Stack, InputBase, IconButton, InputAdornment } from '@mui/material';
+import { Stack, InputBase, IconButton } from '@mui/material';
 // components
 import Iconify from '../../../../components/iconify';
 
@@ -11,10 +11,6 @@ export default function MessageInput() {
     const fileInputRef = useRef(null);
 
     const [message, setMessage] = useState('');
-
-    const handleClickAttach = () => {
-        fileInputRef.current?.click();
-    };
 
     return (
         <InputBase
