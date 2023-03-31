@@ -1,7 +1,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-
+// @mui
 import { Grid, Stack, Box, Typography, Tabs, Tab, IconButton } from '@mui/material';
+// hooks
+import useResponsive from '../../../../hooks/useResponsive';
 
 import BoardFromScratch from './welcomeboard/boardfromscratch';
 import BoardFromDirectors from './welcomeboard/boardfromdirectors';
@@ -59,6 +61,8 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 
 		const [value, setValue] = React.useState(0);
 
+		const isDesktop = useResponsive('up', 'md');
+
 		const handleChange = (event, newValue) => { setValue(newValue); };
 		
 		const handleSubmit = (data) => {
@@ -77,12 +81,13 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 			}}
 		>
 			<Grid container spacing={0}>
-				<Grid item sx={{display: "flex", alignItems:"flex-start" }}>
+				<Grid item sx={{display: "flex", alignItems: isDesktop ? "flex-start" : "center" }}>
                     <IconButton 
                         color= 'default' 
                         onClick={onPrevStep}>
                         <Iconify icon="eva:arrow-ios-back-fill" />
                     </IconButton>
+					{ isDesktop ? null : <Typography variant="body2" onClick={onPrevStep}>Back</Typography>}
                 </Grid>
 				<Grid item sx={{ flexGrow: 1 }}>
 					<Typography variant="h4" gutterBottom>
@@ -92,22 +97,20 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 						Map out your Personal Board of Directors, and engage them!
 					</Typography>
 				</Grid>
-				<Grid item sx={{ flexShrink: 0 }}>
-				{/* <Button variant="contained" size="large" onClick={handleContinue} disabled={!text}>
-					Get Advices
-				</Button> */}
-				</Grid>
 			</Grid>
 		</Stack>
 
 		<Grid container spacing={5} sx={{ display: "flex", flexGrow: 1 }}>
-			<Grid item xs={2} >
+			<Grid item xs={12} md={2} >
 				<Tabs 
 					value={value} 
 					onChange={handleChange} 
 					aria-label="tabs"
-					orientation="vertical"
-					sx={{ borderRight: 1, borderColor:"grey.300", }}
+					orientation= { isDesktop ? "vertical" : "horizontal" } 
+					sx={
+						isDesktop ?
+						{ borderRight: 1, borderColor:"grey.300", } : null
+					}
 				>
 					<Tab 
 						fullWidth 
@@ -132,7 +135,7 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 						{...a11yProps(2)} />
 				</Tabs>
 			</Grid>
-			<Grid item xs={10}>
+			<Grid item xs={12} md={10}>
 				<TabPanel value={value} index={0}>
 					<BoardFromSelection onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />	
 				</TabPanel>

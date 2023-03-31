@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // import * as Yup from 'yup';
 import { styled } from '@mui/material/styles';
-
+// hooks
+import useResponsive from '../../../../../hooks/useResponsive';
 // form
 import { useForm } from 'react-hook-form';
 // import { yupResolver } from '@hookform/resolvers/yup';
@@ -23,6 +24,8 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
+
+	const isDesktop = useResponsive('up', 'md');
 
   	// Show advanced fields
 	const [showAdvanced, setShowAdvanced] = useState(false);
@@ -87,102 +90,114 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 			><Iconify icon={showAdvanced ? 'eva:eye-off-outline' : 'eva:eye-outline'} sx={{ ml: 2, mr: 1 }}/> {showAdvanced ? 'Hide Advanced Fields' : 'Show Advanced Fields'}</Typography>
 		</Box>
 		{formFields.map((input, index) => (
-			<Card key={index} sx={{ p: 2, mb: 1 }}>
-			<Stack direction="row" spacing={1}>
-				<StyledPaper
-				sx={{
-					display: 'flex',
-					backgroundColor: 'primary.lighter',
-					borderRadius: 1,
-					width: '50px',
-					justifyContent: 'center',
-					alignItems: 'center',
-				}}
+			<Card key={index} sx={{ p: 2, mb: isDesktop ? 1 : 4 }}>
+				<Stack 
+					direction={isDesktop ? "row" : "column"} 
+					spacing={1}
 				>
-				<Typography variant="h5">{index+1}</Typography>
-				</StyledPaper>
-
-				<StyledPaper sx={{ flexGrow: 6 }}>
-				<RHFTextField 
-					name="fullName"
-					label="Full Name" 
-					helperText="Fake or Real Full Name (also famous)" 
-					value={input.fullName}
-					onChange={event => handleFormChange(index, event)}
-				/>
-				</StyledPaper>
-
-				{showAdvanced && (
-				<>
-					<StyledPaper sx={{ flexGrow: 1 }}>
-					<RHFTextField
-						select
-						name="role"
-						helperText="Role Director"
-						value={input.role}
-						onChange={event => handleFormChange(index, event)}
+					<StyledPaper
+					sx={{
+						display: 'flex',
+						backgroundColor: 'primary.lighter',
+						borderRadius: 1,
+						width: isDesktop ? "50px" : "100%",
+						justifyContent: 'center',
+						alignItems: 'center',
+						mb: isDesktop ? 0 : 1,
+					}}
 					>
-						{roles.map((option, roleIndex) => (
-						<MenuItem key={roleIndex} value={option.value}>
-							{option.label}
-						</MenuItem>
-						))}
-					</RHFTextField>
+					<Typography variant="h5">{index+1}</Typography>
 					</StyledPaper>
 
-					<StyledPaper sx={{ flexGrow: 1 }}>
-					<RHFTextField
-						select
-						name="area"
-						helperText="Area Expertise"
-						value={input.area}
-						onChange={event => handleFormChange(index, event)}
-					>
-						{areas.map((option, areaIndex) => (
-						<MenuItem key={areaIndex} value={option.value}>
-							{option.label}
-						</MenuItem>
-						))}
-					</RHFTextField>
+					<StyledPaper sx={{ 
+							flexGrow: 6, 
+							width: isDesktop ? undefined : "100%", 
+						}}>
+						<RHFTextField 
+							name="fullName"
+							label="Full Name" 
+							helperText="Fake or Real Full Name (also famous)" 
+							value={input.fullName}
+							onChange={event => handleFormChange(index, event)}
+						/>
 					</StyledPaper>
 
-					<StyledPaper sx={{ flexGrow: 1 }}>
-					<RHFTextField
-						select
-						name="quality"
-						helperText="Key Quality"
-						value={input.quality}
-						onChange={event => handleFormChange(index, event)}
-					>
-						{qualities.map((option, qualityIndex) => (
-						<MenuItem key={qualityIndex} value={option.value}>
-							{option.label}
-						</MenuItem>
-						))}
-					</RHFTextField>
-					</StyledPaper>
-				</>
-				)}
-			</Stack>
+					{showAdvanced && (
+					<>
+						<StyledPaper sx={{ flexGrow: 1, width: isDesktop ? undefined : "100%" }}>
+							<RHFTextField
+								select
+								name="role"
+								helperText="Role Director"
+								value={input.role}
+								onChange={event => handleFormChange(index, event)}
+							>
+								{roles.map((option, roleIndex) => (
+								<MenuItem key={roleIndex} value={option.value}>
+									{option.label}
+								</MenuItem>
+								))}
+							</RHFTextField>
+						</StyledPaper>
+
+						<StyledPaper sx={{ flexGrow: 1, width: isDesktop ? undefined : "100%" }}>
+						<RHFTextField
+							select
+							name="area"
+							helperText="Area Expertise"
+							value={input.area}
+							onChange={event => handleFormChange(index, event)}
+						>
+							{areas.map((option, areaIndex) => (
+							<MenuItem key={areaIndex} value={option.value}>
+								{option.label}
+							</MenuItem>
+							))}
+						</RHFTextField>
+						</StyledPaper>
+
+						<StyledPaper sx={{ flexGrow: 1, width: isDesktop ? undefined : "100%" }}>
+						<RHFTextField
+							select
+							name="quality"
+							helperText="Key Quality"
+							value={input.quality}
+							onChange={event => handleFormChange(index, event)}
+						>
+							{qualities.map((option, qualityIndex) => (
+							<MenuItem key={qualityIndex} value={option.value}>
+								{option.label}
+							</MenuItem>
+							))}
+						</RHFTextField>
+						</StyledPaper>
+					</>
+					)}
+				</Stack>
 			</Card>
 		))}
 		</FormProvider>
 		{formFields.length < 5 && isFormValid && (
-			<Box sx={{pt: 2}}>
+			<Box sx={{pt: isDesktop ? 2 : 0, textAlign: isDesktop ? "left" : "center"}}>
 				<Button onClick={addFields}>Add director</Button>
 			</Box>
 		)}
 		<Stack
 			direction="row"
 			alignItems="center"
-			justifyContent="flex-end"
 			sx={{
 				mt: 3,
 				mb: 4,
+				justifyContent: isDesktop ? "flex-end" : "center",
 		}}
 			>
 			<Box sx={{ flexShrink: 1 }}>
-				<Button disabled={!isFormValid}  variant="contained" size="large" onClick={NextStep} >
+				<Button 
+					disabled={!isFormValid}  
+					variant="contained" size="large" 
+					onClick={NextStep} 
+					fullWidth={!isDesktop ? true : undefined}
+					>
 					Ask Your Board
 				</Button>
 			</Box>

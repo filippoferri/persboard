@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
-
 import { List, ListSubheader, ListItem, ListItemText } from '@mui/material';
 // components
 import Iconify from '../iconify';
@@ -18,8 +17,8 @@ const CustomList = forwardRef(({ icon, takeaways, listSubheader, sx, ...other },
         }
     >
         {Array.isArray(takeaways) && takeaways.map((takeaway, index) => (
-            <ListItem key={index} sx={{ display: "flex", alignItems: "center" }}>
-                <Iconify icon="eva:arrow-forward-outline" sx={{ mr: 1 }} />
+            <ListItem key={index} sx={{ display: "flex", alignItems: "flex-start" }}>
+                <Iconify icon="eva:arrow-forward-outline" sx={{ mr: 1, mt: 0.2 }} />
                 <ListItemText key={index} primary={takeaway.text} />
             </ListItem>
         ))}

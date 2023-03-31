@@ -7,6 +7,8 @@ import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../../../config-global';
 // auth
 import { useAuthContext } from '../../../../../auth/useAuthContext';
+// hooks
+import useResponsive from '../../../../../hooks/useResponsive';
 // sections
 import {DirectorCard} from '../../../directors/DirectorCard';
 import { suggestDirectors } from '../../../../../utils/compromise';
@@ -15,6 +17,8 @@ import { suggestDirectors } from '../../../../../utils/compromise';
 // ----------------------------------------------------------------------
 
 const BoardFromSelection = ({onNextStep, dataFromPrevStep}) => {
+
+    const isDesktop = useResponsive('up', 'md');
 
     const [selectedDirectors, setSelectedDirectors] = useState([]);
     const [selectedDirectorObjects, setSelectedDirectorObjects] = useState([]);  
@@ -70,13 +74,14 @@ const BoardFromSelection = ({onNextStep, dataFromPrevStep}) => {
                 <Button
                     variant="contained"
                     size="large"
-                    onClick={NextStep} 
+                    onClick={NextStep}
+                    fullWidth={!isDesktop ? true : undefined}
                 >
                     Ask Your Board
                 </Button>
             </Grid>
         </Grid>
-        <Grid container spacing={3} sx={{flexDirection: 'row' }}>
+        <Grid container spacing={3} sx={{flexDirection: 'row', mb: 4 }}>
         {selectedDirectorObjects.length > 0 && (
             selectedDirectorObjects
             .map((director, index) => (
