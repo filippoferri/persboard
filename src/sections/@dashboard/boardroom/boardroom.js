@@ -19,7 +19,7 @@ Boardroom.propTypes = {
 
 // ----------------------------------------------------------------------
 
-export function Boardroom( {directors, question, discussion, takeaways} ) {
+export default function Boardroom( {directors, question, discussion, takeaways} ) {
 
     return (
             <Card sx={{ minHeight: '75vh', display: 'flex' }}>

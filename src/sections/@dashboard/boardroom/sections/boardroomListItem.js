@@ -13,6 +13,7 @@ import { CustomAvatar } from '../../../../components/custom-avatar';
 BoardroomListItem.propTypes = {
     director: PropTypes.object,
     handleOpenDetails: PropTypes.func,
+    index: PropTypes.number,
 };
 
 // ----------------------------------------------------------------------

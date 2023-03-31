@@ -9,7 +9,7 @@ import { Container } from '@mui/material';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 // sections
-import { Boardroom } from 'src/sections/@dashboard/boardroom/boardroom';
+import { Boardroom } from '../../../../sections/@dashboard/boardroom';
 // layouts
 import DashboardLayout from '../../../../layouts/dashboard';
 // Router
