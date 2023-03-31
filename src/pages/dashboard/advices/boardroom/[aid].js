@@ -8,6 +8,8 @@ import { Container } from '@mui/material';
 // firebase
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
+// sections
+import { Boardroom } from 'src/sections/@dashboard/boardroom/boardroom';
 // layouts
 import DashboardLayout from '../../../../layouts/dashboard';
 // Router
@@ -16,8 +18,6 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 import { useAuthContext } from '../../../../auth/useAuthContext';
 // components
 import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
-// sections
-import { Boardroom } from 'src/sections/@dashboard/boardroom';
 // config
 import { FIREBASE_API } from '../../../../config-global';
 

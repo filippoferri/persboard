@@ -9,7 +9,7 @@ import useResponsive from '../../../../hooks/useResponsive';
 import Iconify from '../../../../components/iconify';
 import Scrollbar from '../../../../components/scrollbar';
 // subsections
-import BoardroomList from './boardroomList.js';
+import BoardroomList from './boardroomList';
 
 // ----------------------------------------------------------------------
 
