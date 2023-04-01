@@ -17,6 +17,8 @@ import { useRouter } from 'next/router';
 // firebase api
 import { FIREBASE_API } from '../../../../config-global';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
+// hooks
+import useResponsive from '../../../../hooks/useResponsive';
 // auth
 // import { useAuthContext } from '../../../../auth/useAuthContext';
 // import Image from '../../../../components/image';
@@ -37,6 +39,8 @@ WelcomeQuestion.propTypes = {
 
 export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 		// const { themeStretch } = useSettingsContext();
+
+		const isDesktop = useResponsive('up', 'md');
 
 		const router = useRouter();
 		const handleBack = () => {
@@ -106,12 +110,13 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 				}}
 			>
 				<Grid container spacing={0}>
-					<Grid item sx={{display: "flex", alignItems:"flex-start" }}>
+					<Grid item sx={{display: "flex", alignItems: isDesktop ? "flex-start" : "center" }}>
                         <IconButton 
                             color= 'default' 
                             onClick={handleBack}>
                             <Iconify icon="eva:arrow-ios-back-fill" />
                         </IconButton>
+						{!isDesktop && <Typography>Back</Typography>}
 					</Grid>
 					<Grid item sx={{ flexGrow: 1 }}>
 						<Typography variant="h4" gutterBottom>
@@ -152,6 +157,7 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 							}}
 							value={text}
 						/>
+						{isDesktop && (
 						<Button
 							variant="outlined"
 							color="primary"
@@ -166,6 +172,7 @@ export default function WelcomeQuestion({ dataFromPrevStep, onNextStep }) {
 						>
 							Browse Ideas
 						</Button>
+						)}
 					</FormControl>
 
 					<QuestionDialog open={open} handleClose={handleClose} onNextStep={handleListItemClick} />

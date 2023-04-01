@@ -77,21 +77,12 @@ export default function SurveyOne() {
         setData(stepData);
     };
 
-    const handleSaveProfile = async (profileData) => {
-        try {
-            // const profileRef = doc(collection(db, 'users', user && user.uid, 'myProfile'));
-            const userRef = doc(db, 'users', user && user.uid);
-            const dataProfile = {
-                // other user data
-                myProfile: [profileData.optionOne, profileData.optionTwo, profileData.optionThree, profileData.optionFour]
-            };            
-            await setDoc(userRef, dataProfile);
-            // await setDoc(profileRef, profileData);
-            handleNextStep(profileData);
-        } catch (error) {
-            console.error('Error adding director:', error);
-        }
-    };
+    const userRef = doc(db, 'users', user && user.uid);
+    const dataProfile = {
+        // survey user data
+        myProfile: [profileData.optionOne, profileData.optionTwo, profileData.optionThree, profileData.optionFour]
+    };            
+    await setDoc(userRef, dataProfile, { merge: true });
 
     return (
         <>
