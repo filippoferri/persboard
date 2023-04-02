@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
 // @mui
-import { Stack, Typography } from '@mui/material';
-// Utils
+import { Stack, Typography, IconButton, Tooltip } from '@mui/material';
+// utils
 import DownloadPdf from '../../../../utils/downloadPdf';
+// components
+import Iconify from '../../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -11,11 +13,14 @@ BoardroomHeader.propTypes = {
     question: PropTypes.string,
     discussion: PropTypes.array,
     takeaways: PropTypes.array,
+    handleRefresh: PropTypes.func,
+    handleSave: PropTypes.func,
+    isNew: PropTypes.bool,
 };
 
 // ----------------------------------------------------------------------
 
-export default function BoardroomHeader({directors, question, discussion, takeaways}) {
+export default function BoardroomHeader({directors, question, discussion, takeaways, handleRefresh, handleSave, isNew}) {
 
     return (
         <Stack
@@ -30,14 +35,44 @@ export default function BoardroomHeader({directors, question, discussion, takeaw
             }}
             >
                 <Stack flexGrow={1}>
-                    <Typography sx={{ fontWeight: "bold" , color: "grey.600"}}>Report</Typography>
+                    <Typography sx={{ fontWeight: "bold" , color: "grey.600"}}>
+                        {isNew ? "Discussion" : "Report"}
+                    </Typography>
                 </Stack>
 
-                <DownloadPdf 
-                    directors={directors} 
-                    question={question} 
-                    discussion={discussion} 
-                    takeaways={takeaways} />
+                { discussion.length > 1 ? (
+                <>
+                    { isNew ? (
+                    <Tooltip title="Ask your board again to get different advices">
+                        <IconButton 
+                            color= 'default' 
+                            onClick={() => {
+                                handleRefresh();
+                            }}>
+                            <Iconify icon="eva:refresh-outline" />
+                        </IconButton>
+                    </Tooltip>
+                    ) : ( null )}
+
+                    <DownloadPdf 
+                        directors={directors} 
+                        question={question} 
+                        discussion={discussion} 
+                        takeaways={takeaways} />
+
+                    { isNew ? (
+                    <Tooltip title="Save this discussion for a future consult">
+                        <IconButton 
+                            color= 'default' 
+                            onClick={() => {
+                                handleSave();
+                            }}>
+                            <Iconify icon="eva:save-outline" />
+                        </IconButton>
+                    </Tooltip>
+                    ) : ( null )}
+                </>
+                ) : ( null ) }
         </Stack>
     );
 }

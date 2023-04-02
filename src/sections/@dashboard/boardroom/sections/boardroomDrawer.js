@@ -89,6 +89,10 @@ export default function BoardroomDrawer({directors}) {
                 )}
             </Stack>
         </Box>
+
+        <Box sx={{ pl:2.5, pt: 1, pb: 1, borderBottom: 1, borderColor: "grey.300" }}>
+            <Typography variant='caption' sx={{ textTransform: "uppercase", color: "grey.500", fontWeight: "bold" }}>In Room ({directors.length})</Typography>
+        </Box>
     
         <Scrollbar>
             <BoardroomList directors={directors} />

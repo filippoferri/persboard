@@ -48,10 +48,11 @@ export default function Boardroom( {directors, question, discussion, takeaways} 
                                 discussion={discussion} 
                                 takeaways={takeaways}
                             />
-                            <BoardroomFooter />
                         </Stack>
 
                     </Stack>
+                    
+                    <BoardroomFooter />
                     
                 </Stack>
             </Card>

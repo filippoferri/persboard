@@ -1,10 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Paper, Stack, Box, Grid, Typography, Button, IconButton, Tooltip, Skeleton } from '@mui/material';
+import { Card, Stack, Box, Grid, Typography, Button, IconButton, Skeleton } from '@mui/material';
 import Confetti from 'react-confetti';
-// import Tooltip from '@mui/material/Tooltip';
 import PropTypes from 'prop-types';
-// Router
-import { useRouter } from 'next/router';
+
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, updateDoc, getDoc, Timestamp, increment } from 'firebase/firestore';
@@ -18,8 +16,11 @@ import Iconify from '../../../../components/iconify';
 import { useSnackbar } from '../../../../components/snackbar';
 import CustomList from '../../../../components/list';
 // sections
-import AdvisoryBoard from '../../projects/AdvisoryBoard';
 import {generateAdvice} from '../../../../utils/generateAdvice';
+import BoardroomDrawer from '../../boardroom/sections/boardroomDrawer.js';
+import BoardroomHeader from '../../boardroom/sections/boardroomHeader.js';
+import BoardroomFooter from '../../boardroom/sections/boardroomFooter.js';
+
 // Utils
 import {generateTakeaways} from '../../../../utils/generateTakeaways';
 import DownloadPdf from '../../../../utils/downloadPdf';
@@ -51,10 +52,6 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     const [discussion, setDiscussion] = useState([]);
     const [takeaways, setTakeaways] = useState([]);
 
-    const router = useRouter();
-    const handleUpgrade = () => {
-        router.push({ pathname: PATH_DASHBOARD.billing.root });};
-
     // const data = [
     // {
     //     id: '1',
@@ -64,7 +61,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     //     }
     // ]; 
 
-    //  const keyTakeaways = [
+    // const keyTakeaways = [
     //     {
     //         text: 'Think big, but start small.',
     //     },
@@ -137,17 +134,19 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             await handleCredits(); // Call handleCredits if the prompt does not contain an error
         }
         setDiscussion(prompt);
+        // setDiscussion(data); // for testing
 
         // Generate takeaways after setting the discussion
         const discussionText = prompt
-            .map(({ fullName, role, text }) => `${fullName} (${role}): ${text}`)
-            .join('\n');
+        .map(({ fullName, role, text }) => `${fullName} (${role}): ${text}`)
+        .join('\n');
         const generatedTakeaways = await generateTakeaways(discussionText);
         setTakeaways(generatedTakeaways);
-        // setTakeaways(keyTakeaways);
+        // setTakeaways(keyTakeaways); // for testing
 
         // eslint-disable-next-line
     }, [question, loadedDirectors, remainingCredits, user]);
+    // }, [question, user]); // for testing
     
     // save the discussion
     async function handleSave() {
@@ -235,134 +234,104 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             </Grid>
         </Stack>
 
-        <Paper variant="outlined" sx={{ flexGrow: 1 }}>
-            <Grid container spacing={0} sx={{minHeight: '600px'}}>
+        {discussion.length > 1 ? (
+            <Confetti {...confettiProps} />
+        ) : null }
 
-                <Grid item xs={3} sx={{borderRight: '1px solid', borderColor: 'grey.300'}}>
-                    <Box sx={{ display: 'flex', borderBottom: '1px solid', borderColor: 'grey.300', height: '75px', alignItems: 'center', p: 2, fontWeight: 'bold', color: 'grey.600',bgcolor: 'grey.200'}}>
-                        Advisory Board
-                    </Box>
-                    <AdvisoryBoard directors={loadedDirectors} />
-                </Grid>
+        <Card sx={{ minHeight: '74vh', display: 'flex' }}>
 
-                <Grid container item xs={9} direction="column" sx={{flexGrow: 1}} >
+            <BoardroomDrawer directors={loadedDirectors} />
 
-                    <Box sx={{ display: 'flex', borderBottom: '1px solid', borderColor: 'grey.300', height: '75px', alignItems: 'center', p: 2, fontWeight:'bold', color:'grey.600', bgcolor: 'grey.200' }}>
-                        <Box sx={{ display: "flex", flex: 1 }}>
-                            Meaningful Discussion
-                        </Box>
-                        { discussion.length > 1 ? (
-                        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                            <Tooltip title="Ask your board again to get different advices">
-                                <IconButton 
-                                    color= 'default' 
-                                    onClick={() => {
-                                        handleRefresh();
-                                    }}>
-                                    <Iconify icon="eva:refresh-outline" />
-                                </IconButton>
-                            </Tooltip>
+            <Stack flexGrow={1} sx={{ overflow: 'hidden' }}>
 
-                            <DownloadPdf directors={loadedDirectors} question={question} discussion={discussion} takeaways={takeaways} />
+                <BoardroomHeader 
+                    directors={loadedDirectors}
+                    question={question}
+                    discussion={discussion}
+                    takeaways={takeaways}
+                    handleRefresh={handleRefresh}
+                    handleSave={handleSave}
+                    isNew
+                />
 
-                            <Tooltip title="Save this discussion for a future consult">
-                                <IconButton 
-                                    color= 'default' 
-                                    onClick={() => {
-                                        handleSave();
-                                    }}>
-                                    <Iconify icon="eva:save-outline" />
-                                </IconButton>
-                            </Tooltip>
-                        </Box> ) : null }
-                    </Box>
-
-                    <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', p:2 }}>
-
-                        <Grid container justifyContent='flex-end'>
-                            <Grid item sx={{ textAlign: 'right', mb: 2 }}>
-                                <Typography 
-                                variant='caption' 
-                                sx={{ fontWeight:'bold', pr: 1 }}>
-                                    You
-                                </Typography>
-                                <Box sx={{
-                                    backgroundColor:"primary.lighter", 
-                                    p: 2, 
-                                    borderRadius: 1, 
-                                    borderTopRightRadius: 0,
-                                    mb: 1,
-                                    maxWidth: '800px',
-                                }}>
-                                    {question}
-                                </Box>
-                            </Grid>
-                        </Grid>
-
-                        <Grid container justifyContent="flex-start" sx={{flex: 1}}>
-                            {discussion.length === 0 ? (
-                                <Grid item sx={{mb: 6}}>
-                                    <Typography variant="body1" align="left" sx={{color: "grey.600", mb: 2 }}>
-                                        We are thinking...
+                <Stack
+                    direction="row"
+                    flexGrow={1}
+                    sx={{
+                        overflow: 'hidden',
+                    }}
+                >
+                    <Stack flexGrow={1} sx={{ minWidth: 0 }}>
+                        <Stack sx={{ p:2.5}}>
+                            <Grid container justifyContent='flex-end'>
+                                <Grid item sx={{ textAlign: 'right', mb: 2 }}>
+                                    <Typography 
+                                    variant='caption' 
+                                    sx={{ fontWeight:'bold', pr: 1 }}>
+                                        You
                                     </Typography>
-                                    <Skeleton variant="rounded" width={600} height={60} sx={{ bgcolor: 'grey.200', mb: 1 }} />
-                                    <Skeleton variant="rounded" width={600} height={60} animation="wave" sx={{ bgcolor: 'grey.200', mb: 1  }}  />
-                                    <Skeleton variant="rounded" width={600} height={60} sx={{ bgcolor: 'grey.200', mb: 1  }}  />
+                                    <Box sx={{
+                                        backgroundColor:"primary.lighter", 
+                                        p: 2, 
+                                        borderRadius: 1, 
+                                        borderTopRightRadius: 0,
+                                        mb: 1,
+                                        maxWidth: '800px',
+                                    }}>
+                                        {question}
+                                    </Box>
                                 </Grid>
-                            ) : (
-                                discussion.map((advice, index) => (
-                                    <Grid item key={index} sx={{mb:2}}>
-                                        <Typography
-                                            variant='caption'
-                                            sx={{ fontWeight: 'bold', pl: 1, mb: 2 }}
-                                        >
-                                            {advice.fullName} | {advice.role}
+                            </Grid>
+
+                            <Grid container justifyContent="flex-start" sx={{flex: 1}}>
+                                {discussion.length === 0 ? (
+                                    <Grid item sx={{mb: 6}}>
+                                        <Typography variant="body1" align="left" sx={{color: "grey.600", mb: 2 }}>
+                                            We are thinking...
                                         </Typography>
-                                        <Box sx={{
-                                            backgroundColor: "grey.200",
-                                            p: 2,
-                                            borderRadius: 1,
-                                            borderTopLeftRadius: 0,
-                                            mb: 1,
-                                            width: '600px',
-                                        }}
-                                        >
-                                            {advice.text}
-                                        </Box>
+                                        <Skeleton variant="rounded" width={600} height={60} sx={{ bgcolor: 'grey.200', mb: 1 }} />
+                                        <Skeleton variant="rounded" width={600} height={60} animation="wave" sx={{ bgcolor: 'grey.200', mb: 1  }}  />
+                                        <Skeleton variant="rounded" width={600} height={60} sx={{ bgcolor: 'grey.200', mb: 1  }}  />
                                     </Grid>
-                                ))
-                            )}
-                        </Grid>
-
-                        {discussion.length > 1 ? (
-                            <Confetti {...confettiProps} />
-                        ) : null }
-
-                        {takeaways.length !== 0 ? (
-                        <Grid container sx={{ mb: 4, flexDirection: "row"}}>
-                            <Grid item sx={{ display: "flex" }}>
-                                <CustomList listSubheader="Key Takeaways" takeaways={takeaways} />
+                                ) : (
+                                    discussion.map((advice, index) => (
+                                        <Grid item key={index} sx={{mb:2}}>
+                                            <Typography
+                                                variant='caption'
+                                                sx={{ fontWeight: 'bold', pl: 1, mb: 2 }}
+                                            >
+                                                {advice.fullName} | {advice.role}
+                                            </Typography>
+                                            <Box sx={{
+                                                backgroundColor: "grey.200",
+                                                p: 2,
+                                                borderRadius: 1,
+                                                borderTopLeftRadius: 0,
+                                                mb: 1,
+                                                width: '600px',
+                                            }}
+                                            >
+                                                {advice.text}
+                                            </Box>
+                                        </Grid>
+                                    ))
+                                )}
                             </Grid>
-                        </Grid> ) : null }
 
-                        <Grid container justifyContent="center">
-                            <Grid item sx={{ flexGrow: 1 }}>
-                                <Box sx={{display: 'flex', backgroundColor: "primary.lighter", p: 2, borderRadius: 1, alignItems: "center"}}>
-                                    <Box sx={{ flexGrow: 1 }}>
-                                        <Typography variant='h5' sx={{color: "primary.darker"}}>Engage in a dynamic exchange of ideas.</Typography>
-                                        <Typography variant='h5' sx={{color: "primary.main"}}>Achieve greater clarity and direction.</Typography>
-                                    </Box>
-                                    <Box>
-                                        <Button variant="outlined" size="large" onClick={handleUpgrade} >Upgrade Now</Button>
-                                    </Box>
-                                </Box>
-                            </Grid>
-                        </Grid>
-                    </Box>
+                            {takeaways.length !== 0 ? (
+                            <Grid container sx={{ mb: 4, flexDirection: "row"}}>
+                                <Grid item sx={{ display: "flex" }}>
+                                    <CustomList listSubheader="Key Takeaways" takeaways={takeaways} />
+                                </Grid>
+                            </Grid> ) : null }
+                        </Stack>
 
-                </Grid>
-            </Grid>
-        </Paper>
+                    </Stack>
+                </Stack>
+
+                <BoardroomFooter isNew />
+            </Stack>
+        </Card>
     </>
     );
 }

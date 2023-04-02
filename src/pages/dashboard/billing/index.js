@@ -79,7 +79,7 @@ export default function PageBilling() {
     const { user } = useAuthContext();
 
     const [selectedBox, setSelectedBox] = useState(50);
-    const [totalBilled, setTotalBilled] = useState(9.99);
+    const [totalBilled, setTotalBilled] = useState(14.99);
     const [cpc, setCpc] = useState();
     const [credits, setCredits] = useState(user.credits);
     const [loading, setLoading] = useState(false);
