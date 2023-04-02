@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Card, Stack, Box, Grid, Typography, Button, IconButton, Skeleton } from '@mui/material';
+import { Card, Stack, Grid, Typography, Button, IconButton, Skeleton } from '@mui/material';
 import Confetti from 'react-confetti';
 import PropTypes from 'prop-types';
 
@@ -149,24 +149,6 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         // eslint-disable-next-line
     }, [question, loadedDirectors, remainingCredits, user]);
     // }, [question, user]); // for testing
-    
-    // save the discussion
-    async function handleSave() {
-        const myBoardroomsRef = doc(collection(db, "users", user.uid, "myBoardrooms"));
-        try {
-            // add discussion to firestore
-            await setDoc (myBoardroomsRef,{
-                question,
-                directors: loadedDirectors,
-                discussion,
-                takeaways,
-                dateAdd: Timestamp.fromDate(new Date()),
-            });
-            enqueueSnackbar('Discussion saved!');
-        } catch (error) {
-            console.error('Error adding discussion:', error);
-        }
-    }
 
     const handleRefresh = () => {
         if (remainingCredits > 0) {
@@ -213,7 +195,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             }}
         >
             <Grid container spacing={0}>
-                <Grid item sx={{display: "flex", alignItems: isDesktop ? "flex-start" : "center", flexDirection: isDesktop ? "column" : "row" }}>
+                <Grid item sx={{display: "flex", alignItems: isDesktop ? "flex-start" : "center", flexDirection: isDesktop ? "row" : "column" }}>
                     <IconButton 
                         color= 'default' 
                         onClick={onPrevStep}>
@@ -253,7 +235,6 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                     discussion={discussion}
                     takeaways={takeaways}
                     handleRefresh={handleRefresh}
-                    handleSave={handleSave}
                     isNew
                 />
 
