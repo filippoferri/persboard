@@ -18,6 +18,8 @@ import DashboardLayout from '../../../layouts/dashboard';
 // components
 import { useSettingsContext } from '../../../components/settings';
 import Iconify from '../../../components/iconify';
+import { useSnackbar } from '../../../components/snackbar';
+
 // sections
 import {DirectorCard} from '../../../sections/@dashboard/directors/DirectorCard';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
@@ -48,6 +50,7 @@ export default function PageDirectors() {
     const { themeStretch } = useSettingsContext();
 
     const router = useRouter();
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleClick = () => {
     router.push({ pathname: PATH_DASHBOARD.directors.newDirector});};
@@ -94,6 +97,7 @@ export default function PageDirectors() {
         try {
             const myDirectorRef = doc(db, 'users', user.uid, 'myDirectors', directorId);
             await deleteDoc(myDirectorRef);
+            enqueueSnackbar('Director removed!');
         } catch (error) {
             console.error(error);
         }
@@ -138,13 +142,17 @@ export default function PageDirectors() {
                     <Card 
                         onClick={handleClick} 
                         sx={{ 
+                            display: 'flex',
                             textAlign: 'center', 
+                            height: 180,
                             bgcolor: 'primary.main', 
                             '&:hover': {
                                 bgcolor: 'primary.darker',
                             },
                             color: 'white', 
-                            cursor:'pointer'
+                            cursor:'pointer',
+                            alignItems: 'center',
+                            justifyContent: 'center',
                             }}>
                         <Box 
                             sx={{
@@ -152,7 +160,6 @@ export default function PageDirectors() {
                                 flexDirection: 'column',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                height: 265,
                                 fontWeight: 'bold'
                                 }}>
                             
@@ -161,7 +168,7 @@ export default function PageDirectors() {
                                 color="success"
                                 sx={{
                                     p: 0,
-                                    mb: 2,
+                                    mb: 1,
                                     width: 60,
                                     height: 60,
                                     color: 'common.white',
@@ -174,13 +181,13 @@ export default function PageDirectors() {
                             >
                                 <Iconify icon="eva:plus-fill" />
                             </IconButton>
-                            <Typography variant="h5" paragraph>
+                            <Typography variant="h6">
                                 Add Your <br /> Personal Director
                             </Typography>
                         </Box>
                     </Card>
                     {isLoading ? (
-                        <Skeleton variant="rectangular" width="100%" height={265} sx={{ borderRadius: 1 }} />
+                        <Skeleton variant="rectangular" width="100%" height={180} sx={{ borderRadius: 1 }} />
                     ) : null}
                         {myDirectors.length > 0 && (
                         myDirectors.map((myDirector) => (
@@ -212,7 +219,7 @@ export default function PageDirectors() {
                     }}
                     >
                     {isLoading ? (
-                        <Skeleton variant="rectangular" width="100%" height={265} />
+                        <Skeleton variant="rectangular" width="100%" height={180} />
                     ) : null}
                         {directors.length > 0 && (
                         directors.map((director) => (

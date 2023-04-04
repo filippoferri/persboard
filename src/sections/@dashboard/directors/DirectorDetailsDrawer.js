@@ -26,16 +26,12 @@ FileDetailsDrawer.propTypes = {
   item: PropTypes.object,
   onClose: PropTypes.func,
   onDelete: PropTypes.func,
-  favorited: PropTypes.bool,
-  onFavorite: PropTypes.func,
   boardroom: PropTypes.bool,
 };
 
 export default function FileDetailsDrawer({
     item,
     open,
-    favorited,
-    onFavorite,
     onClose,
     onDelete,
     boardroom,
@@ -79,33 +75,13 @@ export default function FileDetailsDrawer({
     >
       <Scrollbar sx={{ height: 1 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 2.5 }}>
-          <Typography variant="h6">About</Typography>
-
-          {/* <Checkbox
-            color="warning"
-            icon={<Iconify icon="eva:star-outline" />}
-            checkedIcon={<Iconify icon="eva:star-fill" />}
-            checked={favorited}
-            onChange={onFavorite}
-            sx={{ p: 0.75 }}
-          /> */}
+          <Typography variant="h6">Details</Typography>
         </Stack>
 
         <Stack
-          spacing={3}
           justifyContent="center"
           sx={{ p: 4, bgcolor: 'background.neutral' }}
         >
-
-        {/* <Avatar
-          alt={item.fullName}
-          src={dirAvatar}
-          sx={{
-            width: 150,
-            height: 150,
-            margin: 'auto',
-          }}
-        /> */}
         <Avatar 
           src={item.avatar}
           alt={item.fullName} 
@@ -114,35 +90,24 @@ export default function FileDetailsDrawer({
             width: 150,
             height: 150,
             margin: 'auto',
+            mb: 2,
           }}
         />
 
           <Typography variant="h6" sx={{ wordBreak: 'break-all', textAlign: 'center' }}>
             {item.role}
           </Typography>
-          {item.desc && (
-            <>
-              <Divider sx={{ borderStyle: 'dashed' }} />
-              <Typography variant="body">{item.desc}</Typography>
-            </>
-          )}
+          <Typography variant="body1" sx={{ wordBreak: 'break-all', textAlign: 'center' }}>
+            {item.fullName}
+          </Typography>
         </Stack>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{mt:2, p: 2.5 }}>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Area of Expertise
-          </Typography>
-          <Label color="success">{item.area}</Label>
-        </Stack>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 2.5 }}>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Key Quality
-          </Typography>
-          <Label color="success">{item.quality}</Label>
-        </Stack>
-        <Stack sx={{ p: 2.5 }}>
-          <Alert icon={false} severity="success">{AREA_DESCRIPTIONS[item.area]}, {QUALITY_DESCRIPTIONS[item.quality]}</Alert>
-        </Stack>
+        {item.desc && (
+            <Stack sx={{ p: 3 }}>
+              <Typography variant="h6">About Me</Typography>
+              <Typography variant="body2">{item.desc}</Typography>
+            </Stack>
+          )}
       </Scrollbar>
 
 

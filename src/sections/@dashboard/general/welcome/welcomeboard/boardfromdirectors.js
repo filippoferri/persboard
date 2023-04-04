@@ -78,7 +78,7 @@ const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
                 <Grid item xs={12} sm={8} sx={{ display: "flex", alignItems: "center" }}>
                     <Box sx={{ flexGrow: 1 }}>
                         <Typography variant="p" gutterBottom>
-                            Select Your virtual Coaches, Mentors and Sponsors (max 5)
+                            Select Your Virtual Directors. (max 5)
                         </Typography>
                     </Box>
                 </Grid>

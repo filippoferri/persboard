@@ -1,6 +1,6 @@
 // title: WelcomeTopics
 
-import React from 'react';
+import {useState} from 'react';
 import PropTypes from 'prop-types';
 // import * as Yup from 'yup';
 // next
@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 // import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Typography, MenuItem, Avatar } from '@mui/material';
+import { Box, Card, Grid, Stack, Typography, MenuItem, InputLabel, Avatar, Chip } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, Timestamp } from 'firebase/firestore';
@@ -44,28 +44,34 @@ export default function NewDirector({ isEdit = false, currentUser }) {
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
-  // const UpdateDirectorSchema = Yup.object().shape({
-  //   fullName: Yup.string().required('Name is required'),
-  //   role: Yup.string().required('Role is required'),
-  //   area: Yup.string().required('Area is required'),
-  //   quality: Yup.string().required('Quality is required'),
-  // });
+  const [selectedChips, setSelectedChips] = useState([]);
+  const [textareaValue, setTextareaValue] = useState('');
 
-  // const defaultValues = {
-  //   fullName: 'John Doe',
-  //   role: 'Executive Coach',
-  //   area: 'Advocacy',
-  //   quality: 'Vision and Leadership',
-  //   description: '',
-  // };
+  const handleChipClick = (chip) => {
+    setSelectedChips((chips) => chips.filter((c) => c !== chip));
+    setTextareaValue((value) =>
+      value
+        .replace(new RegExp(`\\s*${skills[chip]}\\s*`), '')
+        .replace(/\n{2,}/g, '\n')
+        .trim()
+    );
+  };
 
-  const methods = useForm();
-
+  const methods = useForm({
+    defaultValues: {
+      fullName: 'John Doe',
+      role: 'Inspirer',
+      description: '',
+    },
+  });
+  
+  const { formState } = methods;
+  
   const {
     reset,
     watch,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = methods;
 
   const values = watch();
@@ -75,18 +81,15 @@ export default function NewDirector({ isEdit = false, currentUser }) {
     // const uniqueDirectoryId = uuidv4();
     const fullName = watch('fullName');
     const role = watch('role');
-    const area = watch('area');
-    const quality = watch('quality');
-    const description = watch('description');
+    // const area = watch('area');
+    // const quality = watch('quality');
+    // const description = watch('description');
 
     const data = {
       fullName: fullName || '',
-      favorite: false,
       role: role || '',
-      area: area || '',
-      quality: quality || '',
       avatar: '/assets/illustrations/avatars/ai_default.svg', // add the base64 string of the image here if available
-      desc: description || '',
+      desc: textareaValue || '',
       type: 'Personal',
       dateAdd: Timestamp.fromDate(new Date()),
       dateEdit: Timestamp.fromDate(new Date()),
@@ -116,37 +119,20 @@ export default function NewDirector({ isEdit = false, currentUser }) {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Grid container direction="row" alignItems="center" spacing={3}>
-        <Grid item xs={12} md={3} sx={{display: "flex", justifyContent: "center", alignItems: "center", textAlign:"left"}}>
-          <Avatar
-            alt={values.fullName}
-            src="/assets/illustrations/avatars/ai_default.svg"
-            sx={{
-              width: 200,
-              height: 200,
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} md={5} sx={{ backgroundColor: "#F4F6F8", minHeight: 270, borderRadius: 2 }}>
-          <Box sx={{color: "#637381", p: "8px 16px 32px 16px "}}>
-            <Typography variant='body2'>
-              {values.fullName && values.fullName}
-            </Typography>
-            <Typography variant='h4'>
-              {values.role && values.role}
-            </Typography>
-            <Typography variant='body' component="p">
-              {values.role && `${ROLE_DESCRIPTIONS[values.role]}`}
-            </Typography>
-            <Typography variant='body' component="p">
-              {values.area && values.quality && `${AREA_DESCRIPTIONS[values.area]}, ${QUALITY_DESCRIPTIONS[values.quality]}`}
-            </Typography>
-          </Box>
-        </Grid>
+      <Grid container direction="row" spacing={3}>
         <Grid item xs={12} md={8}>
           <Card sx={{ p: 3 }}>
-            <Box sx={{ mb: 4 }}>
-              <RHFTextField select name="role" helperText="Role Director">
+            <Box sx={{ mb: 3 }}>
+            <InputLabel shrink sx={{pl: 2}}>
+                Full Name (also famous)
+              </InputLabel>
+              <RHFTextField fullWidth name="fullName" />
+            </Box>
+            <Box sx={{ mb: 3 }}>
+            <InputLabel shrink sx={{pl: 2}}>
+                Role Director
+              </InputLabel>
+              <RHFTextField select name="role">
                 {roles.map((option, index) => (
                   <MenuItem key={index} value={option.value}>
                     {option.label}
@@ -154,145 +140,117 @@ export default function NewDirector({ isEdit = false, currentUser }) {
                 ))}
               </RHFTextField>
             </Box>
-            <Box sx={{ mb: 4 }}>
-              <RHFTextField fullWidth name="fullName" label="Fake or Real Full Name (also famous)" />
-            </Box>
-            <Box
-              rowGap={3}
-              columnGap={2}
-              display="grid"
-              sx={{ mb: 4 }}
-              gridTemplateColumns={{
-                xs: 'repeat(1, 1fr)',
-                sm: 'repeat(2, 1fr)',
-              }}
-            >
-              <RHFTextField select name="area" helperText="Area Expertise">
-                {areas.map((option, index) => (
-                  <MenuItem key={index} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </RHFTextField>
-              <RHFTextField select name="quality" helperText="Key Quality">
-                {qualities.map((option, index) => (
-                  <MenuItem key={index} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </RHFTextField>
-            </Box>
-            <Box sx={{ mb: 4 }}>
-              <RHFTextField fullWidth name="description" label="Short profile description" multiline rows={4} />
+            <Box sx={{ mb: 3, position: "relative" }}>
+              <InputLabel shrink sx={{pl: 2}}>
+                Customize your director
+              </InputLabel>
+              <RHFTextField 
+                fullWidth 
+                name="description" 
+                placeholder={
+  `Share 3-4 facts about your director to define the personality:
+    • I have a deep interest in life
+    • I inspire and guide you.
+    • I'm optimistic
+    • I provide constructive critique
+  etc.`} 
+                multiline 
+                rows={6} 
+                value={textareaValue}
+                spellcheck="false"
+                onChange={(e) => setTextareaValue(e.target.value)}
+                sx={{ 
+                  whiteSpace: "pre-line",
+                  }}/>
+
+              <Box sx={{ p: 1, pb: 1 }}>
+              {selectedChips.map((chip) => (
+                <Chip 
+                  key={chip} 
+                  label={chip}   
+                  onDelete={() => handleChipClick(chip)}
+                  sx={{ mr: 0.5, mb: 1 }} />
+              ))}
+              {Object.keys(skills).map((skill) => {
+                if (selectedChips.includes(skill)) return null;
+                return (
+                  <Chip
+                    label={skill}
+                    key={skill}
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => {
+                      const skillValue = skills[skill];
+                      setSelectedChips((chips) => [...chips, skill]);
+                      setTextareaValue((value) =>
+                        `${value}${value.length > 0 ? '\n' : ''}${skillValue}`
+                      );
+                    }}
+                    sx={{ mr: 0.5, mb: 1 }}
+                  />
+                );
+              })}
+              </Box>
+
             </Box>
   
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-              <LoadingButton size='large' type="submit" variant="contained" loading={isSubmitting}>
-                {!isEdit ? 'Create AI Director' : 'Save Changes'}
+              <LoadingButton
+                size='large'
+                type="submit"
+                variant="contained"
+                loading={isSubmitting}
+                disabled={!textareaValue}
+              >
+                {isEdit ? 'Save Changes' : 'Create AI Director'}
               </LoadingButton>
             </Stack>
   
           </Card>
         </Grid>
+        <Grid item 
+          xs={12} 
+          md={4}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+          }}
+          >
+          <Avatar
+            alt={values.fullName}
+            src="/assets/illustrations/avatars/ai_default.svg"
+            sx={{
+              width: 200,
+              height: 200,
+              mb: 3,
+            }}
+          />
+
+          <Box sx={{  
+            color: "grey.600", 
+            backgroundColor: "grey.200",
+            p: 2,
+            borderRadius: 2
+            }}>
+            <Box sx={{  mb: 2 }}>
+              <Typography variant='body2'>
+                <b>{values.fullName && values.fullName}</b>
+              </Typography>
+              <Typography variant='h5'>
+                {values.role && values.role}
+              </Typography>
+              <Typography variant='body' component="p">
+                {values.role && `${ROLE_DESCRIPTIONS[values.role]}`}
+              </Typography>
+            </Box>
+          </Box>
+        </Grid>
       </Grid>
     </FormProvider>
   );  
 }
-
-const ROLE_DESCRIPTIONS = {
-  "Life Coach": "I help and support you to achieve personal goals and achievements.",
-  "Sport Coach": "I train and develop athletes' physical and mental abilities.",
-  "Mentor": "I share my knowledge and provide guidance for personal and professional growth.",
-  "Sponsor": "I provide support and resources for career development and advancement.",
-  "Challenger": "I pushe you to overcome obstacles and reach new heights.",
-  "Supporter": "I offers encouragement and assistance in achieving personal and professional goals.",
-  "Senior-to-You Leader": "I serve you as a role model and provide guidance for personal and professional development.",
-  "Adversary": "I present opposing views and challenges ideas to promote growth and progress.",
-  "Inspirer": "I introduce innovative ideas and stimulate creativity by connecting unexpected concepts, and expanding your thinking and inspire growth.",
-};
-
-
-const QUALITY_DESCRIPTIONS = {
-  Passion: 'I have a deep interest in life and being motivated to work towards personal success and fulfillment.',
-  Leadership: 'I have the courage to inspire and guide others towards a common goal or vision.',
-  Vision: 'I can see the big picture and develop strategies to reach those goals.',
-  Governance: 'I have the commitment to serve the interests of oneself, others, and the greater good, while maintaining the highest standards of integrity.',
-  Knowledge: 'I possess a comprehensive understanding of oneself, others, and the world, as well as strong organizational and problem-solving skills.',
-  Diligence: 'I demonstrate dedication and commitment to fulfilling personal goals and a willingness to put in the necessary effort to achieve them.',
-  Collegiality: 'I have a sincere and respectful attitude towards others and their perspectives, and being able to work collaboratively towards shared goals.',
-  Discretion: 'I maintain confidentiality and discretion in personal and professional interactions.'
-};  
-
-const AREA_DESCRIPTIONS = {
-  "Advocacy": 'Empowering through representation',
-  "Social Support": 'Offering care and connection',
-  "Career Advice": 'Guiding toward professional success',
-  "Expertise": 'Sharing specialized knowledge',
-  "Developmental Feedback": 'Providing constructive critique',
-  "Network": 'Connecting to valuable resources'
-};
-
-const areas = [
-  {
-    value: 'Advocacy',
-    label: 'Advocacy',
-  },
-  {
-    value: 'Social Support',
-    label: 'Social Support',
-  },
-  {
-    value: 'Career Advice',
-    label: 'Career Advice',
-  },
-  {
-    value: 'Expertise',
-    label: 'Expertise',
-  },
-  {
-    value: 'Network',
-    label: 'Network',
-  },
-  {
-    value: 'Developmental Feedback',
-    label: 'Feedback',
-  },
-];
-
-const qualities = [
-  {
-    value: 'Leadership',
-    label: 'Leadership',
-  },
-  {
-    value: 'Vision',
-    label: 'Vision',
-  },
-  {
-    value: 'Diligence',
-    label: 'Diligence',
-  },
-  {
-    value: 'Passion',
-    label: 'Passion',
-  },
-  {
-    value: 'Knowledge',
-    label: 'Knowledge',
-  },
-  {
-    value: 'Discretion',
-    label: 'Discretion',
-  },
-  {
-    value: 'Governance',
-    label: 'Governance',
-  },
-  {
-    value: 'Collegiality',
-    label: 'Collegiality',
-  },
-];
 
 const roles = [
   {
@@ -332,3 +290,33 @@ const roles = [
     label: 'Adversary',
   },
 ];
+
+const ROLE_DESCRIPTIONS = {
+  "Life Coach": "I help and support you to achieve personal goals and achievements.",
+  "Sport Coach": "I train and develop athletes' physical and mental abilities.",
+  "Mentor": "I share my knowledge and provide guidance for personal and professional growth.",
+  "Sponsor": "I provide support and resources for career development and advancement.",
+  "Challenger": "I push you to overcome obstacles and reach new heights.",
+  "Supporter": "I offers encouragement and assistance in achieving personal and professional goals.",
+  "Contrarian": "I present opposing views and challenges ideas to promote growth and progress.",
+  "Inspirer": "I introduce innovative ideas and stimulate creativity by connecting unexpected concepts, and expanding your thinking and inspire growth.",
+  "Executive Coach": "I provide guidance and strategies for achieving professional success and leadership development.",
+};
+
+const skills = {
+  "Career Advice": 'I guide toward professional success.',
+  "Expertise": 'I share specialized knowledge.',
+  "Passion": 'I have a deep interest in life.',
+  "Leadership": 'I inspire and guide you.',
+  "Vision": 'I can see the big picture and develop strategies.',
+  "Feedback": 'Providing a constructive critique',
+  "Problem Solving": 'I have strong organizational and problem-solving skills.',
+  "Enthusiastic": "I approach tasks with excitement and energy.",
+  "Encouraging": "I provide positive feedback and support.",
+  "Empathetic": "I have a deep understanding and sensitivity.",
+  "Optimistic": "I maintain a positive outlook and focus.",
+  "Motivated": " I am driven and dedicated to making progress.",
+  "Persuasive": "I persuade others to take action.",
+  "Sarcastic": "I use irony and sarcasm to convey humor and wit.",  
+}
+

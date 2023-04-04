@@ -35,7 +35,7 @@ export const generateAdvice = async (advisoryDirectors, question, user) => {
   
 
   try {
-    const advice = await Promise.all(advisoryDirectors.map(async ({ fullName, role, quality, area }) => {
+    const advice = await Promise.all(advisoryDirectors.map(async ({ fullName, role, desc }) => {
 
       let profile = '';
       if (myProfile) { 
@@ -46,8 +46,9 @@ export const generateAdvice = async (advisoryDirectors, question, user) => {
       const motivationalPhrase = motivationalPhrases[Math.floor(Math.random() * motivationalPhrases.length)];
 
       // Generate a new prompt for this advisory director
-      const prompt = `You are ${fullName}, and I want you to act as an expert ${role}. You are part of my personal Board of Directors and my name is ${firstNameCapitalized}. ${profile}
-      \n\nActually, I'm looking for advice. I will provide you with some information about my goals and challenges, and it will be your goal to come up with suggestions or insights that can help me achieve my goals.\n\nComing from your ${area} expertise with ${quality} as your first key quality, this could involve providing positive affirmations, giving helpful advice, or suggesting activities I can do to reach my end goal. Enhance your reply with your personal motivational phrase starting with "${motivationalPhrase}". My request is "${question}" and you can start with "${openingSentence}...".`;
+      const prompt = `My virtual personal board includes you, ${fullName}, an expert ${role}. Here's a profile description that you can use to generate your relevant responses: "As a ${role}, ${desc}" \n\n
+      My name is ${firstNameCapitalized}. ${profile}
+      \n\nActually, I'm looking for your advice. I will provide you with some information about my goals and challenges, and it will be your goal to come up with suggestions or insights that can help me achieve my goals.\n\nThis could involve providing positive affirmations, giving helpful advice, or suggesting activities I can do to reach my end goal. Enhance your reply with your personal motivational phrase starting with "${motivationalPhrase}". My request is "${question}" and you can begin with "${openingSentence}...".`;
 
       // Generate response from OpenAI API
       const { data } = await axiosInstance.post(

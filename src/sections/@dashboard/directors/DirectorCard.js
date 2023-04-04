@@ -35,12 +35,6 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
     setOpenDetails(false);
   };
 
-  const [favorited, setFavorited] = useState(director.isFavorited);
-
-  const handleFavorite = () => {
-    setFavorited(!favorited);
-  };
-
   // Delete director
   const handleDelete = (directorId) => {
     handleCloseDetails();
@@ -63,10 +57,10 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
     dividerColor = 'primary.lighter';
   } else {
     bgColor = 'white';
-    topColor = '#DFE3E8';
+    topColor = 'grey.300';
     textColor = 'text.secondary';
-    borderColor = '#F4F6F8';
-    dividerColor = '#DFE3E8';
+    borderColor = 'grey.200';
+    dividerColor = 'grey.200';
   }
   
 
@@ -78,6 +72,7 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
           borderColor,
           backgroundColor: bgColor,
           color: textColor,
+          minHeight: 180,
         }}
       >
         <Box sx={{ position: 'relative', textAlign: "center" }}>
@@ -149,33 +144,13 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
           {director.role}
         </Typography>
 
-        <Typography variant="body2" sx={{ mb: 3, textAlign: "center", color: textColor   }}>
+        <Typography variant="body2" sx={{ mb: 3, textAlign: "center", color: textColor, textTransform: "uppercase"   }}>
           {director.fullName}
         </Typography>
-
-        <Divider sx={{ borderStyle: 'dashed', borderColor: dividerColor }} />
-
-        <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" sx={{ py: 3 }}>
-          <div>
-            <Typography variant="caption" component="div" sx={{ mb: 0.75, textAlign: "center", color: textColor  }}>
-              Area Expertise
-            </Typography>
-            <Typography variant="subtitle1" sx={{ textAlign: "center" }}>{director.area}</Typography>
-          </div>
-
-          <div>
-            <Typography variant="caption" component="div" sx={{ mb: 0.75, textAlign: "center", color: textColor  }}>
-              Key Quality
-            </Typography>
-            <Typography variant="subtitle1" sx={{textAlign: "center" }}>{director.quality}</Typography>
-          </div>
-        </Box>
       </Card>
 
       <FileDetailsDrawer
         item={director}
-        favorited={favorited}
-        onFavorite={handleFavorite}
         open={openDetails}
         onClose={handleCloseDetails}
         onDelete={() => handleDelete(director.id)}// pass the function to handle delete action
