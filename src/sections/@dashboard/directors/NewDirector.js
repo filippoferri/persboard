@@ -64,14 +64,12 @@ export default function NewDirector({ isEdit = false, currentUser }) {
       description: '',
     },
   });
-  
-  const { formState } = methods;
-  
+    
   const {
     reset,
     watch,
     handleSubmit,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = methods;
 
   const values = watch();
@@ -157,7 +155,6 @@ export default function NewDirector({ isEdit = false, currentUser }) {
                 multiline 
                 rows={6} 
                 value={textareaValue}
-                spellcheck="false"
                 onChange={(e) => setTextareaValue(e.target.value)}
                 sx={{ 
                   whiteSpace: "pre-line",

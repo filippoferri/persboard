@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, updateDoc, getDoc, Timestamp, increment } from 'firebase/firestore';
+import { getFirestore, doc, updateDoc, getDoc, increment } from 'firebase/firestore';
 // import { increment } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../../config-global';
 // auth

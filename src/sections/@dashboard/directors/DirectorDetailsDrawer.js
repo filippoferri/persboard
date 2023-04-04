@@ -1,22 +1,17 @@
 import PropTypes from 'prop-types';
-// import { useState } from 'react';
 // @mui
 import {
   Box,
-  Alert,
   Stack,
   Avatar,
   Drawer,
   Button,
-  Divider,
   Typography,
 } from '@mui/material';
 
 // components
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
-import Label from '../../../components/label';
-// import { CustomAvatar } from '../../../components/custom-avatar';
 
 
 // ----------------------------------------------------------------------
@@ -37,28 +32,6 @@ export default function FileDetailsDrawer({
     boardroom,
     ...other
   }) {
-
-  // const dirAvatar = item && item.avatar ? item.avatar : 'https://res.cloudinary.com/ddtdvms3g/image/upload/v1677442263/avatar_14_exfcsg.jpg';
-
-  const QUALITY_DESCRIPTIONS = {
-    Passion: 'I have a deep interest in life and being motivated to work towards personal success and fulfillment.',
-    Leadership: 'I have the courage to inspire and guide others towards a common goal or vision.',
-    Vision: 'I have the ability to see the big picture and set direction to achieve personal goals and aspirations.',
-    Stewardship: 'I have the commitment to serve the interests of oneself, others, and the greater good, while maintaining the highest standards of integrity.',
-    Knowledge: 'I possess a comprehensive understanding of oneself, others, and the world, as well as strong organizational and problem-solving skills.',
-    Diligence: 'I demonstrate dedication and commitment to fulfilling personal goals and a willingness to put in the necessary effort to achieve them.',
-    Collegiality: 'I have a sincere and respectful attitude towards others and their perspectives, and being able to work collaboratively towards shared goals.',
-    Discretion: 'I maintain confidentiality and discretion in personal and professional interactions.'
-  };  
-
-  const AREA_DESCRIPTIONS = {
-    "Advocacy": 'Empowering through representation',
-    "Social Support": 'Offering care and connection',
-    "Career Advice": 'Guiding toward professional success',
-    "Expertise": 'Sharing specialized knowledge',
-    "Developmental Feedback": 'Providing constructive critique',
-    "Network": 'Connecting to valuable resources'
-  };
 
   return (
     <Drawer

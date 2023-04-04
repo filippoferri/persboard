@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // @mui
 // import { alpha, styled } from '@mui/material/styles';
-import { Box, Card, Avatar, Divider, Typography } from '@mui/material';
+import { Box, Card, Avatar, Typography } from '@mui/material';
 // components
 // import Image from '../../../components/image';
 import MenuOpenRoundedIcon from '@mui/icons-material/MenuOpenRounded';
@@ -47,20 +47,17 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
   let topColor;
   let textColor;
   let borderColor;
-  let dividerColor;
   
   if (check) {
     bgColor = 'primary.main';
     topColor = 'primary.darker';
     textColor = 'white';
     borderColor = 'primary.main';
-    dividerColor = 'primary.lighter';
   } else {
     bgColor = 'white';
     topColor = 'grey.300';
     textColor = 'text.secondary';
     borderColor = 'grey.200';
-    dividerColor = 'grey.200';
   }
   
 

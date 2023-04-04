@@ -4,7 +4,7 @@ import { Stack, Typography, IconButton, Tooltip } from '@mui/material';
 
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, updateDoc, getDoc, Timestamp, increment } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, Timestamp } from 'firebase/firestore';
 // import { increment } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../../config-global';
 // auth
