@@ -1,6 +1,7 @@
 // title: WelcomeTopics
 
 import {useState} from 'react';
+import PropTypes from 'prop-types';
 // import * as Yup from 'yup';
 // next
 import { useRouter } from 'next/router';
@@ -9,10 +10,10 @@ import { useForm } from 'react-hook-form';
 // import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Typography, MenuItem, InputLabel, Avatar, Chip } from '@mui/material';
+import { Box, Card, Grid, Stack, Typography, MenuItem, InputLabel, Avatar, Chip, Button } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, Timestamp } from 'firebase/firestore';
+import { getFirestore, doc, updateDoc, Timestamp } from 'firebase/firestore';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // config
@@ -29,7 +30,7 @@ import FormProvider, {
 } from '../../../components/hook-form';
 // ----------------------------------------------------------------------
 
-export default function NewDirector() {
+export default function EditDirectorForm() {
 
   const app = initializeApp(FIREBASE_API);
   const db = getFirestore(app);
@@ -38,8 +39,18 @@ export default function NewDirector() {
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [selectedChips, setSelectedChips] = useState([]);
-  const [textareaValue, setTextareaValue] = useState('');
+  const { query } = useRouter();
+  const { d } = query;
+
+  let item = null;
+  if (d) {
+    try {
+      const decodedItem = atob(d);
+      item = JSON.parse(decodedItem);
+    } catch (error) {
+      console.error('Error decoding or parsing item:', error);
+    }
+  }
 
   const handleChipClick = (chip) => {
     setSelectedChips((chips) => chips.filter((c) => c !== chip));
@@ -50,12 +61,12 @@ export default function NewDirector() {
         .trim()
     );
   };
+  console.log('item', item);
 
   const methods = useForm({
     defaultValues: {
-      fullName: 'John Doe',
-      role: 'Inspirer',
-      description: '',
+      fullName: item.fullName,
+      role: item.role,
     },
   });
     
@@ -68,29 +79,27 @@ export default function NewDirector() {
 
   const values = watch();
 
+  const [selectedChips, setSelectedChips] = useState([]);
+  const editedDesc = item.desc.replace(ROLE_DESCRIPTIONS[values.role], '').replace('\n', '');
+  const [textareaValue, setTextareaValue] = useState(editedDesc);
+
   // Add new director
-  const handleNewDirector = async () => {
-    // const uniqueDirectoryId = uuidv4();
+  const handleEditDirector = async () => {
     const fullName = watch('fullName');
     const role = watch('role');
-    // const area = watch('area');
-    // const quality = watch('quality');
-    // const description = watch('description');
 
     const data = {
       fullName: fullName || '',
       role: role || '',
       avatar: '/assets/illustrations/avatars/ai_default.svg', // add the base64 string of the image here if available
-      desc: `${ROLE_DESCRIPTIONS[values.role]}\n${textareaValue || ''}`,
-      type: 'Personal',
-      dateAdd: Timestamp.fromDate(new Date()),
+      desc: `${ROLE_DESCRIPTIONS[values.role]}${textareaValue || ''}`,
       dateEdit: Timestamp.fromDate(new Date()),
     };
 
     try {
       // const directorRef = doc(collection(db, 'directors'), uniqueDirectoryId);
-      const directorRef = doc(collection(db, 'users', user && user.uid, 'myDirectors'));
-      await setDoc(directorRef, data);
+      const directorRef = doc(db, 'users', user && user.uid, 'myDirectors', item.id);
+      await updateDoc(directorRef, data);
       await push(PATH_DASHBOARD.directors.root);
       enqueueSnackbar('Create success!');
     } catch (error) {
@@ -102,11 +111,15 @@ export default function NewDirector() {
   const onSubmit = async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      await handleNewDirector(); // call handleNewDirector after the form is successfully submitted
+      await handleEditDirector(); // call handleNewDirector after the form is successfully submitted
       reset();
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const onCancel = async (data) => {
+    push(PATH_DASHBOARD.directors.root);
   };
 
   return (
@@ -138,7 +151,7 @@ export default function NewDirector() {
               </InputLabel>
               <RHFTextField 
                 fullWidth 
-                name="description" 
+                name="description"
                 placeholder={
   `Share 3-4 facts about your director:
     • I have a deep interest in life
@@ -185,7 +198,10 @@ export default function NewDirector() {
 
             </Box>
   
-            <Stack alignItems="flex-end" sx={{ mt: 3 }}>
+            <Stack alignItems="center" sx={{ mt: 3, flexDirection: "row", justifyContent: "flex-end" }}>
+
+              <Button onClick={onCancel} size="large" sx={{ mr: 2}}>Cancel</Button>
+
               <LoadingButton
                 size='large'
                 type="submit"
@@ -193,7 +209,7 @@ export default function NewDirector() {
                 loading={isSubmitting}
                 disabled={!textareaValue}
               >
-                Create AI Director
+                Save Changes
               </LoadingButton>
             </Stack>
   
@@ -232,9 +248,10 @@ export default function NewDirector() {
               <Typography variant='h5'>
                 {values.role && values.role}
               </Typography>
-              <Typography variant='body' component="p">
+              <Typography variant='body' component="div" sx={{ mb: 2 }}>
                 {values.role && `${ROLE_DESCRIPTIONS[values.role]}`}
               </Typography>
+              <Typography variant="body1" component="div" dangerouslySetInnerHTML={{ __html: textareaValue.replace(/\n/g, '<br>') }} />
             </Box>
           </Box>
         </Grid>

@@ -8,7 +8,10 @@ import {
   Button,
   Typography,
 } from '@mui/material';
-
+// next
+import { useRouter } from 'next/router';
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
@@ -33,6 +36,12 @@ export default function FileDetailsDrawer({
     ...other
   }) {
 
+  const { push } = useRouter();
+  const onEdit = async (isEdit, currentUser) => {
+    const encodedItem = btoa(JSON.stringify(item));
+    push(`${PATH_DASHBOARD.directors.editDirector}?d=${encodedItem}`);
+  };
+
   return (
     <Drawer
       open={open}
@@ -49,6 +58,9 @@ export default function FileDetailsDrawer({
       <Scrollbar sx={{ height: 1 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 2.5 }}>
           <Typography variant="h6">Details</Typography>
+          {item.type === 'Personal' && !boardroom && (    
+            <Typography onClick={() => onEdit(item)} sx={{ cursor: "pointer" }}>Edit</Typography>
+          )}
         </Stack>
 
         <Stack
@@ -78,7 +90,7 @@ export default function FileDetailsDrawer({
         {item.desc && (
             <Stack sx={{ p: 3 }}>
               <Typography variant="h6">About Me</Typography>
-              <Typography variant="body2">{item.desc}</Typography>
+              <Typography variant="body2" dangerouslySetInnerHTML={{ __html: item.desc.replace(/\n/g, '<br>') }} />
             </Stack>
           )}
       </Scrollbar>

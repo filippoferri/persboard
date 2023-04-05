@@ -36,6 +36,7 @@ export const PATH_DASHBOARD = {
   directors: {
     root: path(ROOTS_DASHBOARD, '/directors'),
     newDirector: path(ROOTS_DASHBOARD, '/directors/new'),
+    editDirector: path(ROOTS_DASHBOARD, '/directors/edit'),
   },
   boards: path(ROOTS_DASHBOARD, '/boards'),
   advices: {
