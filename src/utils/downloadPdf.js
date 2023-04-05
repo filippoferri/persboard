@@ -85,7 +85,7 @@ const MyPdf = ({ question, directors, discussion, takeaways }) => (
                     </View>
 
                     <View style={styles.section}>
-                        <Text style={styles.subTitle}>Key Takeaways</Text>
+                        <Text style={styles.subTitle}>Action Items</Text>
                         {takeaways && takeaways.map((takeaway, index) => (
                             <View key={index}>
                                 <Text style={styles.subText}>{takeaway.text}</Text>
