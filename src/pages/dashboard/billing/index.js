@@ -231,7 +231,6 @@ export default function PageBilling() {
                                     <TableRow>
                                         <TableCell sx={{w:40}}>Date</TableCell>
                                         <TableCell>Amount</TableCell>
-                                        <TableCell>Credits</TableCell>
                                         <TableCell>Status</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -240,9 +239,8 @@ export default function PageBilling() {
                                         <TableRow key={payment.id}>
                                             <TableCell>{format(new Date(payment.created * 1000), 'PPP')}</TableCell>
                                             <TableCell>${(payment.amount / 100).toFixed(2)}</TableCell>
-                                            <TableCell>100</TableCell>
                                             <TableCell>
-                                            <Label color="success">{payment.status}</Label>
+                                                <Label color="success">{payment.status}</Label>
                                             </TableCell>
                                         </TableRow>
                                         ))}
@@ -252,6 +250,12 @@ export default function PageBilling() {
                     </Box>
                     )}
                     </Card>
+
+                    {payments.length === 0 && (
+                        <Box sx={{ p: 2, textAlign: "center", mt: 4, color: "grey.500" }}>
+                            <Typography variant="body2" gutterBottom>Your payments will appear here.</Typography>
+                        </Box>
+                    )}
                 </Grid>
                 <Grid item xs={12} md={5}>
                     
