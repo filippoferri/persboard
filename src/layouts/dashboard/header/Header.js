@@ -16,6 +16,7 @@ import { useSettingsContext } from '../../../components/settings';
 //
 // import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
+import WhatsNew from './WhatsNew';
 // import LanguagePopover from './LanguagePopover';
 // import ContactsPopover from './ContactsPopover';
 // import NotificationsPopover from './NotificationsPopover';
@@ -59,7 +60,7 @@ export default function Header({ onOpenNav }) {
         justifyContent="flex-end"
         spacing={{ xs: 0.5, sm: 1.5 }}
       >
-        <Box sx={{color: 'black', mr: 2}}><Link target="_blank" href='https://headwayapp.co/personal-board-news' underline="none">What’s New?</Link></Box>
+        <WhatsNew /> 
 
         {/* <LanguagePopover /> */}
 
