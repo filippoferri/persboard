@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { Container, Grid, Box, Typography, Paper, Stack, Card, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
+import { Container, Grid, Box, Typography, Stack, Card, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
 import { m } from "framer-motion";
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
@@ -70,18 +70,18 @@ export default function PageAbout() {
                 <Card sx={ isDesktop ? { p: 4 } : { p: 2 }}>
                     <Grid container spacing={6}>
                         <Grid item xs={12} md={6}>
-                            <Typography paragraph>To achieve success in your personal and professional life, it's important to seek out a broad range of experiences and perspectives. This means connecting with individuals who have more experience than you do, and who can provide honest advice and feedback on your career or personal goals. By embracing diverse viewpoints, you can gain a broader perspective on your own journey and be better equipped to make informed decisions. Remember, <Typography sx={{backgroundColor: "success.lighter", fontWeight: "bold"}} component="span">it's okay to seek guidance and support from others</Typography> - it's a sign of strength, not weakness. By recognizing that you can't do everything alone, and that you can benefit from the insights and expertise of others, <Typography sx={{backgroundColor: "success.lighter"}} component="span">you can empower yourself to reach new heights and achieve your aspirations.</Typography></Typography>
+                            <Typography paragraph>To achieve success in your personal and professional life, it&apos;s important to seek out a broad range of experiences and perspectives. This means connecting with individuals who have more experience than you do, and who can provide honest advice and feedback on your career or personal goals. By embracing diverse viewpoints, you can gain a broader perspective on your own journey and be better equipped to make informed decisions. Remember, <Typography sx={{backgroundColor: "success.lighter", fontWeight: "bold"}} component="span">it&apos;s okay to seek guidance and support from others</Typography> - it&apos;s a sign of strength, not weakness. By recognizing that you can&apos;t do everything alone, and that you can benefit from the insights and expertise of others, <Typography sx={{backgroundColor: "success.lighter"}} component="span">you can empower yourself to reach new heights and achieve your aspirations.</Typography></Typography>
                             
                             <Typography variant="h4" component="h4">
                                 What Is A Personal Board Of Directors?
                             </Typography>
-                            <Typography paragraph>A Personal Board of Directors is a group of trusted advisors that individuals assemble to provide support and guidance in advancing their careers. Ideally, this group consists of individuals with a strong personal and professional interest in seeing the individual succeed. Although referred to as a "board of directors," the group doesn't physically meet around a conference table. Rather, <Typography sx={{backgroundColor: "success.lighter"}} component="span">it typically comprises three to five carefully selected individuals</Typography> to rely on for strategic guidance and support as they navigate the often complex career paths.</Typography>
+                            <Typography paragraph>A Personal Board of Directors is a group of trusted advisors that individuals assemble to provide support and guidance in advancing their careers. Ideally, this group consists of individuals with a strong personal and professional interest in seeing the individual succeed. Although referred to as a &quot;board of directors,&quot; the group doesn&apos;t physically meet around a conference table. Rather, <Typography sx={{backgroundColor: "success.lighter"}} component="span">it typically comprises three to five carefully selected individuals</Typography> to rely on for strategic guidance and support as they navigate the often complex career paths.</Typography>
 
                             <Typography variant="h4" component="h4">
                                 Where this platfrom came from
                             </Typography>
                             <Typography paragraph>There have been several studies and articles written about the benefits of having a Personal Board of Directors.
-                            <p>The concept of a Personal Board of Directors has gained popularity in recent years, with several articles and books written on the topic, including <Typography sx={{backgroundColor: "success.lighter"}} component="span">"Coach Me! Your Personal Board of Directors: Leadership Advice from the World's Greatest Coaches" by Ken Shelton</Typography>.</p>
+                            <p>The concept of a Personal Board of Directors has gained popularity in recent years, with several articles and books written on the topic, including <Typography sx={{backgroundColor: "success.lighter"}} component="span">&quot;Coach Me! Your Personal Board of Directors: Leadership Advice from the World&apos;s Greatest Coaches&quot; by Ken Shelton</Typography>.</p>
                             Overall, there is a growing body of research and literature that supports the importance of having a Personal Board of Directors to help individuals achieve success and fulfillment in their personal and professional lives.</Typography>
 
                         </Grid>
@@ -170,7 +170,7 @@ export default function PageAbout() {
                             <Typography variant="h4" component="h4">
                                 Building Your Personal Board
                             </Typography>
-                            <Typography paragraph>Personal Board AI allows you to choose from various AI-powered directors to create your own Personal Board. <Typography sx={{backgroundColor: "success.lighter"}} component="span">Whether you need a life coach, mentor, challenger, or supporter, our AI-powered directors can provide the guidance and support you need to achieve your goals.</Typography> Select the directors that align with your needs and objectives, and you'll be on your way to building your Personal Board tailored to your unique needs.</Typography>
+                            <Typography paragraph>Personal Board AI allows you to choose from various AI-powered directors to create your own Personal Board. <Typography sx={{backgroundColor: "success.lighter"}} component="span">Whether you need a life coach, mentor, challenger, or supporter, our AI-powered directors can provide the guidance and support you need to achieve your goals.</Typography> Select the directors that align with your needs and objectives, and you&apos;ll be on your way to building your Personal Board tailored to your unique needs.</Typography>
 
                             <Typography variant="h4" component="h4">
                                 What Can Personal Board Do For You?
@@ -182,7 +182,7 @@ export default function PageAbout() {
                                 isDesktop ? { borderLeft: 1, borderColor: "primary.light", p: 2, pl: 4, fontStyle: "italic" }
                                 : { border: 1, borderColor: "primary.light", p: 2, fontStyle: "italic", borderRadius: 2, mb: 6 }}>
                                 <Typography variant="h4" component="h4" gutterBottom>
-                                    The Most Important "Do"
+                                    The Most Important &quot;Do&quot;
                                 </Typography>
                                 <List dense>
                                     <ListItem alignItems="flex-start">

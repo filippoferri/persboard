@@ -86,7 +86,7 @@ const variants = {
                     <Typography>What is a Personal Board of Directors?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>A Personal Board of Directors is a group of trusted advisors that individuals assemble to provide support and guidance in achieving their personal and professional goals. This group typically consists of individuals with diverse backgrounds, expertise, and perspectives, who can offer insights and advice tailored to the individual's unique needs and aspirations.</Typography>
+                    <Typography>A Personal Board of Directors is a group of trusted advisors that individuals assemble to provide support and guidance in achieving their personal and professional goals. This group typically consists of individuals with diverse backgrounds, expertise, and perspectives, who can offer insights and advice tailored to the individual&apos;s unique needs and aspirations.</Typography>
                     </AccordionDetails>
                 </Accordion>
                 <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
@@ -98,7 +98,7 @@ const variants = {
                     <Typography>How do I build my Personal Board?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>Building a Personal Board requires careful consideration and selection of AI Directors who can offer insights, guidance, and support. Start by identifying those who have expertise and experience in areas that are relevant to your goals, and who share your values and vision. It's important to choose directors who are invested in your success and growth, and who can offer diverse perspectives and advice.</Typography>
+                    <Typography>Building a Personal Board requires careful consideration and selection of AI Directors who can offer insights, guidance, and support. Start by identifying those who have expertise and experience in areas that are relevant to your goals, and who share your values and vision. It&apos;s important to choose directors who are invested in your success and growth, and who can offer diverse perspectives and advice.</Typography>
                     </AccordionDetails>
                 </Accordion>
                 <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
@@ -122,7 +122,7 @@ const variants = {
                     <Typography>How often should I engage with my personal directors?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>The frequency of engagement with your Personal Board will depend on your individual needs and goals. It's important to stay in touch and provide regular updates on your progress, and to seek guidance and support as needed.</Typography>
+                    <Typography>The frequency of engagement with your Personal Board will depend on your individual needs and goals. It&apos;s important to stay in touch and provide regular updates on your progress, and to seek guidance and support as needed.</Typography>
                     </AccordionDetails>
                 </Accordion>
                 <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
@@ -134,7 +134,7 @@ const variants = {
                     <Typography>How do I get the most out of my Personal Board?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>To get the most out of your Personal Board, it's important to approach the relationship with a spirit of openness and willingness to learn. Be receptive to feedback and advice, and be proactive in seeking out guidance and support. It's also important to be transparent and honest with your directors about your goals and challenges, and to seek their insights and expertise in overcoming obstacles and achieving your aspirations.</Typography>
+                    <Typography>To get the most out of your Personal Board, it&apos;s important to approach the relationship with a spirit of openness and willingness to learn. Be receptive to feedback and advice, and be proactive in seeking out guidance and support. It&apos;s also important to be transparent and honest with your directors about your goals and challenges, and to seek their insights and expertise in overcoming obstacles and achieving your aspirations.</Typography>
                     </AccordionDetails>
                 </Accordion>
                 

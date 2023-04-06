@@ -1,13 +1,10 @@
 // title: WelcomeTopics
 
 import {useState} from 'react';
-import PropTypes from 'prop-types';
-// import * as Yup from 'yup';
 // next
 import { useRouter } from 'next/router';
 // form
 import { useForm } from 'react-hook-form';
-// import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
 import { Box, Card, Grid, Stack, Typography, MenuItem, InputLabel, Avatar, Chip, Button } from '@mui/material';
@@ -18,12 +15,9 @@ import { getFirestore, doc, updateDoc, Timestamp } from 'firebase/firestore';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // config
 import { FIREBASE_API } from '../../../config-global';
-// uuid
-// import { v4 as uuidv4 } from 'uuid';
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
 // components
-// import Label from '../../../components/label';
 import { useSnackbar } from '../../../components/snackbar';
 import FormProvider, {
   RHFTextField,
