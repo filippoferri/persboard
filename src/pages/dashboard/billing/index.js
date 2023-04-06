@@ -303,7 +303,7 @@ export default function PageBilling() {
                                 onClick={handleSubmit}
                                 loading={loading} 
                             >
-                                Upgrade
+                                Buy Credits
                             </LoadingButton>
 
                             <Stack alignItems="center" spacing={1}>

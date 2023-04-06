@@ -19,6 +19,7 @@ const ICONS = {
   inspiration: icon('ic_inspiration'),
   chat: icon('ic_chat'),
   menuItem: icon('ic_menu_item'),
+  faq: icon('ic_faq'),
 };
 
 const navConfig = [
@@ -39,21 +40,13 @@ const navConfig = [
 
   // MANAGEMENT
   // ----------------------------------------------------------------------
-/*   {
-    subheader: 'management',
+  {
+    subheader: 'resources',
     items: [
-      {
-        title: 'user',
-        path: PATH_DASHBOARD.user.root,
-        icon: ICONS.user,
-        children: [
-          { title: 'Four', path: PATH_DASHBOARD.user.four },
-          { title: 'Five', path: PATH_DASHBOARD.user.five },
-          { title: 'Six', path: PATH_DASHBOARD.user.six },
-        ],
-      },
+      { title: 'About', path: PATH_DASHBOARD.about, icon: ICONS.inspiration },
+      { title: 'FAQ', path: PATH_DASHBOARD.faq, icon: ICONS.faq },
     ],
-  }, */
+  },
 ];
 
 export default navConfig;

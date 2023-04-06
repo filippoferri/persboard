@@ -50,8 +50,8 @@ export const PATH_DASHBOARD = {
     success: path(ROOTS_DASHBOARD, '/billing/success'),
     cancel: path(ROOTS_DASHBOARD, '/billing/cancel'),
   },
-  one: path(ROOTS_DASHBOARD, '/one'),
-  two: path(ROOTS_DASHBOARD, '/two'),
+  about: path(ROOTS_DASHBOARD, '/about'),
+  faq: path(ROOTS_DASHBOARD, '/faq'),
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),
     settings: path(ROOTS_DASHBOARD, '/user/account'),

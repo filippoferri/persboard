@@ -18,8 +18,12 @@ import { IconButtonAnimate } from '../../../components/animate';
 
 const OPTIONS = [
   {
-    label: 'Accounts Settings',
+    label: 'Account Settings',
     linkTo: '/dashboard/user/account',
+  },
+  {
+    label: 'Credits + Billing',
+    linkTo: '/dashboard/billing/',
   }
 ];
 
