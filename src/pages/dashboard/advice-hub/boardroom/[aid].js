@@ -82,7 +82,7 @@ export default function BoardroomView() {
                 href: PATH_DASHBOARD.root,
             },
             {
-                name: 'Advices',
+                name: 'Advice Hub',
                 href: PATH_DASHBOARD.advices.root,
             },
             {

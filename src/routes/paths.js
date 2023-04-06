@@ -40,9 +40,9 @@ export const PATH_DASHBOARD = {
   },
   boards: path(ROOTS_DASHBOARD, '/boards'),
   advices: {
-    root: path(ROOTS_DASHBOARD, '/advices'),
-    boardroom: path(ROOTS_DASHBOARD, '/advices/boardroom'),
-    view: (aid) => path(ROOTS_DASHBOARD, `/advices/boardroom/${aid}`),
+    root: path(ROOTS_DASHBOARD, '/advice-hub'),
+    boardroom: path(ROOTS_DASHBOARD, '/advice-hub/boardroom'),
+    view: (aid) => path(ROOTS_DASHBOARD, `/advice-hub/boardroom/${aid}`),
   },
   billing: {
     root: path(ROOTS_DASHBOARD, '/billing'),

@@ -95,7 +95,7 @@ export default function PageBoardrooms() {
     return (  
     <>
         <Head>
-            <title> Advices | Personal Board</title>
+            <title> Advice Hub | Personal Board</title>
         </Head>
 
         <m.div
@@ -106,14 +106,14 @@ export default function PageBoardrooms() {
         <Container maxWidth={themeStretch ? false : 'lg'}>
             <Box sx={{pl: 2}}>
                 <CustomBreadcrumbs
-                        heading="Advices"
+                        heading="Advice Hub"
                         links={[
                         {
                             name: 'Dashboard',
                             href: PATH_DASHBOARD.root,
                         },
                         {
-                            name: 'Advices',
+                            name: 'Advice Hub',
                             href: PATH_DASHBOARD.advices.root,
                         },
                     ]}
