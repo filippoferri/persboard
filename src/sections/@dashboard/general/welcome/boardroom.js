@@ -284,8 +284,8 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                 </Stack>
                             ) : (
                             discussion.map((advice, index) => (
-                                <Stack direction="row" justifyContent='flex-start' sx={{ mb: 2 }}>  
-                                    <Stack key={index} sx={{ textAlign: 'left' }}>
+                                <Stack key={index} direction="row" justifyContent='flex-start' sx={{ mb: 2 }}>  
+                                    <Stack sx={{ textAlign: 'left' }}>
                                         <Typography 
                                             variant='caption' 
                                             sx={{ fontWeight:'bold', pl: 1 }}>

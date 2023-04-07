@@ -36,9 +36,9 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 
   // Form validation schema
 	const [formFields, setFormFields] = useState([
-		{ fullName: '', role: 'Inspirer', area: 'Advocacy', quality: 'Vision' },
-		{ fullName: '', role: 'Inspirer', area: 'Advocacy', quality: 'Vision' },
-		{ fullName: '', role: 'Inspirer', area: 'Advocacy', quality: 'Vision' },
+		{ fullName: '', role: 'Inspirer'},
+		{ fullName: '', role: 'Inspirer' },
+		{ fullName: '', role: 'Inspirer' },
 	]);
 
   	// Manage form fields
@@ -50,7 +50,7 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 
   	// Add new form fields
 	const addFields = () => {
-	const object = { fullName: '', role: 'Inspirer', area: 'Advocacy', quality: 'Vision' }
+	const object = { fullName: '', role: 'Inspirer' }
 		setFormFields([...formFields, object])
 	}
 
@@ -138,38 +138,6 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 								))}
 							</RHFTextField>
 						</StyledPaper>
-
-						<StyledPaper sx={{ flexGrow: 1, width: isDesktop ? undefined : "100%" }}>
-						<RHFTextField
-							select
-							name="area"
-							helperText="Area Expertise"
-							value={input.area}
-							onChange={event => handleFormChange(index, event)}
-						>
-							{areas.map((option, areaIndex) => (
-							<MenuItem key={areaIndex} value={option.value}>
-								{option.label}
-							</MenuItem>
-							))}
-						</RHFTextField>
-						</StyledPaper>
-
-						<StyledPaper sx={{ flexGrow: 1, width: isDesktop ? undefined : "100%" }}>
-						<RHFTextField
-							select
-							name="quality"
-							helperText="Key Quality"
-							value={input.quality}
-							onChange={event => handleFormChange(index, event)}
-						>
-							{qualities.map((option, qualityIndex) => (
-							<MenuItem key={qualityIndex} value={option.value}>
-								{option.label}
-							</MenuItem>
-							))}
-						</RHFTextField>
-						</StyledPaper>
 					</>
 					)}
 				</Stack>
@@ -241,68 +209,6 @@ const roles = [
 	{
 		value: 'Adversary',
 		label: 'Adversary',
-	},
-];
-
-const areas = [
-{
-	value: 'Advocacy',
-	label: 'Advocacy',
-},
-{
-	value: 'Social Support',
-	label: 'Social Support',
-},
-{
-	value: 'Career Advice',
-	label: 'Career Advice',
-},
-{
-	value: 'Expertise',
-	label: 'Expertise',
-},
-{
-	value: 'Network',
-	label: 'Network',
-},
-{
-	value: 'Feedback',
-	label: 'Feedback',
-},
-];
-
-const qualities = [
-	{
-		value: 'Leadership',
-		label: 'Leadership',
-	},
-	{
-		value: 'Vision',
-		label: 'Vision',
-	},
-	{
-		value: 'Diligence',
-		label: 'Diligence',
-	},
-	{
-		value: 'Passion',
-		label: 'Passion',
-	},
-	{
-		value: 'Knowledge',
-		label: 'Knowledge',
-	},
-	{
-		value: 'Discretion',
-		label: 'Discretion',
-	},
-	{
-		value: 'Governance',
-		label: 'Governance',
-	},
-	{
-		value: 'Collegiality',
-		label: 'Collegiality',
 	},
 ];
 
