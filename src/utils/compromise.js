@@ -7,8 +7,6 @@ export const suggestDirectors = (directorsData, question) => {
 	const matchingDirectors = directorsData.filter((director) => {
 		const combinedText = [
 		director.role,
-		director.area,
-		director.quality,
 		director.desc,
 		].join(' ');
 
