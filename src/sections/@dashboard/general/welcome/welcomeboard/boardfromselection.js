@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Box, Typography, Button } from '@mui/material';
+import { Grid, Box, Typography, Button, CircularProgress } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
@@ -23,6 +23,8 @@ const BoardFromSelection = ({onNextStep, dataFromPrevStep}) => {
     const [selectedDirectors, setSelectedDirectors] = useState([]);
     const [selectedDirectorObjects, setSelectedDirectorObjects] = useState([]);  
     // const suggestedDirectors = suggestDirectors(directorsData, dataFromPrevStep.question);
+    const [isLoading, setIsLoading] = useState(true); // New state variable
+
 
     const app = initializeApp(FIREBASE_API);
     const db = getFirestore(app);
@@ -44,6 +46,7 @@ const BoardFromSelection = ({onNextStep, dataFromPrevStep}) => {
 
             setSelectedDirectors(suggestedDirectorIds);
             setSelectedDirectorObjects(suggestedDirectors);
+            setIsLoading(false); // Set isLoading to false once the suggested directors are selected
         });
 
         return () => {
@@ -62,40 +65,44 @@ const BoardFromSelection = ({onNextStep, dataFromPrevStep}) => {
 
     return (
         <>
-        <Grid container spacing={3} sx={{flexDirection: 'row', mb: 6}}>
-            <Grid item xs={12} sm={8} sx={{ display: "flex", alignItems: "center" }}>
-                <Box sx={{ flexGrow: 1 }}>
-                    <Typography variant="p" gutterBottom>
-                        Here is a recommended board who can provide you with personalized advice.
-                    </Typography>
-                </Box>
-            </Grid>
-            <Grid item xs={12} sm={4} sx={{display: "flex", justifyContent: "flex-end" }}>
-                <Button
-                    variant="contained"
-                    size="large"
-                    onClick={NextStep}
-                    fullWidth={!isDesktop ? true : undefined}
-                >
-                    Ask Your Board
-                </Button>
-            </Grid>
-        </Grid>
-        <Grid container spacing={3} sx={{flexDirection: 'row', mb: 4 }}>
-        {selectedDirectorObjects.length > 0 && (
-            selectedDirectorObjects
-            .map((director, index) => (
-                <Grid item xs={12} sm={6} lg={4} key={director.id}>
-                    <DirectorCard 
-                        director={director} 
-                        check={selectedDirectors.includes(director.id)}
-                    />
+            <Grid container spacing={3} sx={{flexDirection: 'row', mb: 6}}>
+                <Grid item xs={12} sm={8} sx={{ display: "flex", alignItems: "center" }}>
+                    <Box sx={{ flexGrow: 1 }}>
+                        <Typography variant="p" gutterBottom>
+                            Here is a recommended board who can provide you with personalized advice.
+                        </Typography>
+                    </Box>
                 </Grid>
-            ))
-        )}
-        </Grid>
+                <Grid item xs={12} sm={4} sx={{display: "flex", justifyContent: "flex-end" }}>
+                    <Button
+                        variant="contained"
+                        size="large"
+                        onClick={NextStep}
+                        fullWidth={!isDesktop ? true : undefined}
+                    >
+                        Ask Your Board
+                    </Button>
+                </Grid>
+            </Grid>
+            {selectedDirectorObjects.length > 0 ? (
+                <Grid container spacing={3} sx={{flexDirection: 'row', mb: 4 }}>
+                    {selectedDirectorObjects.map((director, index) => (
+                        <Grid item xs={12} sm={6} lg={4} key={director.id}>
+                            <DirectorCard 
+                                director={director} 
+                                check={selectedDirectors.includes(director.id)}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
+            ) : (
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <CircularProgress />
+                </Box>
+            )}
         </>
-        );
+    );
+    
 };
     
 export default BoardFromSelection;

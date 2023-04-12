@@ -54,7 +54,7 @@ export const generateAdvice = async (advisoryDirectors, question, user) => {
         {
           model: 'text-curie-001',
           prompt,
-          max_tokens: 700,
+          max_tokens: 1000,
           top_p: 1,
           temperature: 0,
           frequency_penalty: 0,
