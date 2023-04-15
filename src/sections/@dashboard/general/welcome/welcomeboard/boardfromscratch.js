@@ -122,7 +122,6 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 					</StyledPaper>
 
 					{showAdvanced && (
-					<>
 						<StyledPaper sx={{ flexGrow: 1, width: isDesktop ? undefined : "100%" }}>
 							<RHFTextField
 								select
@@ -138,7 +137,6 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 								))}
 							</RHFTextField>
 						</StyledPaper>
-					</>
 					)}
 				</Stack>
 			</Card>

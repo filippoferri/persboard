@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 // next
 import Head from 'next/head';
 import { Container, Typography } from '@mui/material';

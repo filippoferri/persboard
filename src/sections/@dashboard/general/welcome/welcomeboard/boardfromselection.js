@@ -23,8 +23,6 @@ const BoardFromSelection = ({onNextStep, dataFromPrevStep}) => {
     const [selectedDirectors, setSelectedDirectors] = useState([]);
     const [selectedDirectorObjects, setSelectedDirectorObjects] = useState([]);  
     // const suggestedDirectors = suggestDirectors(directorsData, dataFromPrevStep.question);
-    const [isLoading, setIsLoading] = useState(true); // New state variable
-
 
     const app = initializeApp(FIREBASE_API);
     const db = getFirestore(app);
@@ -46,7 +44,6 @@ const BoardFromSelection = ({onNextStep, dataFromPrevStep}) => {
 
             setSelectedDirectors(suggestedDirectorIds);
             setSelectedDirectorObjects(suggestedDirectors);
-            setIsLoading(false); // Set isLoading to false once the suggested directors are selected
         });
 
         return () => {
