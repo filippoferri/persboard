@@ -15,7 +15,7 @@ import Iconify from '../../../../components/iconify';
 import { useSnackbar } from '../../../../components/snackbar';
 import CustomList from '../../../../components/list';
 // sections
-import {generateAdvice} from '../../../../utils/generateAdvice';
+import {generateAdviceLC} from '../../../../utils/generateAdviceLC';
 import BoardroomDrawer from '../../boardroom/sections/boardroomDrawer';
 import BoardroomHeader from '../../boardroom/sections/boardroomHeader';
 import BoardroomFooter from '../../boardroom/sections/boardroomFooter';
@@ -130,7 +130,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             return;
         }
     
-        const prompt = await generateAdvice(loadedDirectors, question, user);
+        const prompt = await generateAdviceLC(loadedDirectors, question, user);
         // Assuming `generateAdvice` returns an object with an `error` property when an error occurs
         if (!prompt.error) {
             await handleCredits(); // Call handleCredits if the prompt does not contain an error
@@ -301,9 +301,11 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                             maxWidth: '650px',
                                             color: 'grey.800',
                                         }}
-                                        >
-                                            {advice.text}
-                                        </Stack>
+                                        
+                                            dangerouslySetInnerHTML={{
+                                                __html: `<div>${advice.text.replace(/\n/g, "<br />")}</div>`,
+                                            }}
+                                        />
                                     </Stack>
                                 </Stack>
                             ))
