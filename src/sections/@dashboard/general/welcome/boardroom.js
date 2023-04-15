@@ -15,14 +15,14 @@ import Iconify from '../../../../components/iconify';
 import { useSnackbar } from '../../../../components/snackbar';
 import CustomList from '../../../../components/list';
 // sections
-import {generateAdviceLC} from '../../../../utils/generateAdviceLC';
 import BoardroomDrawer from '../../boardroom/sections/boardroomDrawer';
 import BoardroomHeader from '../../boardroom/sections/boardroomHeader';
 import BoardroomFooter from '../../boardroom/sections/boardroomFooter';
 // hooks
 import useResponsive from '../../../../hooks/useResponsive';
 // Utils
-import {generateTakeaways} from '../../../../utils/generateTakeaways';
+import {generateAdviceLC} from '../../../../utils/generateAdviceLC';
+import {generateTakeawaysLC} from '../../../../utils/generateTakeawaysLC';
 
 // ----------------------------------------------------------------------
 
@@ -142,7 +142,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         const discussionText = prompt
         .map(({ fullName, role, text }) => `${fullName} (${role}): ${text}`)
         .join('\n');
-        const generatedTakeaways = await generateTakeaways(discussionText);
+        const generatedTakeaways = await generateTakeawaysLC(discussionText);
         setTakeaways(generatedTakeaways);
         // setTakeaways(keyTakeaways); // for testing
 
@@ -317,6 +317,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                     <CustomList listSubheader="Action Items" takeaways={takeaways} />
                                 </Grid>
                             </Grid> ) : null }
+
                         </Stack>
 
                     </Stack>

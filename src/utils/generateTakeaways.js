@@ -4,7 +4,7 @@ const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 
 export const generateTakeaways = async (discussion) => {
   try {
-    const takeawaysPrompt = `Given the following discussion, provide a list of action items:\n\n${discussion}\n\nAction Items:\n`;
+    const takeawaysPrompt = `Given the following discussion, provide a list of action items:\n\n${discussion}\n\nAction Items:\n1.`;
 
     const { data } = await axiosInstance.post(
       '/completions',
