@@ -83,8 +83,6 @@ export const generateAdviceLC = async (advisoryDirectors, question, user) => {
                     question,
             });
 
-            console.log('response', response)
-
             // Save the generated advice for this director
             return {
                 fullName,

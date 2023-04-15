@@ -60,7 +60,11 @@ export default function BoardroomReport({ question,discussion,takeaways }) {
                                     <Iconify width={32} icon="ic:baseline-format-quote" sx={{color: "grey.500"}} />
                                 </Box>
 
-                                {advice.text}
+                                <Stack    
+                                    dangerouslySetInnerHTML={{
+                                        __html: `<div>${advice.text.replace(/\n/g, "<br />")}</div>`,
+                                    }}
+                                />
 
                                 <Typography
                                 variant='caption'
