@@ -4,15 +4,15 @@ import { Stack, Typography, IconButton, Tooltip } from '@mui/material';
 
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, Timestamp } from 'firebase/firestore';
-// import { increment } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, Timestamp, deleteDoc } from 'firebase/firestore';
+// Router
+import { useRouter } from 'next/router';
 import { FIREBASE_API } from '../../../../config-global';
 // auth
 import { useAuthContext } from '../../../../auth/useAuthContext';
 // utils
 import DownloadPdf from '../../../../utils/downloadPdf';
 // Router
-import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // components
 import Iconify from '../../../../components/iconify';
@@ -68,7 +68,7 @@ export default function BoardroomHeader({aid, directors, question, discussion, t
         }
     };
 
-    const handleDelete = aid => {
+    const handleDelete = () => {
         onDelete(aid);
         enqueueSnackbar('Advice deleted');
         push(PATH_DASHBOARD.advices.root);

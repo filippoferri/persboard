@@ -191,7 +191,7 @@ export default function PageDirectors() {
                     ) : null}
                         {myDirectors.length > 0 && (
                         myDirectors.map((myDirector) => (
-                            <DirectorCard key={myDirector.id} director={myDirector} onDelete={() => handleDelete(myDirector.id)} isList={true} />
+                            <DirectorCard key={myDirector.id} director={myDirector} onDelete={() => handleDelete(myDirector.id)} isList />
                         ))
                     )}
                     {!isLoading && directors.length === 0 && (
@@ -223,7 +223,7 @@ export default function PageDirectors() {
                     ) : null}
                         {directors.length > 0 && (
                         directors.map((director) => (
-                            <DirectorCard key={director.id} director={director} onDelete={() => handleDelete(director.id)} isList={true} 
+                            <DirectorCard key={director.id} director={director} onDelete={() => handleDelete(director.id)} isList 
                             />
                         ))
                     )}

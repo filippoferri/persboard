@@ -176,7 +176,9 @@ export default function PageBoardrooms() {
                 ) : (
                 <>
                     {myBoardrooms.length > 0 ? (
-                    myBoardrooms.map((myBoardroom, index) => (
+                    myBoardrooms
+                    .sort((a, b) => b.dateAdd.toDate() - a.dateAdd.toDate())
+                    .map((myBoardroom, index) => (
                         <Grid item key={index}>
                         <AdviceCard
                             myBoardroom={myBoardroom}
