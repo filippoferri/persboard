@@ -21,9 +21,10 @@ DirectorCard.propTypes = {
   check: PropTypes.bool,
   onDelete: PropTypes.func,
   boardroom: PropTypes.bool,
+  isList: PropTypes.bool,
 };
 
-export function DirectorCard({director, check, onDelete, boardroom }) {
+export function DirectorCard({director, check, onDelete, boardroom, isList }) {
 
   const [openDetails, setOpenDetails] = useState(false);
 
@@ -70,7 +71,9 @@ export function DirectorCard({director, check, onDelete, boardroom }) {
           backgroundColor: bgColor,
           color: textColor,
           minHeight: 180,
+          cursor: "pointer",
         }}
+        onClick={isList ? handleOpenDetails : null}
       >
         <Box sx={{ position: 'relative', textAlign: "center" }}>
       

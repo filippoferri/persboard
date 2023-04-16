@@ -11,6 +11,7 @@ import BoardroomFooter from './sections/boardroomFooter';
 // ----------------------------------------------------------------------
 
 Boardroom.propTypes = {
+    aid: PropTypes.string,
     directors: PropTypes.array,
     question: PropTypes.string,
     discussion: PropTypes.array,
@@ -19,7 +20,7 @@ Boardroom.propTypes = {
 
 // ----------------------------------------------------------------------
 
-export default function Boardroom( {directors, question, discussion, takeaways} ) {
+export default function Boardroom( {aid, directors, question, discussion, takeaways} ) {
 
     return (
             <Card sx={{ minHeight: '75vh', display: 'flex' }}>
@@ -33,6 +34,7 @@ export default function Boardroom( {directors, question, discussion, takeaways} 
                         question={question}
                         discussion={discussion}
                         takeaways={takeaways}
+                        aid={aid}
                     />
         
                     <Stack

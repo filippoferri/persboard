@@ -11,6 +11,9 @@ import { FIREBASE_API } from '../../../../config-global';
 import { useAuthContext } from '../../../../auth/useAuthContext';
 // utils
 import DownloadPdf from '../../../../utils/downloadPdf';
+// Router
+import { useRouter } from 'next/router';
+import { PATH_DASHBOARD } from '../../../../routes/paths';
 // components
 import Iconify from '../../../../components/iconify';
 import { useSnackbar } from '../../../../components/snackbar';
@@ -18,6 +21,7 @@ import { useSnackbar } from '../../../../components/snackbar';
 // ----------------------------------------------------------------------
 
 BoardroomHeader.propTypes = {
+    aid: PropTypes.string,
     directors: PropTypes.array,
     question: PropTypes.string,
     discussion: PropTypes.array,
@@ -28,11 +32,12 @@ BoardroomHeader.propTypes = {
 
 // ----------------------------------------------------------------------
 
-export default function BoardroomHeader({directors, question, discussion, takeaways, handleRefresh, isNew}) {
+export default function BoardroomHeader({aid, directors, question, discussion, takeaways, handleRefresh, isNew}) {
 
     const app = initializeApp(FIREBASE_API);
     const db = getFirestore(app);
     const { user } = useAuthContext();
+    const { push } = useRouter();
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -51,6 +56,22 @@ export default function BoardroomHeader({directors, question, discussion, takeaw
         } catch (error) {
             console.error('Error adding discussion:', error);
         }
+    }
+
+    const onDelete = async (boardroomId) => {
+        try {
+        const boardroomRef = doc(collection(db, 'users', user.uid, 'myBoardrooms'), boardroomId);
+        await deleteDoc(boardroomRef);
+            console.log(`Advice with id ${boardroomId} has been deleted`);
+        } catch (error) {
+            console.error('Error deleting the advice:', error);
+        }
+    };
+
+    const handleDelete = aid => {
+        onDelete(aid);
+        enqueueSnackbar('Advice deleted');
+        push(PATH_DASHBOARD.advices.root);
     }
 
     return (
@@ -101,7 +122,17 @@ export default function BoardroomHeader({directors, question, discussion, takeaw
                             <Iconify icon="eva:save-outline" />
                         </IconButton>
                     </Tooltip>
-                    ) : ( null )}
+                    ) : ( 
+                    <Tooltip title="Delete this discussion">
+                        <IconButton 
+                            color= 'default' 
+                            onClick={() => {
+                                handleDelete(aid);
+                            }}>
+                            <Iconify icon="eva:trash-2-outline" />
+                        </IconButton>
+                    </Tooltip>
+                    )}
                 </>
                 ) : ( null ) }
         </Stack>

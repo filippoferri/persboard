@@ -96,6 +96,7 @@ export default function BoardroomView() {
             question={adviceData.question} 
             discussion={discussion} 
             takeaways={takeaways}
+            aid={aid}
         />
 
     </Container>
