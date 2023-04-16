@@ -261,24 +261,28 @@ const roles = [
     label: 'Life Coach',
   },
   {
+    value: 'Philosopher',
+    label: 'Philosopher',
+  },
+  {
     value: 'Sport Coach',
     label: 'Sport Coach',
   },
   {
-    value: 'Sponsor',
-    label: 'Sponsor',
+    value: 'Financial Advisor',
+    label: 'Financial Advisor',
   },
   {
-    value: 'Challenger',
-    label: 'Challenger',
+    value: 'Entrepreneur',
+    label: 'Entrepreneur',
   },
   {
-    value: 'Supporter',
-    label: 'Supporter',
+    value: 'Advocate',
+    label: 'Advocate',
   },
   {
-    value: 'Adversary',
-    label: 'Adversary',
+    value: 'Market Expert',
+    label: 'Market Expert',
   },
 ];
 
@@ -286,12 +290,15 @@ const ROLE_DESCRIPTIONS = {
   "Life Coach": "I help and support you to achieve personal goals and achievements.",
   "Sport Coach": "I train and develop athletes' physical and mental abilities.",
   "Mentor": "I share my knowledge and provide guidance for personal and professional growth.",
-  "Sponsor": "I provide support and resources for career development and advancement.",
+  "Financial Advisor": "I identify your financial goals and develop a plan to achieve them.",
   "Challenger": "I push you to overcome obstacles and reach new heights.",
   "Supporter": "I offers encouragement and assistance in achieving personal and professional goals.",
-  "Contrarian": "I present opposing views and challenges ideas to promote growth and progress.",
-  "Inspirer": "I introduce innovative ideas and stimulate creativity by connecting unexpected concepts, and expanding your thinking and inspire growth.",
+  "Market Expert": "I help you identify new business opportunities and navigate the complexities of the market.",
+  "Inspirer": "I stimulate creativity by connecting unexpected concepts, and expanding your thinking and growth.",
   "Executive Coach": "I provide guidance and strategies for achieving professional success and leadership development.",
+  "Philosopher": "I develop a deeper understanding of the world and our place in it.",
+  "Advocate": "I help you express your views and wishes, and stand up for your rights.",
+  "Entrepreneur": "I help you take on the adventure and risk of starting a new business.",
 };
 
 const skills = {
