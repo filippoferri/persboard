@@ -214,8 +214,11 @@ export default function PageBilling() {
                         <Typography variant="body1" sx={{color: 'text.secondary'}}>
                             You have <b>{credits}</b> remaining.
                         </Typography>
-                        <Typography variant="body1" sx={{color: 'text.secondary', mb: 2}}>
+                        <Typography variant="body1" sx={{color: 'text.secondary'}}>
                             Credit cost per board advice: 1
+                        </Typography>
+                        <Typography variant="body1" sx={{color: 'text.secondary', mb: 1.5}}>
+                            Time cost per board advice: 10 to 15 seconds
                         </Typography>
                     </Box>
 
