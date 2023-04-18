@@ -80,7 +80,7 @@ export default function AccountGeneral() {
 
     const {
         // setValue,
-        handleSubmit,
+        // handleSubmit,
         watch,
         // formState: { isSubmitting },
     } = methods;
@@ -112,21 +112,20 @@ export default function AccountGeneral() {
     const handleSaveChanges = async () => {
         const oldPassword = methods.getValues("oldPassword");
         const newPassword = methods.getValues("newPassword");
-        const email = user.email; // Replace this with the user's email
+        const { email } = user; // Replace this with the user's email
         const auth = getAuth();
 
         try {
-        // Re-authenticate the user with their old password
-        const userCredential = await signInWithEmailAndPassword(auth, email, oldPassword);
-        const user = userCredential.user;
+            // Re-authenticate the user with their old password
+            const { user: authenticatedUser } = await signInWithEmailAndPassword(auth, email, oldPassword);
 
-        // Update the user's password with the new one
-        await updatePassword(user, newPassword);
+            // Update the user's password with the new one
+            await updatePassword(authenticatedUser, newPassword);
             setError("");
             methods.reset();
             enqueueSnackbar("Password updated successfully!");
         } catch (error) {
-            setError("Error updating password: " + error.message);
+            setError("Error updating password");
         }
     };
 
