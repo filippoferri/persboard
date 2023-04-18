@@ -3,7 +3,7 @@
     import { useRouter } from 'next/router';
     // @mui
     import { alpha } from '@mui/material/styles';
-    import { Divider, Stack, MenuItem, Box, Typography } from '@mui/material';
+    import { Divider, Stack, MenuItem, Typography } from '@mui/material';
     // routes
     import { PATH_AUTH } from '../../../routes/paths';
     // auth

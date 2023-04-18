@@ -1,10 +1,10 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Box, Grid, Card, Typography, Divider, Link, Button, FormGroup, FormControlLabel, Checkbox, Stack, IconButton, InputAdornment } from '@mui/material';
+import { Box, Grid, Card, Typography, Divider, Link, Button, FormGroup, FormControl, FormControlLabel, Checkbox, Stack, IconButton, InputAdornment, Switch } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore';
@@ -38,6 +38,27 @@ export default function AccountGeneral() {
 
     const [openConfirm, setOpenConfirm] = useState(false);
     const [isConfirmed, setIsConfirmed] = useState(false);
+
+    const [mode, setMode] = useState({
+        quality: true,
+        toneCoincise: true
+    });
+    useEffect(() => {
+        const savedMode = JSON.parse(localStorage.getItem('mode'));
+        if (savedMode) {
+            setMode(savedMode);
+        }
+    }, []);
+    const handleModeChange = (event) => {
+        setMode({
+            ...mode,
+            [event.target.name]: event.target.checked,
+        });
+    };
+
+    useEffect(() => {
+        localStorage.setItem('mode', JSON.stringify(mode));
+    }, [mode]);
 
     const UpdateUserSchema = Yup.object().shape({
         firstName: Yup.string().required('Name is required'),
@@ -130,114 +151,134 @@ export default function AccountGeneral() {
 
             <Grid item xs={12} md={8}>
                 <Card sx={{ p: 3 }}>
-                <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-                    <Typography variant='h5' sx={{ mb: 2, ml: 1 }}>Basic Details</Typography>
-                    <Box
-                    rowGap={3}
-                    columnGap={2}
-                    display="grid"
-                    sx={{ mb: 2 }}
-                    gridTemplateColumns={{
-                        xs: 'repeat(1, 1fr)',
-                        sm: 'repeat(2, 1fr)',
-                    }}
-                    >
-                    <RHFTextField name="firstName" label="First Name" disabled />
-                    <RHFTextField name="lastName" label="Last Name" disabled />
-                    </Box>
-                    <Box sx={{ mb: 4 }}>
-                    <RHFTextField fullWidth name="email" label="Email" disabled />
-                    </Box>
-                </FormProvider>
+                    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+                        <Typography variant='h5' sx={{ mb: 2, ml: 1 }}>Basic Details</Typography>
+                        <Box
+                            rowGap={3}
+                            columnGap={2}
+                            display="grid"
+                            sx={{ mb: 2 }}
+                            gridTemplateColumns={{
+                                xs: 'repeat(1, 1fr)',
+                                sm: 'repeat(2, 1fr)',
+                            }}
+                        >
+                            <RHFTextField name="firstName" label="First Name" disabled />
+                            <RHFTextField name="lastName" label="Last Name" disabled />
+                        </Box>
+                        <Box sx={{ mb: 4 }}>
+                            <RHFTextField fullWidth name="email" label="Email" disabled />
+                        </Box>
+                    </FormProvider>
 
-                <Divider sx={{ borderStyle: 'dashed' }} />
+                    <Divider sx={{ borderStyle: 'dashed' }} />
 
-                <Box sx={{textAlign: 'center', p: 4}}>
-                    <Typography variant='body1'>Email <Link href='mailto: help@personalboard.ai'>help@personalboard.ai </Link>if you have any questions.</Typography>
-                </Box>
+                    <Box sx={{pt: 4, pb: 4}}>
+                            <Typography variant='h5' sx={{ mb: 2, ml: 1 }}>Preferences</Typography>
+                            <FormControl component="fieldset" variant="standard" sx={{ pl: 1}}>
+                                <FormControlLabel
+                                    control={
+                                        <Switch checked={mode.quality} onChange={handleModeChange} name="quality" />
+                                    }
+                                    label= { mode.quality ? "Optimized for quality" : "Optimized for speed" }
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Switch checked={mode.toneCoincise} onChange={handleModeChange} name="toneCoincise" />
+                                    }
+                                    label= { mode.toneCoincise ? "Coincise tone is used for advice" : "Professional tone is used for advice" }
+                                />
+                            </FormControl>
+                    </Box>    
+
+                    <Divider sx={{ borderStyle: 'dashed' }} />
+
+                    <Box sx={{textAlign: 'center', p: 4}}>
+                        <Typography variant='body1'>Email <Link href='mailto: help@personalboard.ai'>help@personalboard.ai </Link>if you have any questions.</Typography>
+                    </Box>
                 </Card>
             </Grid>
 
             <Grid item xs={12} md={4}>
 
                 <Card elevation={2} sx={{mb: 2}}>
-                <Box sx={{ p: 3, textAlign: 'left' }}>
-                    <FormProvider methods={methods}>
-                    <Typography variant='h5' sx={{ mb: 2 }}>Change Password</Typography>
-                    <Box>
-                    <FormGroup>
-                        <RHFTextField
-                            name="oldPassword"
-                            label="Old Password"
-                            type={showPassword ? 'text' : 'password'}
-                            InputProps={{
-                                endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                                    </IconButton>
-                                </InputAdornment>
-                                ),
-                            }}
-                            sx={{mb:1.5}}
-                        />
-                        <RHFTextField
-                            name="newPassword"
-                            label="New Password"
-                            type={showPassword ? 'text' : 'password'}
-                            InputProps={{
-                                endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                                    </IconButton>
-                                </InputAdornment>
-                                ),
-                            }}
-                        />
-                    </FormGroup>
-                    {error && (
-                        <Typography variant="body2" color="error" sx={{ mt: 1 }}>
-                        {error}
-                        </Typography>
-                    )}
-                    <Button
-                        variant="contained"
-                        color='primary'
-                        size='large'
-                        sx={{ mt: 2 }}
-                        onClick={handleSaveChanges}
-                        disabled={!oldPasswordValue || !newPasswordValue}
-                    >
-                        Saves Changes
-                    </Button>
+                    <Box sx={{ p: 3, textAlign: 'left' }}>
+                        <FormProvider methods={methods}>
+                            <Typography variant='h5' sx={{ mb: 2 }}>Change Password</Typography>
+                            <Box>
+                                <FormGroup>
+                                    <RHFTextField
+                                        name="oldPassword"
+                                        label="Old Password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        InputProps={{
+                                            endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                                                <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                                                </IconButton>
+                                            </InputAdornment>
+                                            ),
+                                        }}
+                                        sx={{mb:1.5}}
+                                    />
+                                    <RHFTextField
+                                        name="newPassword"
+                                        label="New Password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        InputProps={{
+                                            endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                                                <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                                                </IconButton>
+                                            </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </FormGroup>
+                                {error && (
+                                    <Typography variant="body2" color="error" sx={{ mt: 1 }}>
+                                    {error}
+                                    </Typography>
+                                )}
+                                <Button
+                                    variant="contained"
+                                    color='primary'
+                                    size='large'
+                                    sx={{ mt: 2 }}
+                                    onClick={handleSaveChanges}
+                                    disabled={!oldPasswordValue || !newPasswordValue}
+                                >
+                                    Saves Changes
+                                </Button>
+                            </Box>
+                        </FormProvider>
                     </Box>
-                    </FormProvider>
-                </Box>
                 </Card>
 
                 <Card elevation={2} >
-                <Box sx={{ p: 3, textAlign: 'left' }}>
-                    <FormProvider methods={methods}>
-                    <Typography variant='h5' sx={{ mb: 1 }}>Delete Account</Typography>
-                    <FormGroup>
-                        <FormControlLabel
-                        control={<Checkbox checked={isConfirmed} onChange={handleCheckboxChange} />}
-                        label="I confirm my account deactivation"
-                        />
-                    </FormGroup>
-                    <Button
-                        variant="contained"
-                        color='error'
-                        size='large'
-                        sx={{ mt: 2 }}
-                        onClick={handleOpenConfirm}
-                        disabled={!isConfirmed}
-                    >
-                        Deactivate Account
-                    </Button>
-                    </FormProvider>
-                </Box>
+                    <Box sx={{ p: 3, textAlign: 'left' }}>
+                        <FormProvider methods={methods}>
+                        <Typography variant='h5' sx={{ mb: 1 }}>Delete Account</Typography>
+                        <FormGroup>
+                            <FormControlLabel
+                            control={<Checkbox checked={isConfirmed} onChange={handleCheckboxChange} />}
+                            label="I confirm my account deactivation"
+                            />
+                        </FormGroup>
+                        <Button
+                            variant="contained"
+                            color='error'
+                            size='large'
+                            sx={{ mt: 2 }}
+                            onClick={handleOpenConfirm}
+                            disabled={!isConfirmed}
+                        >
+                            Deactivate Account
+                        </Button>
+                        </FormProvider>
+                    </Box>
                 </Card>
             </Grid>
 
