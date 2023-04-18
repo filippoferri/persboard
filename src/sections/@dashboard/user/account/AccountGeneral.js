@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Box, Grid, Card, Typography, Divider, Link, Button, FormGroup, FormControl, FormControlLabel, Checkbox, Stack, IconButton, InputAdornment, Switch } from '@mui/material';
+import { Box, Grid, Card, Typography, Divider, Link, Button, FormGroup, FormControl, FormControlLabel, Checkbox, IconButton, InputAdornment, Switch } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore';
@@ -32,7 +32,7 @@ export default function AccountGeneral() {
     const db = getFirestore(app);
     const { user, logout } = useAuthContext();
 
-    const [error, setError] = useState("");
+    const [errorPassUpdate, setError] = useState("");
     const { enqueueSnackbar } = useSnackbar();
     const [showPassword, setShowPassword] = useState(false);
 
@@ -88,16 +88,6 @@ export default function AccountGeneral() {
     const oldPasswordValue = watch("oldPassword");
     const newPasswordValue = watch("newPassword");
 
-    const onSubmit = async (data) => {
-        try {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        // enqueueSnackbar('Update success!');
-        console.log('DATA', data);
-        } catch (error) {
-        console.error(error);
-        }
-    };
-
     const handleOpenConfirm = () => {
         setOpenConfirm(true);
     };
@@ -109,12 +99,12 @@ export default function AccountGeneral() {
     // Delete
     const handleDelete = async () => {
         try {
-        // await logout();
-        const myAccountRef = doc(db, 'users', user.uid);
-        await deleteDoc(myAccountRef);
-        await logout();
+            // await logout();
+            const myAccountRef = doc(db, 'users', user.uid);
+            await deleteDoc(myAccountRef);
+            await logout();
         } catch (error) {
-        console.error(error);
+            console.error(error);
         }
     };  
 
@@ -132,11 +122,11 @@ export default function AccountGeneral() {
 
         // Update the user's password with the new one
         await updatePassword(user, newPassword);
-        setError("");
-        methods.reset();
-        alert("Password updated successfully!");
+            setError("");
+            methods.reset();
+            enqueueSnackbar("Password updated successfully!");
         } catch (error) {
-        setError("Error updating password: " + error.message);
+            setError("Error updating password: " + error.message);
         }
     };
 
@@ -151,7 +141,7 @@ export default function AccountGeneral() {
 
             <Grid item xs={12} md={8}>
                 <Card sx={{ p: 3 }}>
-                    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+                    <FormProvider methods={methods}>
                         <Typography variant='h5' sx={{ mb: 2, ml: 1 }}>Basic Details</Typography>
                         <Box
                             rowGap={3}
@@ -237,9 +227,9 @@ export default function AccountGeneral() {
                                         }}
                                     />
                                 </FormGroup>
-                                {error && (
+                                {errorPassUpdate && (
                                     <Typography variant="body2" color="error" sx={{ mt: 1 }}>
-                                    {error}
+                                        {errorPassUpdate}
                                     </Typography>
                                 )}
                                 <Button
