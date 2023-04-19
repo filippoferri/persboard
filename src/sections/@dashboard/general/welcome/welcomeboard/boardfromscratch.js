@@ -86,7 +86,7 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 				color: "primary.dark",
 				}}
 				onClick={handleAdvanced}
-			><Iconify icon={showAdvanced ? 'eva:eye-off-outline' : 'eva:eye-outline'} sx={{ ml: 2, mr: 1 }}/> {showAdvanced ? 'Hide Advanced Fields' : 'Show Advanced Fields'}</Typography>
+			><Iconify icon={showAdvanced ? 'eva:eye-off-outline' : 'eva:eye-outline'} sx={{ ml: 2, mr: 1 }}/> {showAdvanced ? 'Hide Roles' : 'Show Roles (optional)'}</Typography>
 		</Box>
 		{formFields.map((input, index) => (
 			<Card key={index} sx={{ p: 2, mb: isDesktop ? 1 : 4 }}>
