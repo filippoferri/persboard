@@ -41,7 +41,8 @@ export default function AccountGeneral() {
 
     const [mode, setMode] = useState({
         quality: true,
-        toneCoincise: true
+        toneCoincise: true,
+        humanled: true,
     });
     useEffect(() => {
         const savedMode = JSON.parse(localStorage.getItem('mode'));
@@ -176,6 +177,12 @@ export default function AccountGeneral() {
                                         <Switch checked={mode.toneCoincise} onChange={handleModeChange} name="toneCoincise" />
                                     }
                                     label= { mode.toneCoincise ? "Coincise tone is used for advice" : "Professional tone is used for advice" }
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Switch checked={mode.humanled} onChange={handleModeChange} name="humanled" />
+                                    }
+                                    label= { mode.humanled ? "Human-led" : "AI-led" }
                                 />
                             </FormControl>
                     </Box>    

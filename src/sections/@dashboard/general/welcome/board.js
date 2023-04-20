@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 // @mui
 import { Grid, Stack, Box, Typography, Tabs, Tab, IconButton } from '@mui/material';
@@ -69,6 +70,19 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 			onNextStep(data);
 		};
 
+		// recover preferences
+		const [mode, setMode] = useState({
+			quality: true,
+			toneCoincise: true,
+			humanled: true,
+		});
+		useEffect(() => {
+			const savedMode = JSON.parse(localStorage.getItem('mode'));
+			if (savedMode) {
+				setMode(savedMode);
+			}
+		}, []);
+
 	return (
 
 	<>
@@ -114,11 +128,11 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 				>
 					<Tab 
 						fullWidth 
-						label="From AI Selection"
+						label={mode.humanled ? "From Scratch" : "From AI Selection" }
 						sx={{ 
 							justifyContent: "left",
 						}}
-						{...a11yProps(0)} />
+						{...a11yProps(mode.humanled ? 2 : 0)} />
 					<Tab 
 						fullWidth 
 						label="From AI Directors"
@@ -128,21 +142,21 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 						{...a11yProps(1)} />
 					<Tab 
 						fullWidth 
-						label="From Scratch"
+						label={mode.humanled ? "From AI Selection" : "From Scratch" }
 						sx={{ 
 							justifyContent: "left",
 						}}
-						{...a11yProps(2)} />
+						{...a11yProps(mode.humanled ? 0 : 2)} />
 				</Tabs>
 			</Grid>
 			<Grid item xs={12} md={10}>
-				<TabPanel value={value} index={0}>
+				<TabPanel value={value} index={mode.humanled ? 2 : 0}>
 					<BoardFromSelection onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />	
 				</TabPanel>
 				<TabPanel value={value} index={1}>
 					<BoardFromDirectors onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
 				</TabPanel>
-				<TabPanel value={value} index={2}>
+				<TabPanel value={value} index={mode.humanled ? 0 : 2}>
 					<BoardFromScratch onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
 				</TabPanel>
 			</Grid>
