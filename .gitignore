@@ -31,6 +31,7 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 # next.config.js
+next.config.original.js
 package-lock.json
 
 # vercel
