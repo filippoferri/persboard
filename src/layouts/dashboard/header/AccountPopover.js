@@ -62,9 +62,6 @@
         push(path);
     };
 
-    const tier = user?.tier
-    const tierCapitalized = tier.charAt(0).toUpperCase() + tier.slice(1);
-
     return (
         <>
         <IconButtonAnimate
@@ -94,7 +91,7 @@
                 </Typography>
 
                 <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                    {tierCapitalized}
+                    {user?.email}
                 </Typography>
             </Stack> 
 

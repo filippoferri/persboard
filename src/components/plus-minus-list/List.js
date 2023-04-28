@@ -6,7 +6,7 @@ import Iconify from '../iconify';
 
 // ----------------------------------------------------------------------
 
-const CustomList = forwardRef(({ icon, takeaways, listSubheader, sx, ...other }, ref) => (
+const PlusMinusList = forwardRef(({ plusMinus, listSubheader, icon, sx, ...other }, ref) => (
     <List
         sx={{ width: '100%' }}
         aria-labelledby="nested-list-subheader"
@@ -16,26 +16,26 @@ const CustomList = forwardRef(({ icon, takeaways, listSubheader, sx, ...other },
         </ListSubheader>
         }
     >
-        {Array.isArray(takeaways) && takeaways.map((takeaway, index) => (
-            <ListItem key={index} sx={{ display: "flex", alignItems: "flex-start" }}>
+        {Array.isArray(plusMinus) && plusMinus.map((plusMinusItem, plusminusIndex) => (
+            <ListItem key={plusminusIndex} sx={{ display: "flex", alignItems: "flex-start" }}>
                 <ListItemIcon>
-                    <Iconify icon="eva:arrow-forward-outline" />
+                    <Iconify icon={`eva:${icon}-outline`} />
                 </ListItemIcon>
-                <ListItemText key={index} primary={takeaway.text} />
+                <ListItemText primary={plusMinusItem} />
             </ListItem>
         ))}
     </List>
 ));
 
-CustomList.propTypes = {
+PlusMinusList.propTypes = {
     sx: PropTypes.object,
-    icon: PropTypes.node,
-    takeaways: PropTypes.arrayOf(PropTypes.object),
+    plusMinus: PropTypes.arrayOf(PropTypes.object),
+    icon: PropTypes.string,
     listSubheader: PropTypes.string,
 };
 
-CustomList.defaultProps = {
-    takeaways: [],
+PlusMinusList.defaultProps = {
+    plusMinus: [],
 };
 
-export default CustomList;
+export default PlusMinusList;

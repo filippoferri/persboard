@@ -25,6 +25,11 @@ BoardroomHeader.propTypes = {
     directors: PropTypes.array,
     question: PropTypes.string,
     discussion: PropTypes.array,
+    swotAnalysis: PropTypes.array,
+    soarAnalysis: PropTypes.array,
+    scenarios: PropTypes.array,
+    plusMinus: PropTypes.array,
+    rationalConclusion: PropTypes.array,
     takeaways: PropTypes.array,
     handleRefresh: PropTypes.func,
     isNew: PropTypes.bool,
@@ -32,7 +37,15 @@ BoardroomHeader.propTypes = {
 
 // ----------------------------------------------------------------------
 
-export default function BoardroomHeader({aid, directors, question, discussion, takeaways, handleRefresh, isNew}) {
+export default function BoardroomHeader({aid, directors, question, 
+    discussion, 
+    swotAnalysis,
+    soarAnalysis,
+    scenarios,
+    plusMinus,
+    rationalConclusion,
+    takeaways,
+    handleRefresh, isNew}) {
 
     const app = initializeApp(FIREBASE_API);
     const db = getFirestore(app);
@@ -45,13 +58,31 @@ export default function BoardroomHeader({aid, directors, question, discussion, t
         const myBoardroomsRef = doc(collection(db, "users", user.uid, "myBoardrooms"));
         try {
             // add discussion to firestore
-            await setDoc (myBoardroomsRef,{
+            const data = {
                 question,
                 directors,
                 discussion,
-                takeaways,
-                dateAdd: Timestamp.fromDate(new Date()),
-            });
+                dateAdd: Timestamp.fromDate(new Date())
+            };
+            if (swotAnalysis,length !== 0) {
+                data.swotAnalysis = swotAnalysis;
+            }
+            if (soarAnalysis.length !== 0) {
+                data.soarAnalysis = soarAnalysis;
+            }
+            if (scenarios.length !== 0) {
+                data.scenarios = scenarios;
+            }
+            if (plusMinus.length !== 0) {
+                data.plusMinus = plusMinus;
+            }
+            if (rationalConclusion.length !== 0) {
+                data.rationalConclusion = rationalConclusion;
+            }
+            if (takeaways.length !== 0) {
+                data.takeaways = takeaways;
+            }
+            await setDoc(myBoardroomsRef, data);
             enqueueSnackbar('Discussion saved!');
         } catch (error) {
             console.error('Error adding discussion:', error);
@@ -92,7 +123,7 @@ export default function BoardroomHeader({aid, directors, question, discussion, t
                     </Typography>
                 </Stack>
 
-                { discussion.length > 1 ? (
+                { discussion.length > 0 ? (
                 <>
                     { isNew ? (
                     <Tooltip title="Ask your board again to get different advices">
@@ -110,7 +141,13 @@ export default function BoardroomHeader({aid, directors, question, discussion, t
                         directors={directors} 
                         question={question} 
                         discussion={discussion} 
-                        takeaways={takeaways} />
+                        takeaways={takeaways} 
+                        scenarios={scenarios} 
+                        plusMinus={plusMinus} 
+                        rationalConclusion={rationalConclusion} 
+                        swotAnalysis={swotAnalysis} 
+                        soarAnalysis={soarAnalysis} 
+                        />
 
                     { isNew ? (
                     <Tooltip title="Save this discussion for a future consult">

@@ -11,7 +11,7 @@ const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 const MAX_TOKENS = 500;
 const TEMPERATURE = 0.2;
 
-export const generateTakeawaysLC = async (discussion) => {
+export const generatePlusMinusLC = async (discussion) => {
     try {
 
         // CHAT
@@ -24,17 +24,18 @@ export const generateTakeawaysLC = async (discussion) => {
         });
 
         const parser = StructuredOutputParser.fromNamesAndDescriptions({
-            takeaways: "provide a array of action items",
+            plus: "define an array of four pluses.",
+            minus: "define an array of four minuses.",
         });
 
         const formatInstructions = parser.getFormatInstructions();
 
         const chatPrompt = ChatPromptTemplate.fromPromptMessages([
             SystemMessagePromptTemplate.fromTemplate(
-                `As a director on the personal board, provide the the action items from a given advice.`
+                `As a director on the personal board, provide a list of pluses and minuses for a given advice.`
             ),
             HumanMessagePromptTemplate.fromTemplate(
-                `Given the following discussion: "{discussion}", provide a list of action items\n\n{format_instructions}`
+                `Here is the advice: "{discussion}". Be concise.\n\n{format_instructions}`
             ),
         ]);
 
@@ -49,21 +50,33 @@ export const generateTakeawaysLC = async (discussion) => {
             format_instructions: formatInstructions,
         });
 
+        console.log('response', response);
+
         const responseText = response.text.replace(/```json\n|\n```/g, '');
         const responseJson = JSON.parse(responseText);
 
-        const takeaways = responseJson.takeaways.map((takeaway, index) => ({
-            number: index + 1,
-            text: takeaway,
-        }));
-        
-        return takeaways;
+        const pluses = {
+            number: 1,
+            icon: "plus",
+            text: responseJson.plus,
+        };
+            
+        const minuses = {
+            number: 2,
+            icon: "minus",
+            text: responseJson.minus,
+        };
+
+        console.log('pluses', pluses);
+        console.log('minuses', minuses);
+
+        return [pluses, minuses];
 
     } catch (error) {
-        console.log('Error while generating takeaways: ', error);
+        console.log('Error while generating pluses and minuses: ', error);
         return [
             {
-                text: 'No important points covered in the discussion.',
+                text: 'No relevant pluses and minuses discovered in the discussion.',
             },
         ];
     }

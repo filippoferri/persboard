@@ -14,6 +14,7 @@ import { useAuthContext } from '../../../../auth/useAuthContext';
 import Iconify from '../../../../components/iconify';
 import { useSnackbar } from '../../../../components/snackbar';
 import CustomList from '../../../../components/list';
+import PlusMinusList from '../../../../components/plus-minus-list';
 // sections
 import BoardroomDrawer from '../../boardroom/sections/boardroomDrawer';
 import BoardroomHeader from '../../boardroom/sections/boardroomHeader';
@@ -23,6 +24,13 @@ import useResponsive from '../../../../hooks/useResponsive';
 // Utils
 import {generateAdviceLC} from '../../../../utils/generateAdviceLC';
 import {generateTakeawaysLC} from '../../../../utils/generateTakeawaysLC';
+import {generateScenariosLC} from '../../../../utils/generateScenariosLC';
+import {generatePlusMinusLC} from '../../../../utils/generatePlusMinusLC';
+import {generateRationalConclusionLC} from '../../../../utils/generateRationalConclusionLC';
+import {generateSwotAnalysisLC} from '../../../../utils/generateSwotAnalysisLC';
+import {generateSoarAnalysisLC} from '../../../../utils/generateSoarAnalysisLC';
+import ThinkTime from '../../../../utils/thinkTime';
+import { upperCase } from 'lodash';
 
 // ----------------------------------------------------------------------
 
@@ -53,6 +61,12 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     const [loadedDirectors, setLoadedDirectors] = useState([]);
     const [discussion, setDiscussion] = useState([]);
     const [takeaways, setTakeaways] = useState([]);
+    const [swotAnalysis, setSwotAnalysis] = useState([]);
+    const [soarAnalysis, setSoarAnalysis] = useState([]);
+    const [scenarios, setScenarios] = useState([]);
+    const [plusMinus, setPlusMinus] = useState([]);
+    const [rationalConclusion, setRationalConclusion] = useState([]);
+    const [isThinking, setThinking] = useState(false);
 
     // const data = [
     // {
@@ -130,36 +144,95 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             return;
         }
     
-        const prompt = await generateAdviceLC(loadedDirectors, question, user);
-        // Assuming `generateAdvice` returns an object with an `error` property when an error occurs
-        if (!prompt.error) {
-            await handleCredits(); // Call handleCredits if the prompt does not contain an error
+        const adviceReady = await generateAdviceLC(loadedDirectors, question, user);
+        // Reducing 1 credit per advice
+        if (!adviceReady.error) {
+           await handleCredits(); // Call handleCredits if the prompt does not contain an error
         }
-        setDiscussion(prompt);
+        setDiscussion(adviceReady);
         // setDiscussion(data); // for testing
-
-        // Generate takeaways after setting the discussion
-        const discussionText = prompt
-        .map(({ fullName, role, text }) => `${fullName} (${role}): ${text}`)
-        .join('\n');
-        const generatedTakeaways = await generateTakeawaysLC(discussionText);
-        setTakeaways(generatedTakeaways);
-        // setTakeaways(keyTakeaways); // for testing
 
         // eslint-disable-next-line
     }, [question, loadedDirectors, remainingCredits, user]);
+    // }, [question, loadedDirectors, user]); // for testing without credits
     // }, [question, user]); // for testing
 
     const handleRefresh = () => {
         if (remainingCredits > 0) {
             setDiscussion([]);
-            setTakeaways([]);
             generateDiscussion();
             enqueueSnackbar('New advices created.');
         } else {
             enqueueSnackbar('You have reached the limit of available credits.', { variant: 'error' });
         }
     }
+
+    const handleTakeaways = async () => {
+        setThinking(true);
+        // Generate takeaways after setting the discussion
+        const discussionText = discussion
+        .map(({ text }) => text)
+        .join('\n');
+        const generatedTakeaways = await generateTakeawaysLC(discussionText);
+        setTakeaways(generatedTakeaways);
+        // setTakeaways(keyTakeaways); // for testing
+        setThinking(false); // hide the loading state
+    };
+
+    const handleScenarios = async () => {
+        setThinking(true);
+        // Generate scenarios after setting the discussion
+        const discussionText = discussion
+        .map(({ text }) => text) // extract the "text" property from each object
+        .join('\n');
+        const generatedScenarios = await generateScenariosLC(discussionText);
+        setScenarios(generatedScenarios);
+        setThinking(false); // hide the loading state
+    };
+
+    const handlePlusMinus = async () => {
+        setThinking(true);
+        // Generate scenarios after setting the discussion
+        const discussionText = discussion
+        .map(({ text }) => text) // extract the "text" property from each object
+        .join('\n');
+        const generatedPlusMinus = await generatePlusMinusLC(discussionText);
+        setPlusMinus(generatedPlusMinus);
+        setThinking(false); // hide the loading state
+    };
+
+    const handleRationalConclusion = async () => {
+        setThinking(true);
+        // Generate scenarios after setting the discussion
+        const discussionText = discussion
+        .map(({ text }) => text) // extract the "text" property from each object
+        .join('\n');
+        const generatedRationalConclusion = await generateRationalConclusionLC(discussionText);
+        setRationalConclusion(generatedRationalConclusion);
+        setThinking(false); // hide the loading state
+    };
+
+    const handleSwotAnalysis = async () => {
+        setThinking(true);
+        // Generate scenarios after setting the discussion
+        const discussionText = discussion
+        .map(({ text }) => text) // extract the "text" property from each object
+        .join('\n');
+        const generatedSwotAnalysis = await generateSwotAnalysisLC(discussionText);
+        setSwotAnalysis(generatedSwotAnalysis);
+        setThinking(false); // hide the loading state
+    };
+
+    const handleSoarAnalysis = async () => {
+        setThinking(true);
+        // Generate scenarios after setting the discussion
+        const discussionText = discussion
+        .map(({ text }) => text) // extract the "text" property from each object
+        .join('\n');
+        const generatedSoarAnalysis = await generateSoarAnalysisLC(discussionText);
+        setSoarAnalysis(generatedSoarAnalysis);
+        setThinking(false); // hide the loading state
+    };
 
     const confettiProps = {
         width: window.innerWidth,
@@ -234,6 +307,11 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                     question={question}
                     discussion={discussion}
                     takeaways={takeaways}
+                    scenarios={scenarios}
+                    plusMinus={plusMinus}
+                    rationalConclusion={rationalConclusion}
+                    swotAnalysis={swotAnalysis}
+                    soarAnalysis={soarAnalysis}
                     handleRefresh={handleRefresh}
                     isNew
                 />
@@ -274,9 +352,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                             {discussion.length === 0 ? (
                                 <Stack direction="row" justifyContent='flex-start' sx={{ mb: 2 }}>  
                                     <Stack sx={{ textAlign: 'left', mb: 2 }}>
-                                        <Typography variant="body1" align="left" sx={{color: "grey.600", mb: 2 }}>
-                                            We are thinking...
-                                        </Typography>
+                                        <ThinkTime />
                                         <Skeleton variant="rounded" width={600} height={60} sx={{ bgcolor: 'grey.200', mb: 1 }} />
                                         <Skeleton variant="rounded" width={600} height={60} animation="wave" sx={{ bgcolor: 'grey.200', mb: 1  }}  />
                                         <Skeleton variant="rounded" width={600} height={60} sx={{ bgcolor: 'grey.200', mb: 1  }}  />
@@ -312,18 +388,163 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                             )}
 
                             {takeaways.length !== 0 ? (
-                            <Grid container sx={{ mb: 4, flexDirection: "row"}}>
-                                <Grid item sx={{ display: "flex" }}>
-                                    <CustomList listSubheader="Action Items" takeaways={takeaways} />
+                            <Stack sx={{
+                                p: 2,
+                                border: 1,
+                                borderColor: "grey.300",
+                                borderRadius: 2,
+                                color: 'grey.800',
+                                mb: 2, 
+                            }}>
+                                <Grid container sx={{ mb: 4, flexDirection: "row"}}>
+                                    <Grid item sx={{ display: "flex" }}>
+                                        <CustomList listSubheader="Action Items" takeaways={takeaways} />
+                                    </Grid>
+                                </Grid> 
+                            </Stack>
+                            ) : null }
+
+                            {swotAnalysis.length !== 0 ? (
+                            <Stack sx={{
+                                p: 4,
+                                border: 1,
+                                borderColor: "grey.300",
+                                borderRadius: 2,
+                                color: 'grey.800',
+                                mb: 2, 
+                            }}>
+                                <Typography variant="body2" align="left" sx={{ textTransform: "uppercase", fontWeight: "bold", color: "grey.600", lineHeight:2, ml:1 }}>
+                                    SWOT Analysis
+                                </Typography>
+                                <Grid container sx={{ flexDirection: "row"}} spacing={4}>
+                                    {swotAnalysis.map((swot, indexSwot) => (
+                                    <Grid item xs={12} md={6} key={indexSwot} sx={{ display: "flex", flexDirection: "column" }}>
+                                        <PlusMinusList listSubheader={swot.title} plusMinus={swot.text} icon={swot.icon} />
+                                    </Grid>
+                                    ))}
                                 </Grid>
-                            </Grid> ) : null }
+                            </Stack>
+                            ) : null }
+
+                            {soarAnalysis.length !== 0 ? (
+                            <Stack sx={{
+                                p: 4,
+                                border: 1,
+                                borderColor: "grey.300",
+                                borderRadius: 2,
+                                color: 'grey.800',
+                                mb: 2, 
+                            }}>
+                                <Typography variant="body2" align="left" sx={{ textTransform: "uppercase", fontWeight: "bold", color: "grey.600", lineHeight:2, ml:2 }}>
+                                    SOAR Analysis
+                                </Typography>
+                                <Grid container sx={{ flexDirection: "row"}} spacing={4}>
+                                    {soarAnalysis.map((soar, indexSoar) => (
+                                    <Grid item xs={12} md={6} key={indexSoar} sx={{ display: "flex", flexDirection: "column" }}>
+                                        <PlusMinusList listSubheader={soar.title} plusMinus={soar.text} icon={soar.icon} />
+                                    </Grid>
+                                    ))}
+                                </Grid>
+                            </Stack>
+                            ) : null }
+
+                            {scenarios.length !== 0 ? (
+                            <Stack sx={{
+                                p: 4,
+                                border: 1,
+                                borderColor: "grey.300",
+                                borderRadius: 2,
+                                color: 'grey.800',
+                                mb: 2, 
+                            }}>
+                                <Grid container sx={{ mb: 4, flexDirection: "row"}} spacing={6}>
+                                    {scenarios.map((scenario, indexScenario) => (
+                                    <Grid item xs={12} md={6} key={indexScenario} sx={{ display: "flex", flexDirection: "column" }}>
+                                        <Typography variant="body2" align="left" sx={{ textTransform: "uppercase", fontWeight: "bold", color: "grey.600", lineHeight:2 }}>
+                                            {`${scenario.title} Scenario `}
+                                        </Typography>
+                                        <Typography variant="body1" align="left">
+                                            {scenario.text}
+                                        </Typography>
+                                    </Grid>
+                                    ))}
+                                </Grid>
+                            </Stack>
+                            ) : null }
+
+                            {plusMinus.length !== 0 ? (
+                            <Stack sx={{
+                                p: 2,
+                                border: 1,
+                                borderColor: "grey.300",
+                                borderRadius: 2,
+                                color: 'grey.800',
+                                mb: 2, 
+                            }}>
+                                <Grid container sx={{ mb: 4, flexDirection: "row"}} spacing={6}>
+                                    <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column" }}>
+                                        <PlusMinusList listSubheader="Pluses (+)" plusMinus={plusMinus[0].text} icon={plusMinus[0].icon} />
+                                    </Grid>
+                                    <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column" }}>
+                                        <PlusMinusList listSubheader="Minuses (-)" plusMinus={plusMinus[1].text} icon={plusMinus[1].icon} />
+                                    </Grid>
+                                </Grid> 
+                            </Stack>
+                            ) : null }
+
+                            {rationalConclusion.length !== 0 ? (
+                            <Stack sx={{
+                                p: 4,
+                                border: 1,
+                                borderColor: "grey.300",
+                                borderRadius: 2,
+                                color: 'grey.800',
+                                mb: 2, 
+                            }}>
+                                <Typography variant="body2" align="left" sx={{ textTransform: "uppercase", fontWeight: "bold", color: "grey.600", mb:2 }}>
+                                    Rational Conclusion
+                                </Typography>
+                                <Typography variant="body1" align="left" sx={{ fontWeight: "bold" }}>
+                                    {rationalConclusion.title}
+                                </Typography>
+                                <Typography variant="body1" align="left">
+                                    {rationalConclusion.desc}
+                                </Typography>
+                            </Stack>
+                            ) : null }
+
+                            {isThinking && (
+                            <Stack direction="row" justifyContent='flex-start' sx={{ mb: 2, width: "100%" }}>
+                                <Stack sx={{ textAlign: 'left', mb: 2, width: "100%" }}>
+                                    <ThinkTime isHelp />
+                                    <Skeleton variant="rounded" width="100%" height={60} sx={{ bgcolor: 'grey.200', mb: 1 }} />
+                                </Stack>
+                            </Stack>
+                            )}
 
                         </Stack>
 
                     </Stack>
                 </Stack>
 
-                <BoardroomFooter isNew />
+                {discussion.length > 0 ? (
+                <BoardroomFooter 
+                    isNew 
+                    isPaid={user.tier === "paid"} 
+                    onGenerateTakeaways={handleTakeaways}
+                    activeTakeways={takeaways.length !== 0} 
+                    onGenerateScenarios={handleScenarios}
+                    activeScenarios={scenarios.length !== 0}
+                    onGeneratePlusMinus={handlePlusMinus}
+                    activePlusMinus={plusMinus.length !== 0}
+                    onGenerateRationalConclusion={handleRationalConclusion}
+                    activeRationalConclusion={rationalConclusion.length !== 0}
+                    onGenerateSwotAnalysis={handleSwotAnalysis}
+                    activeSwotAnalysis={swotAnalysis.length !== 0}
+                    onGenerateSoarAnalysis={handleSoarAnalysis}
+                    activeSoarAnalysis={soarAnalysis.length !== 0}
+                    />
+                ) : null }
             </Stack>
         </Card>
     </>

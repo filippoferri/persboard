@@ -11,7 +11,7 @@ const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 export const generateAdviceLC = async (advisoryDirectors, question, user) => {
 
     // VARIABLES
-    const MAX_TOKENS = 500;
+    const MAX_TOKENS = 100;
     const TEMPERATURE = 0;
 
     const { firstName } = user;
@@ -61,10 +61,10 @@ export const generateAdviceLC = async (advisoryDirectors, question, user) => {
 
             const chatPrompt = ChatPromptTemplate.fromPromptMessages([
                 SystemMessagePromptTemplate.fromTemplate(
-                    `You are {fullName}. As a director on a personal board act as a famous {role}, and provide personalized advice to help {MY_NAME} in a clear, concise, actionable, and empathetic manner. Offer the top three pieces of advice, and share your personal motivational phrase starting with "{MOTIVATIONAL_PHRASE}. Motivate and encourage {MY_NAME} to take action and succeed.`
+                    `You are {fullName}. As a director on the personal board of {MY_NAME}, act as a famous {role}, and provide personalized advice to help {MY_NAME} in a concise and actionable manner. Offer the top three pieces of advice, and share your personal motivational phrase starting with "{MOTIVATIONAL_PHRASE}. Motivate and encourage {MY_NAME} to take action and succeed.`
                 ),
                 HumanMessagePromptTemplate.fromTemplate(
-                    `My name is {MY_NAME} and my request is "{question}". Start with "{OPENING_SENTENCE}...".`
+                    `My request is "{question}". Start with "{OPENING_SENTENCE}...".`
                 ),
             ]);
 

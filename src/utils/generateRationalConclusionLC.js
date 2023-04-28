@@ -8,10 +8,10 @@ import { LLMChain } from "langchain/chains";
 import { StructuredOutputParser } from "langchain/output_parsers";
 
 const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-const MAX_TOKENS = 500;
+const MAX_TOKENS = 300;
 const TEMPERATURE = 0.2;
 
-export const generateTakeawaysLC = async (discussion) => {
+export const generateRationalConclusionLC = async (discussion) => {
     try {
 
         // CHAT
@@ -24,17 +24,18 @@ export const generateTakeawaysLC = async (discussion) => {
         });
 
         const parser = StructuredOutputParser.fromNamesAndDescriptions({
-            takeaways: "provide a array of action items",
+            title: "define a short conclusion as a sentence.",
+            desc: "define an explanation of that conclusion.",
         });
 
         const formatInstructions = parser.getFormatInstructions();
 
         const chatPrompt = ChatPromptTemplate.fromPromptMessages([
             SystemMessagePromptTemplate.fromTemplate(
-                `As a director on the personal board, provide the the action items from a given advice.`
+                `As a director on the personal board, please provide a rational conclusion based on advice.`
             ),
             HumanMessagePromptTemplate.fromTemplate(
-                `Given the following discussion: "{discussion}", provide a list of action items\n\n{format_instructions}`
+                `Here is the advice: "{discussion}". Please provide a conclusion that takes into account pluses and minuses to make a decision.\n\n{format_instructions}`
             ),
         ]);
 
@@ -52,18 +53,13 @@ export const generateTakeawaysLC = async (discussion) => {
         const responseText = response.text.replace(/```json\n|\n```/g, '');
         const responseJson = JSON.parse(responseText);
 
-        const takeaways = responseJson.takeaways.map((takeaway, index) => ({
-            number: index + 1,
-            text: takeaway,
-        }));
-        
-        return takeaways;
+        return responseJson;
 
     } catch (error) {
-        console.log('Error while generating takeaways: ', error);
+        console.log('Error while generating the rational conclusion: ', error);
         return [
             {
-                text: 'No important points covered in the discussion.',
+                text: 'No rational conclusion available for the discussion.',
             },
         ];
     }

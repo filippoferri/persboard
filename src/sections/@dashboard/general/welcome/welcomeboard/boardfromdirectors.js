@@ -50,12 +50,12 @@ const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
 
     // Get directors
     useEffect(() => {
-    const directorsRef = collection(db, 'directors');
-    const myDirectorsRef = collection(db, 'users', user && user.uid, 'myDirectors');
-    const unsubscribeDirectors = onSnapshot(directorsRef, (snapshot) => {
-        const directorsData = [];
-        snapshot.forEach((directorsDoc) => {
-        directorsData.push({ id: directorsDoc.id, ...directorsDoc.data() });
+        const directorsRef = collection(db, 'directors');
+        const myDirectorsRef = collection(db, 'users', user && user.uid, 'myDirectors');
+        const unsubscribeDirectors = onSnapshot(directorsRef, (snapshot) => {
+            const directorsData = [];
+            snapshot.forEach((directorsDoc) => {
+            directorsData.push({ id: directorsDoc.id, ...directorsDoc.data() });
         });
         setPremiumDirectors(directorsData);
     });

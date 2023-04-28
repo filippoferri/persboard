@@ -40,6 +40,11 @@ export default function BoardroomView() {
 
     const directors = adviceData.directors || [];
     const discussion = adviceData.discussion || [];
+    const swotAnalysis = adviceData.swotAnalysis || [];
+    const soarAnalysis = adviceData.soarAnalysis || [];
+    const scenarios = adviceData.scenarios || [];
+    const plusMinus = adviceData.plusMinus || [];
+    const rationalConclusion = adviceData.rationalConclusion || [];
     const takeaways = adviceData.takeaways || [];
 
     // Retrieve data from Firestore using `aid`
@@ -95,7 +100,12 @@ export default function BoardroomView() {
             directors={directors} 
             question={adviceData.question} 
             discussion={discussion} 
-            takeaways={takeaways}
+            swotAnalysis={swotAnalysis} 
+            soarAnalysis={soarAnalysis} 
+            scenarios={scenarios} 
+            plusMinus={plusMinus} 
+            rationalConclusion={rationalConclusion}
+            takeaways={takeaways} 
             aid={aid}
         />
 

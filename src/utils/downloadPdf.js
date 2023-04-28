@@ -65,7 +65,17 @@ const styles = StyleSheet.create({
     },
 });
 
-const MyPdf = ({ question, directors, discussion, takeaways }) => (
+const MyPdf = ({ 
+    question, 
+    directors, 
+    discussion, 
+    takeaways,
+    scenarios,
+    plusMinus,
+    rationalConclusion,
+    swotAnalysis,
+    soarAnalysis
+}) => (
     <Document>
         <Page style={styles.page}>
 
@@ -101,7 +111,7 @@ const MyPdf = ({ question, directors, discussion, takeaways }) => (
 
                     <View style={styles.section}>
                         {discussion && discussion.map((advice, index) => (
-                            <View key={index}>
+                            <View key={index} style={styles.section}>
                                 <Text style={styles.text}>{advice.text}</Text>
                                 <Text style={styles.author}>{advice.fullName}</Text>
                                 <Text style={styles.author}>{advice.role}</Text>
@@ -140,16 +150,56 @@ MyPdf.propTypes = {
             text: PropTypes.string,
         })
     ),
+    scenarios: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
+    plusMinus: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
+    rationalConclusion: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
+    swotAnalysis: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
+    soarAnalysis: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
 };
 
 
-const DownloadPdf = ({ question, directors, discussion, takeaways }) => (
+const DownloadPdf = ({ 
+    question, 
+    directors, 
+    discussion, 
+    takeaways,
+    scenarios,
+    plusMinus,
+    rationalConclusion,
+    swotAnalysis,
+    soarAnalysis
+}) => (
     <PDFDownloadLink document={
             <MyPdf 
                 question={question}
                 directors={directors}
                 discussion={discussion}
                 takeaways={takeaways}
+                scenarios={scenarios}
+                plusMinus={plusMinus}
+                rationalConclusion={rationalConclusion}
+                swotAnalysis={swotAnalysis}
+                soarAnalysis={soarAnalysis}
             />
         } fileName="boardroom_report.pdf">
     {({ blob, url, loading, error }) =>
@@ -186,6 +236,31 @@ DownloadPdf.propTypes = {
         })
     ),
     takeaways: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
+    scenarios: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
+    plusMinus: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
+    rationalConclusion: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
+    swotAnalysis: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
+    soarAnalysis: PropTypes.arrayOf(
         PropTypes.shape({
             text: PropTypes.string,
         })

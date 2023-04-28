@@ -11,7 +11,7 @@ const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 const MAX_TOKENS = 500;
 const TEMPERATURE = 0.2;
 
-export const generateTakeawaysLC = async (discussion) => {
+export const generateScenariosLC = async (discussion) => {
     try {
 
         // CHAT
@@ -24,17 +24,18 @@ export const generateTakeawaysLC = async (discussion) => {
         });
 
         const parser = StructuredOutputParser.fromNamesAndDescriptions({
-            takeaways: "provide a array of action items",
+            bestcase: "define the best-case scenario",
+            worstcase: "define the worst-case scenario",
         });
 
         const formatInstructions = parser.getFormatInstructions();
 
         const chatPrompt = ChatPromptTemplate.fromPromptMessages([
             SystemMessagePromptTemplate.fromTemplate(
-                `As a director on the personal board, provide the the action items from a given advice.`
+                `As a director on the personal board, provide the best-case scenario as pipe dream and worst-case scenario as apocalypse for action items recovered from a given advice.`
             ),
             HumanMessagePromptTemplate.fromTemplate(
-                `Given the following discussion: "{discussion}", provide a list of action items\n\n{format_instructions}`
+                `Here is the advice: "{discussion}". Talk directly to me and be concise.\n\n{format_instructions}`
             ),
         ]);
 
@@ -52,18 +53,25 @@ export const generateTakeawaysLC = async (discussion) => {
         const responseText = response.text.replace(/```json\n|\n```/g, '');
         const responseJson = JSON.parse(responseText);
 
-        const takeaways = responseJson.takeaways.map((takeaway, index) => ({
-            number: index + 1,
-            text: takeaway,
-        }));
-        
-        return takeaways;
+        const bestCaseScenario = {
+            number: 1,
+            title: "Best-Case",
+            text: responseJson.bestcase,
+        };
+            
+        const worstCaseScenario = {
+            number: 2,
+            title: "Worst-Case",
+            text: responseJson.worstcase,
+        };
+            
+        return [bestCaseScenario, worstCaseScenario];
 
     } catch (error) {
-        console.log('Error while generating takeaways: ', error);
+        console.log('Error while generating scenarios: ', error);
         return [
             {
-                text: 'No important points covered in the discussion.',
+                text: 'No scenarios discovered in the discussion.',
             },
         ];
     }

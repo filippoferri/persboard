@@ -16,11 +16,27 @@ Boardroom.propTypes = {
     question: PropTypes.string,
     discussion: PropTypes.array,
     takeaways: PropTypes.array,
+    scenarios: PropTypes.array,
+    plusMinus: PropTypes.array,
+    rationalConclusion: PropTypes.array,
+    swotAnalysis: PropTypes.array,
+    soarAnalysis: PropTypes.array,
 };
 
 // ----------------------------------------------------------------------
 
-export default function Boardroom( {aid, directors, question, discussion, takeaways} ) {
+export default function Boardroom( {
+    aid, 
+    directors, 
+    question, 
+    discussion, 
+    takeaways,
+    scenarios,
+    plusMinus,
+    rationalConclusion,
+    swotAnalysis,
+    soarAnalysis,
+} ) {
 
     return (
             <Card sx={{ minHeight: '75vh', display: 'flex' }}>
@@ -34,6 +50,11 @@ export default function Boardroom( {aid, directors, question, discussion, takeaw
                         question={question}
                         discussion={discussion}
                         takeaways={takeaways}
+                        scenarios={scenarios} 
+                        plusMinus={plusMinus} 
+                        rationalConclusion={rationalConclusion} 
+                        swotAnalysis={swotAnalysis} 
+                        soarAnalysis={soarAnalysis} 
                         aid={aid}
                     />
         
@@ -49,6 +70,11 @@ export default function Boardroom( {aid, directors, question, discussion, takeaw
                                 question={question} 
                                 discussion={discussion} 
                                 takeaways={takeaways}
+                                scenarios={scenarios} 
+                                plusMinus={plusMinus} 
+                                rationalConclusion={rationalConclusion} 
+                                swotAnalysis={swotAnalysis} 
+                                soarAnalysis={soarAnalysis} 
                             />
                         </Stack>
 
