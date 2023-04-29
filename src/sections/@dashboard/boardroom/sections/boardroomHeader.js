@@ -64,7 +64,7 @@ export default function BoardroomHeader({aid, directors, question,
                 discussion,
                 dateAdd: Timestamp.fromDate(new Date())
             };
-            if (swotAnalysis,length !== 0) {
+            if (swotAnalysis.length !== 0) {
                 data.swotAnalysis = swotAnalysis;
             }
             if (soarAnalysis.length !== 0) {

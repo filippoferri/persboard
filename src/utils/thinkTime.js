@@ -26,7 +26,7 @@ export default function ThinkTime(isHelp) {
 
     console.log('isHelp', isHelp)
 
-    const thinking = isHelp ? thinkingVariations1 : thinkingVariations2;
+    const thinking = isHelp ? thinkingVariations2 : thinkingVariations1;
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -36,7 +36,7 @@ export default function ThinkTime(isHelp) {
         }
         }, 1000);
         return () => clearInterval(interval);
-    }, [elapsedTime]);
+    }, [elapsedTime, thinking.length]);
 
     return (
         <Typography variant="body1" align="left" sx={{color: "grey.600", mb: 2 }}>

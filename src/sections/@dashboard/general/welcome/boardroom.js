@@ -30,7 +30,6 @@ import {generateRationalConclusionLC} from '../../../../utils/generateRationalCo
 import {generateSwotAnalysisLC} from '../../../../utils/generateSwotAnalysisLC';
 import {generateSoarAnalysisLC} from '../../../../utils/generateSoarAnalysisLC';
 import ThinkTime from '../../../../utils/thinkTime';
-import { upperCase } from 'lodash';
 
 // ----------------------------------------------------------------------
 
@@ -413,7 +412,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                 color: 'grey.800',
                                 mb: 2, 
                             }}>
-                                <Typography variant="body2" align="left" sx={{ textTransform: "uppercase", fontWeight: "bold", color: "grey.600", lineHeight:2, ml:1 }}>
+                                <Typography variant="body2" align="left" sx={{ fontWeight: "bold", color: "grey.600", lineHeight:2, ml:1 }}>
                                     SWOT Analysis
                                 </Typography>
                                 <Grid container sx={{ flexDirection: "row"}} spacing={4}>
@@ -435,7 +434,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                 color: 'grey.800',
                                 mb: 2, 
                             }}>
-                                <Typography variant="body2" align="left" sx={{ textTransform: "uppercase", fontWeight: "bold", color: "grey.600", lineHeight:2, ml:2 }}>
+                                <Typography variant="body2" align="left" sx={{ fontWeight: "bold", color: "grey.600", lineHeight:2, ml:2 }}>
                                     SOAR Analysis
                                 </Typography>
                                 <Grid container sx={{ flexDirection: "row"}} spacing={4}>
@@ -460,7 +459,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                 <Grid container sx={{ mb: 4, flexDirection: "row"}} spacing={6}>
                                     {scenarios.map((scenario, indexScenario) => (
                                     <Grid item xs={12} md={6} key={indexScenario} sx={{ display: "flex", flexDirection: "column" }}>
-                                        <Typography variant="body2" align="left" sx={{ textTransform: "uppercase", fontWeight: "bold", color: "grey.600", lineHeight:2 }}>
+                                        <Typography variant="body2" align="left" sx={{ fontWeight: "bold", color: "grey.600", lineHeight:2 }}>
                                             {`${scenario.title} Scenario `}
                                         </Typography>
                                         <Typography variant="body1" align="left">
@@ -501,7 +500,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                 color: 'grey.800',
                                 mb: 2, 
                             }}>
-                                <Typography variant="body2" align="left" sx={{ textTransform: "uppercase", fontWeight: "bold", color: "grey.600", mb:2 }}>
+                                <Typography variant="body2" align="left" sx={{ fontWeight: "bold", color: "grey.600", mb:2 }}>
                                     Rational Conclusion
                                 </Typography>
                                 <Typography variant="body1" align="left" sx={{ fontWeight: "bold" }}>
