@@ -39,7 +39,7 @@ export default function PageBoards() {
     return (
         <>
         <Head>
-            <title> Your Board | Personal Board</title>
+            <title> Your Board Of Directors | Personal Board</title>
         </Head>
 
         <m.div
@@ -51,14 +51,14 @@ export default function PageBoards() {
             <Container maxWidth={themeStretch ? false : 'lg'}>
                 <Box sx={{pl: 2}}>
                     <CustomBreadcrumbs
-                            heading="Your Board"
+                            heading="Your Board Of Directors"
                             links={[
                             {
                                 name: 'Dashboard',
                                 href: PATH_DASHBOARD.root,
                             },
                             {
-                                name: 'Your Board',
+                                name: 'Your Board Of Directors',
                                 href: PATH_DASHBOARD.about,
                             },
                         ]}
@@ -67,161 +67,39 @@ export default function PageBoards() {
 
                 <Grid container>
                     <Grid item xs={12} md={9}>
-                        <Stack sx={{ p: 2, backgroundColor: "grey.100", border: 1, borderColor: "grey.300", borderRadius: 2 }}>
-                            <Box
-                                gap={3}
-                                display="grid"
-                                gridTemplateColumns={{
-                                    xs: 'repeat(1, 1fr)',
-                                    sm: 'repeat(2, 1fr)',
-                                    md: 'repeat(3, 1fr)',
-                                }}
-                                sx={{justifyContent: "center"}} >                      
-                                <Card  
-                                    sx={{ 
-                                        display: 'flex',
-                                        textAlign: 'center', 
-                                        height: 180,
-                                        bgcolor: 'white',
-                                        color: 'grey.600', 
-                                        cursor:'pointer',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        borderStyle: "dashed",
-                                        borderColor: "grey.300",
+                        <Stack sx={{ p: 4, backgroundColor: "grey.100", border: 1, borderColor: "grey.300", borderRadius: 2 }}>
+
+                            <Box 
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    fontWeight: 'bold'
+                                    }}>
+                                
+                                <IconButton
+                                    size="small"
+                                    color="success"
+                                    sx={{
+                                        p: 0,
+                                        mb: 1,
+                                        width: 60,
+                                        height: 60,
+                                        color: 'common.white',
+                                        bgcolor: 'primary.light',
                                         '&:hover': {
-                                            borderColor: 'primary.light',
-                                            bgcolor: 'primary.lighter',
+                                            bgcolor: 'primary.light',
                                         },
-                                        }}>
-                                    <Box 
-                                        sx={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            fontWeight: 'bold'
-                                            }}>
-                                        
-                                        <IconButton
-                                            size="small"
-                                            color="success"
-                                            sx={{
-                                                p: 0,
-                                                mb: 1,
-                                                width: 60,
-                                                height: 60,
-                                                color: 'common.white',
-                                                bgcolor: 'primary.light',
-                                                '&:hover': {
-                                                    bgcolor: 'primary.light',
-                                                },
-                                            }}
-                                        >
-                                            <Iconify icon="eva:person-outline" />
-                                        </IconButton>
-                                        <Typography variant="h6">
-                                            Add Your <br /> First Director
-                                        </Typography>
-                                    </Box>
-                                </Card>
-                                <Card  
-                                    sx={{ 
-                                        display: 'flex',
-                                        textAlign: 'center', 
-                                        height: 180,
-                                        bgcolor: 'white', 
-                                        color: 'grey.600', 
-                                        cursor:'pointer',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        borderStyle: "dashed",
-                                        borderColor: "grey.300",
-                                        '&:hover': {
-                                            borderColor: 'primary.light',
-                                            bgcolor: 'primary.lighter',
-                                        },
-                                        }}>
-                                    <Box 
-                                        sx={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            fontWeight: 'bold'
-                                            }}>
-                                        
-                                        <IconButton
-                                            size="small"
-                                            color="success"
-                                            sx={{
-                                                p: 0,
-                                                mb: 1,
-                                                width: 60,
-                                                height: 60,
-                                                color: 'common.white',
-                                                bgcolor: 'primary.light',
-                                                '&:hover': {
-                                                    bgcolor: 'primary.light',
-                                                },
-                                            }}
-                                        >
-                                            <Iconify icon="eva:person-outline" />
-                                        </IconButton>
-                                        <Typography variant="h6">
-                                            Add Your <br /> Second Director
-                                        </Typography>
-                                    </Box>
-                                </Card>
-                                <Card  
-                                    sx={{ 
-                                        display: 'flex',
-                                        textAlign: 'center', 
-                                        height: 180,
-                                        bgcolor: 'white', 
-                                        color: 'grey.600', 
-                                        cursor:'pointer',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        borderStyle: "dashed",
-                                        borderColor: "grey.300",
-                                        '&:hover': {
-                                            borderColor: 'primary.light',
-                                            bgcolor: 'primary.lighter',
-                                        },
-                                        }}>
-                                    <Box 
-                                        sx={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            fontWeight: 'bold'
-                                            }}>
-                                        
-                                        <IconButton
-                                            size="small"
-                                            color="success"
-                                            sx={{
-                                                p: 0,
-                                                mb: 1,
-                                                width: 60,
-                                                height: 60,
-                                                color: 'common.white',
-                                                bgcolor: 'primary.light',
-                                                '&:hover': {
-                                                    bgcolor: 'primary.light',
-                                                },
-                                            }}
-                                        >
-                                            <Iconify icon="eva:person-outline" />
-                                        </IconButton>
-                                        <Typography variant="h6">
-                                            Add Your <br /> Third Director
-                                        </Typography>
-                                    </Box>
-                                </Card>
+                                    }}
+                                >
+                                    <Iconify icon="mdi:users-group" />
+                                </IconButton>
+                                <Typography variant="h6" sx={{color: "grey.600"}}>
+                                    Build your personal board
+                                </Typography>
                             </Box>
+
                         </Stack>
                     </Grid>
                 </Grid>
