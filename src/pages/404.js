@@ -41,7 +41,7 @@ export default function Page404() {
           <PageNotFoundIllustration />
         </m.div>
 
-        <Button component={NextLink} href="/welcome" size="large" variant="contained">
+        <Button component={NextLink} href="/dashboard/welcome" size="large" variant="contained">
           Go to Dashboard
         </Button>
       </MotionContainer>
