@@ -98,6 +98,9 @@ export default function PageBoards() {
                                 <Typography variant="h6" sx={{color: "grey.600"}}>
                                     Build your personal board
                                 </Typography>
+                                <Typography variant="caprion" sx={{color: "grey.600", fontWeight: 'normal'}}>
+                                    Limited to 3
+                                </Typography>
                             </Box>
 
                         </Stack>

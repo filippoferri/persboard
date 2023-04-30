@@ -64,7 +64,7 @@ export default function NavDocs() {
             {credits} credits
           </Typography>
           <Typography variant="body2" sx={{ mb: 2 }}>
-            Check out our credit packs to enjoy upto 1000 credits
+            Check out our credit packs to enjoy up to 1000 credits
           </Typography>
           <Button variant="outlined" onClick={handleClick}>
             Buy Credits
