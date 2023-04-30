@@ -11,7 +11,7 @@ const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 export const generateAdviceLC = async (advisoryDirectors, question, user) => {
 
     // VARIABLES
-    const MAX_TOKENS = 100;
+    const MAX_TOKENS = 800;
     const TEMPERATURE = 0;
 
     const { firstName } = user;

@@ -1,5 +1,5 @@
 // @mui
-import { Stack, Chip, Box, Typography, Button } from '@mui/material';
+import { Stack, Chip, Box, Typography, Button, Tooltip } from '@mui/material';
 import PropTypes from 'prop-types';
 // Router
 import { useRouter } from 'next/router';
@@ -57,36 +57,6 @@ export default function BoardroomFooter({
         window.open('https://xmllse17mqf.typeform.com/to/tvBvCeiY', '_blank');
     };
 
-    const renderUpgradeContent = () => (
-        <Stack direction="column" sx={{ width: "100%" }}>
-            <Stack direction="row" sx={{ mb:4, width: "100%", justifyContent: "space-between" }}>
-                <Chip label="Action Items" color="primary" onClick={onGenerateTakeaways} disabled={activeTakeways} />
-                <Chip label="SWOT Analysis" color="primary" disabled />
-                <Chip label="SOAR Analysis" color="primary" disabled />
-                <Chip label="Best/Worst Scenarios" color="primary" disabled />
-                <Chip label="Pluses (+) and Minuses (-)" color="primary" disabled />
-                <Chip label="Rational Conclusion" color="primary" disabled />
-            </Stack>
-
-            <Box sx={{
-                display: 'flex',
-                flexDirection: isDesktop ? "row" : "column",  
-                width: "100%", 
-                backgroundColor: "primary.lighter", 
-                p: 2, 
-                borderRadius: 1, 
-                alignItems: "center" }}>
-                <Box sx={{ flexGrow: 1, mb: isDesktop ? 0 : 2 }}>
-                    <Typography variant='h5' sx={{ color: "primary.darker", textAlign: isDesktop ? "left" : "center"}}>Engage in a dynamic exchange of solutions.</Typography>
-                    <Typography variant='h5' sx={{ color: "primary.main", textAlign: isDesktop ? "left" : "center" }}>Achieve greater clarity and direction.</Typography>
-                </Box>
-                <Box>
-                    <Button variant="outlined" size="large" onClick={handleUpgrade} >Upgrade Now</Button>
-                </Box>
-            </Box>
-        </Stack>
-    );
-
     return (
         <Stack direction="row" spacing={1} 
             sx={{ 
@@ -101,20 +71,41 @@ export default function BoardroomFooter({
                 <Chip label="Request a new feature" color="primary" onClick={handleRequestFeature} />
                 </>
             ) : (
-                !isPaid ? renderUpgradeContent() : (
-                    <>
+                <>
+                <Tooltip title="Suggest action ttems" placement="top">
+                    <div>
                     <Chip label="Action Items" color="primary" onClick={onGenerateTakeaways} disabled={activeTakeways} />
-                    <Chip label="SWOT" color="primary" onClick={onGenerateSwotAnalysis} disabled={activeSwotAnalysis} />
-                    <Chip label="SOAR" color="primary" onClick={onGenerateSoarAnalysis} disabled={activeSoarAnalysis} />
-                    <Chip label="Best/Worst Scenarios" color="primary" onClick={onGenerateScenarios} disabled={activeScenarios} />
-                    <Chip label="Pluses (+) and Minuses (-)" color="primary" onClick={onGeneratePlusMinus} disabled={activePlusMinus} />
-                    <Chip label="Rational Conclusion" color="primary" onClick={onGenerateRationalConclusion} disabled={activeRationalConclusion} />
-                    </>
-                )
+                    </div>
+                </Tooltip>
+                <Tooltip title={ isPaid ? "Provide SWOT analysis" : "Buy credits to unlock" } placement="top">
+                    <div>
+                    <Chip label="SWOT" color="primary" onClick={onGenerateSwotAnalysis} disabled={activeSwotAnalysis || !isPaid} title="Buy credits to unlock" />
+                    </div>
+                </Tooltip>
+                <Tooltip title={ isPaid ? "Provide SOAR analysis" : "Buy credits to unlock" } placement="top">
+                    <div>
+                    <Chip label="SOAR Analysis" color="primary" onClick={onGenerateSoarAnalysis} disabled={activeSoarAnalysis || !isPaid} />
+                    </div>
+                </Tooltip>
+                <Tooltip title={ isPaid ? "Define best-case and worst-case scenarios" : "Buy credits to unlock" } placement="top">
+                    <div>
+                    <Chip label="Best/Worst Scenarios" color="primary" onClick={onGenerateScenarios} disabled={activeScenarios || !isPaid} />
+                    </div>
+                </Tooltip>
+                <Tooltip title={ isPaid ? "Collect pluses and minuses" : "Buy credits to unlock" } placement="top">
+                    <div>
+                    <Chip label="Pluses (+) and Minuses (-)" color="primary" onClick={onGeneratePlusMinus} disabled={activePlusMinus || !isPaid} />
+                    </div>
+                </Tooltip>
+                <Tooltip title={ isPaid ? "Find a rational conclusion" : "Buy credits to unlock" } placement="top">
+                    <div>
+                    <Chip label="Rational Conclusion" color="primary" onClick={onGenerateRationalConclusion} disabled={activeRationalConclusion || !isPaid} />
+                    </div>
+                </Tooltip>
+                </>
             )}
         </Stack>
     );
-    
 }
 
 
