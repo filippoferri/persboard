@@ -11,15 +11,13 @@ export default async function handler(req, res) {
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
+        allow_promotion_codes: true,
         line_items: [
           {
             price_data: {
               currency: 'usd',
               product_data: {
                 name: `Buy ${quantity} Credits`,
-                images: [
-                  'https://res.cloudinary.com/ddtdvms3g/image/upload/v1679592999/stripe_l8iza3.png', // URL of the image
-                ],
               },
               unit_amount: price * 100,
             },

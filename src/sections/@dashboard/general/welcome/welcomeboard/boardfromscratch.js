@@ -142,11 +142,11 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 			</Card>
 		))}
 		</FormProvider>
-		{formFields.length < 5 && isFormValid && (
+		{/* {formFields.length < 5 && isFormValid && (
 			<Box sx={{pt: isDesktop ? 2 : 0, textAlign: isDesktop ? "left" : "center"}}>
 				<Button onClick={addFields}>Add director</Button>
 			</Box>
-		)}
+		)} */}
 		<Stack
 			direction="row"
 			alignItems="center"
@@ -221,7 +221,7 @@ const BoardFromScratch = ({onNextStep, dataFromPrevStep}) => (
 		}}
 		>
 		<Box sx={{ flexGrow: 1, pl: 2 }}>
-			Add from 3 to 5 worldwide celebrities who will be on your board.
+			Add from 3 worldwide celebrities who will be on your board.
 		</Box>
 		</Stack>
 

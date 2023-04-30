@@ -218,7 +218,7 @@ export default function PageBilling() {
                             Credit cost per board advice: 1
                         </Typography>
                         <Typography variant="body1" sx={{color: 'text.secondary', mb: 1.5}}>
-                            Time cost per board advice: 10 to 15 seconds
+                            Time cost per board advice: 20 to 25 seconds
                         </Typography>
                     </Box>
 

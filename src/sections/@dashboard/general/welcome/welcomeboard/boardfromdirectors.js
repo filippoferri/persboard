@@ -21,7 +21,7 @@ const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
     const handleSelectDirector = (directorId) => {
         if (selectedDirectors.includes(directorId)) {
             setSelectedDirectors(selectedDirectors.filter((id) => id !== directorId));
-        } else if (selectedDirectors.length < 5) {
+        } else if (selectedDirectors.length < 3) {
             setSelectedDirectors([...selectedDirectors, directorId]);
         }
     };
@@ -78,7 +78,7 @@ const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
                 <Grid item xs={12} sm={8} sx={{ display: "flex", alignItems: "center" }}>
                     <Box sx={{ flexGrow: 1 }}>
                         <Typography variant="p" gutterBottom>
-                            Select Your Virtual Directors. (max 5)
+                            Select Your 3 Virtual Directors.
                         </Typography>
                     </Box>
                 </Grid>
