@@ -22,9 +22,10 @@ DirectorCard.propTypes = {
   onDelete: PropTypes.func,
   boardroom: PropTypes.bool,
   isList: PropTypes.bool,
+  isBoard: PropTypes.bool,
 };
 
-export function DirectorCard({director, check, onDelete, boardroom, isList }) {
+export function DirectorCard({director, check, onDelete, boardroom, isList, isBoard }) {
 
   const [openDetails, setOpenDetails] = useState(false);
 
@@ -73,7 +74,7 @@ export function DirectorCard({director, check, onDelete, boardroom, isList }) {
           minHeight: 180,
           cursor: "pointer",
         }}
-        onClick={isList ? handleOpenDetails : null}
+        onClick={isList || isBoard ? handleOpenDetails : null}
       >
         <Box sx={{ position: 'relative', textAlign: "center" }}>
       
@@ -154,7 +155,7 @@ export function DirectorCard({director, check, onDelete, boardroom, isList }) {
         open={openDetails}
         onClose={handleCloseDetails}
         onDelete={() => handleDelete(director.id)}// pass the function to handle delete action
-        boardroom={boardroom}
+        boardroom={boardroom || isBoard}
       />
     </>
   );

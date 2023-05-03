@@ -94,7 +94,7 @@ export default function EditDirectorForm() {
       // const directorRef = doc(collection(db, 'directors'), uniqueDirectoryId);
       const directorRef = doc(db, 'users', user && user.uid, 'myDirectors', item.id);
       await updateDoc(directorRef, data);
-      await push(PATH_DASHBOARD.directors.root);
+      await push(PATH_DASHBOARD.yourBoard.build);
       enqueueSnackbar('Create success!');
     } catch (error) {
       console.error('Error adding director:', error);

@@ -80,7 +80,7 @@ export default function SuccessPage() {
         
             // Increment the user's credits
             await updateDoc(userRef, {
-            credits: increment(purchasedCredits),
+                credits: increment(purchasedCredits),
             });
         } catch (error) {
             console.error('Error updating credits:', error);

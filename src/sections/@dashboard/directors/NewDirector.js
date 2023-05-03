@@ -91,7 +91,7 @@ export default function NewDirector() {
       // const directorRef = doc(collection(db, 'directors'), uniqueDirectoryId);
       const directorRef = doc(collection(db, 'users', user && user.uid, 'myDirectors'));
       await setDoc(directorRef, data);
-      await push(PATH_DASHBOARD.directors.root);
+      await push(PATH_DASHBOARD.yourBoard.build);
       enqueueSnackbar('Create success!');
     } catch (error) {
       console.error('Error adding director:', error);
@@ -115,13 +115,13 @@ export default function NewDirector() {
         <Grid item xs={12} md={8}>
           <Card sx={{ p: 3 }}>
             <Box sx={{ mb: 3 }}>
-            <InputLabel shrink sx={{pl: 2}}>
+              <InputLabel shrink sx={{pl: 2}}>
                 Full Name (also famous)
               </InputLabel>
               <RHFTextField fullWidth name="fullName" />
             </Box>
             <Box sx={{ mb: 3 }}>
-            <InputLabel shrink sx={{pl: 2}}>
+              <InputLabel shrink sx={{pl: 2}}>
                 Role Director
               </InputLabel>
               <RHFTextField select name="role">

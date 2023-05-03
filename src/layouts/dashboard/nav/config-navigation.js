@@ -14,12 +14,13 @@ const ICONS = {
   ecommerce: icon('ic_ecommerce'),
   analytics: icon('ic_analytics'),
   dashboard: icon('ic_dashboard'),
-  boards: icon('ic_boards'),
+  yourBoard: icon('ic_boards'),
   projects: icon('ic_projects'),
   inspiration: icon('ic_inspiration'),
   chat: icon('ic_chat'),
   menuItem: icon('ic_menu_item'),
   faq: icon('ic_faq'),
+  directors: icon('ic_directors'),
 };
 
 const navConfig = [
@@ -30,8 +31,8 @@ const navConfig = [
     items: [
       { title: 'New Advice', path: PATH_DASHBOARD.welcome, icon: ICONS.menuItem },
       { title: 'Advice Hub', path: PATH_DASHBOARD.advices.root, icon: ICONS.chat },
-      { title: 'AI Directors', path: PATH_DASHBOARD.directors.root, icon: ICONS.boards },
-      // { title: 'Boards', path: PATH_DASHBOARD.boards, icon: ICONS.boards },
+      { title: 'Your Board', path: PATH_DASHBOARD.yourBoard.root, icon: ICONS.yourBoard },
+      // { title: 'AI Directors', path: PATH_DASHBOARD.directors.root, icon: ICONS.directors },
       // { title: 'One', path: PATH_DASHBOARD.one, icon: ICONS.dashboard },
       // { title: 'Two', path: PATH_DASHBOARD.two, icon: ICONS.ecommerce },
       // { title: 'Three', path: PATH_DASHBOARD.three, icon: ICONS.analytics },

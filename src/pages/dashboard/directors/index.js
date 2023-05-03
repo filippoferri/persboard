@@ -53,7 +53,8 @@ export default function PageDirectors() {
     const { enqueueSnackbar } = useSnackbar();
 
     const handleClick = () => {
-    router.push({ pathname: PATH_DASHBOARD.directors.newDirector});};
+        router.push({ pathname: PATH_DASHBOARD.directors.newDirector});
+    };
 
     const app = initializeApp(FIREBASE_API);
     const db = getFirestore(app);
@@ -72,7 +73,7 @@ export default function PageDirectors() {
         const unsubscribeDirectors = onSnapshot(directorsRef, (snapshot) => {
             const directorsData = [];
             snapshot.forEach((item) => {
-            directorsData.push({ id: item.id, ...item.data() });
+                directorsData.push({ id: item.id, ...item.data() });
             });
             setDirectors(directorsData);
             setIsLoading(false);
@@ -189,7 +190,7 @@ export default function PageDirectors() {
                     {isLoading ? (
                         <Skeleton variant="rectangular" width="100%" height={180} sx={{ borderRadius: 1 }} />
                     ) : null}
-                        {myDirectors.length > 0 && (
+                    {myDirectors.length > 0 && (
                         myDirectors.map((myDirector) => (
                             <DirectorCard key={myDirector.id} director={myDirector} onDelete={() => handleDelete(myDirector.id)} isList />
                         ))

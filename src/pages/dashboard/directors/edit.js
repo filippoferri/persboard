@@ -36,8 +36,12 @@ export default function PageEditDirector() {
               href: PATH_DASHBOARD.root,
             },
             {
-              name: 'AI Directors',
-              href: PATH_DASHBOARD.directors.root,
+              name: 'Your Board Of Directors',
+              href: PATH_DASHBOARD.yourBoard.root,
+            },
+            {
+              name: 'Build Your Board',
+              href: PATH_DASHBOARD.yourBoard.build,
             },
             { name: 'Edit Director' },
           ]}

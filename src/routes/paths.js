@@ -38,7 +38,10 @@ export const PATH_DASHBOARD = {
     newDirector: path(ROOTS_DASHBOARD, '/directors/new'),
     editDirector: path(ROOTS_DASHBOARD, '/directors/edit'),
   },
-  yourBoard: path(ROOTS_DASHBOARD, '/your-board'),
+  yourBoard: { 
+    root: path(ROOTS_DASHBOARD, '/your-board'),
+    build: path(ROOTS_DASHBOARD, '/your-board/build'),
+  },
   advices: {
     root: path(ROOTS_DASHBOARD, '/advice-hub'),
     boardroom: path(ROOTS_DASHBOARD, '/advice-hub/boardroom'),
