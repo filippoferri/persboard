@@ -1,5 +1,5 @@
 // @mui
-import { Stack, Chip, Box, Typography, Button, Tooltip } from '@mui/material';
+import { Stack, Chip, Tooltip } from '@mui/material';
 import PropTypes from 'prop-types';
 // Router
 import { useRouter } from 'next/router';
@@ -44,14 +44,12 @@ export default function BoardroomFooter({
     activeSoarAnalysis,
 }) {
 
-    const isDesktop = useResponsive('up', 'md');
+    // const isDesktop = useResponsive('up', 'md');
 
     const router = useRouter();
     const handleNewAdvice = () => {
         router.push({ pathname: PATH_DASHBOARD.welcome });
     };
-    const handleUpgrade = () => {
-        router.push({ pathname: PATH_DASHBOARD.billing.root });};
 
     const handleRequestFeature = () => {
         window.open('https://xmllse17mqf.typeform.com/to/tvBvCeiY', '_blank');

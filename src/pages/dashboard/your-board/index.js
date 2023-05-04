@@ -1,11 +1,11 @@
 // next
 import { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
-import { Container, Box, Typography, Stack, Card, IconButton, Grid, Skeleton } from '@mui/material';
+import { Container, Box, Typography, Stack, IconButton, Grid, Skeleton } from '@mui/material';
 import { m } from "framer-motion";
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, getDoc, getDocs, query, Doc, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, getDoc, doc, getDocs, query } from 'firebase/firestore';
 // Router
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -74,7 +74,7 @@ export default function PageBoards() {
         }
             
         const myBoardData = myBoardSnapshot.docs[0].data();
-        const directors = myBoardData.directors;
+        const { directors } = myBoardData;
 
         const loadedDirectorsRef = await Promise.all(
             directors.map(async (directorId) => {

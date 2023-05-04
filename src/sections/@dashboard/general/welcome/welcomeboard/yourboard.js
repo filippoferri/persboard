@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid, Box, Typography, Button, CircularProgress } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, onSnapshot, query, doc, getDoc, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, query, doc, getDoc, getDocs } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../../../config-global';
 // auth
 import { useAuthContext } from '../../../../../auth/useAuthContext';
@@ -11,8 +11,6 @@ import { useAuthContext } from '../../../../../auth/useAuthContext';
 import useResponsive from '../../../../../hooks/useResponsive';
 // sections
 import {DirectorCard} from '../../../directors/DirectorCard';
-import { suggestDirectors } from '../../../../../utils/compromise';
-
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +36,7 @@ const YourBoard = ({onNextStep, dataFromPrevStep}) => {
         }
 
         const myBoardData = myBoardSnapshot.docs[0].data();
-        const directors = myBoardData.directors;
+        const { directors } = myBoardData;
 
         const loadedDirectorsRef = await Promise.all(
             directors.map(async (directorId) => {

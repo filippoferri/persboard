@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Grid, Stack, Box, Typography, Tabs, Tab, IconButton } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, onSnapshot, query, doc, getDoc, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../../config-global';
 // auth
 import { useAuthContext } from '../../../../auth/useAuthContext';
@@ -89,7 +89,7 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 		// recover board
 		useEffect(() => {
 			checkHasBoard();
-		}, []);
+		}, [checkHasBoard]);
 		
 		const handleSubmit = (data) => {
 			onNextStep(data);

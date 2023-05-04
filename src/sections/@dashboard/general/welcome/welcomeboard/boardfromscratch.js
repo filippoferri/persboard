@@ -49,10 +49,10 @@ const FormFields = ({ methods, dataFromPrevStep, onNextStep }) => {
 	}
 
   	// Add new form fields
-	const addFields = () => {
-	const object = { fullName: '', role: 'Inspirer' }
-		setFormFields([...formFields, object])
-	}
+	// const addFields = () => {
+	// 	const object = { fullName: '', role: 'Inspirer' }
+	// 		setFormFields([...formFields, object])
+	// }
 
 	// Validate form fields
 	const isFormValid = formFields.every(field => field.fullName !== '');
