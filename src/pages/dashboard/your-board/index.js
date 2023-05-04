@@ -70,6 +70,7 @@ export default function PageBoards() {
 
         if (myBoardSnapshot.empty) {
             console.log('myBoard document does not exist');
+            setIsLoading(false)
             return;
         }
             
@@ -134,10 +135,10 @@ export default function PageBoards() {
                     <Grid item xs={12} md={10}>
                     {!isLoading ? (
                         <Stack 
-                            sx={{ p: 4, backgroundColor: "grey.100", border: 1, borderColor: "grey.300", borderRadius: 2 }}
-                            onClick={myBoard.length === 0 ? handleClick : null}>
+                            sx={{ p: 4, backgroundColor: "grey.100", border: 1, borderColor: "grey.300", borderRadius: 2, cursor: "pointer" }}
+                            onClick={myBoard ? handleClick : null}>
                             <Grid container sx={{ justifyContent: "center"}} spacing={4}>
-                                {myBoard.length > 0 || !isLoading ? (
+                                {myBoard.length > 0 ? (
                                     myBoard.map((myDirector, myDirectorIndex) => ( 
                                     <Grid item key={myDirectorIndex} xs={12} md={4} >
                                         <DirectorCard director={myDirector} isBoard />
@@ -184,7 +185,7 @@ export default function PageBoards() {
                         ) : 
                         <Skeleton variant="rectangular" width="100%" height={246} sx={{ borderRadius: 1 }} /> }
 
-                        {myBoard.length > 0 || !isLoading ? (
+                        {myBoard.length > 0 && !isLoading ? (
                         <Box sx={{ width: "100%", textAlign: "center", p: 2 }}>
                             <Typography variant="body1" onClick={handleClick} sx={{color: "primary.main", fontWeight: 'normal', cursor: "pointer"}}>Edit Your Board</Typography>
                         </Box>
