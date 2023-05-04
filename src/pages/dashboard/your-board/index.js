@@ -136,7 +136,7 @@ export default function PageBoards() {
                     {!isLoading ? (
                         <Stack 
                             sx={{ p: 4, backgroundColor: "grey.100", border: 1, borderColor: "grey.300", borderRadius: 2, cursor: "pointer" }}
-                            onClick={myBoard ? handleClick : null}>
+                            onClick={!myBoard ? handleClick : null}>
                             <Grid container sx={{ justifyContent: "center"}} spacing={4}>
                                 {myBoard.length > 0 ? (
                                     myBoard.map((myDirector, myDirectorIndex) => ( 
