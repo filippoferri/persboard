@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // hooks
-import useResponsive from '../../../../hooks/useResponsive';
+// import useResponsive from '../../../../hooks/useResponsive';
 
 // ----------------------------------------------------------------------
 

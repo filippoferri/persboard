@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 // @mui
 import { Grid, Stack, Box, Typography, Tabs, Tab, IconButton } from '@mui/material';
@@ -78,13 +78,13 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 
 		const handleChange = (event, newValue) => { setValue(newValue); };
 
-		const checkHasBoard = async () => {
+		const checkHasBoard = useCallback(async () => {
 			const myBoardRef = collection(db, 'users', user && user.uid, 'myBoard');
 			const querySnapshot = await getDocs(myBoardRef);
 			if (!querySnapshot.empty) {
 				setHasBoard(true);
 			}
-		};
+		}, [user]);
 
 		// recover board
 		useEffect(() => {
