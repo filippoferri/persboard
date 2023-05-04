@@ -84,7 +84,7 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 			if (!querySnapshot.empty) {
 				setHasBoard(true);
 			}
-		}, [user]);
+		}, [user, db]);
 
 		// recover board
 		useEffect(() => {
