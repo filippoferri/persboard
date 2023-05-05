@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Head from 'next/head';
 import { m } from "framer-motion";
-import { Box, Card, Divider, Container, Grid, Typography, IconButton, Skeleton, Button } from '@mui/material';
+import { Box, Card, Divider, Container, Grid, Typography, IconButton, Skeleton, Button, CircularProgress } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, onSnapshot, query, limit } from 'firebase/firestore';
@@ -65,6 +65,7 @@ export default function PageBoards() {
     const handleSelectDirector = (directorId) => {
         if (selectedDirectors.includes(directorId)) {
             setSelectedDirectors(selectedDirectors.filter((id) => id !== directorId));
+            setNeedDeselect(false);
         } else if (selectedDirectors.length < 3) {
             setSelectedDirectors([...selectedDirectors, directorId]);
         } else {
@@ -91,6 +92,7 @@ export default function PageBoards() {
 
     // Get directors
     useEffect(() => {
+        setIsLoading(true)
         const directorsRef = collection(db, 'directors');
         const myDirectorsRef = collection(db, 'users', user && user.uid, 'myDirectors');
         const unsubscribeDirectors = onSnapshot(directorsRef, (snapshot) => {
@@ -106,6 +108,7 @@ export default function PageBoards() {
                 myDirectorsData.push({ id: myDirectorsDoc.id, ...myDirectorsDoc.data() });
             });
             setMyDirectors(myDirectorsData);
+            setIsLoading(false)
         });
         return () => {
             unsubscribeDirectors();
@@ -124,6 +127,7 @@ export default function PageBoards() {
         if (myBoardSnapshot.empty) {
             console.log('myBoard document does not exist');
             setSelectedDirectors([]);
+            setNeedDeselect(false)
             return;
         }
             
@@ -194,7 +198,6 @@ export default function PageBoards() {
             animate="visible"
             variants={variants}
         >
-
             <Container maxWidth={themeStretch ? false : 'lg'}>
                 <Box sx={{pl: 2}}>
                     <CustomBreadcrumbs
@@ -217,6 +220,14 @@ export default function PageBoards() {
                 </Box> 
             </Container>
 
+            { isLoading ? ( 
+                <Container maxWidth={themeStretch ? false : 'lg'} sx={{ mb: 4 }}>
+                    <Grid container sx={{flexDirection: 'column', alignItems: "center" }}>
+                        <CircularProgress />
+                    </Grid>
+                </Container>
+            ) : (
+            <>
             <Container maxWidth={themeStretch ? false : 'lg'}>
                 <Grid container spacing={3} sx={{flexDirection: 'row', mb: 6}}>
                     <Grid item xs={12} md={6} sx={{ display: "flex", alignItems: "center" }}>
@@ -322,7 +333,8 @@ export default function PageBoards() {
                     )}
                 </Grid>
             </Container>
-
+            </>
+            )}
         </m.div>
         </>
     );

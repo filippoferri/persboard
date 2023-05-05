@@ -38,16 +38,16 @@ export default function BoardroomReport({
         <Stack sx={{ p:2.5}}>
 
             <Box>
-                <Typography variant="h4" sx={{ mb: 1, ml: 1 }}>
+                <Typography variant="h4" sx={{ mb: 1, ml: 2 }}>
                     Objective
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 3, ml: 1 }}>
+                <Typography variant="body1" sx={{ mb: 3, ml: 2 }}>
                     {question}
                 </Typography>
             </Box>
 
             <Box sx={{mb:3}}>
-                <Typography variant="h4" sx={{ mb: 1, ml: 1 }}>
+                <Typography variant="h4" sx={{ mb: 1, ml: 2}}>
                     Discussion
                 </Typography>
                 {discussion.length === 0 ? (
@@ -61,7 +61,7 @@ export default function BoardroomReport({
                                 backgroundColor: "#F4F6F8",
                                 p: 3,
                                 pl: isDesktop ? 8 : 3,
-                                borderRadius: 1,
+                                borderRadius: 2,
                                 mb: 1,
                                 position: "relative"
                             }}
@@ -97,7 +97,7 @@ export default function BoardroomReport({
 
             {swotAnalysis.length !== 0 || soarAnalysis.length !== 0 || scenarios.length !== 0  || plusMinus.length !== 0 || rationalConclusion.length !== 0 ? (
             <Box>
-                <Typography variant="h4" sx={{ mb: 1, ml: 1 }}>
+                <Typography variant="h4" sx={{ mb: 1, ml: 2 }}>
                     Make a decision
                 </Typography>
             </Box>
@@ -215,7 +215,7 @@ export default function BoardroomReport({
             {takeaways && takeaways.length !== 0 ? (
             <>
             <Box>
-                <Typography variant="h4" sx={{ mb: 1, ml: 1 }}>
+                <Typography variant="h4" sx={{ mb: 1, ml: 2 }}>
                     Next Steps
                 </Typography>
             </Box>

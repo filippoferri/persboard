@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 // @mui
-import { Grid, Stack, Box, Typography, Tabs, Tab, IconButton } from '@mui/material';
+import { Grid, Stack, Box, Typography, Tabs, Tab, IconButton, CircularProgress } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
@@ -69,6 +69,7 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 
 		const [value, setValue] = useState(0);
 		const [hasBoard, setHasBoard] = useState(false);
+		const [isLoading, setIsLoading] = useState(true);
 
 		const isDesktop = useResponsive('up', 'md');
 
@@ -84,12 +85,13 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 			if (!querySnapshot.empty) {
 				setHasBoard(true);
 			}
+			setIsLoading(false);
 		}, [user, db]);
 
 		// recover board
 		useEffect(() => {
 			checkHasBoard();
-		}, [checkHasBoard]);
+		}, [checkHasBoard, setIsLoading]);
 		
 		const handleSubmit = (data) => {
 			onNextStep(data);
@@ -140,115 +142,121 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 			</Grid>
 		</Stack>
 
-		<Grid container spacing={5} sx={{ display: "flex", flexGrow: 1 }}>
-			<Grid item xs={12} md={2} >
-				<Tabs 
-					value={value} 
-					onChange={handleChange} 
-					aria-label="tabs"
-					orientation= { isDesktop ? "vertical" : "horizontal" } 
-					sx={
-						isDesktop ?
-						{ borderRight: 1, borderColor:"grey.300", } : null
-					}
-				>
+		{!isLoading ? (
+			<Grid container spacing={5} sx={{ display: "flex", flexGrow: 1 }}>
+				<Grid item xs={12} md={2} >
+					<Tabs 
+						value={value} 
+						onChange={handleChange} 
+						aria-label="tabs"
+						orientation= { isDesktop ? "vertical" : "horizontal" } 
+						sx={
+							isDesktop ?
+							{ borderRight: 1, borderColor:"grey.300", } : null
+						}
+					>
+						{ hasBoard ? (
+							<Tab 
+								fullWidth 
+								label="Your Board" 
+								sx={{ 
+									justifyContent: "left",
+								}}
+								{...a11yProps(0)} />
+						) : null }
+						{ hasBoard ? (
+							<Tab 
+								fullWidth 
+								label={mode.humanled ? "From Scratch" : "From AI Selection" }
+								sx={{ 
+									justifyContent: "left",
+								}}
+								{...a11yProps(mode.humanled ? 3 : 1)} />
+						) : (
+							<Tab 
+								fullWidth 
+								label={mode.humanled ? "From Scratch" : "From AI Selection" }
+								sx={{ 
+									justifyContent: "left",
+								}}
+								{...a11yProps(mode.humanled ? 2 : 0)} />					
+						)}
+						{ hasBoard ? (
+							<Tab 
+								fullWidth 
+								label="From AI Directors"
+								sx={{ 
+									justifyContent: "left",
+								}}
+								{...a11yProps(2)} />
+						) : (
+							<Tab 
+								fullWidth 
+								label="From AI Directors"
+								sx={{ 
+									justifyContent: "left",
+								}}
+								{...a11yProps(1)} />
+						)}
+						{ hasBoard ? (
+							<Tab 
+								fullWidth 
+								label={mode.humanled ? "From AI Selection" : "From Scratch" }
+								sx={{ 
+									justifyContent: "left",
+								}}
+								{...a11yProps(mode.humanled ? 3 : 1)} />
+						) : (
+							<Tab 
+								fullWidth 
+								label={mode.humanled ? "From AI Selection" : "From Scratch" }
+								sx={{ 
+									justifyContent: "left",
+								}}
+								{...a11yProps(mode.humanled ? 0 : 2)} />						
+						)}
+					</Tabs>
+				</Grid>
+				<Grid item xs={12} md={10}>
 					{ hasBoard ? (
-						<Tab 
-							fullWidth 
-							label="Your Board" 
-							sx={{ 
-								justifyContent: "left",
-							}}
-							{...a11yProps(0)} />
+						<TabPanel value={value} index={0}>
+							<YourBoard onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />	
+						</TabPanel>
 					) : null }
 					{ hasBoard ? (
-						<Tab 
-							fullWidth 
-							label={mode.humanled ? "From Scratch" : "From AI Selection" }
-							sx={{ 
-								justifyContent: "left",
-							}}
-							{...a11yProps(mode.humanled ? 3 : 1)} />
+						<TabPanel value={value} index={mode.humanled ? 3 : 1}>
+							<BoardFromSelection onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />	
+						</TabPanel>
 					) : (
-						<Tab 
-							fullWidth 
-							label={mode.humanled ? "From Scratch" : "From AI Selection" }
-							sx={{ 
-								justifyContent: "left",
-							}}
-							{...a11yProps(mode.humanled ? 2 : 0)} />					
+						<TabPanel value={value} index={mode.humanled ? 2 : 0}>
+							<BoardFromSelection onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />	
+						</TabPanel>				
 					)}
 					{ hasBoard ? (
-						<Tab 
-							fullWidth 
-							label="From AI Directors"
-							sx={{ 
-								justifyContent: "left",
-							}}
-							{...a11yProps(2)} />
+						<TabPanel value={value} index={2}>
+							<BoardFromDirectors onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
+						</TabPanel>
 					) : (
-						<Tab 
-							fullWidth 
-							label="From AI Directors"
-							sx={{ 
-								justifyContent: "left",
-							}}
-							{...a11yProps(1)} />
+						<TabPanel value={value} index={1}>
+							<BoardFromDirectors onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
+						</TabPanel>				
 					)}
 					{ hasBoard ? (
-						<Tab 
-							fullWidth 
-							label={mode.humanled ? "From AI Selection" : "From Scratch" }
-							sx={{ 
-								justifyContent: "left",
-							}}
-							{...a11yProps(mode.humanled ? 3 : 1)} />
+						<TabPanel value={value} index={mode.humanled ? 1 : 3}>
+							<BoardFromScratch onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
+						</TabPanel>
 					) : (
-						<Tab 
-							fullWidth 
-							label={mode.humanled ? "From AI Selection" : "From Scratch" }
-							sx={{ 
-								justifyContent: "left",
-							}}
-							{...a11yProps(mode.humanled ? 0 : 2)} />						
+						<TabPanel value={value} index={mode.humanled ? 0 : 2}>
+							<BoardFromScratch onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
+						</TabPanel>				
 					)}
-				</Tabs>
+				</Grid>
 			</Grid>
-			<Grid item xs={12} md={10}>
-				{ hasBoard ? (
-					<TabPanel value={value} index={0}>
-						<YourBoard onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />	
-					</TabPanel>
-				) : null }
-				{ hasBoard ? (
-					<TabPanel value={value} index={mode.humanled ? 3 : 1}>
-						<BoardFromSelection onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />	
-					</TabPanel>
-				) : (
-					<TabPanel value={value} index={mode.humanled ? 2 : 0}>
-						<BoardFromSelection onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />	
-					</TabPanel>				
-				)}
-				{ hasBoard ? (
-					<TabPanel value={value} index={2}>
-						<BoardFromDirectors onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
-					</TabPanel>
-				) : (
-					<TabPanel value={value} index={1}>
-						<BoardFromDirectors onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
-					</TabPanel>				
-				)}
-				{ hasBoard ? (
-					<TabPanel value={value} index={mode.humanled ? 1 : 3}>
-						<BoardFromScratch onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
-					</TabPanel>
-				) : (
-					<TabPanel value={value} index={mode.humanled ? 0 : 2}>
-						<BoardFromScratch onNextStep={handleSubmit} dataFromPrevStep={dataFromPrevStep} />
-					</TabPanel>				
-				)}
-			</Grid>
-		</Grid>
+		) : (
+			<Box sx={{ display: 'flex', justifyContent: 'center' }}>
+				<CircularProgress />
+			</Box>
+		)}
 	</>
 	);
 }
