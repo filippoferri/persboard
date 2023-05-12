@@ -17,6 +17,7 @@ BoardroomReport.propTypes = {
     soarAnalysis: PropTypes.array,
     scenarios: PropTypes.array,
     plusMinus: PropTypes.array,
+    troubleshoot: PropTypes.array,
     rationalConclusion: PropTypes.array,
 };
 
@@ -30,6 +31,7 @@ export default function BoardroomReport({
     scenarios,
     plusMinus,
     rationalConclusion,
+    troubleshoot,
 }) {
 
     const isDesktop = useResponsive('up', 'md');
@@ -95,7 +97,7 @@ export default function BoardroomReport({
                 )}
             </Box>
 
-            {swotAnalysis.length !== 0 || soarAnalysis.length !== 0 || scenarios.length !== 0  || plusMinus.length !== 0 || rationalConclusion.length !== 0 ? (
+            {swotAnalysis.length !== 0 || soarAnalysis.length !== 0 || scenarios.length !== 0  || plusMinus.length !== 0 || troubleshoot.length !== 0 || rationalConclusion.length !== 0 ? (
             <Box>
                 <Typography variant="h4" sx={{ mb: 1, ml: 2 }}>
                     Make a decision
@@ -190,6 +192,23 @@ export default function BoardroomReport({
                 </Grid> 
             </Stack>
             ) : null}
+
+            {troubleshoot && troubleshoot.length !== 0 ? (
+            <Stack sx={{
+                p: 2,
+                border: 1,
+                borderColor: "grey.300",
+                borderRadius: 1,
+                color: 'grey.800',
+                mb: 2, 
+            }}>
+                <Grid container sx={{ mb: 4, flexDirection: "row"}}>
+                    <Grid item sx={{ display: "flex" }}>
+                        <CustomList listSubheader="Troubleshoot" takeaways={troubleshoot} icon="eva:alert-triangle-outline" />
+                    </Grid>
+                </Grid> 
+            </Stack>
+            ) : null }
 
             {rationalConclusion && rationalConclusion.length !== 0 ? (
             <Stack sx={{

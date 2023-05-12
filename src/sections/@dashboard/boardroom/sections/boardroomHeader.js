@@ -31,6 +31,7 @@ BoardroomHeader.propTypes = {
     plusMinus: PropTypes.array,
     rationalConclusion: PropTypes.array,
     takeaways: PropTypes.array,
+    troubleshoot: PropTypes.array,
     handleRefresh: PropTypes.func,
     isNew: PropTypes.bool,
 };
@@ -45,6 +46,7 @@ export default function BoardroomHeader({aid, directors, question,
     plusMinus,
     rationalConclusion,
     takeaways,
+    troubleshoot,
     handleRefresh, isNew}) {
 
     const app = initializeApp(FIREBASE_API);
@@ -62,6 +64,7 @@ export default function BoardroomHeader({aid, directors, question,
                 question,
                 directors,
                 discussion,
+                avatar,
                 dateAdd: Timestamp.fromDate(new Date())
             };
             if (swotAnalysis.length !== 0) {
@@ -81,6 +84,9 @@ export default function BoardroomHeader({aid, directors, question,
             }
             if (takeaways.length !== 0) {
                 data.takeaways = takeaways;
+            }
+            if (troubleshoot.length !== 0) {
+                data.troubleshoot = troubleshoot;
             }
             await setDoc(myBoardroomsRef, data);
             enqueueSnackbar('Discussion saved!');
@@ -147,6 +153,7 @@ export default function BoardroomHeader({aid, directors, question,
                         rationalConclusion={rationalConclusion} 
                         swotAnalysis={swotAnalysis} 
                         soarAnalysis={soarAnalysis} 
+                        troubleshoot={troubleshoot}
                         />
 
                     { isNew ? (

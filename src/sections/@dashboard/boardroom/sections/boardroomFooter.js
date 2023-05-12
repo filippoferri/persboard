@@ -14,16 +14,18 @@ BoardroomFooter.propTypes = {
     isPaid: PropTypes.bool,
     onGenerateTakeaways: PropTypes.func,
     activeTakeways: PropTypes.bool,
-    onGenerateScenarios: PropTypes.func,
-    activeScenarios: PropTypes.bool,
-    onGeneratePlusMinus: PropTypes.func,
-    activePlusMinus: PropTypes.bool,
-    onGenerateRationalConclusion: PropTypes.func,
-    activeRationalConclusion: PropTypes.bool,
     onGenerateSwotAnalysis: PropTypes.func,
     activeSwotAnalysis: PropTypes.bool,    
     onGenerateSoarAnalysis: PropTypes.func,
     activeSoarAnalysis: PropTypes.bool,
+    onGenerateScenarios: PropTypes.func,
+    activeScenarios: PropTypes.bool,
+    onGeneratePlusMinus: PropTypes.func,
+    activePlusMinus: PropTypes.bool,
+    onGenerateTroubleshoot: PropTypes.func,
+    activeTroubleshoot: PropTypes.bool,
+    onGenerateRationalConclusion: PropTypes.func,
+    activeRationalConclusion: PropTypes.bool,
 };
 
 // ----------------------------------------------------------------------
@@ -42,6 +44,8 @@ export default function BoardroomFooter({
     activeSwotAnalysis,
     onGenerateSoarAnalysis,
     activeSoarAnalysis,
+    onGenerateTroubleshoot,
+    activeTroubleshoot,
 }) {
 
     // const isDesktop = useResponsive('up', 'md');
@@ -82,7 +86,7 @@ export default function BoardroomFooter({
                 </Tooltip>
                 <Tooltip title={ isPaid ? "Provide SOAR analysis" : "Buy credits to unlock" } placement="top">
                     <div>
-                    <Chip label="SOAR Analysis" color="primary" onClick={onGenerateSoarAnalysis} disabled={activeSoarAnalysis || !isPaid} />
+                    <Chip label="SOAR" color="primary" onClick={onGenerateSoarAnalysis} disabled={activeSoarAnalysis || !isPaid} />
                     </div>
                 </Tooltip>
                 <Tooltip title={ isPaid ? "Define best-case and worst-case scenarios" : "Buy credits to unlock" } placement="top">
@@ -92,7 +96,12 @@ export default function BoardroomFooter({
                 </Tooltip>
                 <Tooltip title={ isPaid ? "Collect pluses and minuses" : "Buy credits to unlock" } placement="top">
                     <div>
-                    <Chip label="Pluses (+) and Minuses (-)" color="primary" onClick={onGeneratePlusMinus} disabled={activePlusMinus || !isPaid} />
+                    <Chip label="Pluses vs Minuses" color="primary" onClick={onGeneratePlusMinus} disabled={activePlusMinus || !isPaid} />
+                    </div>
+                </Tooltip>
+                <Tooltip title={ isPaid ? "Identify the barriers to success" : "Buy credits to unlock" } placement="top">
+                    <div>
+                    <Chip label="Troubleshoot" color="primary" onClick={onGenerateTroubleshoot} disabled={activeTroubleshoot || !isPaid} />
                     </div>
                 </Tooltip>
                 <Tooltip title={ isPaid ? "Find a rational conclusion" : "Buy credits to unlock" } placement="top">

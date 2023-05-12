@@ -47,15 +47,15 @@ export default function AdvisoryBoard({
                 <List>
                 {directors.map((director, index) => (
                     <ListItem key={index} disablePadding>
-                    <ListItemButton onClick={() => handleOpenDetails(director)}>
-                        <ListItemAvatar>
-                        <CustomAvatar src={director.avatar} alt={director.fullName} name={director.fullName} />
-                        </ListItemAvatar>
-                        <ListItemText
-                            primary={director.fullName ? director.role : director.fullName}
-                            secondary={director.fullName ? director.fullName: director.role}
-                        />
-                    </ListItemButton>
+                        <ListItemButton onClick={() => handleOpenDetails(director)}>
+                            <ListItemAvatar>
+                                <CustomAvatar src={director.avatar} alt={director.fullName} name={director.fullName} />
+                            </ListItemAvatar>
+                            <ListItemText
+                                primary={director.fullName ? director.role : director.fullName}
+                                secondary={director.fullName ? director.fullName: director.role}
+                            />
+                        </ListItemButton>
                     </ListItem>
                 ))}
                 </List>

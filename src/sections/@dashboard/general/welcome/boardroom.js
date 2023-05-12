@@ -29,6 +29,7 @@ import {generatePlusMinusLC} from '../../../../utils/generatePlusMinusLC';
 import {generateRationalConclusionLC} from '../../../../utils/generateRationalConclusionLC';
 import {generateSwotAnalysisLC} from '../../../../utils/generateSwotAnalysisLC';
 import {generateSoarAnalysisLC} from '../../../../utils/generateSoarAnalysisLC';
+import {generateTroubleshootLC} from '../../../../utils/generateTroubleshootLC';
 import ThinkTime from '../../../../utils/thinkTime';
 
 // ----------------------------------------------------------------------
@@ -65,6 +66,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     const [scenarios, setScenarios] = useState([]);
     const [plusMinus, setPlusMinus] = useState([]);
     const [rationalConclusion, setRationalConclusion] = useState([]);
+    const [troubleshoot, setTroubleshoot] = useState([]);
     const [isThinking, setThinking] = useState(false);
 
     // const data = [
@@ -233,6 +235,17 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         setThinking(false); // hide the loading state
     };
 
+    const handleTroubleshoot = async () => {
+        setThinking(true);
+        // Generate scenarios after setting the discussion
+        const discussionText = discussion
+        .map(({ text }) => text) // extract the "text" property from each object
+        .join('\n');
+        const generatedTroubleshoot = await generateTroubleshootLC(discussionText);
+        setTroubleshoot(generatedTroubleshoot);
+        setThinking(false); // hide the loading state
+    };
+
     const confettiProps = {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -311,6 +324,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                     rationalConclusion={rationalConclusion}
                     swotAnalysis={swotAnalysis}
                     soarAnalysis={soarAnalysis}
+                    troubleshoot={troubleshoot}
                     handleRefresh={handleRefresh}
                     isNew
                 />
@@ -491,6 +505,23 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                             </Stack>
                             ) : null }
 
+                            {troubleshoot.length !== 0 ? (
+                            <Stack sx={{
+                                p: 2,
+                                border: 1,
+                                borderColor: "grey.300",
+                                borderRadius: 2,
+                                color: 'grey.800',
+                                mb: 2, 
+                            }}>
+                                <Grid container sx={{ mb: 4, flexDirection: "row"}}>
+                                    <Grid item sx={{ display: "flex" }}>
+                                        <CustomList listSubheader="Troubleshoot" takeaways={troubleshoot} icon="eva:alert-triangle-outline" />
+                                    </Grid>
+                                </Grid> 
+                            </Stack>
+                            ) : null }
+
                             {rationalConclusion.length !== 0 ? (
                             <Stack sx={{
                                 p: 4,
@@ -542,6 +573,8 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                     activeSwotAnalysis={swotAnalysis.length !== 0}
                     onGenerateSoarAnalysis={handleSoarAnalysis}
                     activeSoarAnalysis={soarAnalysis.length !== 0}
+                    onGenerateTroubleshoot={handleTroubleshoot}
+                    activeTroubleshoot={troubleshoot.length !== 0}
                     />
                 ) : null }
             </Stack>

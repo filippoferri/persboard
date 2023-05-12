@@ -46,6 +46,7 @@ export default function BoardroomView() {
     const plusMinus = adviceData.plusMinus || [];
     const rationalConclusion = adviceData.rationalConclusion || [];
     const takeaways = adviceData.takeaways || [];
+    const troubleshoot = adviceData.troubleshoot || [];
 
     // Retrieve data from Firestore using `aid`
     const generateDiscussion = useCallback(async () => {
@@ -105,7 +106,8 @@ export default function BoardroomView() {
             scenarios={scenarios} 
             plusMinus={plusMinus} 
             rationalConclusion={rationalConclusion}
-            takeaways={takeaways} 
+            takeaways={takeaways}
+            troubleshoot={troubleshoot}
             aid={aid}
         />
 

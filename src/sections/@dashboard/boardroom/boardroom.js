@@ -21,6 +21,8 @@ Boardroom.propTypes = {
     rationalConclusion: PropTypes.array,
     swotAnalysis: PropTypes.array,
     soarAnalysis: PropTypes.array,
+    troubleshoot: PropTypes.array,
+
 };
 
 // ----------------------------------------------------------------------
@@ -36,6 +38,7 @@ export default function Boardroom( {
     rationalConclusion,
     swotAnalysis,
     soarAnalysis,
+    troubleshoot,
 } ) {
 
     return (
@@ -55,6 +58,7 @@ export default function Boardroom( {
                         rationalConclusion={rationalConclusion} 
                         swotAnalysis={swotAnalysis} 
                         soarAnalysis={soarAnalysis} 
+                        troubleshoot={troubleshoot} 
                         aid={aid}
                     />
         
@@ -75,6 +79,7 @@ export default function Boardroom( {
                                 rationalConclusion={rationalConclusion} 
                                 swotAnalysis={swotAnalysis} 
                                 soarAnalysis={soarAnalysis} 
+                                troubleshoot={troubleshoot}
                             />
                         </Stack>
 
