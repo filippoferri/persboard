@@ -19,7 +19,7 @@ const CustomList = forwardRef(({ icon, takeaways, listSubheader, sx, ...other },
         {Array.isArray(takeaways) && takeaways.map((takeaway, index) => (
             <ListItem key={index} sx={{ display: "flex", alignItems: "flex-start" }}>
                 <ListItemIcon>
-                    <Iconify icon={icon ? icon : "eva:arrow-forward-outline"} />
+                    <Iconify icon={icon || "eva:arrow-forward-outline"} />
                 </ListItemIcon>
                 <ListItemText key={index} primary={takeaway.text} />
             </ListItem>
