@@ -64,7 +64,6 @@ export default function BoardroomHeader({aid, directors, question,
                 question,
                 directors,
                 discussion,
-                avatar,
                 dateAdd: Timestamp.fromDate(new Date())
             };
             if (swotAnalysis.length !== 0) {

@@ -2,10 +2,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Head from 'next/head';
 import { m } from "framer-motion";
-import { Box, Card, Divider, Container, Grid, Typography, IconButton, Skeleton, Button, CircularProgress } from '@mui/material';
+import { Box, Divider, Container, Grid, Typography, Skeleton, Button, CircularProgress } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, onSnapshot, query, limit } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, getDocs, updateDoc, onSnapshot, query } from 'firebase/firestore';
 // Router
 import { useRouter } from 'next/router';
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -18,10 +18,9 @@ import DashboardLayout from '../../../layouts/dashboard';
 // components
 import { useSettingsContext } from '../../../components/settings';
 import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import Iconify from '../../../components/iconify';
 import { useSnackbar } from '../../../components/snackbar';
 // hooks
-import useResponsive from '../../../hooks/useResponsive';
+// import useResponsive from '../../../hooks/useResponsive';
 // sections
 import {DirectorCard} from '../../../sections/@dashboard/directors/DirectorCard';
 
@@ -49,7 +48,6 @@ const variants = {
 
 export default function PageBoards() {
     const { themeStretch } = useSettingsContext();
-    const isDesktop = useResponsive('up', 'md');
     const [selectedDirectors, setSelectedDirectors] = useState([]);
     const [premiumDirectors, setPremiumDirectors] = useState([]);
     const [myDirectors, setMyDirectors] = useState([]);
@@ -132,7 +130,7 @@ export default function PageBoards() {
         }
             
         const myBoardData = myBoardSnapshot.docs[0].data();
-        const directors = myBoardData.directors;
+        const { directors } = myBoardData;
 
         setSelectedDirectors(directors);
         setIsUpdate(true)
