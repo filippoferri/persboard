@@ -14,7 +14,7 @@ const getColorByName = (name) => {
   if (['K', 'D', 'Y', 'B', 'O'].includes(getCharAtName(name))) return '#e666cc';
   if (['P', 'E', 'R', 'S', 'U'].includes(getCharAtName(name))) return '#28c2d1';
   if (['V', 'W', 'X', 'M', 'Z'].includes(getCharAtName(name))) return '#fa97a1';
-  return '#4633dd';
+  return 'transparent';
 };
 
 // ----------------------------------------------------------------------
