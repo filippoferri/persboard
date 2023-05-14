@@ -31,7 +31,7 @@ export const generateTroubleshootLC = async (discussion) => {
 
         const chatPrompt = ChatPromptTemplate.fromPromptMessages([
             SystemMessagePromptTemplate.fromTemplate(
-                `As a director on the personal board, identify the top three barriers to success from a given advice.`
+                `As a director on the personal board, identify maximum top ten barriers to success from a given advice.`
             ),
             HumanMessagePromptTemplate.fromTemplate(
                 `Given the following discussion: "{discussion}", identify the troubleshoot\n\n{format_instructions}`
