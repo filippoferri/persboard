@@ -41,7 +41,7 @@ export default function Header({ isOffset }) {
       >
         <Logo />
 
-        <Link variant="subtitle2" color="inherit">
+        <Link variant="subtitle2" color="inherit" href="mailto:help@personalboard.ai">
           Need Help?
         </Link>
       </Toolbar>

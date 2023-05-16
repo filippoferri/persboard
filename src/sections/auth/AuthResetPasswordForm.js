@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 // next
 import { useRouter } from 'next/router';
@@ -5,7 +6,9 @@ import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 // @mui
-import { LoadingButton } from '@mui/lab';
+import { LoadingButton, Typography } from '@mui/lab';
+// auth
+import { useAuthContext } from '../../auth/useAuthContext';
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // components
@@ -16,13 +19,15 @@ import FormProvider, { RHFTextField } from '../../components/hook-form';
 export default function AuthResetPasswordForm() {
   const { push } = useRouter();
 
+  const { resetPassword } = useAuthContext();
+  const [submitMessage, setSubmitMessage] = useState(false);
+
   const ResetPasswordSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('Email must be a valid email address'),
   });
 
   const methods = useForm({
     resolver: yupResolver(ResetPasswordSchema),
-    defaultValues: { email: 'demo@personalboard.ai' },
   });
 
   const {
@@ -34,16 +39,18 @@ export default function AuthResetPasswordForm() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       sessionStorage.setItem('email-recovery', data.email);
-      push(PATH_AUTH.newPassword);
+      await resetPassword(data.email);
+      push(PATH_AUTH.checkEmail);
     } catch (error) {
-      console.error(error);
+      console.error('Error sending password reset email:', error);
     }
   };
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <RHFTextField name="email" label="Email address" />
-
+      <RHFTextField name="email" 
+        label="Email address"
+        />
       <LoadingButton
         fullWidth
         size="large"

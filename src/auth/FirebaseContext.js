@@ -13,6 +13,7 @@ import {
   TwitterAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import { getFirestore, collection, doc, getDoc, setDoc, Timestamp } from 'firebase/firestore';
 // next
@@ -162,6 +163,16 @@ export function AuthProvider({ children }) {
     signOut(AUTH);
   }, []);
 
+  // RESET PASSWORD
+  const resetPassword = useCallback(async (email) => {
+    try {
+      await sendPasswordResetEmail(AUTH, email);
+      console.log('Password reset email sent');
+    } catch (error) {
+      console.error('Error sending password reset email:', error);
+    }
+  }, []);
+
   const memoizedValue = useMemo(
     () => ({
       isInitialized: state.isInitialized,
@@ -174,6 +185,7 @@ export function AuthProvider({ children }) {
       loginWithTwitter,
       register,
       logout,
+      resetPassword,
     }),
     [
       state.isAuthenticated,
@@ -185,6 +197,7 @@ export function AuthProvider({ children }) {
       loginWithTwitter,
       register,
       logout,
+      resetPassword,
     ]
   );
 
