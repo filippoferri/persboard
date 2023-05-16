@@ -7,7 +7,7 @@ const router = useRouter();
 
 const handleGoBack = () => {
     // todo: Replace with the route you want to redirect to
-    router.push('/dashboard/billing');
+    router.push('/dashboard/welcome');
 };
 
 const emailRecovery =

@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 // next
 import { useRouter } from 'next/router';
@@ -20,7 +19,6 @@ export default function AuthResetPasswordForm() {
   const { push } = useRouter();
 
   const { resetPassword } = useAuthContext();
-  const [submitMessage, setSubmitMessage] = useState(false);
 
   const ResetPasswordSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('Email must be a valid email address'),
