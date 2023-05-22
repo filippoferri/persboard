@@ -141,6 +141,8 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                     role: 'Advisory'
                 }
             ]);
+
+            enqueueSnackbar('You have reached the limit of available credits.', { variant: 'error' });
             
             return;
         }
@@ -282,7 +284,9 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     });
         
         return unsubscribe;
-    }, [user, user.uid, setCredits]);  
+
+        // eslint-disable-next-line
+    }, [user, user.uid, setCredits]);
 
     return (
     <>
@@ -572,7 +576,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                     </Stack>
                 </Stack>
 
-                {discussion.length > 0 ? (
+                {discussion.length > 1 ? (
                 <BoardroomFooter 
                     isNew 
                     isPaid={user.tier === "paid"} 

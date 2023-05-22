@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 // @mui
-import { LoadingButton, Typography } from '@mui/lab';
+import { LoadingButton } from '@mui/lab';
 // auth
 import { useAuthContext } from '../../auth/useAuthContext';
 // routes
