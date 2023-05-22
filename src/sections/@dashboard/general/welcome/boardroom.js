@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 // firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, updateDoc, getDoc, increment } from 'firebase/firestore';
+import { getFirestore, doc, updateDoc, getDoc, increment, onSnapshot } from 'firebase/firestore';
 // import { increment } from 'firebase/firestore';
 import { FIREBASE_API } from '../../../../config-global';
 // auth
@@ -268,6 +268,21 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         }
         // eslint-disable-next-line
     }, [loadedDirectors]);
+
+    useEffect(() => {
+        if (!user) {
+            setCredits(null);
+            return () => {};
+        }
+        
+        const creditsRef = doc(db, 'users', user.uid);
+        const unsubscribe = onSnapshot(creditsRef, (snapshot) => {
+            const data = snapshot.data();
+            setCredits(data.credits);
+    });
+        
+        return unsubscribe;
+    }, [user, user.uid, setCredits]);  
 
     return (
     <>

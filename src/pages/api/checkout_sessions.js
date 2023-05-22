@@ -7,8 +7,6 @@ export default async function handler(req, res) {
     try {
       const { quantity, price } = req.body;
 
-      console.log('quantity', quantity);
-
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         allow_promotion_codes: true,

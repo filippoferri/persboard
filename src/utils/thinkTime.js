@@ -24,8 +24,6 @@ export default function ThinkTime(isHelp) {
     const [elapsedTime, setElapsedTime] = useState(0);
     const [thinkingIndex, setThinkingIndex] = useState(0);
 
-    console.log('isHelp', isHelp)
-
     const thinking = isHelp ? thinkingVariations2 : thinkingVariations1;
 
     useEffect(() => {
@@ -40,7 +38,7 @@ export default function ThinkTime(isHelp) {
 
     return (
         <Typography variant="body1" align="left" sx={{color: "grey.600", mb: 2 }}>
-            {thinking[thinkingIndex]} <br />({elapsedTime} seconds)
+            {thinking[thinkingIndex]}
         </Typography>
     );
 };
