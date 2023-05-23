@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Stack, IconButton, InputAdornment, Alert } from '@mui/material';
+import { Stack, IconButton, InputAdornment, Alert, FormControlLabel, Checkbox, Typography, Link } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // auth
 import { useAuthContext } from '../../auth/useAuthContext';
@@ -88,6 +88,28 @@ export default function AuthRegisterForm() {
             ),
           }}
         />
+
+        <Stack sx={{ pt: 0, pb: 2 }}>
+          <FormControlLabel 
+            control={<Checkbox />} 
+            sx={{ mt: "0!important" }}
+            label={
+              <Typography
+                      component="div"
+                      sx={{ color: 'text.secondary', mt: 3, typography: 'body1' }}
+                    >
+                      {'By signing up, I agree to '}
+                      <Link href="https://personalboard.ai/privacy-policy" underline="always" color="text.primary">
+                        Terms And Conditions
+                      </Link>
+                      {' and '}
+                      <Link href="https://personalboard.ai/terms-conditions" underline="always" color="text.primary">
+                        Privacy Policy
+                      </Link>
+                      .
+              </Typography>
+            } />
+          </Stack>
 
         <LoadingButton
           fullWidth
