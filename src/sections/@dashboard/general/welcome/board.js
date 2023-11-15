@@ -12,7 +12,7 @@ import { useAuthContext } from '../../../../auth/useAuthContext';
 // hooks
 import useResponsive from '../../../../hooks/useResponsive';
 
-import BoardFromScratch from './welcomeboard/boardfromscratch';
+// import BoardFromScratch from './welcomeboard/boardfromscratch';
 import BoardFromDirectors from './welcomeboard/boardfromdirectors';
 import BoardFromSelection from './welcomeboard/boardfromselection';
 import YourBoard from './welcomeboard/yourboard';
@@ -98,11 +98,11 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 		};
 
 		// recover preferences
-		const [mode, setMode] = useState({
-			quality: true,
-			toneCoincise: true,
-			humanled: true,
-		});
+		// const [mode, setMode] = useState({
+		// 	quality: true,
+		// 	toneCoincise: true,
+		// 	humanled: true,
+		// });
 
 		useEffect(() => {
 			const savedMode = JSON.parse(localStorage.getItem('mode'));
