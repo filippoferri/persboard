@@ -74,11 +74,11 @@ const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
 
     return (
         <>
-            <Grid container spacing={3} sx={{flexDirection: 'row', mb: 6}}>
+            <Grid container spacing={3} sx={{flexDirection: 'row', mb: 6 }}>
                 <Grid item xs={12} sm={8} sx={{ display: "flex", alignItems: "center" }}>
                     <Box sx={{ flexGrow: 1 }}>
                         <Typography variant="p" gutterBottom>
-                            Select Your 3 Virtual Directors.
+                            Select Your 3 Directors.
                         </Typography>
                     </Box>
                 </Grid>

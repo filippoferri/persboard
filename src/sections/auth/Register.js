@@ -21,10 +21,10 @@ export default function Register() {
       <AuthRegisterForm />
 
       <Stack direction="row" spacing={0.5} sx={{mt:6, justifyContent: "center"}}>
-          <Typography variant="body1"> Don&lsquo;t have an account yet? </Typography>
+          <Typography variant="body1">Already have an account?</Typography>
 
           <Link component={NextLink} href={PATH_AUTH.login} variant="body1">
-            Sign in
+            Sign In
           </Link>
         </Stack>
 

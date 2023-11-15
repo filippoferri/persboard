@@ -78,7 +78,7 @@ export default function BoardroomDrawer({directors}) {
                 justifyContent="center"
                 >
                 <>
-                    <Typography sx={{ fontWeight: "bold" , color: "grey.600"}}>Advisory Board</Typography>
+                    <Typography sx={{ fontWeight: "bold" , color: "grey.600"}}>Your Board</Typography>
                     <Box sx={{ flexGrow: 1 }} />
                 </>
 

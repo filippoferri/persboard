@@ -23,6 +23,8 @@ export const generateTakeawaysLC = async (discussion) => {
             compression: true,
         });
 
+        console.log('Discussion', discussion)
+
         const parser = StructuredOutputParser.fromNamesAndDescriptions({
             takeaways: "provide a array of action items",
         });

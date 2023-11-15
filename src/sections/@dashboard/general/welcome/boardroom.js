@@ -22,7 +22,8 @@ import BoardroomFooter from '../../boardroom/sections/boardroomFooter';
 // hooks
 import useResponsive from '../../../../hooks/useResponsive';
 // Utils
-import {generateAdviceLC} from '../../../../utils/generateAdviceLC';
+// import {generateAdviceLC} from '../../../../utils/generateAdviceLC';
+import {generateDiscussionLC} from '../../../../utils/generateDiscussionLC';
 import {generateTakeawaysLC} from '../../../../utils/generateTakeawaysLC';
 import {generateScenariosLC} from '../../../../utils/generateScenariosLC';
 import {generatePlusMinusLC} from '../../../../utils/generatePlusMinusLC';
@@ -147,11 +148,14 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             return;
         }
     
-        const adviceReady = await generateAdviceLC(loadedDirectors, question, user);
+        const adviceReady = await generateDiscussionLC(loadedDirectors, question, user);
         // Reducing 1 credit per advice
         if (!adviceReady.error) {
            await handleCredits(); // Call handleCredits if the prompt does not contain an error
         }
+
+        console.log('advice', adviceReady);
+
         setDiscussion(adviceReady);
         // setDiscussion(data); // for testing
 
@@ -174,7 +178,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         setThinking(true);
         // Generate takeaways after setting the discussion
         const discussionText = discussion
-        .map(({ text }) => text)
+        .map(({ decisionMakingStrategy }) => decisionMakingStrategy)
         .join('\n');
         const generatedTakeaways = await generateTakeawaysLC(discussionText);
         setTakeaways(generatedTakeaways);
@@ -186,7 +190,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         setThinking(true);
         // Generate scenarios after setting the discussion
         const discussionText = discussion
-        .map(({ text }) => text) // extract the "text" property from each object
+        .map(({ decisionMakingStrategy }) => decisionMakingStrategy) // extract the "text" property from each object
         .join('\n');
         const generatedScenarios = await generateScenariosLC(discussionText);
         setScenarios(generatedScenarios);
@@ -197,7 +201,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         setThinking(true);
         // Generate scenarios after setting the discussion
         const discussionText = discussion
-        .map(({ text }) => text) // extract the "text" property from each object
+        .map(({ decisionMakingStrategy }) => decisionMakingStrategy) // extract the "text" property from each object
         .join('\n');
         const generatedPlusMinus = await generatePlusMinusLC(discussionText);
         setPlusMinus(generatedPlusMinus);
@@ -208,7 +212,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         setThinking(true);
         // Generate scenarios after setting the discussion
         const discussionText = discussion
-        .map(({ text }) => text) // extract the "text" property from each object
+        .map(({ decisionMakingStrategy }) => decisionMakingStrategy) // extract the "text" property from each object
         .join('\n');
         const generatedRationalConclusion = await generateRationalConclusionLC(discussionText);
         setRationalConclusion(generatedRationalConclusion);
@@ -219,7 +223,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         setThinking(true);
         // Generate scenarios after setting the discussion
         const discussionText = discussion
-        .map(({ text }) => text) // extract the "text" property from each object
+        .map(({ decisionMakingStrategy }) => decisionMakingStrategy) // extract the "text" property from each object
         .join('\n');
         const generatedSwotAnalysis = await generateSwotAnalysisLC(discussionText);
         setSwotAnalysis(generatedSwotAnalysis);
@@ -230,7 +234,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         setThinking(true);
         // Generate scenarios after setting the discussion
         const discussionText = discussion
-        .map(({ text }) => text) // extract the "text" property from each object
+        .map(({ decisionMakingStrategy }) => decisionMakingStrategy) // extract the "text" property from each object
         .join('\n');
         const generatedSoarAnalysis = await generateSoarAnalysisLC(discussionText);
         setSoarAnalysis(generatedSoarAnalysis);
@@ -241,7 +245,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         setThinking(true);
         // Generate scenarios after setting the discussion
         const discussionText = discussion
-        .map(({ text }) => text) // extract the "text" property from each object
+        .map(({ decisionMakingStrategy }) => decisionMakingStrategy) // extract the "text" property from each object
         .join('\n');
         const generatedTroubleshoot = await generateTroubleshootLC(discussionText);
         setTroubleshoot(generatedTroubleshoot);
@@ -397,7 +401,7 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                         <Typography 
                                             variant='caption' 
                                             sx={{ fontWeight:'bold', pl: 1 }}>
-                                            {advice.fullName} | {advice.role}
+                                            {advice.director} | {advice.role}
                                         </Typography>
                                         <Stack sx={{
                                             backgroundColor: "grey.200",
@@ -411,7 +415,8 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                         }}
                                         
                                             dangerouslySetInnerHTML={{
-                                                __html: `<div>${advice.text.replace(/\n/g, "<br />")}</div>`,
+                                                __html: `<div><p>${advice.decisionMakingStrategy.replace(/\n/g, "<br />")}</p>
+                                                <p>${advice.quote.replace(/\n/g, "<br />")}</p></div>`,
                                             }}
                                         />
                                     </Stack>

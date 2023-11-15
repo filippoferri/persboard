@@ -17,7 +17,7 @@ export default function Login() {
 return (
     <LoginLayout>
     <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
-        <Typography variant="h4">Sign in to your Personal Board</Typography>
+        <Typography variant="h4">Sign In to your Personal Board</Typography>
 
         {/* <Tooltip title={method} placement="left">
         <Box
@@ -32,8 +32,8 @@ return (
     <AuthLoginForm />
 
     <Stack direction="row" spacing={0.5} sx={{mt:6, justifyContent: "center"}}>
-        <Typography variant="body1">New user?</Typography>
-        <Link href={PATH_AUTH.register}  variant="body1">Create an account</Link>
+        <Typography variant="body1">Don&lsquo;t have an account yet?</Typography>
+        <Link href={PATH_AUTH.register}  variant="body1">Sign Up</Link>
     </Stack>
 
     </LoginLayout>
