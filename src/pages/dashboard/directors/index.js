@@ -206,7 +206,7 @@ export default function PageDirectors() {
             <Container maxWidth={themeStretch ? false : 'lg'}>
                 <Box xs={12} sx={{ pl:2 }}>
                     <Typography variant="h5" sx={{ mb: 2}} >
-                        Premium Directors
+                        AI Directors
                     </Typography>
                     <Divider sx={{ mb: 3 }} />
                 </Box>

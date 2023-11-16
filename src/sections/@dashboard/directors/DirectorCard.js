@@ -80,7 +80,7 @@ export function DirectorCard({director, check, onDelete, boardroom, isList, isBo
       
           <Label
             variant="filled"
-            color = {(director.type === 'Premium' && 'warning' || 'info')}
+            color = {(director.type === 'AI' && 'warning' || 'info')}
             sx = {{
               top: 8,
               left: 8,

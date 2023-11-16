@@ -69,7 +69,7 @@ const MyPdf = ({
     question, 
     directors, 
     discussion, 
-    // takeaways,
+    takeaways,
     // scenarios,
     // plusMinus,
     // rationalConclusion,
@@ -94,14 +94,14 @@ const MyPdf = ({
                         ))}
                     </View>
 
-                    {/* <View style={styles.section}>
+                    <View style={styles.section}>
                         <Text style={styles.subTitle}>Action Items</Text>
                         {takeaways && takeaways.map((takeaway, index) => (
                             <View key={index}>
                                 <Text style={styles.subText}>{takeaway.text}</Text>
                             </View>
                         ))}
-                    </View> */}
+                    </View>
                 </View>
 
                 <View style={[styles.section, styles.rightColumn]}>
@@ -112,8 +112,9 @@ const MyPdf = ({
                     <View style={styles.section}>
                         {discussion && discussion.map((advice, index) => (
                             <View key={index} style={styles.section}>
-                                <Text style={styles.text}>{advice.text}</Text>
-                                <Text style={styles.author}>{advice.fullName}</Text>
+                                <Text style={styles.text}>{advice.decisionMakingStrategy}</Text>
+                                <Text style={styles.text}>{advice.quote}</Text>
+                                <Text style={styles.author}>{advice.director}</Text>
                                 <Text style={styles.author}>{advice.role}</Text>
                             </View>
                         ))}
@@ -146,11 +147,11 @@ MyPdf.propTypes = {
             role: PropTypes.string,
         })
     ),
-    // takeaways: PropTypes.arrayOf(
-    //     PropTypes.shape({
-    //         text: PropTypes.string,
-    //     })
-    // ),
+    takeaways: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
     // scenarios: PropTypes.arrayOf(
     //     PropTypes.shape({
     //         text: PropTypes.string,
@@ -183,7 +184,7 @@ const DownloadPdf = ({
     question, 
     directors, 
     discussion, 
-    // takeaways,
+    takeaways,
     // scenarios,
     // plusMinus,
     // rationalConclusion,
@@ -195,7 +196,7 @@ const DownloadPdf = ({
                 question={question}
                 directors={directors}
                 discussion={discussion}
-                // takeaways={takeaways}
+                takeaways={takeaways}
                 // scenarios={scenarios}
                 // plusMinus={plusMinus}
                 // rationalConclusion={rationalConclusion}
@@ -237,11 +238,11 @@ DownloadPdf.propTypes = {
             role: PropTypes.string,
         })
     ),
-    // takeaways: PropTypes.arrayOf(
-    //     PropTypes.shape({
-    //         text: PropTypes.string,
-    //     })
-    // ),
+    takeaways: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+        })
+    ),
     // scenarios: PropTypes.arrayOf(
     //     PropTypes.shape({
     //         text: PropTypes.string,

@@ -79,7 +79,9 @@ export default function BoardroomReport({
 
                                 <Stack    
                                     dangerouslySetInnerHTML={{
-                                        __html: `<div>${advice.text.replace(/\n/g, "<br />")}</div>`,
+                                        __html: `
+                                        <p style="margin-top: 0">${advice.decisionMakingStrategy.replace(/\n/g, "<br />")}</p>
+                                        <p>${advice.quote.replace(/\n/g, "<br />")}</p>`,
                                     }}
                                 />
 
@@ -89,7 +91,7 @@ export default function BoardroomReport({
                                 sx={{ 
                                     fontWeight: 'bold', mt: 2 }}
                             >
-                                {advice.fullName} | {advice.role}
+                                {advice.director} | {advice.role}
                             </Typography>
                             </Box>
                         </Box>
