@@ -44,21 +44,21 @@ export const generateDiscussionLC = async (advisoryDirectors, question, user) =>
         "An idea that motivates me is..."
     ];
 
-                // CHAT
-                const chat = new ChatOpenAI({
-                    openAIApiKey: OPENAI_API_KEY, 
-                    temperature: TEMPERATURE,
-                    maxTokens: MAX_TOKENS,
-                    topP: 1,
-                    compression: true,
-                });
-    
-                const parser = StructuredOutputParser.fromNamesAndDescriptions({
-                    decisionMakingStrategy: "In your response, outline a decision-making strategy that takes into account role-specific sets of aspects such as personal values, long-term goals, immediate needs, and potential risks and benefits. Offer an important role-aligned insight on how to balance these factors to make a well-informed decision that reflects your specific expertise.",
-                    quote: "Share a personal motivational phrase with author"
-                });
-    
-                const formatInstructions = parser.getFormatInstructions();
+    // CHAT
+    const chat = new ChatOpenAI({
+        openAIApiKey: OPENAI_API_KEY, 
+        temperature: TEMPERATURE,
+        maxTokens: MAX_TOKENS,
+        topP: 1,
+        compression: true,
+    });
+
+    const parser = StructuredOutputParser.fromNamesAndDescriptions({
+        decisionMakingStrategy: "In your response, outline a decision-making strategy that takes into account role-specific sets of aspects such as personal values, long-term goals, immediate needs, and potential risks and benefits. Offer an important role-aligned insight on how to balance these factors to make a well-informed decision that reflects your specific expertise.",
+        quote: "Share a personal motivational phrase with author"
+    });
+
+    const formatInstructions = parser.getFormatInstructions();
 
     try {
 
@@ -66,7 +66,6 @@ export const generateDiscussionLC = async (advisoryDirectors, question, user) =>
         let previousAdvice = "";
 
         for (const director of advisoryDirectors) {
-
 
             const OPENING_SENTENCE = OPENING_SENTENCES[Math.floor(Math.random() * OPENING_SENTENCES.length)];
             const MOTIVATIONAL_PHRASE = MOTIVATIONAL_PHRASES[Math.floor(Math.random() * MOTIVATIONAL_PHRASES.length)];
@@ -97,7 +96,7 @@ export const generateDiscussionLC = async (advisoryDirectors, question, user) =>
                 const responseText = response.text.replace(/```json\n|\n```/g, '');
                 const responseJson = JSON.parse(responseText);
 
-                previousAdvice = responseJson.decisionMakingStrategy + " " + responseJson.quote;
+                previousAdvice = responseJson.comprehensiveAnalysis + " " + responseJson.decisionMakingStrategy + " " + responseJson.quote;
 
                 allResponses.push({
                     director: director.fullName,

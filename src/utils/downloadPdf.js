@@ -69,12 +69,12 @@ const MyPdf = ({
     question, 
     directors, 
     discussion, 
-    takeaways,
-    scenarios,
-    plusMinus,
-    rationalConclusion,
-    swotAnalysis,
-    soarAnalysis
+    // takeaways,
+    // scenarios,
+    // plusMinus,
+    // rationalConclusion,
+    // swotAnalysis,
+    // soarAnalysis
 }) => (
     <Document>
         <Page style={styles.page}>
@@ -94,14 +94,14 @@ const MyPdf = ({
                         ))}
                     </View>
 
-                    <View style={styles.section}>
+                    {/* <View style={styles.section}>
                         <Text style={styles.subTitle}>Action Items</Text>
                         {takeaways && takeaways.map((takeaway, index) => (
                             <View key={index}>
                                 <Text style={styles.subText}>{takeaway.text}</Text>
                             </View>
                         ))}
-                    </View>
+                    </View> */}
                 </View>
 
                 <View style={[styles.section, styles.rightColumn]}>
@@ -140,41 +140,42 @@ MyPdf.propTypes = {
     ),
     discussion: PropTypes.arrayOf(
         PropTypes.shape({
-            text: PropTypes.string,
-            fullName: PropTypes.string,
+            decisionMakingStrategy: PropTypes.string,
+            quote: PropTypes.string,
+            fuldirectorlName: PropTypes.string,
             role: PropTypes.string,
         })
     ),
-    takeaways: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-        })
-    ),
-    scenarios: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-        })
-    ),
-    plusMinus: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-        })
-    ),
-    rationalConclusion: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-        })
-    ),
-    swotAnalysis: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-        })
-    ),
-    soarAnalysis: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-        })
-    ),
+    // takeaways: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //         text: PropTypes.string,
+    //     })
+    // ),
+    // scenarios: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //         text: PropTypes.string,
+    //     })
+    // ),
+    // plusMinus: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //         text: PropTypes.string,
+    //     })
+    // ),
+    // rationalConclusion: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //         text: PropTypes.string,
+    //     })
+    // ),
+    // swotAnalysis: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //         text: PropTypes.string,
+    //     })
+    // ),
+    // soarAnalysis: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //         text: PropTypes.string,
+    //     })
+    // ),
 };
 
 
@@ -182,24 +183,24 @@ const DownloadPdf = ({
     question, 
     directors, 
     discussion, 
-    takeaways,
-    scenarios,
-    plusMinus,
-    rationalConclusion,
-    swotAnalysis,
-    soarAnalysis
+    // takeaways,
+    // scenarios,
+    // plusMinus,
+    // rationalConclusion,
+    // swotAnalysis,
+    // soarAnalysis
 }) => (
     <PDFDownloadLink document={
             <MyPdf 
                 question={question}
                 directors={directors}
                 discussion={discussion}
-                takeaways={takeaways}
-                scenarios={scenarios}
-                plusMinus={plusMinus}
-                rationalConclusion={rationalConclusion}
-                swotAnalysis={swotAnalysis}
-                soarAnalysis={soarAnalysis}
+                // takeaways={takeaways}
+                // scenarios={scenarios}
+                // plusMinus={plusMinus}
+                // rationalConclusion={rationalConclusion}
+                // swotAnalysis={swotAnalysis}
+                // soarAnalysis={soarAnalysis}
             />
         } fileName="boardroom_report.pdf">
     {({ blob, url, loading, error }) =>
@@ -230,41 +231,42 @@ DownloadPdf.propTypes = {
     ),
     discussion: PropTypes.arrayOf(
         PropTypes.shape({
-            text: PropTypes.string,
-            fullName: PropTypes.string,
+            decisionMakingStrategy: PropTypes.string,
+            quote: PropTypes.string,
+            director: PropTypes.string,
             role: PropTypes.string,
         })
     ),
-    takeaways: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-        })
-    ),
-    scenarios: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-        })
-    ),
-    plusMinus: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-        })
-    ),
-    rationalConclusion: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-        })
-    ),
-    swotAnalysis: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-        })
-    ),
-    soarAnalysis: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-        })
-    ),
+    // takeaways: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //         text: PropTypes.string,
+    //     })
+    // ),
+    // scenarios: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //         text: PropTypes.string,
+    //     })
+    // ),
+    // plusMinus: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //         text: PropTypes.string,
+    //     })
+    // ),
+    // rationalConclusion: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //         text: PropTypes.string,
+    //     })
+    // ),
+    // swotAnalysis: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //         text: PropTypes.string,
+    //     })
+    // ),
+    // soarAnalysis: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //         text: PropTypes.string,
+    //     })
+    // ),
 };
 
 // ----------------------------------------------------------------------

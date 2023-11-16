@@ -415,8 +415,9 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                                         }}
                                         
                                             dangerouslySetInnerHTML={{
-                                                __html: `<div><p>${advice.decisionMakingStrategy.replace(/\n/g, "<br />")}</p>
-                                                <p>${advice.quote.replace(/\n/g, "<br />")}</p></div>`,
+                                                __html: `
+                                                <p style="margin-top: 0">${advice.decisionMakingStrategy.replace(/\n/g, "<br />")}</p>
+                                                <p>${advice.quote.replace(/\n/g, "<br />")}</p>`,
                                             }}
                                         />
                                     </Stack>

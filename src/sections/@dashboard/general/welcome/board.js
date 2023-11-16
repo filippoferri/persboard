@@ -104,12 +104,12 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 		// 	humanled: true,
 		// });
 
-		useEffect(() => {
-			const savedMode = JSON.parse(localStorage.getItem('mode'));
-			if (savedMode) {
-				setMode(savedMode);
-			}
-		}, []);
+		// useEffect(() => {
+		// 	const savedMode = JSON.parse(localStorage.getItem('mode'));
+		// 	if (savedMode) {
+		// 		setMode(savedMode);
+		// 	}
+		// }, []);
 
 	return (
 
