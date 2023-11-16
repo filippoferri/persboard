@@ -96,7 +96,7 @@ export const generateDiscussionLC = async (advisoryDirectors, question, user) =>
                 const responseText = response.text.replace(/```json\n|\n```/g, '');
                 const responseJson = JSON.parse(responseText);
 
-                previousAdvice = responseJson.comprehensiveAnalysis + " " + responseJson.decisionMakingStrategy + " " + responseJson.quote;
+                previousAdvice += `${responseJson.decisionMakingStrategy} ${responseJson.quote}`;
 
                 allResponses.push({
                     director: director.fullName,
