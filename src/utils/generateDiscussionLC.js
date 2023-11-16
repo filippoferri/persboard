@@ -60,12 +60,13 @@ export const generateDiscussionLC = async (advisoryDirectors, question, user) =>
 
     const formatInstructions = parser.getFormatInstructions();
 
+    let previousAdvice = "";
+
     try {
 
         const allResponses = [];
-        let previousAdvice = "";
 
-        for (const director of advisoryDirectors) {
+        const responses = await Promise.all(advisoryDirectors.map(async (director) => {
 
             const OPENING_SENTENCE = OPENING_SENTENCES[Math.floor(Math.random() * OPENING_SENTENCES.length)];
             const MOTIVATIONAL_PHRASE = MOTIVATIONAL_PHRASES[Math.floor(Math.random() * MOTIVATIONAL_PHRASES.length)];
@@ -98,19 +99,19 @@ export const generateDiscussionLC = async (advisoryDirectors, question, user) =>
 
                 previousAdvice += `${responseJson.decisionMakingStrategy} ${responseJson.quote}`;
 
-                allResponses.push({
+                return {
                     director: director.fullName,
                     role: director.role,
                     decisionMakingStrategy: responseJson.decisionMakingStrategy,
                     quote: responseJson.quote,
-                });
+                };
 
-            }
+            }));
 
-            console.log('allResponses', allResponses)
+            console.log('allResponses', responses)
 
             // Save the generated advice for this director
-            return allResponses;
+            return responses;
 
     } catch (error) {
         console.log('Error while generating advice: ', error);
