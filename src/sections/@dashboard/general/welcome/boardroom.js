@@ -425,6 +425,32 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                             ))
                             )}
 
+                            {(discussion.length !== 0 && takeaways.length === 0 && swotAnalysis.length === 0 && soarAnalysis.length === 0 && scenarios.length === 0 && plusMinus.length === 0 && troubleshoot.length === 0 && rationalConclusion.length === 0) ? (
+                                    <Stack direction="row" justifyContent='flex-start'> 
+                                        <Stack sx={{ textAlign: 'left' }}>
+                                            <Typography 
+                                            variant='caption' 
+                                            sx={{ fontWeight:'bold', pr: 1 }}>
+                                                Your Board
+                                            </Typography>
+                                            <Stack sx={{
+                                                backgroundColor: "grey.200",
+                                                p: 2, 
+                                                borderRadius: 1, 
+                                                borderTopRightRadius: 0,
+                                                mb: 1,
+                                                minWidth: 48,
+                                                maxWidth: '650px',
+                                                overflow: 'hidden',
+                                                color: 'grey.800',
+                                            }}>
+                                                Do you need help to make a decision? Use decision-making prompts below 👇
+                                            </Stack>
+                                        </Stack>
+                                    </Stack>
+                                ) : null
+                            }
+
                             {takeaways.length !== 0 ? (
                             <Stack sx={{
                                 p: 2,
