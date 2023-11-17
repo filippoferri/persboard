@@ -81,14 +81,14 @@ export default function BoardroomFooter({
                 </Tooltip>
                 <Tooltip title={ isPaid ? "Provide SWOT analysis" : "Buy credits to unlock" } placement="top">
                     <div>
-                    <Chip label="SWOT" color="primary" onClick={onGenerateSwotAnalysis} disabled={activeSwotAnalysis || !isPaid} title="Buy credits to unlock" />
+                    <Chip label="SWOT Analysis" color="primary" onClick={onGenerateSwotAnalysis} disabled={activeSwotAnalysis || !isPaid} title="Buy credits to unlock" />
                     </div>
                 </Tooltip>
-                <Tooltip title={ isPaid ? "Provide SOAR analysis" : "Buy credits to unlock" } placement="top">
+                {/* <Tooltip title={ isPaid ? "Provide SOAR analysis" : "Buy credits to unlock" } placement="top">
                     <div>
                     <Chip label="SOAR" color="primary" onClick={onGenerateSoarAnalysis} disabled={activeSoarAnalysis || !isPaid} />
                     </div>
-                </Tooltip>
+                </Tooltip> */}
                 <Tooltip title={ isPaid ? "Define best-case and worst-case scenarios" : "Buy credits to unlock" } placement="top">
                     <div>
                     <Chip label="Best/Worst Scenarios" color="primary" onClick={onGenerateScenarios} disabled={activeScenarios || !isPaid} />
