@@ -267,53 +267,7 @@ export default function PageBoards() {
                 </Grid>
             </Container>
 
-            <Container maxWidth={themeStretch ? false : 'lg'} sx={{ mb: 4 }}>
-                <Box xs={12} sx={{ pl:2, mb: 2 }}>
-                    <Box sx={{ mb: 2 }}>
-                        <Typography variant="h5" sx={{ display: "inline-block", mr: 1 }}>
-                            Your Directors
-                        </Typography>|
-                        <Typography 
-                            variant="body1" 
-                            sx={{ display: "inline-block", mr: 1, ml: 1, color: "primary.main", cursor: "pointer"}} 
-                            onClick={handleCreateDirector}>
-                            Add New Director
-                        </Typography>
-                    </Box>
-                    <Divider sx={{ mb: 3 }} />
-                </Box>
-                {myDirectors.length > 0 ? (
-                    <Grid container spacing={3} sx={{flexDirection: 'row' }}>
-                            { myDirectors.map((myDirector, index) => (
-                                <Grid sx={{ cursor: "pointer" }} item xs={12} sm={3} key={myDirector.id} onClick={() => handleSelectDirector(myDirector.id)}>
-                                    <DirectorCard 
-                                        director={myDirector} 
-                                        check={selectedDirectors.includes(myDirector.id)}   
-                                        // onDelete={() => handleDeleteDirector(myDirector.id)}
-                                    />
-                                </Grid>
-                            ))}
-                    </Grid>
-                ) : (
-                    <Grid container sx={{flexDirection: 'column', alignItems: "center" }}>
-                        <Typography variant="body1" sx={{ display: "inline-block", mb: 1}}>
-                            Here you can create your personal directors!
-                        </Typography>
-                        <Button variant='outlined' onClick={handleCreateDirector}>
-                            Add New Director
-                        </Button>
-                    </Grid>
-                )}
-            </Container>
-
             <Container maxWidth={themeStretch ? false : 'lg'}>
-                <Box xs={12} sx={{ pl:2 }}>
-                    <Typography variant="h5" sx={{ mb: 2}} >
-                        AI Directors
-                    </Typography>
-                    <Divider sx={{ mb: 3 }} />
-                </Box>
-
                 <Grid container spacing={3} sx={{flexDirection: 'row' }}>
                     {isLoading ? (
                         <Skeleton variant="rectangular" width="100%" height={180} />
