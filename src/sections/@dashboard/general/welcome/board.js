@@ -158,7 +158,7 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 						{ hasBoard ? (
 							<Tab 
 								fullWidth 
-								label="Your Board" 
+								label="Saved Board" 
 								sx={{ 
 									justifyContent: "left",
 								}}
@@ -166,7 +166,7 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 						) : (
 							<Tab 
 								fullWidth 
-								label="From AI Selection"
+								label="Created for you"
 								sx={{ 
 									justifyContent: "left",
 								}}
@@ -175,7 +175,7 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 
 						<Tab 
 							fullWidth 
-							label="Temporary Board"
+							label="New Board"
 							sx={{ 
 								justifyContent: "left",
 							}}
