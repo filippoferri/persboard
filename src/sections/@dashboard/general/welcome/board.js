@@ -158,7 +158,7 @@ export default function WelcomeBoard({ dataFromPrevStep, onNextStep, onPrevStep 
 						{ hasBoard ? (
 							<Tab 
 								fullWidth 
-								label="Saved Board" 
+								label="Your Board" 
 								sx={{ 
 									justifyContent: "left",
 								}}
