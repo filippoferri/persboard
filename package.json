@@ -4,6 +4,11 @@
   "version": "4.2.0",
   "description": "Simple Next.Js & Javascript",
   "private": true,
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0",
+    "yarn": ">=1.22.0"
+  },
   "scripts": {
     "dev": "next dev -p 3034",
     "start": "next start",
