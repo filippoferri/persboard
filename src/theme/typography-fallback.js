@@ -1,6 +1,5 @@
-import { Public_Sans, Barlow } from 'next/font/google';
-
-// ----------------------------------------------------------------------
+// Fallback typography configuration without Google Fonts
+// Use this if Google Fonts fails to load during build
 
 export function remToPx(value) {
   return Math.round(parseFloat(value) * 16);
@@ -24,28 +23,18 @@ export function responsiveFontSizes({ sm, md, lg }) {
   };
 }
 
-export const primaryFont = Public_Sans({
-  weight: ['400', '500', '600', '700', '800'],
-  subsets: ['latin'],
-  display: 'swap',
-  fallback: ['Helvetica', 'Arial', 'sans-serif'],
-  preload: false,
-  adjustFontFallback: false,
-});
+// Fallback font families - system fonts
+export const primaryFont = {
+  style: {
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+  }
+};
 
-export const secondaryFont = Barlow({
-  weight: ['900'],
-  subsets: ['latin'],
-  display: 'swap',
-  fallback: ['Helvetica', 'Arial', 'sans-serif'],
-  preload: false,
-  adjustFontFallback: false,
-});
-
-// ----------------------------------------------------------------------
-
-// LEARN MORE
-// https://nextjs.org/docs/basic-features/font-optimization#google-fonts
+export const secondaryFont = {
+  style: {
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+  }
+};
 
 const typography = {
   fontFamily: primaryFont.style.fontFamily,
