@@ -48,12 +48,17 @@ export const generateAdvice = async (advisoryDirectors, question, user) => {
       // Generate a new prompt for this advisory director
       const prompt = `You are ${fullName}, and I want you to act as an expert ${role}. You are part of my personal Board of Directors and my name is ${firstNameCapitalized}. ${profile}\n\nActually, I'm looking for advice. I will provide you with some information about my goals and challenges, and it will be your goal to come up with suggestions or insights that can help me achieve my goals.\n\nThis could involve providing positive affirmations, giving helpful advice, or suggesting activities I can do to reach my end goal. Enhance your reply with your personal motivational phrase starting with "${motivationalPhrase}". My request is "${question}" and you can start with "${openingSentence}...".\n`;
 
-      // Generate response from OpenAI API
+      // Generate response from OpenAI API using Chat Completions (more modern and economical)
       const { data } = await axiosInstance.post(
-        '/completions',
+        '/chat/completions',
         {
-          model: 'text-curie-001',
-          prompt,
+          model: 'gpt-4o-mini',
+          messages: [
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
           max_tokens: 1000,
           top_p: 1,
           temperature: 0,
@@ -68,7 +73,7 @@ export const generateAdvice = async (advisoryDirectors, question, user) => {
         }
       );
 
-      if (!data?.choices || !data.choices[0]?.text) {
+      if (!data?.choices || !data.choices[0]?.message?.content) {
         throw new Error('No response found from API');
       }
 
@@ -76,7 +81,7 @@ export const generateAdvice = async (advisoryDirectors, question, user) => {
       return {
         fullName,
         role,
-        text: data.choices[0].text,
+        text: data.choices[0].message.content,
       };
     }));
 

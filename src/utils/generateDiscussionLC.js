@@ -44,14 +44,14 @@ export const generateDiscussionLC = async (advisoryDirectors, question, user) =>
         "An idea that motivates me is"
     ];
 
-    // CHAT
+    // CHAT with most economical model
     const chat = new ChatOpenAI({
         openAIApiKey: OPENAI_API_KEY,
+        modelName: 'gpt-4o-mini',
         temperature: TEMPERATURE,
         maxTokens: MAX_TOKENS,
         topP: 1,
         compression: true,
-        model: 'gpt-4o-mini'
     });
 
     const parser = StructuredOutputParser.fromNamesAndDescriptions({

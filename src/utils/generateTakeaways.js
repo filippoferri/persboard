@@ -7,10 +7,15 @@ export const generateTakeaways = async (discussion) => {
     const takeawaysPrompt = `Given the following discussion, provide a list of action items:\n\n${discussion}\n\nAction Items:\n1.`;
 
     const { data } = await axiosInstance.post(
-      '/completions',
+      '/chat/completions',
       {
-        model: 'text-curie-001',
-        prompt: takeawaysPrompt,
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'user',
+            content: takeawaysPrompt
+          }
+        ],
         max_tokens: 500,
         n: 1,
         temperature: 0.2,
@@ -25,8 +30,8 @@ export const generateTakeaways = async (discussion) => {
 
     if (data?.choices) {
       const choice = data.choices[0];
-      if (choice?.text) {
-        const takeawaysText = choice.text.trim();
+      if (choice?.message?.content) {
+        const takeawaysText = choice.message.content.trim();
         const takeawaysList = takeawaysText.split('\n');
         return takeawaysList.map((takeaway) => {
           // Remove the number and the period from the takeaway

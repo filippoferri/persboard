@@ -50,9 +50,10 @@ export const generateAdviceLC = async (advisoryDirectors, question, user) => {
             const OPENING_SENTENCE = OPENING_SENTENCES[Math.floor(Math.random() * OPENING_SENTENCES.length)];
             const MOTIVATIONAL_PHRASE = MOTIVATIONAL_PHRASES[Math.floor(Math.random() * MOTIVATIONAL_PHRASES.length)];
 
-            // CHAT
+            // CHAT with most economical model
             const chat = new ChatOpenAI({
-                openAIApiKey: OPENAI_API_KEY, 
+                openAIApiKey: OPENAI_API_KEY,
+                modelName: 'gpt-4o-mini',
                 temperature: TEMPERATURE,
                 maxTokens: MAX_TOKENS,
                 topP: 1,

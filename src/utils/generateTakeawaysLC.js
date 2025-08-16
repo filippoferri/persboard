@@ -14,9 +14,10 @@ const TEMPERATURE = 0.2;
 export const generateTakeawaysLC = async (discussion) => {
     try {
 
-        // CHAT
+        // CHAT with most economical model
         const chat = new ChatOpenAI({
-            openAIApiKey: OPENAI_API_KEY, 
+            openAIApiKey: OPENAI_API_KEY,
+        modelName: 'gpt-4o-mini',
             temperature: TEMPERATURE,
             maxTokens: MAX_TOKENS,
             topP: 1,

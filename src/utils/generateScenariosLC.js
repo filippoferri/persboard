@@ -17,6 +17,7 @@ export const generateScenariosLC = async (discussion) => {
         // CHAT
         const chat = new ChatOpenAI({
             openAIApiKey: OPENAI_API_KEY, 
+        modelName: 'gpt-4o-mini',
             temperature: TEMPERATURE,
             maxTokens: MAX_TOKENS,
             topP: 1,
