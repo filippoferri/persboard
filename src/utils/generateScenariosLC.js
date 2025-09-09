@@ -7,21 +7,29 @@ import {
 import { LLMChain } from "langchain/chains";
 import { StructuredOutputParser } from "langchain/output_parsers";
 
-const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-const MAX_TOKENS = 500;
-const TEMPERATURE = 0.2;
+import { withCache } from './responseCache';
+import { getOptimizedModelConfig } from './smartTokenManager';
+import { createUserProfile, generatePersonalizedContext } from './profileManager';
 
-export const generateScenariosLC = async (discussion) => {
+const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+
+const _generateScenariosLC = async (discussion, user) => {
     try {
 
-        // CHAT
+        // VARIABLES - Using smart token management
+        const optimizedConfig = getOptimizedModelConfig(discussion, 2); // Best and worst case scenarios
+        
+        const { firstName, myProfile } = user;
+        const MY_NAME = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+        
+        // Create personalized user profile from survey data
+        const userProfile = createUserProfile(myProfile);
+        const personalizedContext = generatePersonalizedContext(userProfile, MY_NAME);
+
+        // CHAT with optimized model configuration
         const chat = new ChatOpenAI({
-            openAIApiKey: OPENAI_API_KEY, 
-        modelName: 'gpt-4o-mini',
-            temperature: TEMPERATURE,
-            maxTokens: MAX_TOKENS,
-            topP: 1,
-            compression: true,
+            openAIApiKey: OPENAI_API_KEY,
+            ...optimizedConfig,
         });
 
         const parser = StructuredOutputParser.fromNamesAndDescriptions({
@@ -33,10 +41,28 @@ export const generateScenariosLC = async (discussion) => {
 
         const chatPrompt = ChatPromptTemplate.fromPromptMessages([
             SystemMessagePromptTemplate.fromTemplate(
-                `As a director on the personal board, provide the best-case scenario as pipe dream and worst-case scenario as apocalypse for action items recovered from a given advice.`
+                `Based on the following takeaways from a board discussion, create two personalized scenarios for ${MY_NAME}:
+                
+                Personal Context: ${personalizedContext}
+                
+                Generate best/worst case scenarios from advice considering their profile and goals.`
             ),
             HumanMessagePromptTemplate.fromTemplate(
-                `Here is the advice: "{discussion}". Talk directly to me and be concise.\n\n{format_instructions}`
+                `Advice: "{discussion}"\n
+                Please provide:
+                1. **Best Case Scenario**: What could happen if ${MY_NAME} follows all advice successfully, considering their profile and goals
+                2. **Worst Case Scenario**: What risks or challenges might arise if ${MY_NAME} ignores the advice, given their specific situation
+                
+                Each scenario should be:
+                - Realistic and specific to ${MY_NAME}'s context and career goals
+                - Directly related to the takeaways and ${MY_NAME}'s profile
+                - Actionable (showing clear cause and effect relevant to ${MY_NAME})
+                - Motivating (best case) or cautionary (worst case) for ${MY_NAME}'s situation
+                - Aligned with ${MY_NAME}'s decision-making style and preferences
+                
+                Format as two distinct scenarios with clear headings, personalized for ${MY_NAME}.
+                
+                {format_instructions}`
             ),
         ]);
 
@@ -77,3 +103,6 @@ export const generateScenariosLC = async (discussion) => {
         ];
     }
 };
+
+// Export cached version
+export const generateScenariosLC = withCache(_generateScenariosLC, 'generateScenariosLC');

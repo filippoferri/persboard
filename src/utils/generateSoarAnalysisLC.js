@@ -6,22 +6,22 @@ import {
 } from "langchain/prompts";
 import { LLMChain } from "langchain/chains";
 import { StructuredOutputParser } from "langchain/output_parsers";
+import { OPENAI_MODELS } from '../config/openai-models';
 
 const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-const MAX_TOKENS = 300;
-const TEMPERATURE = 0.2;
 
 export const generateSoarAnalysisLC = async (discussion) => {
     try {
 
-        // CHAT
+        // CHAT - using centralized configuration
+        const { modelName, temperature, maxTokens, topP, compression } = OPENAI_MODELS.LANGCHAIN_DEFAULT;
         const chat = new ChatOpenAI({
-            openAIApiKey: OPENAI_API_KEY, 
-        modelName: 'gpt-4o-mini',
-            temperature: TEMPERATURE,
-            maxTokens: MAX_TOKENS,
-            topP: 1,
-            compression: true,
+            openAIApiKey: OPENAI_API_KEY,
+            modelName,
+            temperature,
+            maxTokens,
+            topP,
+            compression,
         });
 
         const parser = StructuredOutputParser.fromNamesAndDescriptions({

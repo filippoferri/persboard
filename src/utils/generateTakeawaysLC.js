@@ -7,21 +7,28 @@ import {
 import { LLMChain } from "langchain/chains";
 import { StructuredOutputParser } from "langchain/output_parsers";
 
+import { withCache } from './responseCache';
+import { getOptimizedModelConfig } from './smartTokenManager';
+import { createUserProfile, generatePersonalizedContext } from './profileManager';
+
 const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-const MAX_TOKENS = 500;
-const TEMPERATURE = 0.2;
 
-export const generateTakeawaysLC = async (discussion) => {
+const _generateTakeawaysLC = async (discussion, user) => {
     try {
+        // VARIABLES - Using smart token management
+        const optimizedConfig = getOptimizedModelConfig(discussion, 3); // Assuming 3 takeaways on average
+        
+        const { firstName, myProfile } = user;
+        const MY_NAME = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+        
+        // Create personalized user profile from survey data
+        const userProfile = createUserProfile(myProfile);
+        const personalizedContext = generatePersonalizedContext(userProfile, MY_NAME);
 
-        // CHAT with most economical model
+        // CHAT with optimized model configuration
         const chat = new ChatOpenAI({
             openAIApiKey: OPENAI_API_KEY,
-        modelName: 'gpt-4o-mini',
-            temperature: TEMPERATURE,
-            maxTokens: MAX_TOKENS,
-            topP: 1,
-            compression: true,
+            ...optimizedConfig,
         });
 
         console.log('Discussion', discussion)
@@ -34,10 +41,21 @@ export const generateTakeawaysLC = async (discussion) => {
 
         const chatPrompt = ChatPromptTemplate.fromPromptMessages([
             SystemMessagePromptTemplate.fromTemplate(
-                `As a director on the personal board, provide the the action items from a given advice.`
+                `Based on the following board discussion, extract the most important takeaways and action items for ${MY_NAME}.
+                
+                Personal Context: ${personalizedContext}
+                
+                Please provide 3-5 key takeaways that are:
+                - Actionable and specific to ${MY_NAME}'s profile and goals
+                - Relevant to the main topics discussed and ${MY_NAME}'s situation
+                - Prioritized by importance and relevance to ${MY_NAME}'s needs
+                - Clear, concise, and personalized
+                - Aligned with ${MY_NAME}'s decision-making style and career objectives
+                
+                Format each takeaway as a brief, actionable statement tailored to ${MY_NAME}'s specific context.`
             ),
             HumanMessagePromptTemplate.fromTemplate(
-                `Given the following discussion: "{discussion}", provide a list of action items\n\n{format_instructions}`
+                `Discussion: "{discussion}"\n{format_instructions}`
             ),
         ]);
 
@@ -71,3 +89,6 @@ export const generateTakeawaysLC = async (discussion) => {
         ];
     }
 };
+
+// Export cached version
+export const generateTakeawaysLC = withCache(_generateTakeawaysLC, 'generateTakeawaysLC');

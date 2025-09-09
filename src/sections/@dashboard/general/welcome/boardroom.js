@@ -24,13 +24,13 @@ import useResponsive from '../../../../hooks/useResponsive';
 // Utils
 // import {generateAdviceLC} from '../../../../utils/generateAdviceLC';
 import {generateDiscussionLC} from '../../../../utils/generateDiscussionLC';
-import {generateTakeawaysLC} from '../../../../utils/generateTakeawaysLC';
-import {generateScenariosLC} from '../../../../utils/generateScenariosLC';
+import {generateConsolidatedBoardroom} from '../../../../utils/generateConsolidatedBoardroom';
 import {generatePlusMinusLC} from '../../../../utils/generatePlusMinusLC';
 import {generateRationalConclusionLC} from '../../../../utils/generateRationalConclusionLC';
 import {generateSwotAnalysisLC} from '../../../../utils/generateSwotAnalysisLC';
 import {generateSoarAnalysisLC} from '../../../../utils/generateSoarAnalysisLC';
 import {generateTroubleshootLC} from '../../../../utils/generateTroubleshootLC';
+import { getOptimalDirectorOrder } from '../../../../utils/profileManager';
 import ThinkTime from '../../../../utils/thinkTime';
 
 // ----------------------------------------------------------------------
@@ -88,12 +88,22 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
     //     }
     // ]; 
 
-    // Decrease remaining credits by 1
+    // Decrease remaining credits based on number of directors and user tier
     async function handleCredits() {
         if (remainingCredits > 0) {
+            // Calculate dynamic cost based on directors count and user tier
+            const directorsCount = loadedDirectors.length;
+            let creditCost = 1; // Base cost
+            
+            // Scale cost for more than 3 directors (premium feature)
+            if (directorsCount > 3 && user?.tier === 'premium') {
+                creditCost = Math.min(directorsCount - 1, 3); // Max 3 credits for premium users
+            }
+            
             const remainingCreditsRef = doc(db, "users", user.uid);
             try {
-                await updateDoc(remainingCreditsRef, { credits: increment(-1) });
+                await updateDoc(remainingCreditsRef, { credits: increment(-creditCost) });
+                console.log(`Used ${creditCost} credits for ${directorsCount} directors`);
             } catch (error) {
                 console.error('Error decreasing credits:', error);
             } 
@@ -123,8 +133,11 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
                 };
             })
         );
+        
+        // Ordina i direttori per massimizzare la diversità dei consigli
+        const optimizedDirectors = getOptimalDirectorOrder(loadedDirectorsRef);
             
-        setLoadedDirectors(loadedDirectorsRef);
+        setLoadedDirectors(optimizedDirectors);
     }, [directors, db, user]); 
 
     // generate discussion
@@ -133,17 +146,25 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
             return;
         }
     
-        if (remainingCredits <= 0) {
+        // Calculate required credits based on directors count and user tier
+        const directorsCount = loadedDirectors.length;
+        let requiredCredits = 1; // Base cost
+        
+        if (directorsCount > 3 && user?.tier === 'premium') {
+            requiredCredits = Math.min(directorsCount - 1, 3); // Max 3 credits for premium users
+        }
+    
+        if (remainingCredits < requiredCredits) {
             setDiscussion([
                 {
                     id: '1',
                     fullName: 'Your Personal Board',
-                    text: 'You have reached the limit of available credits. Please upgrade your account to receive more advices.',
+                    text: `You need ${requiredCredits} credits for ${directorsCount} directors, but you only have ${remainingCredits} remaining. Please upgrade your account or reduce the number of directors.`,
                     role: 'Advisory'
                 }
             ]);
 
-            enqueueSnackbar('You have reached the limit of available credits.', { variant: 'error' });
+            enqueueSnackbar(`Insufficient credits: need ${requiredCredits}, have ${remainingCredits}`, { variant: 'error' });
             
             return;
         }
@@ -174,27 +195,33 @@ export default function WelcomeBoardroom({ dataFromPrevStep, onPrevStep, onResta
         }
     }
 
-    const handleTakeaways = async () => {
+    const handleConsolidatedGeneration = async () => {
         setThinking(true);
-        // Generate takeaways after setting the discussion
+        // Generate discussion, takeaways, and scenarios in a single consolidated call
         const discussionText = discussion
         .map(({ decisionMakingStrategy }) => decisionMakingStrategy)
         .join('\n');
-        const generatedTakeaways = await generateTakeawaysLC(discussionText);
-        setTakeaways(generatedTakeaways);
-        // setTakeaways(keyTakeaways); // for testing
+        
+        try {
+            const consolidatedResults = await generateConsolidatedBoardroom(discussionText);
+            setTakeaways(consolidatedResults.takeaways);
+            setScenarios(consolidatedResults.scenarios);
+        } catch (error) {
+            console.error('Error in consolidated generation:', error);
+            // Fallback to empty arrays if consolidated call fails
+            setTakeaways([]);
+            setScenarios([]);
+        }
+        
         setThinking(false); // hide the loading state
     };
 
+    const handleTakeaways = async () => {
+        await handleConsolidatedGeneration();
+    };
+
     const handleScenarios = async () => {
-        setThinking(true);
-        // Generate scenarios after setting the discussion
-        const discussionText = discussion
-        .map(({ decisionMakingStrategy }) => decisionMakingStrategy) // extract the "text" property from each object
-        .join('\n');
-        const generatedScenarios = await generateScenariosLC(discussionText);
-        setScenarios(generatedScenarios);
-        setThinking(false); // hide the loading state
+        await handleConsolidatedGeneration();
     };
 
     const handlePlusMinus = async () => {

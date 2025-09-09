@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Head from 'next/head';
 import { m } from "framer-motion";
-import { Box, Divider, Container, Grid, Typography, Skeleton, Button, CircularProgress } from '@mui/material';
+import { Box, Container, Grid, Typography, Skeleton, Button, CircularProgress } from '@mui/material';
 // firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, getDocs, updateDoc, onSnapshot, query } from 'firebase/firestore';
@@ -50,7 +50,7 @@ export default function PageBoards() {
     const { themeStretch } = useSettingsContext();
     const [selectedDirectors, setSelectedDirectors] = useState([]);
     const [premiumDirectors, setPremiumDirectors] = useState([]);
-    const [myDirectors, setMyDirectors] = useState([]);
+    const [, setMyDirectors] = useState([]);
     const [isUpdate, setIsUpdate] = useState(false);
     const [needDeselect, setNeedDeselect] = useState(true);
 
@@ -64,16 +64,22 @@ export default function PageBoards() {
         if (selectedDirectors.includes(directorId)) {
             setSelectedDirectors(selectedDirectors.filter((id) => id !== directorId));
             setNeedDeselect(false);
-        } else if (selectedDirectors.length < 3) {
-            setSelectedDirectors([...selectedDirectors, directorId]);
         } else {
-            enqueueSnackbar('You need to deselect one director!', { variant: 'warning' });
+            // Determina il limite massimo basato sul tier dell'utente
+            const maxDirectors = user?.tier === 'premium' ? 5 : 3;
+            
+            if (selectedDirectors.length < maxDirectors) {
+                setSelectedDirectors([...selectedDirectors, directorId]);
+            } else {
+                const message = user?.tier === 'premium' 
+                    ? 'You can select up to 5 directors!' 
+                    : 'You need to deselect one director or upgrade to Premium for more!';
+                enqueueSnackbar(message, { variant: 'warning' });
+            }
         }
     };
 
-    const handleCreateDirector = () => {
-        router.push({ pathname: PATH_DASHBOARD.directors.newDirector});
-    };
+
 
     const handleCancel = () => {
         router.push({ pathname: PATH_DASHBOARD.yourBoard.root});
@@ -231,7 +237,12 @@ export default function PageBoards() {
                     <Grid item xs={12} md={6} sx={{ display: "flex", alignItems: "center" }}>
                         <Box sx={{ flexGrow: 1 }}>
                             <Typography variant="p" sx={{ pl:2 }}>
-                                Click to Select or Deselect Your Personal Directors ( {selectedDirectors.length} /3 )
+                                Click to Select or Deselect Your Personal Directors ( {selectedDirectors.length} /{user?.tier === 'premium' ? '5' : '3'} )
+                                {user?.tier !== 'premium' && (
+                                    <Typography variant="caption" display="block" sx={{ color: 'text.secondary', mt: 0.5 }}>
+                                        Upgrade to Premium to select up to 5 directors
+                                    </Typography>
+                                )}
                             </Typography>
                         </Box>
                     </Grid>

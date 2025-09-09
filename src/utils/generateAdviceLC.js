@@ -5,14 +5,14 @@ import {
     ChatPromptTemplate,
 } from "langchain/prompts";
 import { LLMChain } from "langchain/chains";
+import { OPENAI_MODELS } from '../config/openai-models';
 
 const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 
 export const generateAdviceLC = async (advisoryDirectors, question, user) => {
 
-    // VARIABLES
-    const MAX_TOKENS = 800;
-    const TEMPERATURE = 0;
+    // VARIABLES - Using centralized configuration
+    const { maxTokens: MAX_TOKENS, temperature: TEMPERATURE, modelName, topP, compression } = OPENAI_MODELS.LANGCHAIN_DEFAULT;
 
     const { firstName } = user;
     const MY_NAME = firstName.charAt(0).toUpperCase() + firstName.slice(1);
@@ -50,14 +50,14 @@ export const generateAdviceLC = async (advisoryDirectors, question, user) => {
             const OPENING_SENTENCE = OPENING_SENTENCES[Math.floor(Math.random() * OPENING_SENTENCES.length)];
             const MOTIVATIONAL_PHRASE = MOTIVATIONAL_PHRASES[Math.floor(Math.random() * MOTIVATIONAL_PHRASES.length)];
 
-            // CHAT with most economical model
+            // CHAT - using centralized configuration
             const chat = new ChatOpenAI({
                 openAIApiKey: OPENAI_API_KEY,
-                modelName: 'gpt-4o-mini',
+                modelName,
                 temperature: TEMPERATURE,
                 maxTokens: MAX_TOKENS,
-                topP: 1,
-                compression: true,
+                topP,
+                compression,
             });
 
             const chatPrompt = ChatPromptTemplate.fromPromptMessages([
