@@ -26,13 +26,13 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 # next.config.js
 next.config.original.js
-package-lock.json
 
 # vercel
 .vercel
@@ -45,6 +45,3 @@ _static
 
 # PM2 logs
 logs/
-
-# NPM lock file (project uses yarn)
-package-lock.json

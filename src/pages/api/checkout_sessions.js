@@ -1,35 +1,61 @@
 import Stripe from 'stripe';
+import { getAdminDb } from '../../lib/firebaseAdmin';
+import { requireFirebaseUser } from '../../lib/apiAuth';
 
-const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2024-06-20',
 });
+
+const CREDIT_PACKAGES = {
+  50: 1499,
+  100: 2499,
+  500: 9999,
+  1000: 14999,
+};
+
+const getAppUrl = () => process.env.APP_URL || 'http://localhost:3034';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const { quantity, price, promotionCode } = req.body;
+      const authUser = await requireFirebaseUser(req);
+      const { quantity, promotionCode } = req.body;
+      const credits = Number(quantity);
+      const unitAmount = CREDIT_PACKAGES[credits];
+
+      if (!unitAmount) {
+        res.status(400).json({ message: 'Invalid credit package' });
+        return;
+      }
+
+      const db = getAdminDb();
+      const userSnap = await db.collection('users').doc(authUser.uid).get();
+      const stripeCustomerId = userSnap.data()?.stripeCustomerId;
 
       const sessionParams = {
         payment_method_types: ['card'],
         allow_promotion_codes: true,
+        ...(stripeCustomerId ? { customer: stripeCustomerId } : { customer_email: authUser.email }),
         line_items: [
           {
             price_data: {
               currency: 'usd',
               product_data: {
-                name: `Buy ${quantity} Credits`,
+                name: `Buy ${credits} Credits`,
               },
-              unit_amount: price * 100,
+              unit_amount: unitAmount,
             },
             quantity: 1,
           },
         ],
+        client_reference_id: authUser.uid,
         metadata: {
-          credits: quantity.toString(), // Store the number of credits in the metadata
+          uid: authUser.uid,
+          credits: credits.toString(),
         },
         mode: 'payment',
-        success_url: `${process.env.NEXT_PUBLIC_HOST_API_KEY}/dashboard/billing/success/?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.NEXT_PUBLIC_HOST_API_KEY}/dashboard/billing/cancel/`,
+        success_url: `${getAppUrl()}/dashboard/billing/success/?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${getAppUrl()}/dashboard/billing/cancel/`,
       };
 
       // Automatically apply a promotion code if provided
@@ -50,7 +76,7 @@ export default async function handler(req, res) {
 
       res.status(200).json({ sessionId: session.id });
     } catch (err) {
-      res.status(500).json({ statusCode: 500, message: err.message });
+      res.status(err.statusCode || 500).json({ statusCode: err.statusCode || 500, message: err.message });
     }
   } else {
     res.setHeader('Allow', 'POST');

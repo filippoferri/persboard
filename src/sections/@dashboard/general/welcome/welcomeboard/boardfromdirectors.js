@@ -21,8 +21,13 @@ const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
     const handleSelectDirector = (directorId) => {
         if (selectedDirectors.includes(directorId)) {
             setSelectedDirectors(selectedDirectors.filter((id) => id !== directorId));
-        } else if (selectedDirectors.length < 3) {
-            setSelectedDirectors([...selectedDirectors, directorId]);
+        } else {
+            // Determina il limite massimo basato sul tier dell'utente
+            const maxDirectors = user?.tier === 'premium' ? 5 : 3;
+            
+            if (selectedDirectors.length < maxDirectors) {
+                setSelectedDirectors([...selectedDirectors, directorId]);
+            }
         }
     };
 
@@ -78,7 +83,12 @@ const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
                 <Grid item xs={12} sm={8} sx={{ display: "flex", alignItems: "center" }}>
                     <Box sx={{ flexGrow: 1 }}>
                         <Typography variant="p" gutterBottom>
-                            Select Your 3 Directors.
+                            Select Your {user?.tier === 'premium' ? '5' : '3'} Directors.
+                            {user?.tier !== 'premium' && (
+                                <Typography variant="caption" display="block" sx={{ color: 'text.secondary', mt: 0.5 }}>
+                                    Upgrade to Premium to select up to 5 directors
+                                </Typography>
+                            )}
                         </Typography>
                     </Box>
                 </Grid>
@@ -89,7 +99,7 @@ const BoardFromDirectors = ({onNextStep, dataFromPrevStep}) => {
                         disabled={selectedDirectors.length < 3}
                         onClick={NextStep} 
                     >
-                        Ask Your Board
+                        Ask Your Board ({selectedDirectors.length} selected)
                     </Button>
                 </Grid>
             </Grid>
