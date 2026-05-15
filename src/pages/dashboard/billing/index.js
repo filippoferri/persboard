@@ -12,6 +12,7 @@ import { LoadingButton } from '@mui/lab';
 // Router
 // import { useRouter } from 'next/router';
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
 // Show right date in the payment table
 import { format } from 'date-fns';
@@ -115,9 +116,18 @@ export default function PageBilling() {
     
         try {
         const stripe = await getStripe();
+        const idToken = await getAuth().currentUser?.getIdToken();
+
+        if (!idToken) {
+            throw new Error('User is not authenticated');
+        }
+
         const response = await axios.post('/api/checkout_sessions', {
             quantity: selectedBox,
-            price: totalBilled,
+        }, {
+            headers: {
+                Authorization: `Bearer ${idToken}`,
+            },
         });
         const { sessionId } = response.data;
         const result = await stripe.redirectToCheckout({ sessionId });
@@ -159,8 +169,17 @@ export default function PageBilling() {
     useEffect(() => {
         const fetchPayments = async () => {
             try {
-                // Replace 'CUSTOMER_ID' with the actual customer ID that you saved during customer creation in Stripe
-                const response = await axios.get(`/api/list_payments?customerId=${user.stripeCustomerId}`);
+                const idToken = await getAuth().currentUser?.getIdToken();
+
+                if (!idToken) {
+                    return;
+                }
+
+                const response = await axios.get('/api/list_payments', {
+                    headers: {
+                        Authorization: `Bearer ${idToken}`,
+                    },
+                });
                 setPayments(response.data.data);
             } catch (error) {
                 console.error('Error fetching payments:', error);

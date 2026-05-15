@@ -1,12 +1,20 @@
 import Stripe from 'stripe';
+import { getAdminDb } from '../../lib/firebaseAdmin';
+import { requireFirebaseUser } from '../../lib/apiAuth';
 
-const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
-  // You need to provide the customer ID that you saved during the customer's creation in Stripe
-  const { customerId } = req.query;
-
   try {
+    const authUser = await requireFirebaseUser(req);
+    const userSnap = await getAdminDb().collection('users').doc(authUser.uid).get();
+    const customerId = userSnap.data()?.stripeCustomerId;
+
+    if (!customerId) {
+      res.status(200).json({ data: [] });
+      return;
+    }
+
     const paymentList = await stripe.charges.list({
       customer: customerId,
       limit: 5, // You can change the limit as needed
@@ -15,6 +23,6 @@ export default async function handler(req, res) {
     res.status(200).json(paymentList);
 
   } catch (error) {
-    res.status(500).json({ error: 'Error fetching payment data' });
+    res.status(error.statusCode || 500).json({ error: 'Error fetching payment data' });
   }
 }

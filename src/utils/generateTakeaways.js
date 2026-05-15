@@ -1,49 +1,14 @@
-import axiosInstance from './axiosOpenai';
+import { requestBoardroomAi } from './boardroomAiClient';
 
-const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-
-export const generateTakeaways = async (discussion) => {
+export const generateTakeaways = async (discussion, user) => {
   try {
-    const takeawaysPrompt = `Given the following discussion, provide a list of action items:\n\n${discussion}\n\nAction Items:\n1.`;
-
-    const { data } = await axiosInstance.post(
-      '/chat/completions',
-      {
-        model: 'gpt-4o-mini',
-        messages: [
-          {
-            role: 'user',
-            content: takeawaysPrompt
-          }
-        ],
-        max_tokens: 500,
-        n: 1,
-        temperature: 0.2,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${OPENAI_API_KEY}`,
-        },
-      }
-    );
-
-    if (data?.choices) {
-      const choice = data.choices[0];
-      if (choice?.message?.content) {
-        const takeawaysText = choice.message.content.trim();
-        const takeawaysList = takeawaysText.split('\n');
-        return takeawaysList.map((takeaway) => {
-          // Remove the number and the period from the takeaway
-          const text = takeaway.replace(/^\d+\.\s*/, '');
-          return { text };
-        });
-      }
-      throw new Error('No response found from API');
-    }
-    throw new Error('No response found from API');
+    return await requestBoardroomAi('takeaways', {
+      discussion,
+      user,
+    });
   } catch (error) {
-    console.log('Error while generating takeaways: ', error);
+    console.error('Error while generating takeaways: ', error);
+
     return [
       {
         text: 'No important points covered in the discussion.',
@@ -51,4 +16,3 @@ export const generateTakeaways = async (discussion) => {
     ];
   }
 };
-

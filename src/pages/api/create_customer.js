@@ -1,33 +1,37 @@
 import Stripe from 'stripe';
-import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, setDoc, Timestamp } from 'firebase/firestore';
-import { FIREBASE_API } from '../../config-global';
+import { getAdminDb } from '../../lib/firebaseAdmin';
+import { requireFirebaseUser } from '../../lib/apiAuth';
 
-const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
-    const { email, uid } = req.body;
-
     try {
+        const authUser = await requireFirebaseUser(req);
+        const db = getAdminDb();
+        const userRef = db.collection('users').doc(authUser.uid);
+        const userSnap = await userRef.get();
+        const existingCustomerId = userSnap.data()?.stripeCustomerId;
+
+        if (existingCustomerId) {
+            res.status(200).json({ customerId: existingCustomerId });
+            return;
+        }
+
         // Create a Stripe customer
         const customer = await stripe.customers.create({
-            email,
+            email: authUser.email,
+            metadata: {
+                uid: authUser.uid,
+            },
         });
 
-        // Initialize Firebase app
-        const app = initializeApp(FIREBASE_API);
-        const db = getFirestore(app);
-
         // Save the customer ID to Firestore
-        const userRef = doc(db, 'users', uid);
-        await setDoc(userRef, { 
+        await userRef.set({
             stripeCustomerId: customer.id,
-            tier: 'paid',
-            lastPayment: Timestamp.fromDate(new Date()),
         }, { merge: true });
 
         res.status(200).json({ customerId: customer.id });
     } catch (error) {
-        res.status(500).json({ error: 'Error creating customer' });
+        res.status(error.statusCode || 500).json({ error: 'Error creating customer' });
     }
 }
