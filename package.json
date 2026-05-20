@@ -13,6 +13,7 @@
     "dev": "next dev -p 3034",
     "start": "next start",
     "build": "next build",
+    "check:env": "node scripts/check-env.mjs",
     "build-netlify": "next build && cp -r .next _next && mv _next .next/",
     "export": "yarn build && next export -o _static",
     "lint": "eslint --ext .js,.jsx .",

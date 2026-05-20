@@ -1,12 +1,11 @@
-import Stripe from 'stripe';
 import { getAdminDb } from '../../lib/firebaseAdmin';
 import { requireFirebaseUser } from '../../lib/apiAuth';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+import { getStripeServer } from '../../lib/stripeServer';
 
 export default async function handler(req, res) {
     try {
         const authUser = await requireFirebaseUser(req);
+        const stripe = getStripeServer();
         const db = getAdminDb();
         const userRef = db.collection('users').doc(authUser.uid);
         const userSnap = await userRef.get();

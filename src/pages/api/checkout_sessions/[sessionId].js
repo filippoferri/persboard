@@ -1,13 +1,12 @@
 // pages/api/checkout_sessions/[sessionId].js
-import Stripe from 'stripe';
 import { requireFirebaseUser } from '../../../lib/apiAuth';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+import { getStripeServer } from '../../../lib/stripeServer';
 
 export default async function handler(req, res) {
 if (req.method === 'GET') {
     try {
     const authUser = await requireFirebaseUser(req);
+    const stripe = getStripeServer();
     const { sessionId } = req.query;
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
         expand: ['line_items'],

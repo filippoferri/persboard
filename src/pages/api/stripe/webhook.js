@@ -1,15 +1,12 @@
-import Stripe from 'stripe';
 import { FieldValue, getAdminDb } from '../../../lib/firebaseAdmin';
+import { getRequiredServerEnv } from '../../../lib/serverEnv';
+import { getStripeServer } from '../../../lib/stripeServer';
 
 export const config = {
   api: {
     bodyParser: false,
   },
 };
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-06-20',
-});
 
 const readBuffer = (req) => new Promise((resolve, reject) => {
   const chunks = [];
@@ -68,20 +65,20 @@ export default async function handler(req, res) {
   }
 
   const signature = req.headers['stripe-signature'];
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-  if (!webhookSecret) {
-    res.status(500).json({ message: 'STRIPE_WEBHOOK_SECRET is not configured' });
-    return;
-  }
 
   let event;
 
   try {
     const rawBody = await readBuffer(req);
+    const stripe = getStripeServer();
+    const webhookSecret = getRequiredServerEnv('STRIPE_WEBHOOK_SECRET');
+
     event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
   } catch (error) {
-    res.status(400).json({ message: `Webhook Error: ${error.message}` });
+    const statusCode = error.statusCode || 400;
+    const message = statusCode === 400 ? `Webhook Error: ${error.message}` : error.message;
+
+    res.status(statusCode).json({ message });
     return;
   }
 

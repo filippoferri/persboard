@@ -9,6 +9,7 @@ npm run dev
 ```
 
 Fill `.env.local` with Firebase, Stripe, and OpenAI values before starting the app.
+Run `npm run check:env` to verify that required values are present without printing secrets.
 
 ### Required Server Secrets
 
@@ -22,3 +23,6 @@ Do not expose these with `NEXT_PUBLIC_`:
 - `FIREBASE_PRIVATE_KEY`
 
 Stripe checkout credits are fulfilled by the `/api/stripe/webhook` endpoint after `checkout.session.completed`.
+
+Production environment and payment test steps are documented in
+[`docs/production-payments.md`](docs/production-payments.md).

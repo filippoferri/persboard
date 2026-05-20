@@ -1,10 +1,7 @@
-import Stripe from 'stripe';
 import { getAdminDb } from '../../lib/firebaseAdmin';
 import { requireFirebaseUser } from '../../lib/apiAuth';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-06-20',
-});
+import { getAppUrl } from '../../lib/serverEnv';
+import { getStripeServer } from '../../lib/stripeServer';
 
 const CREDIT_PACKAGES = {
   50: 1499,
@@ -13,12 +10,11 @@ const CREDIT_PACKAGES = {
   1000: 14999,
 };
 
-const getAppUrl = () => process.env.APP_URL || 'http://localhost:3034';
-
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       const authUser = await requireFirebaseUser(req);
+      const stripe = getStripeServer();
       const { quantity, promotionCode } = req.body;
       const credits = Number(quantity);
       const unitAmount = CREDIT_PACKAGES[credits];
